@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import img1 from './logo.JPG';
+import img1 from "./logo.JPG";
 
 function FooterComp() {
   return (
     <footer>
-      <img className="logo2" src={img1} alt="logo" />
-      <div className="footerContainer">         
+      <Link to="/mainHome">
+        <img className="logo2" src={img1} alt="logo" />
+      </Link>
+      <div className="footerContainer">
         <div className="socialIcons">
           <a href="#" aria-label="Facebook">
             <i className="fa-brands fa-facebook"></i>
@@ -29,33 +31,38 @@ function FooterComp() {
         <div className="footerNav">
           <ul>
             <li className="footerLinkMain">
-              <Link to="/mainHome" className="footerLink">
-                Home
+              <Link to="/mainAboutUs" className="footerLink">
+                About Us
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/mainGallery" className="footerLink">
-                Gallery
+              <Link to="/mainContactUs" className="footerLink">
+                Contact Us
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/mainEvents" className="footerLink">
-                Events
+              <Link to="/#" className="footerLink">
+                Privacy Policy
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/mainTickets" className="footerLink">
-                Tickets
+              <Link to="/#" className="footerLink">
+                FAQ
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/mainShop" className="footerLink">
-                Shop
+              <Link to="/mainBlog" className="footerLink">
+                Blog
               </Link>
             </li>
-          </ul>          
-        </div>          
-      </div>        
+            <li className="footerLinkMain">
+              <Link to="/#" className="footerLink">
+                Help & Artist
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div className="footerBottom">
         <p className="bg-black">
           Copyright &copy; 2024; Designed by{" "}
