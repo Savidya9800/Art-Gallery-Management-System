@@ -45,3 +45,13 @@
   display: inline;
   margin-left: 20px;
 }
+
+.searchbtn:hover{
+  background-color: #c09c4e;
+  border-color: #333;
+}
+
+.searchbtn{
+  border-color: #333;
+  color: #333;
+}

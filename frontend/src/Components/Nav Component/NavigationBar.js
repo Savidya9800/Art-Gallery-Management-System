@@ -37,32 +37,31 @@ function NavigationBar() {
               Gallery
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainEvents">
-              Events
+            <Nav.Link as={Link} to="/mainNewsFeed">
+              News Feed
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainTickets">
-              Tickets
+            <Nav.Link as={Link} to="/mainBlog">
+              Blog
               <span></span>
             </Nav.Link>
             <Nav.Link as={Link} to="/mainShop">
               Shop
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainBidding">
-              Bidding
+            <Nav.Link as={Link} to="/mainAboutUs">
+              About Us
               <span></span>
             </Nav.Link>
             <NavDropdown title="More" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/mainAboutUs">
-                About Us
+              <NavDropdown.Item as={Link} to="/mainInquary">
+                Inquiry
               </NavDropdown.Item>
-              <NavDropdown.Item href="#inquiryForm">
-                Inquiry Form
-              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#somethingElse">
-                Something else here
+              <NavDropdown.Item as={Link} to="/mainContactUs">
+                Contact Us
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
@@ -73,7 +72,7 @@ function NavigationBar() {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button>
+            <Button className="searchbtn" variant="outline-success">Search</Button>
           </Form>
           <img
             src={img2}
