@@ -23,18 +23,26 @@ const getAllArtWorks = async (req, res) => {
 //Data Insert
 const addArtWorks = async (req,res, next) => {
 
-    const {title, category, artist, year, price, img} = req.body;
+    const {name, email, pNumber, website, biography, statement, title, medium, dimensions, date, description, img, place, tags} = req.body;
 
     let artWorks;
 
     try{
         artWorks = new artWork({
-            title,
-            category,
-            artist,
-            year,
-            price,
-            img
+            name, 
+            email, 
+            pNumber, 
+            website, 
+            biography, 
+            statement, 
+            title, 
+            medium, 
+            dimensions, 
+            date, 
+            description,
+            img, 
+            place, 
+            tags
         });
         await artWorks.save();
     }catch (err) {
@@ -70,13 +78,13 @@ const getById = async (req, res) => {
 //Update artwork Details
 const updateArtWork = async (req, res, next) => {
     const id = req.params.id;
-    const {title, category, artist, year, price, img} = req.body;
+    const {name, email, pNumber, website, biography, statement, title, medium, dimensions, date, description, img, place, tags} = req.body;
 
     let artworks;
 
     try{
         artworks = await artWork.findByIdAndUpdate(id,
-            {title, category, artist, year, price, img});
+            {name, email, pNumber, website, biography, statement, title, medium, dimensions, date, description, img, place, tags});
             artworks = await artworks.save();       
     }catch(err){
         console.log(err);
