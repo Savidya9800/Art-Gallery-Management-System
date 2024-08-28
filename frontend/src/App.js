@@ -14,6 +14,7 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
+import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
 
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
           <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
           <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
+          <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+
 
         </Routes>
       </React.Fragment>
