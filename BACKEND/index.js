@@ -18,7 +18,7 @@ app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inqui
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
-mongoose.connect("mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/")
+mongoose.connect("mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/ArtGallery_DB")
 .then(() => console.log("Connected to MongoDB"))
 .then(() => {
     app.listen(5000);
