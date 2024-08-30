@@ -4,6 +4,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import axios from "axios";
 
+// Add Artwork Component
 function AddArtworkComp() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
