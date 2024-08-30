@@ -15,6 +15,7 @@ import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
+import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
           <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
           <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+          
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
 
 
         </Routes>
