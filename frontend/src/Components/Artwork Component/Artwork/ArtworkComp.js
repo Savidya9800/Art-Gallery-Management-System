@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ function ArtworkComp(props) {
       <h1> Email :{email}</h1>
       <h1> Phone :{pNumber}</h1>
       <Link to={`/mainArtworkDetails/${_id}`}>Update</Link>
-      <button onClick={deleteHandler}>Delete</button>
+      <button onClick={deleteHandler}>Delete</button> 
       <br></br>
       <br></br>
     </div>
