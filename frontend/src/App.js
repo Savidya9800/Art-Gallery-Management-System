@@ -13,6 +13,10 @@ import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
+import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
+import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
+import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
+
 
 function App() {
   return (
@@ -32,6 +36,11 @@ function App() {
           <Route path="/mainSellArt" element={<SellArtComp/>} />
           <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
+          <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
+          <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+          
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+
 
         </Routes>
       </React.Fragment>
