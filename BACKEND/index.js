@@ -16,6 +16,7 @@ app.use("/artWorks", router);
 //Inquiry-manager
 app.use(express.json());
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+app.use(cors());
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
