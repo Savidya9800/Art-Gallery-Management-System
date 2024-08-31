@@ -5,7 +5,6 @@ import Home from "./Components/Main Component/Home";
 import GalleryComp from "./Components/Artwork Component/GalleryComp";
 import EventComp from "./Components/Event Component/EventComp";
 import TicketComp from "./Components/Ticketing Component/TicketComp";
-import ShopComp from "./Components/Inventory Component/ShopComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
@@ -14,6 +13,8 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
+import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
+import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp/>} />
           <Route path="/mainEvents" element={<EventComp/>} />
           <Route path="/mainTickets" element={<TicketComp/>} />
-          <Route path="/mainShop" element={<ShopComp/>} />
+          <Route path="/mainInventory" element={<InventoryComp/>} />
           <Route path="/mainBidding" element={<BiddingComp/>} />
           <Route path="/mainAboutUs" element={<AboutUsComp/>} />
           <Route path="/mainBlog" element={<BlogComp/>} />
