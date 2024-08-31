@@ -9,10 +9,14 @@ import ShopComp from "./Components/Inventory Component/ShopComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+<<<<<<< Updated upstream
 
 //inquiry imports
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 
+=======
+import InquiryComp from "./Components/Inquiry Component/inquiries/InquiryComp";
+>>>>>>> Stashed changes
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
@@ -21,6 +25,7 @@ import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtwork
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry";
 import AddInquiry from "./Components/Inquiry Component/AddInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry";
+
 
 
 function App() {
@@ -39,10 +44,14 @@ function App() {
           <Route path="/mainBlog" element={<BlogComp/>} />
 
           <Route path="/mainInquary" element={<InquiryComp/>} />
+<<<<<<< Updated upstream
           <Route path="/" element={<InquiryComp />} />
           <Route path="/inquiries" element={<ViewInquiry />} />
           <Route path="/newInquiry" element={<AddInquiry />} />
           <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
+=======
+          
+>>>>>>> Stashed changes
 
           <Route path="/mainSellArt" element={<SellArtComp/>} />
           <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />

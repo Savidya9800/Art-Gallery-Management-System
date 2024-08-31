@@ -1,0 +1,35 @@
+.inquiry-page {
+    font-family: Arial, sans-serif;
+    color: #6e5d4e; /* Light Brown color */
+    background-color: #f5f1e9; /* Cream background color */
+    padding: 50px;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .inquiry-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .inquiry-button {
+    background: none;
+    border: 2px solid #6e5d4e;
+    color: #6e5d4e;
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 15px 0;
+    cursor: pointer;
+  }
+  
+  .image img {
+    width: 400px;
+    height: auto;
+    border-radius: 5px;
+  }
+  

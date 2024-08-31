@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Viewinquiries from './ViewInquiries';
@@ -36,3 +37,28 @@ export default function ViewInquiry(){
     </div>
     );
 }
+=======
+import React,{useState} from 'react';
+import axios from 'axios';
+const URL = "http://localhost:5000/inquiry";
+
+const fetchHandler = async () => { 
+
+    return await axios.get(URL).then((res)=>res.data);
+}
+export default function ViewInquiry(){
+
+    const [inquiryData, setInquiryData] = React.useState();
+    useEffect(() => {
+        fetchHandler().then((data) =>  setInquiryData(data.inquiryData));
+        },[])
+    }
+
+    return(
+
+        <div>
+            <h1>View Inquiry</h1>
+        </div>
+    )
+
+>>>>>>> Stashed changes
