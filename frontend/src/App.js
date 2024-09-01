@@ -13,11 +13,14 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
+import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
+import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
+
+//Inventory Manager
 import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
 import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
-
 
 function App() {
   return (
@@ -45,6 +48,10 @@ function App() {
           <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
           <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
+          <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+          
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+
 
         </Routes>
       </React.Fragment>

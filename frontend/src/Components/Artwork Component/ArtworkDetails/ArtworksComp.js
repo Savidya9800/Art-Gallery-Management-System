@@ -6,6 +6,7 @@ import ArtworkComp from "../Artwork/ArtworkComp";
 
 const URL = "http://localhost:5000/artWorks";
 
+//fetchHandler
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
