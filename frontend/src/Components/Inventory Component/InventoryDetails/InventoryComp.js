@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NavigationBar from "../../Nav Component/NavigationBar";
-import FooterComp from "../../Nav Component/FooterComp";
 import ShopComp from "../Inventory/ShopComp";
 
 const URL = "http://localhost:5000/inventory";
@@ -24,7 +22,6 @@ function InventoryComp() {
   }, []);
   return (
     <div>
-      <NavigationBar />
       <h1>inventory details display page</h1>
       <div>
         {inventory?.length > 0 &&
@@ -34,7 +31,6 @@ function InventoryComp() {
             </div>
           ))}
       </div>
-      <FooterComp />
     </div>
   );
 }

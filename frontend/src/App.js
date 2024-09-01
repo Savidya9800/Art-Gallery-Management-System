@@ -15,6 +15,8 @@ import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
 import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
+import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
+import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
 
 
 function App() {
@@ -27,7 +29,14 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp/>} />
           <Route path="/mainEvents" element={<EventComp/>} />
           <Route path="/mainTickets" element={<TicketComp/>} />
-          <Route path="/mainInventory" element={<InventoryComp/>} />
+
+          <Route path="/mainInventory" element={<AdminUi/>} />
+          <Route path="/addinventoryform" element={<Addinventory/>} />
+          <Route path="/itemview" element={<InventoryComp/>} />
+          <Route path="/itemview/:id" element={<UpdateInventory/>} />
+
+
+
           <Route path="/mainBidding" element={<BiddingComp/>} />
           <Route path="/mainAboutUs" element={<AboutUsComp/>} />
           <Route path="/mainBlog" element={<BlogComp/>} />

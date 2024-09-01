@@ -1,27 +1,28 @@
-import React, { UseState } from 'react'
+import React, { useState } from 'react'
 import NavigationBar from '../../Nav Component/NavigationBar'
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 function Addinventory() {
     const history = useNavigate();
-    const [inputs,setInputs] = UseState({
+    const [inputs, setInputs] = useState({
       productname:"",
       price:"",
       itemCount:"",
-      date:"",
+      date:""
     });
     const handleChange = (e)=>{
       setInputs((prevState)=> ({
         ...prevState,
-        [e.target.name]: e.value,
+        [e.target.name]: e.target
+        .value,
       }));
     };
 
     const handleSubmit = (e)=>{
       e.preventDefault();
       console.log(inputs);
-      sendRequest().then(()=>history("mainInventory"))
+      sendRequest().then(()=>history('/itemview'))
     }
 
     const sendRequest = async()=>{
@@ -39,20 +40,20 @@ function Addinventory() {
       <form onSubmit={handleSubmit}>
         <label>productname</label>
         <br></br>
-        <input type="text" name="productname" onChange={handleChange} value={inputs.productname} required></input>
+        <input type="text" name="productname" onChange={handleChange} value={inputs.productname} required></input><br></br><br></br>
 
         <label>price</label>
         <br></br>
-        <input type="text" name="price" onChange={handleChange}  value={inputs.price} required></input>
+        <input type="text" name="price" onChange={handleChange}  value={inputs.price} required></input><br></br><br></br>
 
         <label>itemCount</label>
         <br></br>
-        <input type="text" name="itemCount" onChange={handleChange} value={inputs.itemCount} required></input>
+        <input type="text" name="itemCount" onChange={handleChange} value={inputs.itemCount} required></input><br></br><br></br>
 
         <label>date</label>
         <br></br>
-        <input type="text" name="date" onChange={handleChange} value={inputs.date} required></input>
-        <br></br><br></br>
+        <input type="text" name="date" onChange={handleChange} value={inputs.date} required></input><br></br><br></br>
+        <br></br>
         <button type='submit'>Submit</button>
       </form>
     </div>
