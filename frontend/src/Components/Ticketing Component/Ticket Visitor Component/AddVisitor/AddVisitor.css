@@ -1,0 +1,105 @@
+/* AddVisitor.css */
+
+.container {
+    width: 1440px;
+    height: 705px;
+    padding-bottom: 19px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .left-section {
+    width: 728px;
+    height: 500px;
+    position: absolute;
+    top: 110px;
+  }
+  
+  .header {
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    color: #A78F51;
+    font-size: 32px;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  
+  .label {
+    position: absolute;
+    color: black;
+    font-size: 24px;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  
+  .ticket-type {
+    left: 15px;
+    top: 70px;
+  }
+  
+  .total {
+    left: 15px;
+    top: 347px;
+  }
+  
+  .subtotal {
+    left: 374px;
+    top: 70px;
+  }
+  
+  .ticket-details {
+    left: 23px;
+    top: 136px;
+    font-size: 22px;
+    font-weight: 300;
+  }
+  
+  .button-update {
+    position: absolute;
+    left: 556px;
+    top: 462px;
+    background-color: #A78F51;
+    border-radius: 15px;
+    width: 155px;
+    height: 47px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .right-section {
+    width: 473px;
+    height: 705px;
+    position: absolute;
+    top: 110px;
+    left: 819px;
+  }
+  
+  .checkout {
+    width: 470px;
+    background: #A78F51;
+    border-radius: 15px;
+    height: 47px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    line-height: 47px;
+  }
+  
+  .form-label {
+    font-size: 22px;
+    font-family: Inter;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  
+  .form-input {
+    width: 470px;
+    height: 48px;
+    border-radius: 15px;
+    border: 1px solid black;
+    margin-bottom: 20px;
+  }
+  
