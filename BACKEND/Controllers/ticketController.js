@@ -3,6 +3,23 @@ const Visitor = require("../Models/ticketModel");
 // Get all visitors
 const getAllVisitors = async (req, res) => {
     try {
+        const visitors = await Visitor.find();
+        if (!visitors || visitors.length === 0) {
+            return res.status(404).json({ message: "Could not find any visitors" });
+        }
+        return res.status(200).json({ visitors });
+    } catch (err) {
+        console.error('Error retrieving visitors:', err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+// Add a new visitor
+const addVisitors = async (req, res) => {
+    const { date, time, tickets, fname, lname, email, phone, city, country } = req.body;
+
+    try {
+        const visitor = new Visitor({ date, time, tickets, fname, lname, email, phone, city, country });
         await visitor.save();
         return res.status(201).json({ visitor });
     } catch (err) {
