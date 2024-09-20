@@ -14,6 +14,7 @@ import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
+import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 
 //Inventory Manager
@@ -21,6 +22,11 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
+
+import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
+import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
+import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
+import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
 
 function App() {
   return (
@@ -49,8 +55,21 @@ function App() {
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
           <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
           <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+          <Route path="/mainTicketing" element={<TicketComp/>} />
+          <Route path="/mainTicketAddVisitor" element={<AddVisitor/>} />
+
+
+          <Route path='/visitor' element={<Visitor/>}/>
+          <Route path='/visitorDetails' element={<Visitors/>}/>
+          <Route path='/addVisitor' element={<AddVisitor/>}/>
+          <Route path='/visitorDetails/:id' element={<UpdateVisitor/>}/>
+          <Route path="/visitorDetails/:id" element={<Visitor />} />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+        
+
           
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+
 
 
         </Routes>

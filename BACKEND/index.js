@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
+const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 
 const app = express();
 const cors = require("cors");
@@ -20,6 +21,12 @@ app.use("/artWorks", router);
 //Inquiry-manager
 app.use(express.json());
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+
+//Ticket-manager
+app.use(express.json());
+app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
+
+
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
