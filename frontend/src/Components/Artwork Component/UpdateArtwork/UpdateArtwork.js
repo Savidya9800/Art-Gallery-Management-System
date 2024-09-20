@@ -50,8 +50,7 @@ function UpdateArtwork() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(inputs);
-    sendRequest().then(() =>
-    history("/mainArtworkDetails"));
+    sendRequest().then(() => history("/mainArtworkDetails"));
   };
 
   return (
@@ -152,7 +151,7 @@ function UpdateArtwork() {
           onChange={handleChange}
           value={inputs.img}
           placeholder="Image"
-          required
+          //required
         />
         <input
           type="text"
