@@ -16,7 +16,8 @@ import ContactUsComp from "./Components/Main Component/ContactUsComp";
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
-
+import UploadImage from "./Components/Artwork Component/AddArtwork/UploadImage";
+import UploadReceipt from "./Components/Artwork Component/AddArtwork/UploadReceipt";
 
 function App() {
   return (
@@ -25,23 +26,23 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mainHome" element={<Home />} />
-          <Route path="/mainGallery" element={<GalleryComp/>} />
-          <Route path="/mainEvents" element={<EventComp/>} />
-          <Route path="/mainTickets" element={<TicketComp/>} />
-          <Route path="/mainShop" element={<ShopComp/>} />
-          <Route path="/mainBidding" element={<BiddingComp/>} />
-          <Route path="/mainAboutUs" element={<AboutUsComp/>} />
-          <Route path="/mainBlog" element={<BlogComp/>} />
-          <Route path="/mainInquary" element={<InquiryComp/>} />
-          <Route path="/mainSellArt" element={<SellArtComp/>} />
-          <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
-          <Route path="/mainContactUs" element={<ContactUsComp/>} />
-          <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
-          <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
-          
-          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+          <Route path="/mainGallery" element={<GalleryComp />} />
+          <Route path="/mainEvents" element={<EventComp />} />
+          <Route path="/mainTickets" element={<TicketComp />} />
+          <Route path="/mainShop" element={<ShopComp />} />
+          <Route path="/mainBidding" element={<BiddingComp />} />
+          <Route path="/mainAboutUs" element={<AboutUsComp />} />
+          <Route path="/mainBlog" element={<BlogComp />} />
+          <Route path="/mainInquary" element={<InquiryComp />} />
+          <Route path="/mainSellArt" element={<SellArtComp />} />
+          <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
+          <Route path="/mainContactUs" element={<ContactUsComp />} />
+          <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
+          <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
+          <Route path="/mainUploadImage" element={<UploadImage />} />
+          <Route path="/mainUploadReceipt" element={<UploadReceipt />} />
 
-
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
         </Routes>
       </React.Fragment>
     </div>
