@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
 const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
+const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 
 const app = express();
 const cors = require("cors");
@@ -13,12 +15,21 @@ app.use(express.json());
 app.use(cors());
 app.use("/files", express.static("files")); //for PDF upload
 
+//Inventory Manager
+app.use("/inventory", routerinv);//Mayomi
+
 //Artwork-manager
 app.use("/artWorks", router);
 
 //Inquiry-manager
 app.use(express.json());
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+
+//Ticket-manager
+app.use(express.json());
+app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
+
+
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
