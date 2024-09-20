@@ -1,28 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import NavigationBar from "../../Nav Component/NavigationBar";
-import FooterComp from "../../Nav Component/FooterComp";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 
-// Add Artwork Component
-function AddArtworkComp() {
+function UpdateArtwork() {
+  const [inputs, setInputs] = useState({});
   const history = useNavigate();
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    pNumber: "",
-    website: "",
-    biography: "",
-    statement: "",
-    title: "",
-    medium: "",
-    dimensions: "",
-    date: "",
-    description: "",
-    img: "",
-    place: "",
-    tags: "",
-  });
+  const id = useParams().id;
+
+  useEffect(() => {
+    const fetchHandler = async () => {
+      await axios
+        .get(`http://localhost:5000/artWorks/${id}`)
+        .then((res) => res.data)
+        .then((data) => setInputs(data.artWorks));
+    };
+    fetchHandler();
+  }, [id]);
+
+  const sendRequest = async () => {
+    await axios
+      .put(`http://localhost:5000/artWorks/${id}`, {
+        name: String(inputs.name),
+        email: String(inputs.email),
+        pNumber: Number(inputs.pNumber),
+        website: String(inputs.website),
+        biography: String(inputs.biography),
+        statement: String(inputs.statement),
+        title: String(inputs.title),
+        medium: String(inputs.medium),
+        dimensions: String(inputs.dimensions),
+        date: String(inputs.date),
+        description: String(inputs.description),
+        img: String(inputs.img),
+        place: String(inputs.place),
+        tags: String(inputs.tags),
+      })
+
+      .then((res) => res.data);
+  };
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -34,33 +50,13 @@ function AddArtworkComp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(inputs);
-    await sendRequest();
-    history("/mainArtworkDetails");
-  };
-
-  const sendRequest = async () => {
-    await axios.post("http://localhost:5000/artWorks", {
-      name: String(inputs.name),
-      email: String(inputs.email),
-      pNumber: Number(inputs.pNumber),
-      website: String(inputs.website),
-      biography: String(inputs.biography),
-      statement: String(inputs.statement),
-      title: String(inputs.title),
-      medium: String(inputs.medium),
-      dimensions: String(inputs.dimensions),
-      date: String(inputs.date),
-      description: String(inputs.description),
-      img: String(inputs.img),
-      place: String(inputs.place),
-      tags: String(inputs.tags),
-    });
+    sendRequest().then(() =>
+    history("/mainArtworkDetails"));
   };
 
   return (
     <div>
-      <NavigationBar />
-      <h1>Add Artwork</h1>
+      <h1>Update Artwork</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -68,6 +64,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.name}
           placeholder="Name"
+          required
         />
         <input
           type="email"
@@ -75,6 +72,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.email}
           placeholder="Email"
+          required
         />
         <input
           type="number"
@@ -82,6 +80,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.pNumber}
           placeholder="Phone Number"
+          required
         />
         <input
           type="text"
@@ -89,6 +88,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.website}
           placeholder="Website"
+          required
         />
         <input
           type="text"
@@ -96,6 +96,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.biography}
           placeholder="Biography"
+          required
         />
         <input
           type="text"
@@ -103,6 +104,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.statement}
           placeholder="Statement"
+          required
         />
         <input
           type="text"
@@ -110,6 +112,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.title}
           placeholder="Title"
+          required
         />
         <input
           type="text"
@@ -117,6 +120,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.medium}
           placeholder="Medium"
+          required
         />
         <input
           type="text"
@@ -124,6 +128,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.dimensions}
           placeholder="Dimensions"
+          required
         />
         <input
           type="text"
@@ -131,6 +136,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.date}
           placeholder="Date"
+          required
         />
         <input
           type="text"
@@ -138,6 +144,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.description}
           placeholder="Description"
+          required
         />
         <input
           type="text"
@@ -145,6 +152,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.img}
           placeholder="Image"
+          required
         />
         <input
           type="text"
@@ -152,6 +160,7 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.place}
           placeholder="Place"
+          required
         />
         <input
           type="text"
@@ -159,12 +168,12 @@ function AddArtworkComp() {
           onChange={handleChange}
           value={inputs.tags}
           placeholder="Tags"
+          required
         />
-        <button>Submit</button>
+        <button>Update Artwork</button>
       </form>
-      <FooterComp />
     </div>
   );
 }
 
-export default AddArtworkComp;
+export default UpdateArtwork;
