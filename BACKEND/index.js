@@ -12,7 +12,7 @@ const cors = require("cors");
 
 //Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors()); 
 app.use("/files", express.static("files")); //for PDF upload
 
 //Inventory Manager
