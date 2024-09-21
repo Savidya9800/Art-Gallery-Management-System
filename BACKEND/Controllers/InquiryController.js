@@ -1,45 +1,113 @@
-const inquiry = require('../Models/InquiryModel');
+const Inquiry = require('../Models/InquiryModel');
 
-
-// Display part 
+// Get all inquiries
 const getAllInquiries = async (req, res) => {
-
-    let inquiryData;  //Remember the variable declare in here this is for the display of the data
+    let inquiryData;
     try {
-        inquiryData = await inquiry.find();
-    } catch (error) {
+        inquiryData = await Inquiry.find();
+    } catch (err) {
         console.log(err);
+        return res.status(500).json({ message: 'Error fetching inquiries' });
+    }
+
+    if (!inquiryData || inquiryData.length === 0) {
+        return res.status(404).json({ message: 'No inquiries found' });
+    }
+
+    return res.status(200).json({ inquiryData });
+};
+
+// Add a new inquiry
+const addInquiry = async (req, res) => {
+    const { name, email, inquiryType, inquiryMessage } = req.body;
+
+    let newInquiry;
+    try {
+        newInquiry = new Inquiry({
+            name,
+            email,
+            inquiryType,
+            inquiryMessage
+        });
+        await newInquiry.save();
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error adding inquiry' });
+    }
+
+    return res.status(201).json({ newInquiry });
+};
+
+// Get an inquiry by ID
+const getInquiryById = async (req, res) => {
+    const id = req.params.id;
+
+    let inquiryData;
+    try {
+        inquiryData = await Inquiry.findById(id);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error fetching inquiry' });
     }
 
     if (!inquiryData) {
-        return res.status(404).json({message: 'No Inquiry Found'})
+        return res.status(404).json({ message: 'Inquiry not found' });
     }
 
-    return res.status(200).json({inquiryData});
-
+    return res.status(200).json({ inquiryData });
 };
 
-//data insert part
+// Update an inquiry
+const updateInquiry = async (req, res) => {
+    const id = req.params.id;
+    const { name, email, inquiryType, inquiryMessage } = req.body;
 
-const addInquiries = async (req, res) => {
-
-    const {name,email,inquiryType,inquiryMessage} = req.body;
-
-    let newInquiry;
-
+    let inquiryData;
     try {
-        newInquiry = new inquiry({name,email,inquiryType,inquiryMessage});
-        await newInquiry.save();
-    } catch (err){
+        inquiryData = await Inquiry.findByIdAndUpdate(
+            id,
+            { name, email, inquiryType, inquiryMessage },
+            { new: true } // Returns the updated document
+        );
+    } catch (err) {
         console.log(err);
+        return res.status(500).json({ message: 'Error updating inquiry' });
     }
 
-    if (!newInquiry){
-        return res.status(404).json({message: 'Unable to add Inquiry'});
+    if (!inquiryData) {
+        return res.status(404).json({ message: 'Unable to update inquiry' });
+    }
 
-    } 
-    return res.status(200).json({newInquiry});
-}
+    return res.status(200).json({ inquiryData });
+};
 
+// Delete an inquiry
+const deleteInquiry = async (req, res) => {
+    const id = req.params.id;
+
+    let inquiryData;
+    try {
+        inquiryData = await Inquiry.findByIdAndDelete(id);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error deleting inquiry' });
+    }
+
+    if (!inquiryData) {
+        return res.status(404).json({ message: 'Unable to delete inquiry' });
+    }
+
+    return res.status(200).json({ message: 'Inquiry deleted successfully' });
+};
+
+// Exporting the functions
 exports.getAllInquiries = getAllInquiries;
-exports.addInquiries = addInquiries;
+exports.addInquiry = addInquiry;
+exports.getInquiryById = getInquiryById;
+exports.updateInquiry = updateInquiry;
+exports.deleteInquiry = deleteInquiry;
+
+
+
+
+
