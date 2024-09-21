@@ -24,7 +24,6 @@ function GalleryComp() {
       </Link>
       <br></br>
       <br></br>
-     
 
       <FooterComp />
     </div>

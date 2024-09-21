@@ -25,6 +25,12 @@ import Addinventory from "./Components/Inventory Component/InventoryDetails/Addi
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
 
+//Financial-Manager
+import Transactions from "./Components/Transactions/Transaction";
+import PaymentGateway from "./Components/PaymentGateway/PaymentGateway";
+import Payments from "./Components/Payments/Payments";
+
+//Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
@@ -41,6 +47,12 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainEvents" element={<EventComp />} />
           <Route path="/mainTickets" element={<TicketComp />} />
+
+          <Route path="/mainInventory" element={<AdminUi />} />
+          <Route path="/addinventoryform" element={<Addinventory />} />
+          <Route path="/itemview" element={<InventoryComp />} />
+          <Route path="/itemview/:id" element={<UpdateInventory />} />
+
           <Route path="/mainShop" element={<ShopComp />} />
           <Route path="/mainBidding" element={<BiddingComp />} />
           <Route path="/mainAboutUs" element={<AboutUsComp />} />
@@ -88,6 +100,9 @@ function App() {
               
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
 
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/pay" element={<PaymentGateway />} />
+          <Route path="/payments" element={<Payments />} />
         </Routes>
       </React.Fragment>
     </div>
