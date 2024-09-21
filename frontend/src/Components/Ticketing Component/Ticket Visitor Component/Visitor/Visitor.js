@@ -2,8 +2,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Visitor.css';
-import FooterComp from '../../../Nav Component/FooterComp';
-import NavigationBar from '../../../Nav Component/NavigationBar';
 
 function Visitor(props) {
   const { _id, date, time, tickets, fname, lname, email, phone, city, country } = props.visitor;

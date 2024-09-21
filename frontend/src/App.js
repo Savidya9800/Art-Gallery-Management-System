@@ -35,6 +35,7 @@ import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/V
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
+import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 
 function App() {
   return (
