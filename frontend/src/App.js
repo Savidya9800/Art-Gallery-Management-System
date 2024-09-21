@@ -44,11 +44,6 @@ function App() {
           <Route path="/mainEvents" element={<EventComp />} />
           <Route path="/mainTickets" element={<TicketComp />} />
 
-          <Route path="/mainInventory" element={<AdminUi />} />
-          <Route path="/addinventoryform" element={<Addinventory />} />
-          <Route path="/itemview" element={<InventoryComp />} />
-          <Route path="/itemview/:id" element={<UpdateInventory />} />
-
           <Route path="/mainShop" element={<ShopComp />} />
           <Route path="/mainBidding" element={<BiddingComp />} />
           <Route path="/mainAboutUs" element={<AboutUsComp />} />
