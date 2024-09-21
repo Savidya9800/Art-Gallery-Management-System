@@ -2,6 +2,7 @@ const { response } = require('express');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//Document table is here 
 const InquirySchema = new Schema({
     name: {
         type: String,

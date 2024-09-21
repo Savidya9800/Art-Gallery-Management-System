@@ -100,7 +100,7 @@ const deleteInquiry = async (req, res) => {
     return res.status(200).json({ message: 'Inquiry deleted successfully' });
 };
 
-// Exporting the functions
+// Exporting the functions in here
 exports.getAllInquiries = getAllInquiries;
 exports.addInquiry = addInquiry;
 exports.getInquiryById = getInquiryById;

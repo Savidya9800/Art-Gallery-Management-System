@@ -8,7 +8,7 @@ const inquiryC = require('../Controllers/InquiryController');
 
 
 //model inserting is here 
-//controller inserting is here
+//controller inserting is here.
 
 router.get("/", inquiryC.getAllInquiries); //Get All Inquiries
 router.post("/", inquiryC.addInquiry); //Insert new Inquiries

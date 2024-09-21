@@ -20,7 +20,7 @@ app.use("/artWorks", router);
 
 //Inquiryuser
 app.use(express.json());
-app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
 
 //Inquiry Admin 
 app.use("/adminResponse", responserouter); //inquiry is using the local host 5000/adminResponse
