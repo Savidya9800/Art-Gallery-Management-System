@@ -25,10 +25,6 @@ import Addinventory from "./Components/Inventory Component/InventoryDetails/Addi
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
 
-//Financial-Manager
-import Transactions from "./Components/Transactions/Transaction";
-import PaymentGateway from "./Components/PaymentGateway/PaymentGateway";
-import Payments from "./Components/Payments/Payments";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
@@ -100,9 +96,8 @@ function App() {
               
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
 
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/pay" element={<PaymentGateway />} />
-          <Route path="/payments" element={<Payments />} />
+         
+         
         </Routes>
       </React.Fragment>
     </div>

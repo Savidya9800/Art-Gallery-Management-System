@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
-const transactionRoutes = require("./Routes/transactionRoutes");
-const paymentRoutes = require("./Routes/paymentRoutes");
+//const transactionRoutes = require("./Routes/transactionRoutes");
+//const paymentRoutes = require("./Routes/paymentRoutes");
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
 const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
@@ -40,8 +40,8 @@ app.use("/artWorks", router);
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
 
 //Financial Manager
-app.use("/transactions", transactionRoutes);
-app.use("/api/payments", paymentRoutes);
+//app.use("/transactions", transactionRoutes);
+//app.use("/api/payments", paymentRoutes);
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
