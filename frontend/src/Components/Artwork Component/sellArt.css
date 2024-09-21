@@ -1,0 +1,15 @@
+#button6{
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.form{
+    margin-left:  60%;
+    margin-top: 20px;
+   
+}
