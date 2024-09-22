@@ -12,37 +12,39 @@ const fetchHandler = async () => {
 };
 
 function ArtworksComp() {
-  const [artWorks, setArtworks] = useState();
+  const [artWorks, setArtworks] = useState([]);
 
   useEffect(() => {
     fetchHandler().then((data) => setArtworks(data.artWorks));
   }, []);
 
   return (
-    <div>
+    <div className="flex-col min-h-screen ">
       <NavigationBar />
-      <h1>Artwork Details</h1>
-      <table border="1" cellPadding="10" cellSpacing="0" width="100%">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Place</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {artWorks &&
-            artWorks.map((ARTWORK, i) => (
-              <tr key={i}>
-                {/* You can use ArtworkComp to display the details */}
+
+      <div className="flex-grow p-4">
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border border-gray-300">Submission ID</th>
+              <th className="p-2 border border-gray-300">Title</th>
+              <th className="p-2 border border-gray-300">Medium</th>
+              <th className="p-2 border border-gray-300">Bidding</th>
+              <th className="p-2 border border-gray-300">Promote</th>
+              <th className="p-2 border border-gray-300">Description</th>
+              <th className="p-2 border border-gray-300">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {artWorks.map((ARTWORK, i) => (
+              <tr key={i} className="hover:bg-gray-100">
                 <ArtworkComp ARTWORK={ARTWORK} />
               </tr>
             ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
       <FooterComp />
     </div>
   );

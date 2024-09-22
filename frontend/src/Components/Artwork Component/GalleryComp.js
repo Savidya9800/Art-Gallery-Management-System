@@ -17,12 +17,7 @@ function GalleryComp() {
       </Link>
       <br></br>
       <br></br>
-      <Link to="/mainAddArtwork">
-        <button type="button" class="btn btn-primary">
-          Add Artwork
-        </button>
-      </Link>
-      <br></br>
+
       <br></br>
 
       <FooterComp />
