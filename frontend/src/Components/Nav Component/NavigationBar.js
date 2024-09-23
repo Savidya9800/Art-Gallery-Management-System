@@ -45,7 +45,7 @@ function NavigationBar() {
               Blog
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainShop">
+            <Nav.Link as={Link} to="/mainInventory">
               Shop
               <span></span>
             </Nav.Link>
@@ -53,12 +53,14 @@ function NavigationBar() {
               About Us
               <span></span>
             </Nav.Link>
+           
             <NavDropdown title="More" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainTicketing">Tickets</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us

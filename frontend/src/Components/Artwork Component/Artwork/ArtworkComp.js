@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ArtworkComp(props) {
-  const { _id, name, email, pNumber } = props.ARTWORK;
+  const { _id, title, category, place, description } = props.ARTWORK;
   const history = useNavigate();
 
   const deleteHandler = async () => {
@@ -16,17 +16,17 @@ function ArtworkComp(props) {
   };
 
   return (
-    <div>
-      <br></br>
-      <h1> ID :{_id}</h1>
-      <h1> Name :{name}</h1>
-      <h1> Email :{email}</h1>
-      <h1> Phone :{pNumber}</h1>
-      <Link to={`/mainArtworkDetails/${_id}`}>Update</Link>
-      <button onClick={deleteHandler}>Delete</button> 
-      <br></br>
-      <br></br>
-    </div>
+    <>
+      <td>{_id}</td>
+      <td>{title}</td>
+      <td>{category}</td>
+      <td>{place}</td>
+      <td>{description}</td>
+      <td>
+        <Link to={`/mainArtworkDetails/${_id}`}>Update</Link> |
+        <button onClick={deleteHandler}>Delete</button>
+      </td>
+    </>
   );
 }
 
