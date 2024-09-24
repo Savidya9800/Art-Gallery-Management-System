@@ -2,24 +2,32 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Visitor.css';
+import FooterComp from '../../../Nav Component/FooterComp';
+import NavigationBar from '../../../Nav Component/NavigationBar';
 
 function Visitor(props) {
   const { _id, date, time, tickets, fname, lname, email, phone, city, country } = props.visitor;
   const history = useNavigate();
 
   const deleteVisitor = async () => {
-    await axios.delete(`http://localhost:5000/visitors/${_id}`)
-      .then(res => res.data)
-      .then(() => history("/"))
-      .then(() => history("/visitorDetails"));
+    try {
+      await axios.delete(`http://localhost:5000/visitors/${_id}`);
+      alert("Visitor deleted successfully!");
+      history("/"); // Redirect to home
+      history("/visitorDetails"); // Redirect to the visitor details page
+    } catch (err) {
+      console.error("Error deleting visitor:", err);
+      alert("Failed to delete visitor. Please try again.");
+    }
   };
+  
 
   // Calculate total amount
   const totalAmount = tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
 
   return (
-    <div>
-      
+    
+    <div>      
       <div className="visitor-container"> 
         <table className="visitor-table">
           <tbody>
