@@ -49,7 +49,7 @@ const artWorkSchema = new Schema({
     },
     img: {
         type: String,
-        required: true
+        //required: true
     },
     place: {
         type: String,
