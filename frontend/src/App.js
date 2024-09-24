@@ -24,14 +24,18 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
-
+import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
-import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
+import MessageAdmin from "./Components/Ticketing Component/Ticket Issues/MessageAdmin";
+import MessageResult from "./Components/Ticketing Component/Ticket Issues/MessageResults";
+import Messages from "./Components/Ticketing Component/Ticket Issues/Messages"
+
+
 
 function App() {
   return (
@@ -67,8 +71,6 @@ function App() {
           <Route path="/itemview" element={<InventoryComp/>} />
           <Route path="/itemview/:id" element={<UpdateInventory/>} />
 
-
-
           <Route path="/mainBidding" element={<BiddingComp/>} />
           <Route path="/mainAboutUs" element={<AboutUsComp/>} />
           <Route path="/mainBlog" element={<BlogComp/>} />
@@ -81,13 +83,15 @@ function App() {
           <Route path="/mainTicketing" element={<TicketComp/>} />
           <Route path="/mainTicketAddVisitor" element={<AddVisitor/>} />
 
-
           <Route path='/visitor' element={<Visitor/>}/>
           <Route path='/visitorDetails' element={<Visitors/>}/>
           <Route path='/addVisitor' element={<AddVisitor/>}/>
           <Route path='/visitorDetails/:id' element={<UpdateVisitor/>}/>
           <Route path="/visitorDetails/:id" element={<Visitor />} />
           <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+          <Route path="/messageAdmin" element={<MessageAdmin />} />
+          <Route path="/messageResult" element={<MessageResult />} />
+          <Route path="/message" element ={<Messages/>}/>
               
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
 
