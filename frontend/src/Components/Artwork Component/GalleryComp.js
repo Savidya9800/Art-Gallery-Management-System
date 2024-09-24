@@ -1,7 +1,6 @@
 import React from "react";
 import NavigationBar from "../Nav Component/NavigationBar";
 import FooterComp from "../Nav Component/FooterComp";
-import "./sellArt.css";
 import { Link } from "react-router-dom";
 
 function GalleryComp() {

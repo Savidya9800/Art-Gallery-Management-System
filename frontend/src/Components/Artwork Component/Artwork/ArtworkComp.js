@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -84,7 +84,7 @@ function ArtworkComp(props) {
           <Button variant="primary">Edit</Button>{" "}
         </Link>{" "}
         |
-        <Button onClick={deleteHandler} variant="danger">
+        <Button onClick={deleteHandler} variant="danger" className="ml-1">
           Delete
         </Button>{" "}
       </td>

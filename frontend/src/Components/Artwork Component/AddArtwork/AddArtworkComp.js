@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
-import img2 from "./photo56.png";
+import img2 from "../Images/photo56.png";
 
 // Add Artwork Component
 function AddArtworkComp() {
@@ -34,18 +34,42 @@ function AddArtworkComp() {
     }));
   };
 
-  const handleImageUpload = (imageUrl) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      img: imageUrl, // Update img field with the uploaded image URL or file
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    await sendRequest();
-    history("/mainArtworkDetails");
+
+    // Validate inputs
+    const requiredFields = [
+      "name",
+      "email",
+      "pNumber",
+      "website",
+      "biography",
+      "statement",
+      "title",
+      "medium",
+      "dimensions",
+      "date",
+      "description",
+      "place",
+      "tags",
+    ];
+
+    // Check if any required field is empty
+    const emptyFields = requiredFields.filter((field) => !inputs[field]);
+
+    if (emptyFields.length > 0) {
+      alert(`Please fill in all fields: ${emptyFields.join(", ")}`);
+      return;
+    }
+
+    try {
+      await sendRequest();
+      alert("Artwork Added Successfully");
+      history("/mainArtworkDetails");
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      alert("There was an error submitting the form. Please try again.");
+    }
   };
 
   const sendRequest = async () => {
@@ -79,10 +103,11 @@ function AddArtworkComp() {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form ml-[60%] mt-5" onSubmit={handleSubmit}>
       {currentStep === 1 && (
         <div className=" relative w-[523px] h-[800px]">
           <div className="absolute w-[513px] h-[776px] bg-white border-2 border-black rounded-[25px]"></div>
+
           <div className=" bg-white absolute left-[100px] top-[25px] text-[#A78F51] text-[25px] font-[400] font-Inter">
             Artwork Submission form
           </div>
