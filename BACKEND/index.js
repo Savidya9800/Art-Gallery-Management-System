@@ -9,6 +9,11 @@ const pdfSchema = require("./Models/artWorkImgModel"); //pdf
 const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 
+const financeRouter = require('./Routes/financeRouter') // event
+
+
+const transactionRouter = require('./Routes/transactionRoutes') // event
+
 const app = express();
 const cors = require("cors");
 
@@ -35,6 +40,10 @@ app.use("/inventory", routerinv); //Mayomi
 
 //Artwork-manager
 app.use("/artWorks", router);
+
+app.use("/finance", financeRouter);
+
+app.use("/transaction", transactionRouter);
 
 //Inquiry-manager
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry

@@ -35,6 +35,15 @@ import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/V
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
+<<<<<<< Updated upstream
+=======
+import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
+import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
+import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
+import PaymentGateway from "./Components/Finance Component/PaymentGateway/Payment";
+import Payments from "./Components/Finance Component/PaymentGateway/PaymentDetails";
+import Transactions from "./Components/Finance Component/TransactionDetails/Transaction";
+>>>>>>> Stashed changes
 
 function App() {
   return (
@@ -64,12 +73,18 @@ function App() {
           <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
           <Route path="/mainUploadImage" element={<UploadImage />} />
           <Route path="/mainUploadReceipt" element={<UploadReceipt />} />
+<<<<<<< Updated upstream
+=======
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
+          <Route path="/mainAdminArtworks" element={<AdminArtworks />} />
+>>>>>>> Stashed changes
 
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
           <Route path="/mainGallery" element={<GalleryComp/>} />
           <Route path="/mainEvents" element={<EventComp/>} />
           <Route path="/mainTickets" element={<TicketComp/>} />
 
+<<<<<<< Updated upstream
           <Route path="/mainInventory" element={<AdminUi/>} />
           <Route path="/addinventoryform" element={<Addinventory/>} />
           <Route path="/itemview" element={<InventoryComp/>} />
@@ -102,6 +117,19 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/pay" element={<PaymentGateway />} />
           <Route path="/payments" element={<Payments />} />
+=======
+          {/* Ticket-manager */}
+          <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
+          <Route path="/visitor" element={<Visitor />} />
+          <Route path="/visitorDetails" element={<Visitors />} />
+          <Route path="/addVisitor" element={<AddVisitor />} />
+          <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+
+          <Route path="/paymentgateway" element={<PaymentGateway />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/transactions" element={<Transactions />} />
+>>>>>>> Stashed changes
         </Routes>
       </React.Fragment>
     </div>
