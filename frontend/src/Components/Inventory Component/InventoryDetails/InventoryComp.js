@@ -5,10 +5,7 @@ import ShopComp from "../Inventory/ShopComp";
 const URL = "http://localhost:5000/inventory";
 
 const fetchHandler = async () => {
-  return await axios.get(URL).then((res) => {
-    console.log("Fetch data:", res.data);
-    return res.data;
-  });
+  return await axios.get(URL).then((res) => res.data);
 };
 
 function InventoryComp() {
