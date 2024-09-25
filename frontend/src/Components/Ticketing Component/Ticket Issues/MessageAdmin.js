@@ -12,10 +12,23 @@ const MessageAdmin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Handle input changes and validate visitorID for numbers only
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Validate visitorID to accept only numbers
+    if (name === "visitorID") {
+      if (!/^\d*$/.test(value)) {
+        setError("Visitor ID must contain only numbers");
+        return;
+      } else {
+        setError(""); // Clear the error if the input is valid
+      }
+    }
+
     setInputs({
       ...inputs,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -24,7 +37,7 @@ const MessageAdmin = () => {
     try {
       // Make an actual POST request to store the message in the database
       const response = await axios.post('http://localhost:5000/api/messages', inputs);
-      
+
       // Display success message and navigate to the result page
       alert('Message sent successfully');
       navigate('/messageResult', { state: { message: response.data.message } });
@@ -49,6 +62,7 @@ const MessageAdmin = () => {
               value={inputs.visitorID}
               required
             />
+            {error && <p className="text-red-500">{error}</p>}
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>

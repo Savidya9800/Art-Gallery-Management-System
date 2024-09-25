@@ -141,6 +141,19 @@ const TicketIssues = () => {
   );
 };
 
+const VisitorCount = () => {
+  return (
+    <div className="border border-gray-300 rounded-lg p-4 w-full">
+      <a
+        href="/visitor-count"
+        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+      >
+        View Visitor Details (Admin)
+      </a>
+    </div>
+  );
+};
+
 // Banner Component
 const Banner = () => {
   return (
@@ -208,6 +221,7 @@ const TicketPrices = () => {
           <div className="w-full lg:w-1/4">
               <AdminButton />
               <TicketIssues/>
+              <VisitorCount />
             </div>
         </div>
       </div>

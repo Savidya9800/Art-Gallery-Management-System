@@ -8,6 +8,7 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+import PrivacyPolicy from "./Components/Main Component/PrivacyPolicy"
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
@@ -33,7 +34,8 @@ import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Compo
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
 import MessageAdmin from "./Components/Ticketing Component/Ticket Issues/MessageAdmin";
 import MessageResult from "./Components/Ticketing Component/Ticket Issues/MessageResults";
-import Messages from "./Components/Ticketing Component/Ticket Issues/Messages"
+import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
+import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
 
 
 
@@ -47,6 +49,7 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainEvents" element={<EventComp />} />
           <Route path="/mainTickets" element={<TicketComp />} />
+          <Route path="/mainPrivacyPolicy" element={<PrivacyPolicy/>}/>
 
           <Route path="/mainShop" element={<ShopComp />} />
           <Route path="/mainBidding" element={<BiddingComp />} />
@@ -92,6 +95,7 @@ function App() {
           <Route path="/messageAdmin" element={<MessageAdmin />} />
           <Route path="/messageResult" element={<MessageResult />} />
           <Route path="/message" element ={<Messages/>}/>
+          <Route path="/visitor-count" element ={<VisitorCount/>}/>
               
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
 
