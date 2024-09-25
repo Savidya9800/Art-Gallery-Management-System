@@ -52,6 +52,8 @@ const visitorSchema = new Schema({
     },
 });
 
+
+
 // Virtual field to calculate total amount
 visitorSchema.virtual('totalAmount').get(function() {
     return this.tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
