@@ -8,10 +8,12 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+import PrivacyPolicy from "./Components/Main Component/PrivacyPolicy";
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
+
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
@@ -24,18 +26,22 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
+import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
-import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
+import MessageAdmin from "./Components/Ticketing Component/Ticket Issues/MessageAdmin";
+import MessageResult from "./Components/Ticketing Component/Ticket Issues/MessageResults";
+import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
+import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
+
+//Artwork-manager
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
-//Event Component 
-
-import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin"
+import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
 import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
 import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
 import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
@@ -53,6 +59,7 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainEvents" element={<EventComp />} />
           <Route path="/mainTickets" element={<TicketComp />} />
+          <Route path="/mainPrivacyPolicy" element={<PrivacyPolicy />} />
 
           <Route path="/mainShop" element={<ShopComp />} />
           <Route path="/mainBidding" element={<BiddingComp />} />
@@ -66,8 +73,6 @@ function App() {
           <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
           <Route path="/mainUploadImage" element={<UploadImage />} />
           <Route path="/mainUploadReceipt" element={<UploadReceipt />} />
-
-          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainEvents" element={<EventComp />} />
           <Route path="/mainTickets" element={<TicketComp />} />
@@ -98,15 +103,27 @@ function App() {
             path="/bookingConfirmation"
             element={<BookingConfirmation />}
           />
+          <Route path="/messageAdmin" element={<MessageAdmin />} />
+          <Route path="/messageResult" element={<MessageResult />} />
+          <Route path="/message" element={<Messages />} />
+          <Route path="/visitor-count" element={<VisitorCount />} />
 
-          <Route path="/artistLogin" element={<ArtistLogin/>} />
-          <Route path="/artistRegister" element={<ArtistRegister/>} />
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
+          <Route
+            path="/bookingConfirmation"
+            element={<BookingConfirmation />}
+          />
+
+          <Route path="/artistLogin" element={<ArtistLogin />} />
+          <Route path="/artistRegister" element={<ArtistRegister />} />
           <Route path="/requestEventForm" element={<RequestEventForm />} />
-          <Route path="/event-manager-request" element={<EventMangerRequest />} />
-          
+          <Route
+            path="/event-manager-request"
+            element={<EventMangerRequest />}
+          />
+
           <Route path="/userSee" element={<UserSee />} />
           <Route path="/pdf-generator" element={<PdfGenerator />} />
-         
         </Routes>
       </React.Fragment>
     </div>

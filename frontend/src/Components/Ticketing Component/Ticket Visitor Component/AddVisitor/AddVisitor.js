@@ -25,6 +25,8 @@ function AddVisitor() {
   const [inputs, setInputs] = useState(initialFormState);
   const [remainingSlots, setRemainingSlots] = useState(10); // State to hold remaining slots
   const [error, setError] = useState(""); // State to hold error messages
+  const [emailError, setEmailError] = useState(""); // State for email validation error
+  const [phoneError, setPhoneError] = useState(""); // State for phone validation error
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +48,31 @@ function AddVisitor() {
   };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Validate email field format using regex
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+      if (!emailRegex.test(value)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError(""); // Clear email error if valid
+      }
+    }
+
+    // Validate phone number to accept only numbers
+    if (name === "phone") {
+      const phoneRegex = /^[0-9]*$/; // Regex to allow only digits
+      if (!phoneRegex.test(value)) {
+        setPhoneError("Phone number can only contain numbers");
+      } else {
+        setPhoneError(""); // Clear phone error if valid
+      }
+    }
+
     setInputs({
       ...inputs,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -64,6 +88,13 @@ function AddVisitor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent form submission if there are validation errors
+    if (emailError || phoneError) {
+      alert('Please correct the errors before submitting.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:5000/visitors', inputs);
       alert('Visitor added successfully');
@@ -184,6 +215,7 @@ function AddVisitor() {
               value={inputs.email}
               required
             />
+            {emailError && <p className="text-red-500 mt-2">{emailError}</p>}
             <br />
 
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone</label>
@@ -196,6 +228,7 @@ function AddVisitor() {
               maxLength="10"
               required
             />
+            {phoneError && <p className="text-red-500 mt-2">{phoneError}</p>}
             <br />
 
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">City</label>

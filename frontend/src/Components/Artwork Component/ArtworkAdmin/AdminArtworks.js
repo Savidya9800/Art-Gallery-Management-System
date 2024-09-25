@@ -4,7 +4,6 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import AdminArtwork from "./AdminArtwork";
 import Button from "react-bootstrap/Button";
-import { useReactToPrint } from "react-to-print";
 
 const URL = "http://localhost:5000/artWorks";
 
@@ -44,14 +43,6 @@ function AdminArtworks() {
     });
   };
 
-  // Print Functionality
-  const ComponentsRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => ComponentsRef.current,
-    DocumentTitle: "Artworks Report",
-    onafterprint: () => alert("Artwork Report Successfully Download !"),
-  });
-
   return (
     <div className="flex-col min-h-screen">
       <NavigationBar />
@@ -71,38 +62,32 @@ function AdminArtworks() {
         </Button>
       </div>
 
-      <button onClick={handlePrint} className="btn btn-primary">
-        Download report{" "}
-      </button>
+      <div className="flex-grow p-4">
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border border-gray-300">Submission ID</th>
+              <th className="p-2 border border-gray-300">Artist</th>
+              <th className="p-2 border border-gray-300">Title</th>
+              <th className="p-2 border border-gray-300">Bidding</th>
+              <th className="p-2 border border-gray-300">Promote</th>
+            </tr>
+          </thead>
 
-      <div ref={ComponentsRef}>
-        <div className="flex-grow p-4">
-          <table className="min-w-full border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2 border border-gray-300">Submission ID</th>
-                <th className="p-2 border border-gray-300">Artist</th>
-                <th className="p-2 border border-gray-300">Title</th>
-                <th className="p-2 border border-gray-300">Bidding</th>
-                <th className="p-2 border border-gray-300">Promote</th>
-              </tr>
-            </thead>
-
-            {noResults ? (
-              <div>
-                <p>No Artworks Found</p>
-              </div>
-            ) : (
-              <tbody>
-                {artWorks.map((ARTWORK, i) => (
-                  <tr key={i} className="hover:bg-gray-100">
-                    <AdminArtwork ARTWORK={ARTWORK} />
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
-        </div>
+          {noResults ? (
+            <div>
+              <p>No Artworks Found</p>
+            </div>
+          ) : (
+            <tbody>
+              {artWorks.map((ARTWORK, i) => (
+                <tr key={i} className="hover:bg-gray-100">
+                  <AdminArtwork ARTWORK={ARTWORK} />
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
       </div>
 
       <FooterComp />
