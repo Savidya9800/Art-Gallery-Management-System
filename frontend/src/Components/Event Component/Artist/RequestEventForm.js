@@ -513,7 +513,10 @@ return (
               <p className="text-gray-600">
                 <strong>Date:</strong> {request.eventDate ? new Date(request.eventDate).toLocaleString() : 'No Date'}
               </p>
-              <button className="choose-package-button px-4 py-2 bg-blue-500 bg-blue-500 font-semibold rounded hover:bg-blue-600 mt-2" onClick={() => handleChoosePackage(request._id)}>Get Package</button>
+              <div className="flex space-x-4">
+              <button className="choose-package-button px-4 py-2 bg-blue-500 bg-blue-500 font-semibold rounded hover:bg-blue-600 mt-2" onClick={() => handleChoosePackage(request._id)}>Generate PDF</button>
+              <button className="choose-package-button px-4 py-2 bg-blue-500 bg-blue-500 font-semibold rounded hover:bg-blue-600 mt-2" onClick={() => handleChoosePackage(request._id)}>Pay Now</button>
+              </div>
             </div>
           </li>
         ))}

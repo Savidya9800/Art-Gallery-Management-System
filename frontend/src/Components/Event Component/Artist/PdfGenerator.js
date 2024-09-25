@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import jsPDF from 'jspdf';
+//import logo from '../../../Nav Component/logo.JPG';
+
 
 const PdfGenerator = () => {
   const location = useLocation();
@@ -8,47 +10,67 @@ const PdfGenerator = () => {
 
   const downloadPDF = () => {
     const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 20; // Page margin
-    const contentWidth = pageWidth - margin * 2;
-    const contentHeight = 250; // Fixed height for the card
 
-    // Draw a rectangle border around the content
-    doc.setLineWidth(0.5);
-    doc.rect(margin, margin, contentWidth, contentHeight);
+     // Add a background color for the title
+     doc.setFillColor(167, 143, 81); // Light lavender background
+     doc.rect(10, 10, 190, 15, 'F'); // Rectangle for title background
+ 
+     // Add title to the PDF
+     doc.setFontSize(22);
+     doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
+     doc.text('Reservation Confirmation', 14, 20);
+ 
+     //Add logo
+  /*   const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Title
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.text('Event Confirmation Summary', pageWidth / 2, margin + 20, { align: 'center' });
+     const imgWidth = 25; // Width of the logo
+     const imgHeight = 20; // Height of the logo
+     const xPosition = pageWidth - imgWidth - 10;
+     doc.addImage(logo, 'JPEG', xPosition, 10, imgWidth, imgHeight);*/
 
-    // Details Section
-    const details = [
-      { label: "Artist", value: artistName },
-      { label: "Email", value: email },
-      { label: "Event Date", value: eventDate ? new Date(eventDate).toLocaleString() : 'No Date' },
-      { label: "Package", value: `${selectedPackage?.name} - ${selectedPackage?.Decoration}` },
-      { label: "Total Budget", value: selectedPackage?.budget?.toString() || '0' }
-    ];
+     // Add a line below the title
+     doc.setLineWidth(0.5);
+     doc.setDrawColor(169, 169, 169); // Gray color
+     doc.line(10, 30, 200, 30);
 
-    let currentY = margin + 50; // Start position for details
+     // Information Section Title
+     doc.setFontSize(16);
+     doc.setTextColor(0, 0, 128); // Navy color
+     doc.text('Reservation Details', 14, 40);
+ 
+     // Details Section
+     doc.setFontSize(12);
+     doc.setTextColor(0, 0, 0); // Reset to black for content
+ 
+     let startY = 50;
+     const lineHeight = 10;
 
-    details.forEach(detail => {
-      doc.setFont("helvetica", "normal");
-      const label = `${detail.label}:`;
-      const value = detail.value.toString();
+      // Artist Information
+      const detail = [
+        `Name: ${artistName}`,
+        `Email: ${email}`,
+        `Event Date: ${eventDate ? new Date(eventDate).toLocaleString() : 'No Date'}`,
+        `Package Name: ${selectedPackage?.name}`,
+        `Includes: ${selectedPackage?.Decoration}`,
+        `Total Budget: ${selectedPackage?.budget}`        
+      ];
 
-      // Draw label and value, aligning the value to the right
-      doc.text(label, margin + 10, currentY);
-      const valueX = pageWidth - margin - doc.getTextWidth(value) - 10; // Right-align the value
-      doc.text(value, valueX, currentY);
+       // Add a line below the title
+     doc.setLineWidth(0.5);
+     doc.setDrawColor(169, 169, 169); // Gray color
+     doc.line(10, 30, 200, 30);
 
-      currentY += 10; // Move to the next line
-    });
+     detail.forEach((detail, index) => {
+       doc.text(detail, 14, startY + (index * lineHeight));
+     });
 
-    // Save the PDF
-    doc.save('summary.pdf');
-  };
+     // Tickets information
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 128); // Navy color for section title
+
+    // Final save
+    doc.save(`Confirmation.pdf`);
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

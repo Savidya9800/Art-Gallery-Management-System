@@ -49,6 +49,7 @@ import EventMangerRequest from "./Components/Event Component/EventManager/EventM
 import UserSee from "./Components/Event Component/User/UserSee";
 import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
 
+
 function App() {
   return (
     <div>
@@ -124,6 +125,17 @@ function App() {
 
           <Route path="/userSee" element={<UserSee />} />
           <Route path="/pdf-generator" element={<PdfGenerator />} />
+
+          {/* Event Manager */}
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/artistLogin" element={<ArtistLogin />} />
+          <Route path="/artistRegister" element={<ArtistRegister />} />
+          <Route path="/requestEventForm" element={<RequestEventForm />} />
+
+
         </Routes>
       </React.Fragment>
     </div>
