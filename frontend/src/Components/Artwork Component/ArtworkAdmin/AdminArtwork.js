@@ -4,8 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-function ArtworkComp(props) {
-  const { _id, title, medium, place, description } = props.ARTWORK;
+function AdminArtwork(props) {
+  const { _id, name, title, place } = props.ARTWORK;
   const history = useNavigate();
 
   const deleteHandler = async () => {
@@ -30,8 +30,8 @@ function ArtworkComp(props) {
   return (
     <>
       <td className="p-2 border border-gray-300">{_id}</td>
+      <td className="p-2 border border-gray-300">{name}</td>
       <td className="p-2 border border-gray-300">{title}</td>
-      <td className="p-2 border border-gray-300">{medium}</td>
       <td className="p-2 border border-gray-300">
         <label className="items-center ">
           <input
@@ -78,18 +78,25 @@ function ArtworkComp(props) {
           </span>
         </label>
       </td>
-      <td className="p-2 border border-gray-300">{description}</td>
+      {/* <td className="p-2 border border-gray-300">{description}</td> */}
+
       <td className="p-2 border border-gray-300">
+        <Button onClick={deleteHandler} variant="primary">
+          Generate Report
+        </Button>{" "}
+        |
         <Link to={`/mainArtworkDetails/${_id}`}>
-          <Button variant="primary">Edit</Button>{" "}
+          <Button variant="success" className="ml-1">
+            Accept
+          </Button>{" "}
         </Link>{" "}
         |
         <Button onClick={deleteHandler} variant="danger" className="ml-1">
-          Delete
+          Reject
         </Button>{" "}
       </td>
     </>
   );
 }
 
-export default ArtworkComp;
+export default AdminArtwork;

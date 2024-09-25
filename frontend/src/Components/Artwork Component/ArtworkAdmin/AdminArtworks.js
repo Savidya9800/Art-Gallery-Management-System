@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
-import ArtworkComp from "../Artwork/ArtworkComp";
+import AdminArtwork from "./AdminArtwork";
 import Button from "react-bootstrap/Button";
+import { useReactToPrint } from "react-to-print";
 
 const URL = "http://localhost:5000/artWorks";
 
@@ -18,7 +19,7 @@ const fetchHandler = async () => {
   }
 };
 
-function ArtworksComp() {
+function AdminArtworks() {
   const [artWorks, setArtworks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
@@ -43,6 +44,14 @@ function ArtworksComp() {
     });
   };
 
+  // Print Functionality
+  const ComponentsRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => ComponentsRef.current,
+    DocumentTitle: "Artworks Report",
+    onafterprint: () => alert("Artwork Report Successfully Download !"),
+  });
+
   return (
     <div className="flex-col min-h-screen">
       <NavigationBar />
@@ -53,7 +62,7 @@ function ArtworksComp() {
           onChange={(e) => setSearchQuery(e.target.value)}
           type="text"
           name="search"
-          placeholder="Search Artworks Details"
+          placeholder="Search Artist"
           className="w-full p-2 px-3 mr-2 transition duration-300 ease-in-out bg-gray-100 border border-gray-300 rounded-lg shadow-sm ml-7 sm:w-1/2 lg:w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
 
@@ -62,35 +71,38 @@ function ArtworksComp() {
         </Button>
       </div>
 
+      <button onClick={handlePrint} className="btn btn-primary">
+        Download report{" "}
+      </button>
 
-      <div className="flex-grow p-4">
-        <table className="min-w-full border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border border-gray-300">Submission ID</th>
-              <th className="p-2 border border-gray-300">Title</th>
-              <th className="p-2 border border-gray-300">Medium</th>
-              <th className="p-2 border border-gray-300">Bidding</th>
-              <th className="p-2 border border-gray-300">Promote</th>
-              <th className="p-2 border border-gray-300">Description</th>
-              <th className="p-2 border border-gray-300">Actions</th>
-            </tr>
-          </thead>
+      <div ref={ComponentsRef}>
+        <div className="flex-grow p-4">
+          <table className="min-w-full border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="p-2 border border-gray-300">Submission ID</th>
+                <th className="p-2 border border-gray-300">Artist</th>
+                <th className="p-2 border border-gray-300">Title</th>
+                <th className="p-2 border border-gray-300">Bidding</th>
+                <th className="p-2 border border-gray-300">Promote</th>
+              </tr>
+            </thead>
 
-          {noResults ? (
-            <div>
-              <p>No Artworks Found</p>
-            </div>
-          ) : (
-            <tbody>
-              {artWorks.map((ARTWORK, i) => (
-                <tr key={i} className="hover:bg-gray-100">
-                  <ArtworkComp ARTWORK={ARTWORK} />
-                </tr>
-              ))}
-            </tbody>
-          )}
-        </table>
+            {noResults ? (
+              <div>
+                <p>No Artworks Found</p>
+              </div>
+            ) : (
+              <tbody>
+                {artWorks.map((ARTWORK, i) => (
+                  <tr key={i} className="hover:bg-gray-100">
+                    <AdminArtwork ARTWORK={ARTWORK} />
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
       </div>
 
       <FooterComp />
@@ -98,4 +110,4 @@ function ArtworksComp() {
   );
 }
 
-export default ArtworksComp;
+export default AdminArtworks;
