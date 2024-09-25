@@ -33,6 +33,16 @@ import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
+//Event Component 
+
+import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin"
+import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
+import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
+import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
+
+import UserSee from "./Components/Event Component/User/UserSee";
+import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
+
 function App() {
   return (
     <div>
@@ -89,8 +99,14 @@ function App() {
             element={<BookingConfirmation />}
           />
 
-          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
-          <Route path="/mainAdminArtworks" element={<AdminArtworks />} />
+          <Route path="/artistLogin" element={<ArtistLogin/>} />
+          <Route path="/artistRegister" element={<ArtistRegister/>} />
+          <Route path="/requestEventForm" element={<RequestEventForm />} />
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+         
         </Routes>
       </React.Fragment>
     </div>

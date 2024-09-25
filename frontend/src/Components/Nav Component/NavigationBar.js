@@ -37,7 +37,7 @@ function NavigationBar() {
               Gallery
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainNewsFeed">
+            <Nav.Link as={Link} to="/userSee">
               News Feed
               <span></span>
             </Nav.Link>
