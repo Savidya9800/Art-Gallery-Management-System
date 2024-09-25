@@ -16,6 +16,10 @@ import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry"; 
 
+//Inquiry Admin imports
+import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
+import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
+import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
 
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
@@ -60,6 +64,17 @@ function App() {
           <Route path="/inquiries" element={<ViewInquiry />} />
           <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
 
+
+        
+          
+          {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}
+          <Route path="/Viewresponse" element={<ViewResponse/>} />
+          <Route path="/Addresponse" element={<Addresponse/>} />
+          <Route path="/updateresponse/:id" element={<Updateresponse/>} />
+
+
+
+
           <Route path="/mainSellArt" element={<SellArtComp/>} />
           <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
           <Route path="/mainContactUs" element={<ContactUsComp/>} />
@@ -67,8 +82,6 @@ function App() {
           <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
           
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
-
-
         </Routes>
       </React.Fragment>
     </div>

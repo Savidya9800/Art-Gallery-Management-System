@@ -2,6 +2,7 @@ const Inquiry = require('../Models/InquiryModel');
 
 // Get all inquiries
 const getAllInquiries = async (req, res) => {
+    
     let inquiryData;
     try {
         inquiryData = await Inquiry.find();

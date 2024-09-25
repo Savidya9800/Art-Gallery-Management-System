@@ -5,14 +5,16 @@ const Schema = mongoose.Schema;
 const InquiryAdminSchema = new Schema({
 
   
-    inquiryType: {
-        type: String,
-        required: true
-    },
+   
     response: {
         type: String,
         required: true
     },
+    inquirystatus: {
+        type: String,
+        required: true
+    },
+    
     Date: {
         type: Date,
         required: true
