@@ -123,7 +123,7 @@ function AddArtworkComp() {
             name="name"
             onChange={handleChange}
             value={inputs.name}
-            className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
 
           <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
@@ -133,23 +133,32 @@ function AddArtworkComp() {
             type="email"
             name="email"
             onChange={handleChange}
-            placeholder="example@gmail.com"
             value={inputs.email}
-            className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           ></input>
 
-          <div className=" bg-white absolute left-[25px] top-[316px] text-black text-[18px] font-[400] font-Inter">
+          <div className="bg-white absolute left-[25px] top-[316px] text-black text-[18px] font-[400] font-Inter">
             Phone Number
           </div>
+
           <input
-            type="tel"
+            type="text"
             name="pNumber"
-            onChange={handleChange}
-            value={inputs.pNumber}
-            maxLength="10"
-            pattern="\d{10}"
-            className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
+            onChange={(e) => {
+              const value = e.target.value;
+              // Ensure +94 is always present at the beginning, and enforce digit validation for the rest
+              if (
+                value.startsWith("+94") &&
+                /^\+94\d*$/.test(value) &&
+                value.length <= 12
+              ) {
+                handleChange(e); // Update the state only if the value is valid
+              }
+            }}
+            value={inputs.pNumber.startsWith("+94") ? inputs.pNumber : "+94"} // Ensure the value always starts with +94
+            className="bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px] pl-4"
             placeholder="Enter your phone number"
+            required
           />
 
           <div className=" bg-white absolute left-[25px] top-[408px] text-black text-[18px] font-[400] font-Inter">
@@ -160,7 +169,7 @@ function AddArtworkComp() {
             name="website"
             onChange={handleChange}
             value={inputs.website}
-            className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
+            className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px] pl-4"
           ></input>
 
           <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
@@ -172,7 +181,7 @@ function AddArtworkComp() {
             name="biography"
             onChange={handleChange}
             value={inputs.biography}
-            className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[540px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[540px] border border-black rounded-[15px]"
           ></input>
 
           <div className=" bg-white absolute left-[25px] top-[603px] text-black text-[18px] font-[400] font-Inter">
@@ -183,7 +192,7 @@ function AddArtworkComp() {
             name="statement"
             onChange={handleChange}
             value={inputs.statement}
-            className=" bg-white absolute w-[468px] h-[107px] left-[25px] top-[635px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[468px] h-[107px] left-[25px] top-[635px] border border-black rounded-[15px]"
           ></input>
 
           <Button
@@ -213,7 +222,7 @@ function AddArtworkComp() {
             name="title"
             onChange={handleChange}
             value={inputs.title}
-            className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
 
           <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
@@ -223,7 +232,7 @@ function AddArtworkComp() {
             name="medium"
             onChange={handleChange}
             value={inputs.medium}
-            className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           >
             <option value="">Select Medium</option>
             <option value="clay">Clay</option>
@@ -240,7 +249,7 @@ function AddArtworkComp() {
             name="dimensions"
             onChange={handleChange}
             value={inputs.dimensions}
-            className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
+            className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
           >
             <option value="">Select Dimensions</option>
             <option value="1080x1080">1080 x 1080 px</option>
@@ -257,7 +266,7 @@ function AddArtworkComp() {
             name="date"
             onChange={handleChange}
             value={inputs.date}
-            className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
+            className="pl-4 pr-3 bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
           ></input>
 
           <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
@@ -269,7 +278,7 @@ function AddArtworkComp() {
             name="description"
             onChange={handleChange}
             value={inputs.description}
-            className=" bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
+            className="pl-4  bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
           ></input>
 
           <Button

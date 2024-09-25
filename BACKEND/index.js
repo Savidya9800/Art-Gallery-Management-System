@@ -10,6 +10,10 @@ const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 
+//event
+const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
+const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
+
 const app = express();
 const cors = require("cors");
 
@@ -41,12 +45,20 @@ app.use("/artWorks", router);
 //Inquiry-manager
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
 
+
+//event
+app.use('/artist', Artistrouter);
+app.use('/requestEvent', RequestEventrouter);
+
+
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
 //app.use("/api/payments", paymentRoutes);
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
+
+
 mongoose
   .connect(
     "mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/ArtGallery_DB"

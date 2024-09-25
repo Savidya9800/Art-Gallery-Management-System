@@ -17,7 +17,11 @@ function GalleryComp() {
       <br></br>
       <br></br>
 
-      <br></br>
+      <Link to="/mainAdminArtworks">
+        <button type="button" class="btn btn-primary">
+          Artwork Details-Admin
+        </button>
+      </Link>
 
       <FooterComp />
     </div>
