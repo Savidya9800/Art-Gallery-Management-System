@@ -8,6 +8,7 @@ const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
 const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
+const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 
 //event
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
@@ -33,6 +34,7 @@ app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inqui
 
 //Ticket-manager
 app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
+app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
