@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Nav from "../Nav/Nav";
-import "./AddVisitor.css"; // Import the CSS file
 
 function AddVisitor() {
-  const history = useNavigate();
-  const [inputs, setInputs] = useState({
+
+  const initialFormState = {
     date: "",
     time: "",
     tickets: [
@@ -22,13 +20,36 @@ function AddVisitor() {
     phone: "",
     city: "",
     country: ""
-  });
+  };
+
+  const [inputs, setInputs] = useState(initialFormState);
+  const [remainingSlots, setRemainingSlots] = useState(10); // State to hold remaining slots
+  const [error, setError] = useState(""); // State to hold error messages
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (inputs.date && inputs.time) {
+      fetchRemainingSlots(inputs.date, inputs.time);
+    }
+  }, [inputs.date, inputs.time]);
+
+  const fetchRemainingSlots = async (date, time) => {
+    try {
+      const response = await axios.get('http://localhost:5000/visitorCountForSlot', {
+        params: { date, time }
+      });
+      const count = response.data.count;
+      setRemainingSlots(10 - count);
+    } catch (err) {
+      console.error('Error fetching remaining slots:', err);
+    }
+  };
 
   const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
+    setInputs({
+      ...inputs,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
   const handleTicketChange = (index, e) => {
@@ -45,13 +66,17 @@ function AddVisitor() {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/visitors', inputs);
-      if (response.status === 200) {
-        alert('Visitor added successfully');
-        history('/bookingConfirmation', { state: { visitor: response.data.visitor } }); // Pass the visitor data including the ID
-      }
+      alert('Visitor added successfully');
+      const remainingSlots = response.data.remainingSlots;
+      setRemainingSlots(remainingSlots); // Update remaining slots
+      navigate('/bookingConfirmation', { state: { visitor: response.data.visitor } }); // Pass the visitor data including the ID
     } catch (err) {
       console.error('Error adding visitor:', err);
-      alert('Failed to add visitor');
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError('Failed to add visitor');
+      }
     }
   };
 
@@ -67,125 +92,144 @@ function AddVisitor() {
   return (
     <div>
       <NavigationBar />
-      <Nav />
-      
-      <div className="container">
-        <form onSubmit={handleSubmit}>
-          <div className="left-section">
-            <label className="form-label">Date</label><br />
-            <input 
-              type="date" 
-              name="date" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.date} 
-              max={getCurrentDate()} // Restrict to past dates
-              required 
+
+      <div className="border border-black bg-white max-w-4xl mx-auto mt-10 p-6 shadow-lg rounded-lg">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white border-black">
+          
+          {/* Left Section */}
+          <div className="bg-white border-black">
+            <label className=" bg-white block text-sm font-medium text-gray-700">Date</label>
+            <input
+              type="date"
+              name="date"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.date}
+              min={getCurrentDate()}
+              required
             />
             <br />
 
-            <label className="form-label">Time</label><br />
-            <select 
-              name="time" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.time} 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4 mb-2">Time</label>
+            <select
+              name="time"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.time}
               required
             >
               <option value="">Select Time</option>
               <option value="8.30">8.30</option>
-              <option value="10.30">10.30</option>
-              <option value="11.30">11.30</option>
               <option value="12.30">12.30</option>
-              <option value="1.30">1.30</option>
-              <option value="2.30">2.30</option>
               <option value="3.30">3.30</option>
-              <option value="4.30">4.30</option>
             </select>
             <br />
 
+            {inputs.date && inputs.time && (
+              <p className="bg-white text-sm text-gray-700 mt-2">
+                Remaining slots for {inputs.date} at {inputs.time}: {remainingSlots}
+              </p>
+            )}
+
             {inputs.tickets.map((ticket, index) => (
               <div key={index}>
-                <label className="form-label">{ticket.type} Ticket Count</label><br />
-                <input 
-                  type="number" 
-                  name="count" 
-                  className="form-input" 
-                  onChange={(e) => handleTicketChange(index, e)} 
-                  value={ticket.count} 
-                  required 
+                <label className="bg-white block text-sm font-medium text-gray-700 mt-4">
+                  {ticket.type} Ticket Count
+                </label>
+                <input
+                  type="number"
+                  name="count"
+                  className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+                  onChange={(e) => handleTicketChange(index, e)}
+                  max={10}
+                  min={0}
+                  value={ticket.count}
+                  required
                 />
                 <br />
               </div>
             ))}
           </div>
 
-          <div className="right-section">
-            <label className="form-label">First Name</label>
-            <input 
-              type="text" 
-              name="fname" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.fname} 
-              required 
+          {/* Right Section */}
+          <div className="bg-white border-black">
+            <label className="bg-white block text-sm font-medium text-gray-700">First Name</label>
+            <input
+              type="text"
+              name="fname"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.fname}
+              required
             />
+            <br />
 
-            <label className="form-label">Last Name</label>
-            <input 
-              type="text" 
-              name="lname" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.lname} 
-              required 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Last Name</label>
+            <input
+              type="text"
+              name="lname"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.lname}
+              required
             />
+            <br />
 
-            <label className="form-label">Email</label>
-            <input 
-              type="email" 
-              name="email" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.email} 
-              required 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.email}
+              required
             />
+            <br />
 
-            <label className="form-label">Phone</label>
-            <input 
-              type="tel" 
-              name="phone" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.phone} 
-              required 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.phone}
+              maxLength="10"
+              required
             />
+            <br />
 
-            <label className="form-label">City</label>
-            <input 
-              type="text" 
-              name="city" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.city} 
-              required 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">City</label>
+            <input
+              type="text"
+              name="city"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.city}
+              required
             />
+            <br />
 
-            <label className="form-label">Country</label>
-            <input 
-              type="text" 
-              name="country" 
-              className="form-input" 
-              onChange={handleChange} 
-              value={inputs.country} 
-              required 
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Country</label>
+            <input
+              type="text"
+              name="country"
+              className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
+              onChange={handleChange}
+              value={inputs.country}
+              required
             />
+            <br />
 
-            <button type="submit" className="checkout">Checkout</button>
+            <button
+              type="submit"
+              className="w-full mt-6 bg-[#A78F51] text-white font-semibold py-2 px-4 rounded-md"
+            >
+              Checkout
+            </button>
+            {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
         </form>
       </div>
-
       <FooterComp />
     </div>
   );

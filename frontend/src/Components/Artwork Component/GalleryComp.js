@@ -1,7 +1,6 @@
 import React from "react";
 import NavigationBar from "../Nav Component/NavigationBar";
 import FooterComp from "../Nav Component/FooterComp";
-import "./sellArt.css";
 import { Link } from "react-router-dom";
 
 function GalleryComp() {
@@ -17,13 +16,12 @@ function GalleryComp() {
       </Link>
       <br></br>
       <br></br>
-      <Link to="/mainAddArtwork">
+
+      <Link to="/mainAdminArtworks">
         <button type="button" class="btn btn-primary">
-          Add Artwork
+          Artwork Details-Admin
         </button>
       </Link>
-      <br></br>
-      <br></br>
 
       <FooterComp />
     </div>
