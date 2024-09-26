@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavigationBar from '../../Nav Component/NavigationBar';
+import FooterComp from '../../Nav Component/FooterComp';
 
 const EventManagerRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -190,6 +191,7 @@ const EventManagerRequest = () => {
         </tbody>
       </table>
     </div>
+    <FooterComp/>
   </div>  
   );
 };

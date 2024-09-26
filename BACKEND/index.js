@@ -19,6 +19,10 @@ const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
 const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
 
+
+//user
+const bookingUserRoutes = require("./Routes/user.route");
+
 const app = express();
 const cors = require("cors");
 
@@ -69,6 +73,10 @@ app.use("/Adminbid", adminBiddingRouter); //bidding is using the local host 5000
 app.use('/artist', Artistrouter);
 app.use('/requestEvent', RequestEventrouter);
 
+//user
+///routes
+app.use("/artWorks", router);
+app.use("/api/bookingUsers", bookingUserRoutes);
 
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
