@@ -1,3 +1,5 @@
+//ticket controller
+
 const Visitor = require("../Models/ticketModel");
 
 // Get all visitors

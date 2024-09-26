@@ -2,6 +2,7 @@ import React from "react";
 import NavigationBar from "../Nav Component/NavigationBar";
 import FooterComp from "../Nav Component/FooterComp";
 import bannerImage from '../Ticketing Component/Ticket Visitor Component/Images/bannerImage.jpg'; // Add your banner image
+import MessageAdmin from "../Ticketing Component/Ticket Issues/MessageAdmin"; // Import the new component
 
 // Ticket Table Component
 const TicketTable = () => {
@@ -126,12 +127,12 @@ const AdminButton = () => {
     </div>
   );
 };
-/*
-const Summary = () => {
+
+const TicketIssues = () => {
   return (
     <div className="border border-gray-300 rounded-lg p-4 w-full">
       <a
-        href="/visitorCount"
+        href="/message"
         className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
       >
         View Visitor Details (Admin)
@@ -139,7 +140,20 @@ const Summary = () => {
     </div>
   );
 };
-*/
+
+const VisitorCount = () => {
+  return (
+    <div className="border border-gray-300 rounded-lg p-4 w-full">
+      <a
+        href="/visitor-count"
+        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+      >
+        View Visitor Details (Admin)
+      </a>
+    </div>
+  );
+};
+
 // Banner Component
 const Banner = () => {
   return (
@@ -184,24 +198,31 @@ const TicketPrices = () => {
           {/* Ticket Table */}
           <TicketTable />
 
-          {/* Group Visit Info, Ticket Purchase Section, and Admin Button (Horizontally aligned) */}
+          {/* Group Visit Info, Ticket Purchase Section, Admin Button, and Message Admin (Horizontally aligned) */}
           <div className="flex flex-col lg:flex-row justify-between mt-6 space-y-6 lg:space-y-0 lg:space-x-6">
             {/* Group Visit Info */}
-            <div className="w-full lg:w-1/3">
+            <div className="w-full lg:w-1/4">
               <GroupVisitInfo />
             </div>
 
             {/* Ticket Purchase Section */}
-            <div className="w-full lg:w-1/3">
+            <div className="w-full lg:w-1/4">
               <TicketPurchaseSection />
             </div>
 
-            {/* Admin Button Section */}
-            <div className="w-full lg:w-1/3">
-              <AdminButton />
-              
+            
+
+            {/* Message Admin Section */}
+            <div className="w-full lg:w-1/4">
+              <MessageAdmin />
             </div>
           </div>
+          {/* Admin Button Section */}
+          <div className="w-full lg:w-1/4">
+              <AdminButton />
+              <TicketIssues/>
+              <VisitorCount />
+            </div>
         </div>
       </div>
 
