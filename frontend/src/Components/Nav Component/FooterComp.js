@@ -41,7 +41,7 @@ function FooterComp() {
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/#" className="footerLink">
+              <Link to="/mainPrivacyPolicy" className="footerLink">
                 Privacy Policy
               </Link>
             </li>
