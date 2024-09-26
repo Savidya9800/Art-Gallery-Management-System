@@ -37,8 +37,6 @@ import MessageResult from "./Components/Ticketing Component/Ticket Issues/Messag
 import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
 import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
 
-
-
 function App() {
   return (
     <div>
@@ -98,6 +96,8 @@ function App() {
           <Route path="/visitor-count" element ={<VisitorCount/>}/>
               
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+
+         
 
          
          
