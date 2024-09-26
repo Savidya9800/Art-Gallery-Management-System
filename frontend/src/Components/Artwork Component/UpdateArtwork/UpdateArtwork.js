@@ -130,7 +130,7 @@ function UpdateArtwork() {
         </Carousel>
       </div>
       <div className="-mt-[570px]">
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form ml-[60%] mt-5" onSubmit={handleSubmit}>
           {currentStep === 1 && (
             <div className=" relative w-[523px] h-[800px]">
               <div className="absolute w-[513px] h-[700px] bg-white border-2 border-black rounded-[25px]"></div>
@@ -149,7 +149,7 @@ function UpdateArtwork() {
                 name="name"
                 onChange={handleChange}
                 value={inputs.name}
-                className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
               />
 
               <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
@@ -161,21 +161,26 @@ function UpdateArtwork() {
                 onChange={handleChange}
                 placeholder="example@gmail.com"
                 value={inputs.email}
-                className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
               ></input>
 
               <div className=" bg-white absolute left-[25px] top-[316px] text-black text-[18px] font-[400] font-Inter">
                 Phone Number
               </div>
               <input
-                type="tel"
+                type="text" // Change to text for better control over the input
                 name="pNumber"
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only digits and enforce a max length of 10
+                  if (/^\d*$/.test(value) && value.length <= 10) {
+                    handleChange(e); // Update the state only if the value is valid
+                  }
+                }}
                 value={inputs.pNumber}
-                maxLength="10"
-                pattern="\d{10}"
-                className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
+                className="bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px] pl-4"
                 placeholder="Enter your phone number"
+                required
               />
 
               <div className=" bg-white absolute left-[25px] top-[408px] text-black text-[18px] font-[400] font-Inter">
@@ -186,7 +191,7 @@ function UpdateArtwork() {
                 name="website"
                 onChange={handleChange}
                 value={inputs.website}
-                className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
               ></input>
 
               <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
@@ -198,7 +203,7 @@ function UpdateArtwork() {
                 name="biography"
                 onChange={handleChange}
                 value={inputs.biography}
-                className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[540px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[540px] border border-black rounded-[15px]"
               ></input>
 
               <div className=" bg-white absolute left-[25px] top-[603px] text-black text-[18px] font-[400] font-Inter">
@@ -209,7 +214,7 @@ function UpdateArtwork() {
                 name="statement"
                 onChange={handleChange}
                 value={inputs.statement}
-                className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[635px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[635px] border border-black rounded-[15px]"
               ></input>
 
               <Button
@@ -239,7 +244,7 @@ function UpdateArtwork() {
                 name="title"
                 onChange={handleChange}
                 value={inputs.title}
-                className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
               />
 
               <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
@@ -249,7 +254,7 @@ function UpdateArtwork() {
                 name="medium"
                 onChange={handleChange}
                 value={inputs.medium}
-                className=" bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
               >
                 <option value="">Select Medium</option>
                 <option value="clay">Clay</option>
@@ -266,7 +271,7 @@ function UpdateArtwork() {
                 name="dimensions"
                 onChange={handleChange}
                 value={inputs.dimensions}
-                className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
               >
                 <option value="">Select Dimensions</option>
                 <option value="1080x1080">1080 x 1080 px</option>
@@ -283,7 +288,7 @@ function UpdateArtwork() {
                 name="date"
                 onChange={handleChange}
                 value={inputs.date}
-                className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
+                className="pl-4 pr-3 bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
               ></input>
 
               <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
@@ -295,7 +300,7 @@ function UpdateArtwork() {
                 name="description"
                 onChange={handleChange}
                 value={inputs.description}
-                className=" bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
               ></input>
 
               <Button

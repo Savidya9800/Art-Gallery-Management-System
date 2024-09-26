@@ -3,12 +3,21 @@ const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
+const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
+const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
+const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
+
+
 //const transactionRoutes = require("./Routes/transactionRoutes");
 //const paymentRoutes = require("./Routes/paymentRoutes");
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
 const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
+
+//event
+const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
+const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
 
 const app = express();
 const cors = require("cors");
@@ -25,8 +34,14 @@ app.use("/inventory", routerinv);//Mayomi
 //Artwork-manager
 app.use("/artWorks", router);
 
-//Inquiry-manager
-app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+//Inquiryuser
+app.use(express.json());
+app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
+
+//Inquiry Admin 
+app.use("/adminResponse", responserouter); //inquiry is using the local host 5000/adminResponse
+
+
 
 //Ticket-manager
 app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
@@ -41,12 +56,28 @@ app.use("/artWorks", router);
 //Inquiry-manager
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
 
+//bidding manager
+app.use(express.json()); //data inserted will be made responsive to json
+app.use("/bidding", biddingrouter); //bidding is using the local host 5000/bidding
+
+//bidding admin
+app.use("/Adminbid", adminBiddingRouter); //bidding is using the local host 5000/bidding
+
+
+
+//event
+app.use('/artist', Artistrouter);
+app.use('/requestEvent', RequestEventrouter);
+
+
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
 //app.use("/api/payments", paymentRoutes);
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
+
+
 mongoose
   .connect(
     "mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/ArtGallery_DB"
