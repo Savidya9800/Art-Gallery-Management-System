@@ -2,7 +2,10 @@ import React from "react";
 import { Route, Routes } from "react-router";
 import "./App.css";
 
+<<<<<<< HEAD
+=======
 //Main Components
+>>>>>>> 823fd42831ba178e198ed03243a1d0f0f5fe1338
 import Home from "./Components/Main Component/Home";
 import GalleryComp from "./Components/Artwork Component/GalleryComp";
 import EventComp from "./Components/Event Component/EventComp";
@@ -10,7 +13,18 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+
+//Inquiry imports
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
+import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
+import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
+import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry"; 
+
+//Inquiry Admin imports
+import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
+import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
+import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
+
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
@@ -58,6 +72,13 @@ function App() {
           <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
           <Route path="/mainContactUs" element={<ContactUsComp />} />
 
+<<<<<<< HEAD
+        
+          <Route path="/mainInventory" element={<AdminUi/>} />
+          <Route path="/addinventoryform" element={<Addinventory/>} />
+          <Route path="/itemview" element={<InventoryComp/>} />
+          <Route path="/itemview/:id" element={<UpdateInventory/>} />
+=======
           {/* Artwork-manager */}
           <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
           <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
@@ -67,6 +88,7 @@ function App() {
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
           <Route path="/mainAdminArtworks" element={<AdminArtworks />} />
+>>>>>>> 823fd42831ba178e198ed03243a1d0f0f5fe1338
 
           {/* Inventory Manager */}
           <Route path="/mainInventory" element={<AdminUi />} />
@@ -86,6 +108,37 @@ function App() {
             element={<BookingConfirmation />}
           />
 
+<<<<<<< HEAD
+          <Route path="/mainBidding" element={<BiddingComp/>} />
+          
+
+          <Route path="/mainAboutUs" element={<AboutUsComp/>} />
+          <Route path="/mainBlog" element={<BlogComp/>} />
+
+          <Route path="/mainInquary" element={<InquiryComp/>} />
+          <Route path="/newInquiry" element={<AddInquiry />} />
+          <Route path="/inquiries" element={<ViewInquiry />} />
+          <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
+
+
+        
+          
+          {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}
+          <Route path="/Viewresponse" element={<ViewResponse/>} />
+          <Route path="/Addresponse" element={<Addresponse/>} />
+          <Route path="/updateresponse/:id" element={<Updateresponse/>} />
+
+
+
+
+          <Route path="/mainSellArt" element={<SellArtComp/>} />
+          <Route path="/mainNewsFeed" element={<NewsFeedComp/>} />
+          <Route path="/mainContactUs" element={<ContactUsComp/>} />
+          <Route path="/mainArtworkDetails" element={<ArtworksComp/>} />
+          <Route path="/mainAddArtwork" element={<AddArtworkComp/>} />
+          
+          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork/>} />
+=======
           {/* Inquiry Manager */}
 
           {/* Bidding Manager */}
@@ -95,6 +148,7 @@ function App() {
           {/* User Manager */}
 
           {/* Event Manager */}
+>>>>>>> 823fd42831ba178e198ed03243a1d0f0f5fe1338
         </Routes>
       </React.Fragment>
     </div>
