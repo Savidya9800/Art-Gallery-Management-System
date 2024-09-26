@@ -208,6 +208,8 @@ const RequestEventForm = () => {
     }
   };
 
+  
+
   const handleEditClick = (request) => {
     setEditingRequestId(request._id);
     setEditedRequestData(request);
@@ -254,6 +256,7 @@ const RequestEventForm = () => {
 return (
   <div>
     <NavigationBar/>
+
   <div className="request-event-form">
   <div className="form-container p-4">
     <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' onClick={toggleModal}>
@@ -268,11 +271,12 @@ return (
         <div className="modal-content bg-white p-6 rounded-lg shadow-lg w-full max-w-lg h-auto max-h-[90vh] overflow-auto">
 
           <span className="close text-red-500 cursor-pointer" onClick={toggleModal}>&times;</span>
-          <h1 className="heading text-xl font-bold mb-4">Allocate Your Date & Time</h1>
+          
+          <h1 className="bg-white heading text-xl font-bold mb-4">Allocate Your Date & Time</h1>
           <form onSubmit={handleSubmit}>
-            <div className="date-picker-container mb-4  bg-white">
+            <div className="date-picker-container mb-4 w-  bg-white">
               <label className="block font-semibold">Event Date and Time: </label>
-              <DatePicker
+              <DatePicker 
                 selected={formData.eventDate}
                 onChange={handleDateChange}
                 showTimeSelect
@@ -514,8 +518,8 @@ return (
                 <strong>Date:</strong> {request.eventDate ? new Date(request.eventDate).toLocaleString() : 'No Date'}
               </p>
               <div className="flex space-x-4">
-              <button className="choose-package-button px-4 py-2 bg-blue-500 bg-blue-500 font-semibold rounded hover:bg-blue-600 mt-2" onClick={() => handleChoosePackage(request._id)}>Generate PDF</button>
-              <button className="choose-package-button px-4 py-2 bg-blue-500 bg-blue-500 font-semibold rounded hover:bg-blue-600 mt-2" onClick={() => handleChoosePackage(request._id)}>Pay Now</button>
+                <button className="choose-package-button px-4 py-2 bg-[#A78F51]  font-semibold rounded  mt-2" onClick={() => handleChoosePackage(request._id)}>Generate PDF</button>
+                <button className="choose-package-button px-4 py-2 bg-red-500 bg-blue-500 font-semibold rounded  mt-2" onClick={() => handleChoosePackage(request._id)}>Pay Now</button>
               </div>
             </div>
           </li>
