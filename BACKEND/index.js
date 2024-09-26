@@ -121,15 +121,15 @@ app.post("/uploadFile", uplode.single("file"), async (req, res) => {
 });
 
 //Next video
-app.get("/getFile", async (req, res) => {
-  try {
-    const data = await pdfSchema.find();
-    res.status(200).send({ status: 200, data: data });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ status: 500, message: "Error in getting pdf" });
-  }
-});
+// app.get("/getFile", async (req, res) => {
+//   try {
+//     const data = await pdfSchema.find();
+//     res.status(200).send({ status: 200, data: data });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send({ status: 500, message: "Error in getting pdf" });
+//   }
+// });
 
 //Insert Model Part in Payment Receipt
 app.post("/uploadReceipt", uplode.single("file"), async (req, res) => {
