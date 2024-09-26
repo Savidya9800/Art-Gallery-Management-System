@@ -4,3 +4,5 @@ A MERN stack web application for managing art galleries. Built with React.js and
 inquiry manager update branch
 
 updated
+
+#inquiry manager
