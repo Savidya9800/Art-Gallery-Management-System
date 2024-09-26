@@ -8,7 +8,11 @@ const bookingUserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     contactNumber: { type: String, required: true },
     username: { type: String, required: true, unique: true },
+<<<<<<< HEAD
     role: { type: String, enum: ["artist", "user", "admin"], default: "user" },
+=======
+    role: { type: String, enum: ["artist", "user"], default: "user" },
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
     password: { type: String, required: true },
   },
   { timestamps: true }

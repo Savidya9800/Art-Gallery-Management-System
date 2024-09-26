@@ -25,16 +25,21 @@ class BookingUserService {
 
   async getAllUsers() {
     try {
+<<<<<<< HEAD
       const response = await axios.get(`${BASE_URL}/all`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+=======
+      const response = await axios.get(`${BASE_URL}/all`);
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || "Error fetching users");
     }
   }
+<<<<<<< HEAD
   async getUserById() {
     try {
       const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
@@ -43,6 +48,13 @@ class BookingUserService {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+=======
+
+  async getUserById() {
+    try {
+      const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
+      const response = await axios.get(`${BASE_URL}/${id}`);
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || "Error fetching users");
@@ -52,11 +64,15 @@ class BookingUserService {
   async updateUser(data) {
     try {
       const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
+<<<<<<< HEAD
       const response = await axios.put(`${BASE_URL}/${id}`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+=======
+      const response = await axios.put(`${BASE_URL}/${id}`, data);
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || "Error fetching users");

@@ -27,6 +27,7 @@ class BookingUserController {
       res.status(500).json({ success: false, message: error.message });
     }
   }
+<<<<<<< HEAD
   async login(req, res) {
     try {
       const { email, password } = req.body;
@@ -35,6 +36,14 @@ class BookingUserController {
         password
       );
       res.status(200).json({ success: true, data: { user, token } });
+=======
+
+  async login(req, res) {
+    try {
+      const { email, password } = req.body;
+      const user = await bookingUserService.loginUser(email, password);
+      res.status(200).json({ success: true, data: user });
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
     } catch (error) {
       res.status(401).json({ success: false, message: error.message });
     }

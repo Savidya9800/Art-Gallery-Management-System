@@ -13,6 +13,10 @@ import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
+import AdminUsers from "./Components/AdminUsers/AdminUsers";
+import Login from "./Components/Login/Login";
+import CreaetProfile from "./Components/CreateProfile/CreaetProfile";
+import Profile from "./Components/Profile/Profile";
 
 //User Manager
 import AdminUsers from "./Components/User Component/AdminUsers/AdminUsers";
@@ -39,13 +43,19 @@ function App() {
           <Route path="/mainSellArt" element={<SellArtComp />} />
           <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
           <Route path="/mainContactUs" element={<ContactUsComp />} />
+<<<<<<< HEAD
 
           {/* User manager */}
+=======
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
           <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<CreaetProfile />} />
           <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
           <Route path="/admin" element={<AdminDashboard />} />
+=======
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
         </Routes>
       </React.Fragment>
     </div>

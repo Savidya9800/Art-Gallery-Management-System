@@ -1,5 +1,9 @@
 const BookingUser = require("../Models/user.model");
+<<<<<<< HEAD
 const jwt = require("jsonwebtoken");
+=======
+
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
 class BookingUserService {
   async createBookingUser(userData) {
     try {
@@ -41,12 +45,16 @@ class BookingUserService {
       if (!user || !(await user.isPasswordValid(password))) {
         throw new Error("Invalid email or password");
       }
+<<<<<<< HEAD
       const token = jwt.sign(
         { id: user._id, email: user.email, role: user.role },
         "process.env.JWT_SECRET",
         { expiresIn: "1h" }
       );
       return { user, token };
+=======
+      return user;
+>>>>>>> 53bfd9248a85e0f07094a58f05120bd4d4814e9f
     } catch (error) {
       throw new Error("Error during login");
     }
