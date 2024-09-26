@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavigationBar from '../../Nav Component/NavigationBar';
-import imgevent from '../Artist/event.jpg'
+import bgImage from '../User/Gallery.jpeg';
+import { useNavigate } from 'react-router-dom';
+import FooterComp from '../../Nav Component/FooterComp';
 
 function UserSee() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(''); // Search term state
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -32,31 +36,70 @@ function UserSee() {
     return new Date(a.eventDate) - new Date(b.eventDate);
   });
 
+  // Filter the sorted requests based on the search term
+  const filteredRequests = sortedAcceptedRequests.filter(request =>
+    request.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleButtonClick = () => {
+    navigate('/artistLogin'); // Change this to your artist login page route
+  };
+
   if (loading) return <p className="text-center text-lg font-semibold">Loading...</p>;
   if (error) return <p className="text-red-500 text-center font-semibold">{error}</p>;
 
   return (
     <div>
-      <NavigationBar/>
+      <NavigationBar />
 
-      <img src={imgevent} alt="Event" className="w-full h-72 object-cover rounded-lg" />
-      
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-5xl font-extrabold mb-6 text-center text-gray-800 ">UPCOMING EVENT</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-        {sortedAcceptedRequests.map((request) => (
-          <div key={request._id} className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
-            <h2 className="text-xl font-semibold mb-2 text-gray-900">{request.name}</h2>
-            <p className="text-gray-700"><strong>Email:</strong> {request.email}</p>
-            <p className="text-gray-700"><strong>Mobile Number:</strong> {request.mobileNumber}</p>
-            <p className="text-gray-700"><strong>Member Count:</strong> {request.memberCount}</p>
-            <p className="text-gray-700"><strong>Budget:</strong> Rs.{request.budget}</p>
-            <p className="text-gray-700"><strong>Message:</strong> {request.message}</p>
-            <p className="text-gray-700"><strong>Event Date:</strong> {new Date(request.eventDate).toLocaleString()}</p>
-          </div>
-        ))}
+      <img src={bgImage} alt="Event" className="w-full h-72 object-cover rounded-lg" />
+
+      <div className="p-6 max-w-6xl mx-auto">
+        <div className="flex justify-center">
+          <button
+            className="bg-[#A78F51] text-white font-bold py-2 px-4 rounded-full"
+            onClick={handleButtonClick}
+          >
+            Plan Event
+          </button>
+        </div>
+        <br />
+        <h1 className="text-5xl font-extrabold mb-6 text-center text-gray-800 ">UPCOMING EVENT</h1>
+
+        {/* Search Input */}
+        <div className="mb-6 flex justify-center">
+          <input
+            type="text"
+            placeholder="Search event by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 p-2 w-full max-w-md rounded"
+          />
+        </div>
+
+        {/* Event Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredRequests.length > 0 ? (
+            filteredRequests.map((request) => (
+              <div
+                key={request._id}
+                className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              >
+                <h2 className="bg-white text-center text-xl font-bold mb-2 text-gray-900">{request.name}</h2>
+                <p className="bg-white text-gray-700">
+                  <strong className="bg-white">Message:</strong> {request.message}
+                </p>
+                <p className="bg-white text-gray-700">
+                  <strong className="bg-white">Event Date:</strong> {new Date(request.eventDate).toLocaleString()}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-lg font-semibold">No events found</p>
+          )}
+        </div>
       </div>
-    </div>
+      <FooterComp />
     </div>
   );
 }
