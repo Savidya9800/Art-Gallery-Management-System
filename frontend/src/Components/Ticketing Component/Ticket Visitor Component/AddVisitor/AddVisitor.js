@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddVisitor() {
-
   const initialFormState = {
     date: "",
     time: "",
@@ -23,17 +22,30 @@ function AddVisitor() {
   };
 
   const [inputs, setInputs] = useState(initialFormState);
-  const [remainingSlots, setRemainingSlots] = useState(10); // State to hold remaining slots
-  const [error, setError] = useState(""); // State to hold error messages
-  const [emailError, setEmailError] = useState(""); // State for email validation error
-  const [phoneError, setPhoneError] = useState(""); // State for phone validation error
+  const [remainingSlots, setRemainingSlots] = useState(10);
+  const [visitorCount, setVisitorCount] = useState(0); 
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
+
 
   useEffect(() => {
     if (inputs.date && inputs.time) {
       fetchRemainingSlots(inputs.date, inputs.time);
     }
   }, [inputs.date, inputs.time]);
+
+  useEffect(() => {
+    fetchVisitorCount();
+  }, []);
+
+  const fetchVisitorCount = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/visitorCount');
+      setVisitorCount(response.data.count);
+    } catch (err) {
+      console.error('Error fetching visitor count:', err);
+    }
+  };
 
   const fetchRemainingSlots = async (date, time) => {
     try {
@@ -49,24 +61,10 @@ function AddVisitor() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Validate email field format using regex
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
-      if (!emailRegex.test(value)) {
-        setEmailError("Please enter a valid email address");
-      } else {
-        setEmailError(""); // Clear email error if valid
-      }
-    }
-
-    // Validate phone number to accept only numbers
     if (name === "phone") {
-      const phoneRegex = /^[0-9]*$/; // Regex to allow only digits
-      if (!phoneRegex.test(value)) {
-        setPhoneError("Phone number can only contain numbers");
-      } else {
-        setPhoneError(""); // Clear phone error if valid
+      const regex = /^[0-9]*$/;
+      if (!regex.test(value)) {
+        return;
       }
     }
 
@@ -88,19 +86,19 @@ function AddVisitor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Prevent form submission if there are validation errors
-    if (emailError || phoneError) {
-      alert('Please correct the errors before submitting.');
-      return;
+    const totalTickets = inputs.tickets.reduce((sum, ticket) => sum + parseInt(ticket.count), 0);
+    
+    if (totalTickets + visitorCount > 10) {
+      setError("The total number of visitors exceeds the limit of 10 for this time slot.");
+      return; 
     }
 
     try {
       const response = await axios.post('http://localhost:5000/visitors', inputs);
       alert('Visitor added successfully');
       const remainingSlots = response.data.remainingSlots;
-      setRemainingSlots(remainingSlots); // Update remaining slots
-      navigate('/bookingConfirmation', { state: { visitor: response.data.visitor } }); // Pass the visitor data including the ID
+      setRemainingSlots(remainingSlots);
+      navigate('/bookingConfirmation', { state: { visitor: response.data.visitor } });
     } catch (err) {
       console.error('Error adding visitor:', err);
       if (err.response && err.response.data && err.response.data.message) {
@@ -111,7 +109,6 @@ function AddVisitor() {
     }
   };
 
-  // Get the current date in YYYY-MM-DD format
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -123,13 +120,10 @@ function AddVisitor() {
   return (
     <div>
       <NavigationBar />
-
       <div className="border border-black bg-white max-w-4xl mx-auto mt-10 p-6 shadow-lg rounded-lg">
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white border-black">
-          
-          {/* Left Section */}
           <div className="bg-white border-black">
-            <label className=" bg-white block text-sm font-medium text-gray-700">Date</label>
+            <label className="bg-white block text-sm font-medium text-gray-700">Date</label>
             <input
               type="date"
               name="date"
@@ -140,7 +134,6 @@ function AddVisitor() {
               required
             />
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4 mb-2">Time</label>
             <select
               name="time"
@@ -150,18 +143,19 @@ function AddVisitor() {
               required
             >
               <option value="">Select Time</option>
-              <option value="8.30">8.30</option>
-              <option value="12.30">12.30</option>
-              <option value="3.30">3.30</option>
+              <option value="8.30" disabled={remainingSlots <= 0}>8.30</option>
+              <option value="12.30" disabled={remainingSlots <= 0}>12.30</option>
+              <option value="3.30" disabled={remainingSlots <= 0}>3.30</option>
             </select>
             <br />
-
             {inputs.date && inputs.time && (
               <p className="bg-white text-sm text-gray-700 mt-2">
                 Remaining slots for {inputs.date} at {inputs.time}: {remainingSlots}
               </p>
             )}
-
+            <p className="bg-white text-sm text-gray-700 mt-2">
+              Total Visitor Count: {visitorCount}
+            </p>
             {inputs.tickets.map((ticket, index) => (
               <div key={index}>
                 <label className="bg-white block text-sm font-medium text-gray-700 mt-4">
@@ -182,7 +176,6 @@ function AddVisitor() {
             ))}
           </div>
 
-          {/* Right Section */}
           <div className="bg-white border-black">
             <label className="bg-white block text-sm font-medium text-gray-700">First Name</label>
             <input
@@ -194,7 +187,6 @@ function AddVisitor() {
               required
             />
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Last Name</label>
             <input
               type="text"
@@ -205,7 +197,6 @@ function AddVisitor() {
               required
             />
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Email</label>
             <input
               type="email"
@@ -215,9 +206,7 @@ function AddVisitor() {
               value={inputs.email}
               required
             />
-            {emailError && <p className="text-red-500 mt-2">{emailError}</p>}
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone</label>
             <input
               type="tel"
@@ -226,11 +215,10 @@ function AddVisitor() {
               onChange={handleChange}
               value={inputs.phone}
               maxLength="10"
+              pattern="[0-9]*"
               required
             />
-            {phoneError && <p className="text-red-500 mt-2">{phoneError}</p>}
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">City</label>
             <input
               type="text"
@@ -241,7 +229,6 @@ function AddVisitor() {
               required
             />
             <br />
-
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Country</label>
             <input
               type="text"
@@ -252,14 +239,13 @@ function AddVisitor() {
               required
             />
             <br />
-
+            {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
-              className="w-full mt-6 bg-[#A78F51] text-white font-semibold py-2 px-4 rounded-md"
+              className="bg-blue-500 text-white mt-6 py-2 px-4 rounded hover:bg-blue-600"
             >
-              Checkout
+              Add Visitor
             </button>
-            {error && <p className="text-red-500 mt-4">{error}</p>}
           </div>
         </form>
       </div>
