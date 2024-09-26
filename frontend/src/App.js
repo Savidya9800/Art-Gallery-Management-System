@@ -69,6 +69,24 @@ import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
+//Event Manager
+import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
+import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
+import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
+import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
+
+import UserSee from "./Components/Event Component/User/UserSee";
+import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
+
+
+//User Manager
+import AdminUsers from "./Components/User Component/AdminUsers/AdminUsers";
+import Login from "./Components/User Component/Login/Login";
+import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
+import Profile from "./Components/User Component/Profile/Profile";
+import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
+
+
 function App() {
   return (
     <div>
@@ -129,6 +147,15 @@ function App() {
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
 
+          {/* Event Manager */}
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/artistLogin" element={<ArtistLogin />} />
+          <Route path="/artistRegister" element={<ArtistRegister />} />
+          <Route path="/requestEventForm" element={<RequestEventForm />} />
+
           {/* Bidding Manager */}
 
           <Route path="/mainBidding" element={<BiddingComp />} />
@@ -146,6 +173,11 @@ function App() {
           {/* Financial Manager */}
 
           {/* User Manager */}
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<CreaetProfile />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
 
           {/* Event Manager */}
         </Routes>

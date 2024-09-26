@@ -151,7 +151,7 @@ function AddArtworkComp() {
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
           {errors.name && (
-            <div className="text-red-500 absolute left-[26px] top-[205px]">
+            <div className="text-red-500 absolute left-[26px] top-[205px] bg-white text-xs">
               {errors.name}
             </div>
           )}
@@ -167,7 +167,7 @@ function AddArtworkComp() {
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           ></input>
           {errors.email && (
-            <div className="text-red-500 absolute left-[26px] top-[300px]">
+            <div className="text-red-500 absolute left-[26px] top-[300px] bg-white text-xs">
               {errors.email}
             </div>
           )}
