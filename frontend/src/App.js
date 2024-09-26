@@ -60,6 +60,11 @@ import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/V
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
+import MessageAdmin from "./Components/Ticketing Component/Ticket Issues/MessageAdmin";
+import MessageResult from "./Components/Ticketing Component/Ticket Issues/MessageResults";
+import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
+import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
+
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
@@ -107,10 +112,11 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation"
-            element={<BookingConfirmation />}
-          />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+          <Route path="/messageAdmin" element={<MessageAdmin />} />
+          <Route path="/messageResult" element={<MessageResult />} />
+          <Route path="/message" element ={<Messages/>}/>
+          <Route path="/visitor-count" element ={<VisitorCount/>}/>
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />

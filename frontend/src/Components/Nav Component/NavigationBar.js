@@ -60,7 +60,7 @@ function NavigationBar() {
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainTicketing">Tickets</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us

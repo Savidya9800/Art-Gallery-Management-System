@@ -27,6 +27,8 @@ function VisitorsCount() {
     });
   }, []);
 
+  
+
   // Function to group visitors by date and time slot, and calculate total visitors per month
   const groupVisitorsByDateAndTime = (visitors) => {
     const dateGroups = {};
@@ -124,5 +126,6 @@ function VisitorsCount() {
     </div>
   );
 }
+
 
 export default VisitorsCount;
