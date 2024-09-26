@@ -1,15 +1,31 @@
-import React from 'react'
-import NavigationBar from '../Nav Component/NavigationBar'
-import FooterComp from '../Nav Component/FooterComp'
+import React from "react";
+import NavigationBar from "../Nav Component/NavigationBar";
+import FooterComp from "../Nav Component/FooterComp";
+import { Link } from "react-router-dom";
 
 function GalleryComp() {
   return (
     <div>
-      <NavigationBar/>
+      <NavigationBar />
       <h1>Gallery</h1>
-      <FooterComp/>
+      <br></br>
+      <Link to="/mainArtworkDetails">
+        <button type="button" class="btn btn-primary">
+          Artwork Details
+        </button>
+      </Link>
+      <br></br>
+      <br></br>
+
+      <Link to="/mainAdminArtworks">
+        <button type="button" class="btn btn-primary">
+          Artwork Details-Admin
+        </button>
+      </Link>
+
+      <FooterComp />
     </div>
-  )
+  );
 }
 
-export default GalleryComp
+export default GalleryComp;
