@@ -69,6 +69,18 @@ import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
+<<<<<<< HEAD
+import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
+import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
+import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
+import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
+
+import UserSee from "./Components/Event Component/User/UserSee";
+import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
+
+
+=======
+>>>>>>> c5d24ae7f0a32c39b13ec46b000834fe3b0f9dc8
 function App() {
   return (
     <div>
@@ -129,6 +141,21 @@ function App() {
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
 
+<<<<<<< HEAD
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+
+          {/* Event Manager */}
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/artistLogin" element={<ArtistLogin />} />
+          <Route path="/artistRegister" element={<ArtistRegister />} />
+          <Route path="/requestEventForm" element={<RequestEventForm />} />
+
+
+=======
           {/* Bidding Manager */}
 
           <Route path="/mainBidding" element={<BiddingComp />} />
@@ -148,6 +175,7 @@ function App() {
           {/* User Manager */}
 
           {/* Event Manager */}
+>>>>>>> c5d24ae7f0a32c39b13ec46b000834fe3b0f9dc8
         </Routes>
       </React.Fragment>
     </div>
