@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
+const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
+
 //const transactionRoutes = require("./Routes/transactionRoutes");
 //const paymentRoutes = require("./Routes/paymentRoutes");
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
@@ -29,8 +31,14 @@ app.use("/inventory", routerinv);//Mayomi
 //Artwork-manager
 app.use("/artWorks", router);
 
-//Inquiry-manager
-app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
+//Inquiryuser
+app.use(express.json());
+app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
+
+//Inquiry Admin 
+app.use("/adminResponse", responserouter); //inquiry is using the local host 5000/adminResponse
+
+
 
 //Ticket-manager
 app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
