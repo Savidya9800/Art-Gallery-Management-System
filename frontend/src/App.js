@@ -112,10 +112,11 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation"
-            element={<BookingConfirmation />}
-          />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+          <Route path="/messageAdmin" element={<MessageAdmin />} />
+          <Route path="/messageResult" element={<MessageResult />} />
+          <Route path="/message" element ={<Messages/>}/>
+          <Route path="/visitor-count" element ={<VisitorCount/>}/>
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />
