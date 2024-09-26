@@ -26,6 +26,22 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
+//Bidding user imports are here 
+
+import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
+import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
+import CreateBid from "./Components/Bidding Component/BiddingAdd/CreateBid";
+import BidUpdate from "./Components/Bidding Component/UpdateBid/BidUpdate";
+
+//Bidding Admin imports are here
+
+import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBidAdd";
+import ArtBidView from "./Components/Bidding Component/AdminBid/AdminBidView/ArtBidView";
+import ArtBidUpdate from "./Components/Bidding Component/AdminBid/AdminBidUpdate/ArtBidUpdate";
+
+
+
+
 //Artwork-manager
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
@@ -108,6 +124,18 @@ function App() {
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
 
           {/* Bidding Manager */}
+
+          <Route path="/mainBidding" element={<BiddingComp />} />
+          <Route path="/mainViewBid" element={<ViewBid />} />
+          <Route path="/startBidding" element={<StartBid />} />
+          <Route path="/mainCreateBid" element={<CreateBid />} />
+          <Route path="/mainViewBid/:id" element={<BidUpdate />} />
+          
+          <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
+          <Route path="/adminBidView" element={<ArtBidView />} />
+          <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+        
+
 
           {/* Financial Manager */}
 
