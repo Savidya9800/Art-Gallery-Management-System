@@ -76,11 +76,15 @@ function NavigationBar() {
             />
             <Button className="searchbtn" variant="outline-success">Search</Button>
           </Form>
+
+          <a
+            href="/profile">
           <img
             src={img2}
             style={{ height: "50px", marginRight: "10px" }}
             alt="User"
           />
+          </a>
         </Navbar.Collapse>
       </Container>
     </Navbar>
