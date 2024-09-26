@@ -5,12 +5,13 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./nav.css";
 import img1 from "./logo.JPG";
 import img2 from "./UserImg.png";
 
 function NavigationBar() {
+  const navigate = useNavigate();
   return (
     <Navbar expand="lg" className="navbar">
       <Container
@@ -57,8 +58,12 @@ function NavigationBar() {
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainSellArt">
+                Sell Art
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainBidding">
+                Buy Art
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us
@@ -72,11 +77,20 @@ function NavigationBar() {
               className="me-2"
               aria-label="Search"
             />
-            <Button className="searchbtn" variant="outline-success">Search</Button>
+            <Button className="searchbtn" variant="outline-success">
+              Search
+            </Button>
           </Form>
           <img
+            onClick={() => {
+              if (localStorage.getItem("user")) {
+                navigate("/profile");
+              } else {
+                navigate("/login");
+              }
+            }}
             src={img2}
-            style={{ height: "50px", marginRight: "10px" }}
+            style={{ height: "50px", marginRight: "10px", cursor: "pointer" }}
             alt="User"
           />
         </Navbar.Collapse>
