@@ -1,15 +1,18 @@
-import React from 'react';
-import NavigationBar from '../Nav Component/NavigationBar';
-import FooterComp from '../Nav Component/FooterComp';
+import React from "react";
+import NavigationBar from "../Nav Component/NavigationBar";
+import FooterComp from "../Nav Component/FooterComp";
 
 function Home() {
   return (
     <div>
-        <NavigationBar/>
+      <NavigationBar />
       <h1>Home Page</h1>
-      <FooterComp/>
+
+      <br></br>
+
+      <FooterComp />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;

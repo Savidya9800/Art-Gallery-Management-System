@@ -49,7 +49,7 @@ const artWorkSchema = new Schema({
     },
     img: {
         type: String,
-        required: true
+        //required: true
     },
     place: {
         type: String,
@@ -58,6 +58,10 @@ const artWorkSchema = new Schema({
     tags: {
         type: String,
         required: true
+    },
+    price: {
+        type: Number,
+        //required: true
     },
     
 });

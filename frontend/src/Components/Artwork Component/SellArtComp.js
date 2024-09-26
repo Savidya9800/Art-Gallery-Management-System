@@ -1,21 +1,48 @@
-import React from 'react'
-import FooterComp from '../Nav Component/FooterComp'
-import NavigationBar from '../Nav Component/NavigationBar'
-import './sellArt.css'
-import { Link } from 'react-router-dom'
+import React from "react";
+import FooterComp from "../Nav Component/FooterComp";
+import NavigationBar from "../Nav Component/NavigationBar";
+import AddArtworkComp from "./AddArtwork/AddArtworkComp";
+import ExampleCarouselImage from "./Images/img5.jpeg";
+import ExampleCarouselImage2 from "./Images/img2.jpg";
+import ExampleCarouselImage3 from "./Images/img7.jpeg";
+import Carousel from "react-bootstrap/Carousel";
 
 function SellArtComp() {
   return (
     <div>
-      <NavigationBar/>
-        <h1>Sell Art</h1>
-        <Link to="/mainArtworkDetails"><button type="button" class="btn btn-primary">Artwork Details</button></Link>
-        <br></br>
-        <br></br>
-        <Link to="/mainAddArtwork"><button type="button" class="btn btn-primary">Add Artwork</button></Link>
-        <FooterComp/>
+      <NavigationBar />
+      <div className="mt-8 ml-48 w-96">
+        <Carousel>
+          <Carousel.Item>
+            <img
+              className="w-full h-[550px]  object-cover"
+              src={ExampleCarouselImage}
+              alt="First slide"
+            />
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              className="w-full h-[550px] object-cover"
+              src={ExampleCarouselImage2}
+              alt="Second slide"
+            />
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="w-full h-[550px] object-cover "
+              src={ExampleCarouselImage3}
+              alt="Third slide"
+            />
+          </Carousel.Item>
+        </Carousel>
+      </div>
+      <div className="-mt-[570px]">
+        <AddArtworkComp />
+      </div>
+      <FooterComp />
     </div>
-  )
+  );
 }
 
-export default SellArtComp
+export default SellArtComp;
