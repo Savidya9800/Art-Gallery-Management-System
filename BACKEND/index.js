@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
-<<<<<<< HEAD
 const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
-=======
+
 //const transactionRoutes = require("./Routes/transactionRoutes");
 //const paymentRoutes = require("./Routes/paymentRoutes");
 const pdfSchema = require("./Models/artWorkImgModel"); //pdf
@@ -16,7 +15,6 @@ const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 //event
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
 const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
->>>>>>> 823fd42831ba178e198ed03243a1d0f0f5fe1338
 
 const app = express();
 const cors = require("cors");
@@ -33,7 +31,6 @@ app.use("/inventory", routerinv);//Mayomi
 //Artwork-manager
 app.use("/artWorks", router);
 
-<<<<<<< HEAD
 //Inquiryuser
 app.use(express.json());
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
@@ -41,10 +38,7 @@ app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inqui
 //Inquiry Admin 
 app.use("/adminResponse", responserouter); //inquiry is using the local host 5000/adminResponse
 
-=======
-//Inquiry-manager
-app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
->>>>>>> 823fd42831ba178e198ed03243a1d0f0f5fe1338
+
 
 //Ticket-manager
 app.use("/visitors", ticketrouter); //ticket is using the local host 5000/ticket
