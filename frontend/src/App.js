@@ -78,6 +78,15 @@ import EventMangerRequest from "./Components/Event Component/EventManager/EventM
 import UserSee from "./Components/Event Component/User/UserSee";
 import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
 
+
+//User Manager
+import AdminUsers from "./Components/User Component/AdminUsers/AdminUsers";
+import Login from "./Components/User Component/Login/Login";
+import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
+import Profile from "./Components/User Component/Profile/Profile";
+import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
+
+
 function App() {
   return (
     <div>
@@ -164,6 +173,11 @@ function App() {
           {/* Financial Manager */}
 
           {/* User Manager */}
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<CreaetProfile />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
 
           {/* Event Manager */}
         </Routes>
