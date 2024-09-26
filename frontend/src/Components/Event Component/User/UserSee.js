@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavigationBar from '../../Nav Component/NavigationBar';
 import bgImage from '../User/Gallery.jpeg';
 import { useNavigate } from 'react-router-dom';
+import FooterComp from '../../Nav Component/FooterComp';
 
 function UserSee() {
   const [requests, setRequests] = useState([]);
@@ -84,12 +85,12 @@ function UserSee() {
                 key={request._id}
                 className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
               >
-                <h2 className="text-xl font-semibold mb-2 text-gray-900">{request.name}</h2>
-                <p className="text-gray-700">
-                  <strong>Message:</strong> {request.message}
+                <h2 className="bg-white text-center text-xl font-bold mb-2 text-gray-900">{request.name}</h2>
+                <p className="bg-white text-gray-700">
+                  <strong className="bg-white">Message:</strong> {request.message}
                 </p>
-                <p className="text-gray-700">
-                  <strong>Event Date:</strong> {new Date(request.eventDate).toLocaleString()}
+                <p className="bg-white text-gray-700">
+                  <strong className="bg-white">Event Date:</strong> {new Date(request.eventDate).toLocaleString()}
                 </p>
               </div>
             ))
@@ -98,6 +99,7 @@ function UserSee() {
           )}
         </div>
       </div>
+      <FooterComp />
     </div>
   );
 }

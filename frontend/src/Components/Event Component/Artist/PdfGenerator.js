@@ -20,14 +20,7 @@ const PdfGenerator = () => {
      doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
      doc.text('Reservation Confirmation', 14, 20);
  
-     //Add logo
-  /*   const pageWidth = doc.internal.pageSize.getWidth();
-
-     const imgWidth = 25; // Width of the logo
-     const imgHeight = 20; // Height of the logo
-     const xPosition = pageWidth - imgWidth - 10;
-     doc.addImage(logo, 'JPEG', xPosition, 10, imgWidth, imgHeight);*/
-
+    
      // Add a line below the title
      doc.setLineWidth(0.5);
      doc.setDrawColor(169, 169, 169); // Gray color
@@ -37,6 +30,7 @@ const PdfGenerator = () => {
      doc.setFontSize(16);
      doc.setTextColor(0, 0, 128); // Navy color
      doc.text('Reservation Details', 14, 40);
+    
  
      // Details Section
      doc.setFontSize(12);
@@ -45,6 +39,7 @@ const PdfGenerator = () => {
      let startY = 50;
      const lineHeight = 10;
 
+
       // Artist Information
       const detail = [
         `Name: ${artistName}`,
@@ -52,7 +47,7 @@ const PdfGenerator = () => {
         `Event Date: ${eventDate ? new Date(eventDate).toLocaleString() : 'No Date'}`,
         `Package Name: ${selectedPackage?.name}`,
         `Includes: ${selectedPackage?.Decoration}`,
-        `Total Budget: ${selectedPackage?.budget}`        
+        `Total Budget: ${selectedPackage?.budget}`       
       ];
 
        // Add a line below the title
@@ -79,64 +74,69 @@ const PdfGenerator = () => {
         <div className="flex justify-end mb-4">
           <button 
             onClick={downloadPDF} 
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-[#A78F51] text-white px-5 py-2 rounded-lg  transition"
           >
             Download PDF
           </button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Confirmation</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">CONFORMATION</h1>
 
         {/* Card View for Confirmation Details */}
-        <div className="space-y-4 mb-6">
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+        <div className="bg-white space-y-4 mb-6">
+          <div className="p-4 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold">Artist Information</h2>
             <p className="text-gray-700"><strong>Name:</strong> {artistName}</p>
             <p className="text-gray-700"><strong>Email:</strong> {email}</p>
             <p className="text-gray-700"><strong>Event Date:</strong> {eventDate ? new Date(eventDate).toLocaleString() : 'No Date'}</p>
           </div>
 
-          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+          <div className="p-4 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold">Package Details</h2>
             <p className="text-gray-700"><strong>Package Name:</strong> {selectedPackage?.name}</p>
             <p className="text-gray-700"><strong>Includes:</strong> {selectedPackage?.Decoration}</p>
             <p className="text-gray-700"><strong>Total Budget:</strong> {selectedPackage?.budget}</p>
+           
           </div>
         </div>
 
         {/* Summary Section */}
         <div className="summary-section mt-6">
-          <h2 className="text-lg font-semibold mb-2">Summary</h2>
-          <table className="summary-table w-full border-collapse border border-gray-300">
+          <h2 className="text-lg text-center font-semibold mb-2">Summary</h2>
+          <table className="summary-table w-full border-collapse border border-black">
             <thead>
               <tr className="bg-gray-200">
-                <th className="table-cell px-4 py-2 border border-gray-300">Detail</th>
-                <th className="table-cell px-4 py-2 border border-gray-300">Value</th>
+                <th className="table-cell px-4 py-2 border border-black">Detail</th>
+                <th className="table-cell px-4 py-2 border border-black">Value</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="table-cell px-4 py-2 border border-gray-300">Total Budget</td>
-                <td className="table-cell px-4 py-2 border border-gray-300">{selectedPackage?.budget?.toString() || '0'}</td>
+                <td className="table-cell px-4 py-2 border border-black">Total Budget</td>
+                <td className="table-cell px-4 py-2 border border-black">{selectedPackage?.budget?.toString() || '0'}</td>
               </tr>
               <tr>
-                <td className="table-cell px-4 py-2 border border-gray-300">Artist</td>
-                <td className="table-cell px-4 py-2 border border-gray-300">{artistName}</td>
+                <td className="table-cell px-4 py-2 border border-black">Artist</td>
+                <td className="table-cell px-4 py-2 border border-black">{artistName}</td>
               </tr>
               <tr>
-                <td className="table-cell px-4 py-2 border border-gray-300">Email</td>
-                <td className="table-cell px-4 py-2 border border-gray-300">{email}</td>
+                <td className="table-cell px-4 py-2 border border-black">Email</td>
+                <td className="table-cell px-4 py-2 border border-black">{email}</td>
               </tr>
               <tr>
-                <td className="table-cell px-4 py-2 border border-gray-300">Event Date</td>
-                <td className="table-cell px-4 py-2 border border-gray-300">{eventDate ? new Date(eventDate).toLocaleString() : 'No Date'}</td>
+                <td className="table-cell px-4 py-2 border border-black">Event Date</td>
+                <td className="table-cell px-4 py-2 border border-black">{eventDate ? new Date(eventDate).toLocaleString() : 'No Date'}</td>
               </tr>
               <tr>
-                <td className="table-cell px-4 py-2 border border-gray-300">Package</td>
-                <td className="table-cell px-4 py-2 border border-gray-300">{selectedPackage?.name} - {selectedPackage?.Decoration}</td>
+                <td className="table-cell px-4 py-2 border border-black">Package</td>
+                <td className="table-cell px-4 py-2 border border-black">{selectedPackage?.name} - {selectedPackage?.Decoration}</td>
+                <td>  </td>
               </tr>
             </tbody>
           </table>
+          <div className="mt-4">  
+          
+            </div>  
         </div>
       </div>
     </div>
