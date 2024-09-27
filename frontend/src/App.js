@@ -94,9 +94,7 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation" element={<BookingConfirmation />}
-          />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />
