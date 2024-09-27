@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Image, Alert } from "react-bootstrap";
 import BookingUserService from "../../../Services/UserService";
-
+import { useNavigate } from "react-router-dom";
 const CreateProfile = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,6 +14,17 @@ const CreateProfile = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+
+  // Mobile number validation function
+  const validateMobile = (contactNumber) => {
+    const mobilePattern = /^[0-9]{10}$/;  // Regular expression for exactly 10 digits
+    if (!mobilePattern.test(contactNumber)) {
+      return "Contact number must be exactly 10 digits.";
+    }
+    return null;
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -28,9 +39,18 @@ const CreateProfile = () => {
       setError("Passwords do not match!");
       return;
     }
+
+    // Phone number validation
+  const mobilePattern = /^[0-9]{10}$/; // Regular expression for 10 digits
+  if (!mobilePattern.test(formData.contactNumber)) {
+    setError("Contact number must be exactly 10 digits.");
+    return;
+  }
+
     try {
       await BookingUserService.registerUser(formData);
       alert("User registered successfully!");
+
     } catch (error) {
       setError(error.message);
     }
@@ -43,7 +63,13 @@ const CreateProfile = () => {
         style={{ maxWidth: "600px" }} // Increased the maxWidth to 600px
       >
         <div className="text-center mb-4">
-          <Image src="/welcome.png" alt="Awarna Art Gallery" width={200} />
+          <Image 
+            src="/welcome.png" 
+            alt="Awarna Art Gallery" 
+            width={200} 
+            className="mx-auto d-block" // Adding this class for centering
+          />
+
           <h2
             className="mt-3"
             style={{
@@ -184,3 +210,4 @@ const CreateProfile = () => {
 };
 
 export default CreateProfile;
+

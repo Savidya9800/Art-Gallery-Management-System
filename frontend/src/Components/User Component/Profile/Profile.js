@@ -21,7 +21,11 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserData();
+    if(localStorage.getItem('user')){
+      fetchUserData();
+    } else {
+      navigate('/login')
+    }
   }, []);
 
   const fetchUserData = async () => {
