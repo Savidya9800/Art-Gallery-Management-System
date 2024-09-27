@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const pdfSchema2 = new Schema({
+const pdfSchema = new Schema({
   pdf: {
     type: String, //dataType
     required: true, //validation
@@ -9,6 +9,6 @@ const pdfSchema2 = new Schema({
 });
 
 module.exports = mongoose.model(
-  "Paymentreceipt", //file name
-  pdfSchema2 //function name
+  "PaymentReceipt", //file name
+  pdfSchema //function name
 );
