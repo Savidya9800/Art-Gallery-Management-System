@@ -1,9 +1,7 @@
-import React from 'react'
-import NavigationBar from '../Nav Component/NavigationBar'
-import FooterComp from '../Nav Component/FooterComp'
+import React from 'react';
+import NavigationBar from '../Nav Component/NavigationBar';
+import FooterComp from '../Nav Component/FooterComp';
 import { useNavigate } from 'react-router-dom';
-
-
 
 function InquiryComp() {
 
@@ -11,20 +9,39 @@ function InquiryComp() {
 
   return (
     <div>
-      <NavigationBar/>
-      
-          <div className='flex justify-center space-x-4 mt-8'>
-            <button className="inquiry-button px-6 py-3 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition-all duration-300" onClick={() => Navigate('/newInquiry')}>Add Inquiry </button>
+      <NavigationBar />
+      <div 
+        className="h-screen bg-cover bg-center flex flex-col justify-center items-center text-center" 
+        style={{ backgroundImage: `url(${require('./inquiryimg.jpg')})`, opacity: 0.6, height: '50vh' }}
+      >
+        {/* Background box around buttons */}
+        <div className="bg-gray-200 bg-opacity-60 p-5 rounded-lg flex flex-col space-y-6">
+          <button 
+            className="px-5 py-2 text-lg text-gray-800 border-2 border-gray-800 rounded-full cursor-pointer transition duration-300 hover:bg-gray-800 hover:text-white" 
+            onClick={() => Navigate('/newInquiry')}
+          >
+            Add Inquiry 
+          </button>
+          
+          <button 
+            className="px-5 py-2 text-lg text-gray-800 border-2 border-gray-800 rounded-full cursor-pointer transition duration-300 hover:bg-gray-800 hover:text-white" 
+            onClick={() => Navigate('/inquiries')}
+          >
+            Current Inquiries
+          </button>
 
-            <button className="inquiry-button px-6 py-3 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition-all duration-300" onClick={() => Navigate('/inquiries')}>Current Inquiries </button>
-    </div>
+          <button 
+            className="px-5 py-2 text-lg text-gray-800 border-2 border-gray-800 rounded-full cursor-pointer transition duration-300 hover:bg-gray-800 hover:text-white" 
+            onClick={() => Navigate('/AdminViewresponse')}
+          >
+            Response
+          </button>
+        </div>
+      </div>
 
-    <FooterComp/>
+      <FooterComp />
     </div>
-    
   );
 }
 
 export default InquiryComp;
-
-

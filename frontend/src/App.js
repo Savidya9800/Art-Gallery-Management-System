@@ -17,10 +17,13 @@ import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry";
 
+
 //Inquiry Admin imports
 import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
 import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
 import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
+import AdminInquiryPage from "./Components/Inquiry Component/Inquiry admin//adminreadinquiry/AdminInquiryPage";
+
 
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
@@ -127,6 +130,7 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
+
           <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
           <Route path="/messageAdmin" element={<MessageAdmin />} />
           <Route path="/messageResult" element={<MessageResult />} />
@@ -138,11 +142,15 @@ function App() {
           <Route path="/newInquiry" element={<AddInquiry />} />
           <Route path="/inquiries" element={<ViewInquiry />} />
           <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
-
-          {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}
+          <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
           <Route path="/Viewresponse" element={<ViewResponse />} />
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
+        
+
+          {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}
+          
+          
 
           {/* Event Manager */}
           <Route path="/event-manager-request" element={<EventMangerRequest />} />
