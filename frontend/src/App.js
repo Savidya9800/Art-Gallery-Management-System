@@ -29,7 +29,7 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
-//Bidding user imports are here 
+//Bidding user imports are here
 
 import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
@@ -47,7 +47,7 @@ import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/Artworks
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 import UploadImage from "./Components/Artwork Component/AddArtwork/UploadImage";
-import UploadReceipt from "./Components/Artwork Component/AddArtwork/UploadReceipt";
+import SendPdf from "./Components/Artwork Component/AddArtwork/SendPdf";
 
 //Inventory Manager
 import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
@@ -76,14 +76,12 @@ import EventMangerRequest from "./Components/Event Component/EventManager/EventM
 import UserSee from "./Components/Event Component/User/UserSee";
 import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
 
-
 //User Manager
 import AdminUsers from "./Components/User Component/AdminUsers/AdminUsers";
 import Login from "./Components/User Component/Login/Login";
 import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
 import Profile from "./Components/User Component/Profile/Profile";
 import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
-
 
 function App() {
   return (
@@ -109,7 +107,7 @@ function App() {
           <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
           <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
           <Route path="/mainUploadImage" element={<UploadImage />} />
-          <Route path="/mainUploadReceipt" element={<UploadReceipt />} />
+          <Route path="/mainUploadReceipt" element={<SendPdf />} />
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
           <Route path="/mainGallery" element={<GalleryComp />} />
           <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
@@ -131,8 +129,8 @@ function App() {
           <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
           <Route path="/messageAdmin" element={<MessageAdmin />} />
           <Route path="/messageResult" element={<MessageResult />} />
-          <Route path="/message" element ={<Messages/>}/>
-          <Route path="/visitor-count" element ={<VisitorCount/>}/>
+          <Route path="/message" element={<Messages />} />
+          <Route path="/visitor-count" element={<VisitorCount />} />
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />
@@ -150,10 +148,16 @@ function App() {
           
 
           {/* Event Manager */}
-          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route
+            path="/event-manager-request"
+            element={<EventMangerRequest />}
+          />
           <Route path="/userSee" element={<UserSee />} />
           <Route path="/pdf-generator" element={<PdfGenerator />} />
-          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route
+            path="/event-manager-request"
+            element={<EventMangerRequest />}
+          />
           <Route path="/artistLogin" element={<ArtistLogin />} />
           <Route path="/artistRegister" element={<ArtistRegister />} />
           <Route path="/requestEventForm" element={<RequestEventForm />} />
@@ -165,11 +169,10 @@ function App() {
           <Route path="/startBidding" element={<StartBid />} />
           <Route path="/mainCreateBid" element={<CreateBid />} />
           <Route path="/mainViewBid/:id" element={<BidUpdate />} />
+
           <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
           <Route path="/adminBidView" element={<ArtBidView />} />
           <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
-        
-
 
           {/* Financial Manager */}
 

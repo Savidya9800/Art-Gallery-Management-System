@@ -7,17 +7,20 @@ import Button from "react-bootstrap/Button";
 
 const URL = "http://localhost:5000/artWorks";
 
-// fetchHandler
+// fetchHandler to get unaccepted artworks
 const fetchHandler = async () => {
   try {
     const res = await axios.get(URL);
-    return res.data;
+    
+    // Filter artworks where accepted is false
+    const unacceptedArtworks = res.data.artWorks.filter((artwork) => artwork.accepted === false);
+    
+    return { artWorks: unacceptedArtworks }; // Return filtered artworks
   } catch (error) {
     console.error("Error fetching artworks:", error);
     return { artWorks: [] }; // Return an empty array in case of error
   }
 };
-
 function AdminArtworks() {
   const [artWorks, setArtworks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
