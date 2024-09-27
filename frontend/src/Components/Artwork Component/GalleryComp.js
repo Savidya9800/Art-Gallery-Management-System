@@ -10,21 +10,6 @@ function GalleryComp() {
   return (
     <div>
       <NavigationBar />
-      <h1>Gallery</h1>
-      <br />
-      <Link to="/mainArtworkDetails">
-        <button type="button" className="btn btn-primary">
-          Artwork Details
-        </button>
-      </Link>
-      <br />
-      <br />
-
-      <Link to="/mainAdminArtworks">
-        <button type="button" className="btn btn-primary">
-          Artwork Details - Admin
-        </button>
-      </Link>
 
       <br />
       <br />
