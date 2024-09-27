@@ -4,7 +4,7 @@ import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
 import { Link } from 'react-router-dom';
 
-const URL = 'http://localhost:5000/visitors'; // Your API endpoint for fetching visitors
+const URL = 'http://localhost:5000/visitors'; 
 
 const fetchHandler = async () => {
   try {
@@ -36,7 +36,7 @@ const TicketIssues = () => {
         href="/message"
         className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
       >
-        View Visitor Details (Admin)
+        View Messages (Admin)
       </a>
     </div>
   );

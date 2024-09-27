@@ -40,7 +40,7 @@ const ArtistRegister = () => {
     <NavigationBar/>
     <div className="flex justify-center items-center">
       <div className="bg-[#FAF3E0] p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-center text-2xl font-bold text-[#B69E51] mb-6">Insert Bid</h1>
+        <h1 className="text-center text-2xl font-bold text-[#B69E51] mb-6">Register Artist</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">Enter Name</label>
@@ -85,7 +85,7 @@ const ArtistRegister = () => {
             type="submit"
             className="w-full bg-[#B69E51] text-white py-2 rounded-lg font-semibold hover:bg-[#9F8944] transition-colors duration-300"
           >
-            Submit Bid
+            Save
           </button>
         </form>
 
