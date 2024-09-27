@@ -21,7 +21,6 @@ import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateIn
 import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
 import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
 import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
-
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
@@ -53,7 +52,6 @@ import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
 import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
 import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
 import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
-
 import UserSee from "./Components/Event Component/User/UserSee";
 import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
 
@@ -101,10 +99,7 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation"
-            element={<BookingConfirmation />}
-          />
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />}/>
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />
@@ -116,7 +111,6 @@ function App() {
           <Route path="/Viewresponse" element={<ViewResponse />} />
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
-
           <Route path="/userSee" element={<UserSee />} />
           <Route path="/pdf-generator" element={<PdfGenerator />} />
 
