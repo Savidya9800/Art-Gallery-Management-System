@@ -19,6 +19,10 @@ const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
 const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
 
+
+//user
+const bookingUserRoutes = require("./Routes/user.route");
+
 const app = express();
 const cors = require("cors");
 
@@ -69,6 +73,10 @@ app.use("/Adminbid", adminBiddingRouter); //bidding is using the local host 5000
 app.use('/artist', Artistrouter);
 app.use('/requestEvent', RequestEventrouter);
 
+//user
+///routes
+app.use("/artWorks", router);
+app.use("/api/bookingUsers", bookingUserRoutes);
 
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
@@ -121,15 +129,15 @@ app.post("/uploadFile", uplode.single("file"), async (req, res) => {
 });
 
 //Next video
-app.get("/getFile", async (req, res) => {
-  try {
-    const data = await pdfSchema.find();
-    res.status(200).send({ status: 200, data: data });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ status: 500, message: "Error in getting pdf" });
-  }
-});
+// app.get("/getFile", async (req, res) => {
+//   try {
+//     const data = await pdfSchema.find();
+//     res.status(200).send({ status: 200, data: data });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send({ status: 500, message: "Error in getting pdf" });
+//   }
+// });
 
 //Insert Model Part in Payment Receipt
 app.post("/uploadReceipt", uplode.single("file"), async (req, res) => {
