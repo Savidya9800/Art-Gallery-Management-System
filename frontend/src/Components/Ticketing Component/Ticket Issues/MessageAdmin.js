@@ -16,15 +16,6 @@ const MessageAdmin = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validate visitorID to accept only numbers
-    if (name === "visitorID") {
-      if (!/^\d*$/.test(value)) {
-        setError("Visitor ID must contain only numbers");
-        return;
-      } else {
-        setError(""); // Clear the error if the input is valid
-      }
-    }
 
     setInputs({
       ...inputs,

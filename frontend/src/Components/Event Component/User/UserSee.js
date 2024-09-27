@@ -9,10 +9,10 @@ function UserSee() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(''); // Search term state
+  const [searchTerm, setSearchTerm] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
