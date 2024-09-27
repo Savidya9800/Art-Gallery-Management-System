@@ -39,9 +39,6 @@ import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBi
 import ArtBidView from "./Components/Bidding Component/AdminBid/AdminBidView/ArtBidView";
 import ArtBidUpdate from "./Components/Bidding Component/AdminBid/AdminBidUpdate/ArtBidUpdate";
 
-
-
-
 //Artwork-manager
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
