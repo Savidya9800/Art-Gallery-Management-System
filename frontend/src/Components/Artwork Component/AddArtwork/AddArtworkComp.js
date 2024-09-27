@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
@@ -8,6 +8,34 @@ import img2 from "../Images/photo56.png";
 function AddArtworkComp() {
   const history = useNavigate();
   const [errors, setErrors] = useState({ name: "", email: "" });
+  const [imgId, setImgId] = useState("");
+
+    const fetchLastImage = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/getImage");
+        console.log(res.data.data);
+        if (res.data.data.length > 0) {
+          setImgId(res.data.data[0]._id); // Set the ID of the last uploaded image
+        } else {
+          console.log("No images found");
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+  useEffect(() => {
+    if (imgId) {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        img: imgId, 
+      }));
+    }
+  }, [imgId]); 
+
+  const handleFetchImage = () => {
+    fetchLastImage();
+  };
 
   const [inputs, setInputs] = useState({
     name: "",
@@ -21,12 +49,12 @@ function AddArtworkComp() {
     dimensions: "",
     date: "",
     description: "",
-    //img: "",
+    img: imgId,
     place: "",
     tags: "",
-    price: "",
+    price: "", 
   });
-
+  
   const [currentStep, setCurrentStep] = useState(1); // To keep track of the current form step
 
   const handleChange = (e) => {
@@ -61,7 +89,12 @@ function AddArtworkComp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Fetch the last image if needed (optional)
+    await handleFetchImage();
 
+    
+  
     // Validate inputs
     const requiredFields = [
       "name",
@@ -111,7 +144,7 @@ function AddArtworkComp() {
         dimensions: String(inputs.dimensions),
         date: String(inputs.date),
         description: String(inputs.description),
-        //img: String(inputs.img),
+        img: String(imgId),
         place: String(inputs.place),
         tags: String(inputs.tags),
         price: Number(inputs.price),

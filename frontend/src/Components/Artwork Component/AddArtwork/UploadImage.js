@@ -4,43 +4,27 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 
 function UploadImage() {
-  const [title, settitle] = useState("");
-  const [file, saveFile] = useState("");
-  const [allpdf, setAllpdf] = useState("");
+  const [image, setImage] = useState(null); //image insert
 
-  useEffect(() => {
-    getpdf();
-  }, []);
-
-  const getpdf = async () => {
-    const result = await axios.get("http://localhost:5000/getFile");
-    console.log(result.data.data);
-    setAllpdf(result.data.data);
-  };
-
-  const submitpdf = async (e) => {
+  const submitImg = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("file", file);
-    console.log(title, file);
+    formData.append("image", image);
 
     try {
       const result = await axios.post(
-        "http://localhost:5000/uploadFile",
+        "http://localhost:5000/uploadImg",
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
       console.log(result);
 
       if (result.data.status === 200) {
         alert("Image uploaded successfully");
-        getpdf();
+        setImage();
       } else {
         alert("Image not uploaded");
       }
@@ -50,33 +34,26 @@ function UploadImage() {
     }
   };
 
+  const onImgChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   return (
     <div>
       <NavigationBar />
       <br></br>
       <br></br>
       <form
-        onSubmit={submitpdf}
+        onSubmit={submitImg}
         className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md "
       >
-        <label className="block text-sm font-medium text-gray-700 bg-white">
-          Image Title
-        </label>
-        <input
-          required
-          type="text"
-          placeholder="Enter Image Title"
-          onChange={(e) => settitle(e.target.value)}
-          className="w-full p-2 mt-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
         <label className="block mt-4 text-sm font-medium text-gray-700 bg-white">
           Select Image
         </label>
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => saveFile(e.target.files[0])}
+          onChange={onImgChange}
           required
           className="w-full p-2 mt-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />

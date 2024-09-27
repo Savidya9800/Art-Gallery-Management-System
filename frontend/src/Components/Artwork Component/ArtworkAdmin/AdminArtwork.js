@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ function AdminArtwork(props) {
     price,
   } = props.ARTWORK;
   const history = useNavigate();
+  const [accepted, setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
@@ -130,6 +131,22 @@ function AdminArtwork(props) {
     }
   };
 
+  const handleAccept = async () => {
+    const updatedData = {
+      accepted: true, // Setting accepted to true
+      place, // Include other relevant data if needed
+      // Add other properties here if needed (like title, description, etc.)
+    };
+
+    try {
+      const response = await axios.patch(`http://localhost:5000/artWorks/updateart/${_id}`, updatedData);
+      console.log("Artwork updated successfully:", response.data);
+      setAccepted(true); // Update accepted state in UI
+    } catch (error) {
+      console.error("Error updating artwork:", error.response.data);
+    }
+  };
+
   return (
     <>
       <td className="p-2 border border-gray-300">{_id}</td>
@@ -187,8 +204,8 @@ function AdminArtwork(props) {
           Generate Report
         </Button>
         |
-        <Link to={`/mainArtworkDetails/${_id}`}>
-          <Button variant="success" className="ml-1 mr-1">
+        <Link to={`/mainGallery/`}>
+          <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
             Accept
           </Button>
         </Link>
