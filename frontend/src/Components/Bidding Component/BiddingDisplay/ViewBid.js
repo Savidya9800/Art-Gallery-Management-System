@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Bids from '../Bid/Bids';
 import NavigationBar from '../../Nav Component/NavigationBar';
+import FooterComp from '../../Nav Component/FooterComp';
 
 const URL = "http://localhost:5000/bidding";
 //fetch data
@@ -38,7 +39,9 @@ function ViewBid() {
 
   return (
     <div style={{ backgroundColor: '#eee8dc', minHeight: '100vh' }}>
+      <div className='relative z-10'>
         <NavigationBar/>
+        </div>
 
       <div className="flex justify-start mb-5" style={{ marginLeft: '30px' }}>
       
@@ -71,6 +74,8 @@ function ViewBid() {
         ))}
       </div>
       )}
+
+      <FooterComp/>
 
     </div>
   )
