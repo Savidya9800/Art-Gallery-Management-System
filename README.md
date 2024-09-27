@@ -5,3 +5,5 @@ inquiry manager update branch
 
 update by inquiry manager 
 
+inquiry update
+
