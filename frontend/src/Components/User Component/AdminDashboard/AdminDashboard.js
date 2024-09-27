@@ -137,7 +137,7 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
             validatePasscode(prompt("Enter passcode:"), passcodes.inquiry, () => setActiveIndex(8));
           }}
           icon={FaBell}
-          label="Finance Management"
+          label="Inquiry Management"
         />
 
         

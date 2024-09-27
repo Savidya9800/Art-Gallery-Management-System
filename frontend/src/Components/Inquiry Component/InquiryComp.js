@@ -29,13 +29,6 @@ function InquiryComp() {
           >
             Current Inquiries
           </button>
-
-          <button 
-            className="px-5 py-2 text-lg text-gray-800 border-2 border-gray-800 rounded-full cursor-pointer transition duration-300 hover:bg-gray-800 hover:text-white" 
-            onClick={() => Navigate('/AdminViewresponse')}
-          >
-            Response
-          </button>
         </div>
       </div>
 
