@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 
+
+
 function ArtBidForm(props) {
   
   const { _id, title, description, artistName, category, startDate, endDate, minPrice } = props.BIDART;
@@ -23,14 +25,19 @@ function ArtBidForm(props) {
 
   // Delete function
   const deleteHandler = async () => {
-    await axios.delete(`http://Localhost:5000/Adminbid/${_id}`)
-      .then(res => res.data)
-      .then(() => history("/"))
-      .then(() => history("/adminBidView"));
+    const confirmDelete = window.confirm("Are you sure you want to delete this artwork?");
+    if (confirmDelete) {
+      await axios.delete(`http://Localhost:5000/Adminbid/${_id}`)
+        .then(res => res.data)
+        .then(() => history("/adminBidView")); 
+    }
   };
 
   return (
+    
+    
     <div className="border-2 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-xl">
+      
       <div className="p-2 rounded-t-lg text-[#A78F51]">
         <h1 className="text-2xl font-bold">ID: { _id }</h1>
         <h1 className="text-2xl font-bold">Title: { title }</h1>
@@ -47,6 +54,8 @@ function ArtBidForm(props) {
         <button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition duration-300" onClick={deleteHandler}>Delete</button>
       </div>
     </div>
+   
+    
   );
 }
 
