@@ -24,7 +24,6 @@ import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addrespons
 import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
 import AdminInquiryPage from "./Components/Inquiry Component/Inquiry admin//adminreadinquiry/AdminInquiryPage";
 
-
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
@@ -68,7 +67,9 @@ import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
-//Event Manager
+
+
+//Event-manager
 import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
 import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
 import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
@@ -141,11 +142,9 @@ function App() {
           <Route path="/Viewresponse" element={<ViewResponse />} />
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
-        
 
-          {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}
           
-          
+
 
           {/* Event Manager */}
           <Route
@@ -161,6 +160,7 @@ function App() {
           <Route path="/artistLogin" element={<ArtistLogin />} />
           <Route path="/artistRegister" element={<ArtistRegister />} />
           <Route path="/requestEventForm" element={<RequestEventForm />} />
+
 
           {/* Bidding Manager */}
 
@@ -183,7 +183,6 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
 
-          {/* Event Manager */}
         </Routes>
       </React.Fragment>
     </div>
