@@ -9,9 +9,9 @@ function AddVisitor() {
     date: "",
     time: "",
     tickets: [
-      { type: "Adult(Age 19+)", count: 0, price: 20 },
-      { type: "Senior(Age 65+)", count: 0, price: 15 },
-      { type: "Child(below 19)", count: 0, price: 10 }
+      { type: "Adult(Age 19+)", count: 0, price: 1550 },
+      { type: "Senior(Age 65+)", count: 0, price: 1300 },
+      { type: "Child(below 19)", count: 0, price: 950 }
     ],
     fname: "",
     lname: "",
@@ -153,9 +153,6 @@ function AddVisitor() {
                 Remaining slots for {inputs.date} at {inputs.time}: {remainingSlots}
               </p>
             )}
-            <p className="bg-white text-sm text-gray-700 mt-2">
-              Total Visitor Count: {visitorCount}
-            </p>
             {inputs.tickets.map((ticket, index) => (
               <div key={index}>
                 <label className="bg-white block text-sm font-medium text-gray-700 mt-4">
@@ -242,7 +239,7 @@ function AddVisitor() {
             {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
-              className="bg-blue-500 text-white mt-6 py-2 px-4 rounded hover:bg-blue-600"
+              className="bg-[#A78F51]  text-white mt-6 py-2 px-4 rounded hover:bg-[#A78F51] "
             >
               Add Visitor
             </button>

@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 import NavigationBar from '../../Nav Component/NavigationBar';
 import Viewresponses from './Viewresponses';
 import FooterComp from '../../Nav Component/FooterComp';
@@ -26,12 +25,15 @@ export default function ViewResponse() {
     return (
     
 <div>
-            <NavigationBar />
+           
             <br></br>
 
             <div>
+            <NavigationBar />
 
-                <h1>Admin Responses</h1>
+            <div className="border-0 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-4xl">
+                <h1 className="text-center text-3xl font-semibold text-gray-700 mb-8">Admin Responses</h1>
+
 
                 {responseData && responseData.map((RESPONSE, i) => (
                     <div>
@@ -40,8 +42,9 @@ export default function ViewResponse() {
                     
                 ))}
 
+</div>
                 </div>
-            <FooterComp />
+         <FooterComp />
             </div>
     );
 

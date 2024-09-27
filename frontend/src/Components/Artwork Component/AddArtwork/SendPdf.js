@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 
-function UploadReceipt() {
+function SendPdf() {
   const [file, saveFile] = useState("");
   const [allpdf, setAllpdf] = useState("");
+
+  useEffect(() => {
+    getpdf();
+  }, []);
+
+  const getpdf = async () => {
+    const result = await axios.get("http://localhost:5000/getFile");
+    console.log(result.data.data);
+    setAllpdf(result.data.data);
+  };
+
   const submitpdf = async (e) => {
     e.preventDefault();
 
@@ -15,7 +26,7 @@ function UploadReceipt() {
 
     try {
       const result = await axios.post(
-        "http://localhost:5000/uploadReceipt",
+        "http://localhost:5000/uploadfile",
         formData,
         {
           headers: {
@@ -46,7 +57,7 @@ function UploadReceipt() {
           onSubmit={submitpdf}
           className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
         >
-          <h2 className="mb-4 text-xl font-semibold bg-white" >
+          <h2 className="mb-4 text-xl font-semibold bg-white">
             Upload Receipt
           </h2>
           <label className="block mb-2 text-sm font-medium text-gray-700 bg-white">
@@ -56,7 +67,6 @@ function UploadReceipt() {
             type="file"
             accept="application/pdf"
             onChange={(e) => saveFile(e.target.files[0])}
-            
             className="w-full p-2 mt-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <br></br>
@@ -74,4 +84,4 @@ function UploadReceipt() {
   );
 }
 
-export default UploadReceipt;
+export default SendPdf;
