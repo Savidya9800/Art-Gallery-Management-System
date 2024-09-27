@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
+import logo from '../../Nav Component/logo.JPG';
 
 function AdminArtwork(props) {
   const {
@@ -30,13 +31,21 @@ function AdminArtwork(props) {
     const doc = new jsPDF();
 
     // Add a background color for the title
-    doc.setFillColor(230, 230, 250); // Light lavender background
+    doc.setFillColor(167, 143, 81); // Light lavender background
     doc.rect(10, 10, 190, 15, "F"); // Rectangle for title background
 
     // Add title to the PDF
     doc.setFontSize(22);
-    doc.setTextColor(54, 69, 79); // Dark Slate Gray color for text
+    doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
     doc.text("Artwork Report", 14, 20);
+
+    //Add logo
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    const imgWidth = 25; // Width of the logo
+    const imgHeight = 20; // Height of the logo
+    const xPosition = pageWidth - imgWidth - 10;
+    doc.addImage(logo, "JPEG", xPosition, 10, imgWidth, imgHeight);
 
     // Add a line below the title
     doc.setLineWidth(0.5);

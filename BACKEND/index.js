@@ -4,6 +4,9 @@ const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 const router = require("./Routes/artWorkRoutes"); //Artwork-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
 const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
+const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
+const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
+
 
 //const transactionRoutes = require("./Routes/transactionRoutes");
 //const paymentRoutes = require("./Routes/paymentRoutes");
@@ -15,6 +18,10 @@ const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 //event
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
 const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
+
+
+//user
+const bookingUserRoutes = require("./Routes/user.route");
 
 const app = express();
 const cors = require("cors");
@@ -53,11 +60,23 @@ app.use("/artWorks", router);
 //Inquiry-manager
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry
 
+//bidding manager
+app.use(express.json()); //data inserted will be made responsive to json
+app.use("/bidding", biddingrouter); //bidding is using the local host 5000/bidding
+
+//bidding admin
+app.use("/Adminbid", adminBiddingRouter); //bidding is using the local host 5000/bidding
+
+
 
 //event
 app.use('/artist', Artistrouter);
 app.use('/requestEvent', RequestEventrouter);
 
+//user
+///routes
+app.use("/artWorks", router);
+app.use("/api/bookingUsers", bookingUserRoutes);
 
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
@@ -110,15 +129,15 @@ app.post("/uploadFile", uplode.single("file"), async (req, res) => {
 });
 
 //Next video
-app.get("/getFile", async (req, res) => {
-  try {
-    const data = await pdfSchema.find();
-    res.status(200).send({ status: 200, data: data });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ status: 500, message: "Error in getting pdf" });
-  }
-});
+// app.get("/getFile", async (req, res) => {
+//   try {
+//     const data = await pdfSchema.find();
+//     res.status(200).send({ status: 200, data: data });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send({ status: 500, message: "Error in getting pdf" });
+//   }
+// });
 
 //Insert Model Part in Payment Receipt
 app.post("/uploadReceipt", uplode.single("file"), async (req, res) => {

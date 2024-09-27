@@ -60,7 +60,7 @@ function NavigationBar() {
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainTicketing">Tickets</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us
@@ -76,11 +76,15 @@ function NavigationBar() {
             />
             <Button className="searchbtn" variant="outline-success">Search</Button>
           </Form>
+
+          <a
+            href="/profile">
           <img
             src={img2}
             style={{ height: "50px", marginRight: "10px" }}
             alt="User"
           />
+          </a>
         </Navbar.Collapse>
       </Container>
     </Navbar>

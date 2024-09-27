@@ -29,6 +29,19 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
+//Bidding user imports are here 
+
+import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
+import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
+import CreateBid from "./Components/Bidding Component/BiddingAdd/CreateBid";
+import BidUpdate from "./Components/Bidding Component/UpdateBid/BidUpdate";
+
+//Bidding Admin imports are here
+
+import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBidAdd";
+import ArtBidView from "./Components/Bidding Component/AdminBid/AdminBidView/ArtBidView";
+import ArtBidUpdate from "./Components/Bidding Component/AdminBid/AdminBidUpdate/ArtBidUpdate";
+
 //Artwork-manager
 import ArtworksComp from "./Components/Artwork Component/ArtworkDetails/ArtworksComp";
 import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtworkComp";
@@ -47,9 +60,32 @@ import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/V
 import Visitors from "./Components/Ticketing Component/Ticket Visitor Component/Visitor Details/Visitors";
 import UpdateVisitor from "./Components/Ticketing Component/Ticket Visitor Component/UpdateVisitor/UpdateVisitor";
 import BookingConfirmation from "./Components/Ticketing Component/Ticket Visitor Component/BookingConfirmation/BookingConfirmation";
+import MessageAdmin from "./Components/Ticketing Component/Ticket Issues/MessageAdmin";
+import MessageResult from "./Components/Ticketing Component/Ticket Issues/MessageResults";
+import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
+import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
+
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
+
+//Event Manager
+import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
+import ArtistRegister from "./Components/Event Component/Artist/ArtistRegister";
+import RequestEventForm from "./Components/Event Component/Artist/RequestEventForm";
+import EventMangerRequest from "./Components/Event Component/EventManager/EventMangerRequest";
+
+import UserSee from "./Components/Event Component/User/UserSee";
+import PdfGenerator from "./Components/Event Component/Artist/PdfGenerator";
+
+
+//User Manager
+import AdminUsers from "./Components/User Component/AdminUsers/AdminUsers";
+import Login from "./Components/User Component/Login/Login";
+import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
+import Profile from "./Components/User Component/Profile/Profile";
+import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
+
 
 function App() {
   return (
@@ -94,9 +130,12 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation" element={<BookingConfirmation />}
-          />
+
+          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+          <Route path="/messageAdmin" element={<MessageAdmin />} />
+          <Route path="/messageResult" element={<MessageResult />} />
+          <Route path="/message" element ={<Messages/>}/>
+          <Route path="/visitor-count" element ={<VisitorCount/>}/>
 
           {/* Inquiry Manager */}
           <Route path="/mainInquary" element={<InquiryComp />} />
@@ -113,11 +152,37 @@ function App() {
           
           
 
+          {/* Event Manager */}
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/userSee" element={<UserSee />} />
+          <Route path="/pdf-generator" element={<PdfGenerator />} />
+          <Route path="/event-manager-request" element={<EventMangerRequest />} />
+          <Route path="/artistLogin" element={<ArtistLogin />} />
+          <Route path="/artistRegister" element={<ArtistRegister />} />
+          <Route path="/requestEventForm" element={<RequestEventForm />} />
+
           {/* Bidding Manager */}
+
+          <Route path="/mainBidding" element={<BiddingComp />} />
+          <Route path="/mainViewBid" element={<ViewBid />} />
+          <Route path="/startBidding" element={<StartBid />} />
+          <Route path="/mainCreateBid" element={<CreateBid />} />
+          <Route path="/mainViewBid/:id" element={<BidUpdate />} />
+          
+          <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
+          <Route path="/adminBidView" element={<ArtBidView />} />
+          <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+        
+
 
           {/* Financial Manager */}
 
           {/* User Manager */}
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<CreaetProfile />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
 
           {/* Event Manager */}
         </Routes>
