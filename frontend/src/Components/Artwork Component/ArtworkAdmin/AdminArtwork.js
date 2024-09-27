@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
+import logo from '../../Nav Component/logo.JPG';
 
 function AdminArtwork(props) {
   const {
@@ -24,19 +25,28 @@ function AdminArtwork(props) {
     price,
   } = props.ARTWORK;
   const history = useNavigate();
+  const [accepted, setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
     const doc = new jsPDF();
 
     // Add a background color for the title
-    doc.setFillColor(230, 230, 250); // Light lavender background
+    doc.setFillColor(167, 143, 81); // Light lavender background
     doc.rect(10, 10, 190, 15, "F"); // Rectangle for title background
 
     // Add title to the PDF
     doc.setFontSize(22);
-    doc.setTextColor(54, 69, 79); // Dark Slate Gray color for text
+    doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
     doc.text("Artwork Report", 14, 20);
+
+    //Add logo
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    const imgWidth = 25; // Width of the logo
+    const imgHeight = 20; // Height of the logo
+    const xPosition = pageWidth - imgWidth - 10;
+    doc.addImage(logo, "JPEG", xPosition, 10, imgWidth, imgHeight);
 
     // Add a line below the title
     doc.setLineWidth(0.5);
@@ -121,6 +131,22 @@ function AdminArtwork(props) {
     }
   };
 
+  const handleAccept = async () => {
+    const updatedData = {
+      accepted: true, // Setting accepted to true
+      place, // Include other relevant data if needed
+      // Add other properties here if needed (like title, description, etc.)
+    };
+
+    try {
+      const response = await axios.patch(`http://localhost:5000/artWorks/updateart/${_id}`, updatedData);
+      console.log("Artwork updated successfully:", response.data);
+      setAccepted(true); // Update accepted state in UI
+    } catch (error) {
+      console.error("Error updating artwork:", error.response.data);
+    }
+  };
+
   return (
     <>
       <td className="p-2 border border-gray-300">{_id}</td>
@@ -178,8 +204,8 @@ function AdminArtwork(props) {
           Generate Report
         </Button>
         |
-        <Link to={`/mainArtworkDetails/${_id}`}>
-          <Button variant="success" className="ml-1 mr-1">
+        <Link to={`/mainGallery/`}>
+          <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
             Accept
           </Button>
         </Link>

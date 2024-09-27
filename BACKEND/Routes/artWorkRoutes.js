@@ -7,6 +7,7 @@ router.get("/",artWorkController.getAllArtWorks); //Get All ArtWorks
 router.post("/",artWorkController.addArtWorks); //Add ArtWorks
 router.get("/:id",artWorkController.getById); //Get ArtWorks by ID
 router.put("/:id",artWorkController.updateArtWork); //Update ArtWorks
+router.patch("/updateart/:id",artWorkController.updateArtWork);
 router.delete("/:id",artWorkController.deleteArtWork); //Delete ArtWorks
 
 //Export 

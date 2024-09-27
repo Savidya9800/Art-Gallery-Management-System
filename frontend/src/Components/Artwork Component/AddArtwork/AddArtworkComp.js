@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
@@ -7,6 +7,36 @@ import img2 from "../Images/photo56.png";
 // Add Artwork Component
 function AddArtworkComp() {
   const history = useNavigate();
+  const [errors, setErrors] = useState({ name: "", email: "" });
+  const [imgId, setImgId] = useState("");
+
+    const fetchLastImage = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/getImage");
+        console.log(res.data.data);
+        if (res.data.data.length > 0) {
+          setImgId(res.data.data[0]._id); // Set the ID of the last uploaded image
+        } else {
+          console.log("No images found");
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+  useEffect(() => {
+    if (imgId) {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        img: imgId, 
+      }));
+    }
+  }, [imgId]); 
+
+  const handleFetchImage = () => {
+    fetchLastImage();
+  };
+
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -19,24 +49,52 @@ function AddArtworkComp() {
     dimensions: "",
     date: "",
     description: "",
-    //img: "",
+    img: imgId,
     place: "",
     tags: "",
-    price: "",
+    price: "", 
   });
-
+  
   const [currentStep, setCurrentStep] = useState(1); // To keep track of the current form step
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Validate Full Name to restrict symbols and numbers
+    if (name === "name" && !/^[a-zA-Z\s]*$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "Full Name can only contain letters and spaces.",
+      }));
+    } else if (
+      name === "email" &&
+      !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value)
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Email must be in the format abc@gmail.com.",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
+
     setInputs((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Fetch the last image if needed (optional)
+    await handleFetchImage();
 
+    
+  
     // Validate inputs
     const requiredFields = [
       "name",
@@ -86,7 +144,7 @@ function AddArtworkComp() {
         dimensions: String(inputs.dimensions),
         date: String(inputs.date),
         description: String(inputs.description),
-        //img: String(inputs.img),
+        img: String(imgId),
         place: String(inputs.place),
         tags: String(inputs.tags),
         price: Number(inputs.price),
@@ -125,6 +183,11 @@ function AddArtworkComp() {
             value={inputs.name}
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
+          {errors.name && (
+            <div className="text-red-500 absolute left-[26px] top-[205px] bg-white text-xs">
+              {errors.name}
+            </div>
+          )}
 
           <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
             Email
@@ -136,6 +199,11 @@ function AddArtworkComp() {
             value={inputs.email}
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           ></input>
+          {errors.email && (
+            <div className="text-red-500 absolute left-[26px] top-[300px] bg-white text-xs">
+              {errors.email}
+            </div>
+          )}
 
           <div className="bg-white absolute left-[25px] top-[316px] text-black text-[18px] font-[400] font-Inter">
             Phone Number

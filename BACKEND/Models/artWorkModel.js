@@ -64,6 +64,12 @@ const artWorkSchema = new Schema({
         //required: true
     },
     
+        accepted: {
+            type: Boolean,
+            default: false
+        }
+    
+    
 });
 
 module.exports = mongoose.model("ArtWork", //file name

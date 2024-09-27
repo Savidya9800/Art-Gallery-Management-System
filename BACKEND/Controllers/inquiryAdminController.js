@@ -26,13 +26,13 @@ const getAllResponses = async (req, res) => {
 
 const addResponse = async (req, res,next) => {
 
-    const { response, inquirystatus, Date } = req.body; //Request data to body
+    const { response, inquirystatus } = req.body; //Request data to body
 
     let createResponse;
 
     try {
         
-        createResponse = new InquiryAdmin({ response, inquirystatus, Date });
+        createResponse = new InquiryAdmin({ response, inquirystatus });
         await createResponse.save();
     }
 
@@ -83,12 +83,12 @@ const getResponseById = async (req, res,next) => {
 const updateResponse = async (req, res,next) => {
 
     const id = req.params.id;
-    const { response, inquirystatus, Date } = req.body;
+    const { response, inquirystatus } = req.body;
 
     let updateResponse;
 
     try {
-        updateResponse = await InquiryAdmin.findByIdAndUpdate(id, { response, inquirystatus, Date });
+        updateResponse = await InquiryAdmin.findByIdAndUpdate(id, { response, inquirystatus });
 
         updateResponse = await InquiryAdmin.findById(id);
     }catch (error) {
