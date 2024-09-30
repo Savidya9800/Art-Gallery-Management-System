@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
+import { Link } from 'react-router-dom';
 
-const URL = 'http://localhost:5000/visitors'; // Your API endpoint for fetching visitors
+const URL = 'http://localhost:5000/visitors'; 
 
 const fetchHandler = async () => {
   try {
@@ -13,6 +14,32 @@ const fetchHandler = async () => {
     console.error("Error fetching visitors:", error);
     return null;
   }
+};
+
+const AdminButton = () => {
+  return (
+    <div className="border border-gray-300 rounded-lg p-4 w-full">
+      <a
+        href="/visitordetails"
+        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+      >
+        View Visitor Details (Admin)
+      </a>
+    </div>
+  );
+};
+
+const TicketIssues = () => {
+  return (
+    <div className="border border-gray-300 rounded-lg p-4 w-full">
+      <a
+        href="/message"
+        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+      >
+        View Messages (Admin)
+      </a>
+    </div>
+  );
 };
 
 function VisitorsCount() {
@@ -68,6 +95,10 @@ function VisitorsCount() {
   return (
     <div>
       <NavigationBar />
+      <br />
+      <AdminButton />
+      <TicketIssues />
+
       <br />
       <div className="container mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-5">Visitor Count by Date and Time Slot</h2>
