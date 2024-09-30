@@ -18,12 +18,12 @@ const inventorySchema = new Schema({
     },
 
     date:{
-        type:Date,//data type
+        type:String,//data type
         required:true,//validate
     }
 });
 
 module.exports = mongoose.model(
-    "inventoryModel",//file name
+    "InventoryItem",//file name
     inventorySchema//function name
 )
