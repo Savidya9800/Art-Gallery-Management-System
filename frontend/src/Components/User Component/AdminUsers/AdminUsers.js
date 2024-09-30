@@ -23,11 +23,11 @@ const AdminUsers = () => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    const tableColumn = ["ID", "Name", "Email"];
+    const tableColumn = ["ID", "Username", "Email"];
     const tableRows = [];
 
     users.forEach((user) => {
-      const userData = [user._id, user.name, user.email];
+      const userData = [user._id, user.username, user.email];
       tableRows.push(userData);
     });
 
