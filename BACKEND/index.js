@@ -1,8 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require("path");
-const multer = require("multer");
-
 const router = require("./Routes/artWorkRoutes");
 const routerinv = require("./Routes/inventoryRouter");
 
@@ -13,17 +10,14 @@ const cors = require("cors");
 //Middleware
 app.use(express.json());
 app.use(cors());
-app.use("/artWorks", router);
-app.use("/inventory", routerinv); //Mayomi
+app.use("/artWorks", router );
+app.use("/inventory", routerinv);//Mayomi
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
-mongoose
-  .connect(
-    "mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/ArtGallery_DB"
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .then(() => {
+mongoose.connect("mongodb+srv://admin:ohYTKpIAkkGLhNTd@cluster0.omv4o.mongodb.net/ArtGallery_DB")
+.then(() => console.log("Connected to MongoDB"))
+.then(() => {
     app.listen(5000);
-  })
-  .catch((err) => console.log(err));
+})
+.catch(err => console.log(err));

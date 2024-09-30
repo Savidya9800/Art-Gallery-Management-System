@@ -8,45 +8,46 @@ const getAllInventory = async (req, res) => {
         inventory = await Inventory.find();
 
     }catch (err){
-        return res.status(500).json({message:"Server Error",error: err.message});
+        console.log(err);
     }
     //not Found
-    if(!inventory || inventory.length === 0){
-        return res.status(404).json({message:"Inventory not found"});
+    if(!inventory){
+        return res.status(400).json({message:"Inventory not found"});
     }
     //Display all inventories
     return res.status(200).json({ inventory });
 };
 
 //data insert
-const addInventory = async (req, res) => {
+const addInventory = async (req, res, next) => {
     const {productname,price,itemCount,date}= req.body;
+
     let inventory;
 
     try{
-        inventory = new Inventory({
-            productname,
-            price,
-            itemCount,
-            date
-        });
+        inventory = new Inventory({productname,price,itemCount,date});
         await inventory.save();
     }catch(err) {
-        return res.status(500).json({message:"unable to add inventory",error: err.message});
+        console.log(err);
     }
-
-        return res.status(201).json({message:"Inventory added successfully", inventory});
+    //not insert inventory
+    if(!inventory){
+        return res.status(404).json({message:"unable to add inventory"});
+        }
+        return res.status(200).json({ inventory });
 };
 
 //get by id
-const getByID = async (req, res)=>{
+const getByID = async (req, res, next)=>{
+
     const id = req.params.id;
+
     let inventory;
 
     try{
         inventory = await Inventory.findById(id);
         }catch(err) {
-           return res.status(500).json({message:"Server Error",error: err.message});
+            console.log(err);
                 }
 
     //not available inventory
@@ -57,39 +58,42 @@ const getByID = async (req, res)=>{
 };
 
 //update inventory details
-const updateInventory = async (req,res) => {
+const updateInventory = async (req,res,next) => {
+
     const id = req.params.id;
-    const {productname, price, itemCount, date }= req.body;
+    const {productname,price,itemCount,date}= req.body;
+
     let inventory;
 
     try{
         inventory = await Inventory.findByIdAndUpdate(id,
-            {productname,price, itemCount,date},
-            {new: true}
-        );
+            {productname:name,price: Number, itemCount:Number,date:date});
+            inventory = await inventory.save();
     }catch(err) {
-       return res.status(500).json({message:"Unable to update inventory",error: err.message});
+        console.log(err);
             }
 
     if(!inventory){
-        return res.status(404).json({message:"Inventory not found"});
+        return res.status(404).json({message:"unable to update user Details"});
         }
-        return res.status(200).json({ message:"Inventory updated successfully", inventory });
+        return res.status(200).json({ inventory });
+
 };
-// delete inventory item
-const deleteInventory = async (req,res) =>{
+// delete inventory details
+const deleteInventory = async (req,res,next) =>{
     const id = req.params.id;
+
     let inventory; 
 
     try{
         inventory = await Inventory.findByIdAndDelete(id)
     }catch(err){
-       return res.status(500).json({message:"Unable to delete  inventory",error: err.message});
+        console.log(err);
     }
     if(!inventory){
-        return res.status(404).json({message:"Inventory not found for delete"});
+        return res.status(404).json({message:"unable to delete user Details"});
         }
-        return res.status(200).json({ message:"Inventory deleted successfully", inventory });
+        return res.status(200).json({ inventory });
 };
 
 

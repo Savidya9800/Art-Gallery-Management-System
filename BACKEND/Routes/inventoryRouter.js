@@ -1,6 +1,5 @@
 const express = require("express");
 const routerinv = express.Router();
-const{check, validationResult} = require("express-validator");
 //insert model
 const Inventory = require("../Models/inventoryModel");
 //insert inventory controler

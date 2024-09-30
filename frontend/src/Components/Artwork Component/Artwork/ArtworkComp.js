@@ -7,7 +7,6 @@ function ArtworkComp(props) {
     <div>
       <h1>Artwork Display</h1>
       <br></br>
-      <h1> ID :{_id}</h1>
       <h1> Name :{name}</h1>
       <h1> Email :{email}</h1>
       <h1> Phone :{pNumber}</h1>

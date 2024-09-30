@@ -1,41 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+//import axios from 'axios';
+//import { useNavigate } from 'react-router-dom';
 
 function ShopComp(props) {
-  const {_id, productname, price, itemCount, date} = props.INVENTORY;
+  const { INVENTORY } = props;
+  //const histroy = useNavigate();
 
-  // Delete function
-  const history = useNavigate();
+  if (!INVENTORY) {
+    return null; // Or display a loading/error message
+  }
 
-  const deleteHandler = async () => {
-    await axios.delete(`http://localhost:5000/inventory/${_id}`)
-      .then(res => res.data)
-      .then(() => history("/"))
-      .then(() => history("/itemview"));
-  };
+  const { _id,productname,price,itemCount,date } = INVENTORY;
 
   return (
-    <tr>
-      <td className="px-6 py-3">{_id}</td>
-      <td className="px-6 py-3">{productname}</td>
-      <td className="px-6 py-3">LKR {price.toFixed(2)}</td>
-      <td className="px-6 py-3">{itemCount}</td>
-      <td className="px-6 py-3">{new Date(date).toLocaleDateString()}</td>
-      <td className="px-6 py-3 flex gap-2">
-        <Link to={`/itemview/${_id}`} className="bg-yellow-500 text-white px-4 py-1 rounded">
-          Edit
-        </Link>
-        <button 
-          onClick={deleteHandler} 
-          className="bg-red-500 text-white px-4 py-1 rounded"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
+    <div>
+      <h6>product Code:{_id}</h6>
+      <h6>Product Name:{productname}</h6>
+      <h6>Price:{price}</h6>
+      <h6>Item Count:{itemCount}</h6>
+      <h6>Date:{date}</h6>
+      <br></br>
+      <button type="button">Update</button>
+      <button type="button">Delete</button>
+      <br></br><br></br>
+    </div>
   );
 }
 
-export default ShopComp;
+export default ShopComp
