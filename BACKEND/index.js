@@ -5,10 +5,15 @@ const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 //Artwork-manager
 const router = require("./Routes/artWorkRoutes");
 
+//Inquiry-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
 const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
+
+//Bidding-manager
 const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
 const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
+
+//Financial-manager
 
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
@@ -19,6 +24,10 @@ const RequestEventrouter = require("./Routes/EventRoutes/requestEventRoutes"); /
 
 //user
 const bookingUserRoutes = require("./Routes/user.route");
+
+//Finance
+const financeRouter = require("./Routes/financeRouter"); // event
+const transactionRouter = require("./Routes/transactionRoutes"); // event
 
 const app = express();
 const cors = require("cors");
@@ -32,7 +41,7 @@ app.use("/inventory", routerinv); //Mayomi
 
 //Artwork-manager
 app.use("/artWorks", router);
-app.use('/images', express.static('./file/')); 
+app.use("/images", express.static("./file/"));
 
 //Inquiryuser
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
@@ -67,9 +76,9 @@ app.use("/requestEvent", RequestEventrouter);
 app.use("/artWorks", router);
 app.use("/api/bookingUsers", bookingUserRoutes);
 
-//Financial Manager
-//app.use("/transactions", transactionRoutes);
-//app.use("/api/payments", paymentRoutes);
+app.use("/finance", financeRouter); //Financial Manager
+app.use('/transaction', transactionRouter);
+
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
@@ -127,8 +136,6 @@ app.get("/getFile", async (req, res) => {
   }
 });
 
-
-
 //Image -----
 //Image model part
 require("./Models/artWorkImgModel");
@@ -156,11 +163,13 @@ app.post("/uploadImg", uploadimg.single("image"), async (req, res) => {
   try {
     await ImgSchema.create({ image: imageName });
     // res.json({ status: "ok" });
-    res.status(200).send({ status: 200, message: "Image uploaded successfully" });
+    res
+      .status(200)
+      .send({ status: 200, message: "Image uploaded successfully" });
   } catch (error) {
     res.json({ status: "error" });
   }
-}); 
+});
 
 // app.get("/getImage", async (req, res) => {
 //   try {
