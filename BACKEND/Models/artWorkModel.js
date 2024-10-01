@@ -62,6 +62,10 @@ const artWorkSchema = new Schema({
     type: Number,
     //required: true
   },
+  accepted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model(

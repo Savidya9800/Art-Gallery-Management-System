@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
@@ -7,7 +7,44 @@ import img2 from "../Images/photo56.png";
 // Add Artwork Component
 function AddArtworkComp() {
   const history = useNavigate();
-  const [errors, setErrors] = useState({ name: "", email: "" });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    website: "",
+    statement: "",
+    title: "",
+    description: "",
+  });
+  const [imgId, setImgId] = useState("");
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+
+  const fetchLastImage = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/getImage");
+      console.log(res.data.data);
+      if (res.data.data.length > 0) {
+        setImgId(res.data.data[0]._id); // Set the ID of the last uploaded image
+      } else {
+        console.log("No images found");
+      }
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (imgId) {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        img: imgId,
+      }));
+    }
+  }, [imgId]);
+
+  const handleFetchImage = () => {
+    fetchLastImage();
+  };
 
   const [inputs, setInputs] = useState({
     name: "",
@@ -21,7 +58,7 @@ function AddArtworkComp() {
     dimensions: "",
     date: "",
     description: "",
-    //img: "",
+    img: imgId,
     place: "",
     tags: "",
     price: "",
@@ -38,13 +75,53 @@ function AddArtworkComp() {
         ...prevErrors,
         name: "Full Name can only contain letters and spaces.",
       }));
-    } else if (
+    }
+    // Validate email to match the abc@gmail.com format
+    else if (
       name === "email" &&
       !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value)
     ) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         email: "Email must be in the format abc@gmail.com.",
+      }));
+    }
+    // Validate Website/Portfolio to end with .com or .lk
+    else if (
+      name === "website" &&
+      !/^(https?:\/\/)?([a-zA-Z0-9.-]+)\.(com|lk)$/.test(value)
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        website: "Website must end with .com or .lk.",
+      }));
+    }
+    // Validate Artist Statement to not exceed 10 words
+    else if (
+      name === "statement" &&
+      value.split(" ").filter(Boolean).length > 10
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        statement: "Artist Statement can only contain up to 10 words.",
+      }));
+    }
+    // Validate Title of Artwork to restrict symbols and numbers
+    else if (name === "title" && !/^[a-zA-Z\s\-']*$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        title:
+          "Title can only contain letters, spaces, hyphens, and apostrophes.",
+      }));
+    }
+    // Validate Description to not exceed 15 words
+    else if (
+      name === "description" &&
+      value.split(" ").filter(Boolean).length > 15
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        description: "Description can only contain up to 15 words.",
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -61,6 +138,9 @@ function AddArtworkComp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Fetch the last image if needed (optional)
+    await handleFetchImage();
 
     // Validate inputs
     const requiredFields = [
@@ -111,7 +191,7 @@ function AddArtworkComp() {
         dimensions: String(inputs.dimensions),
         date: String(inputs.date),
         description: String(inputs.description),
-        //img: String(inputs.img),
+        img: String(imgId),
         place: String(inputs.place),
         tags: String(inputs.tags),
         price: Number(inputs.price),
@@ -127,8 +207,14 @@ function AddArtworkComp() {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  const handleTagClick = (tag) => {
+    // Append the clicked tag to the input value
+    const updatedTags = inputs.tags ? `${inputs.tags} ${tag}` : tag;
+    handleChange({ target: { name: "tags", value: updatedTags } });
+  };
+
   return (
-    <form className="form ml-[60%] mt-5" onSubmit={handleSubmit}>
+    <form className="form ml-[60%] mt-4" onSubmit={handleSubmit}>
       {currentStep === 1 && (
         <div className=" relative w-[523px] h-[800px]">
           <div className="absolute w-[513px] h-[776px] bg-white border-2 border-black rounded-[25px]"></div>
@@ -148,6 +234,7 @@ function AddArtworkComp() {
             name="name"
             onChange={handleChange}
             value={inputs.name}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
           {errors.name && (
@@ -164,6 +251,7 @@ function AddArtworkComp() {
             name="email"
             onChange={handleChange}
             value={inputs.email}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           ></input>
           {errors.email && (
@@ -179,6 +267,7 @@ function AddArtworkComp() {
           <input
             type="text"
             name="pNumber"
+            required
             onChange={(e) => {
               const value = e.target.value;
               // Ensure +94 is always present at the beginning, and enforce digit validation for the rest
@@ -193,7 +282,6 @@ function AddArtworkComp() {
             value={inputs.pNumber.startsWith("+94") ? inputs.pNumber : "+94"} // Ensure the value always starts with +94
             className="bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px] pl-4"
             placeholder="Enter your phone number"
-            required
           />
 
           <div className=" bg-white absolute left-[25px] top-[408px] text-black text-[18px] font-[400] font-Inter">
@@ -204,8 +292,14 @@ function AddArtworkComp() {
             name="website"
             onChange={handleChange}
             value={inputs.website}
+            required
             className=" bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px] pl-4"
           ></input>
+          {errors.website && (
+            <div className="text-red-500 absolute left-[26px] top-[488px] bg-white text-xs">
+              {errors.website}
+            </div>
+          )}
 
           <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
             Biography
@@ -216,6 +310,7 @@ function AddArtworkComp() {
             name="biography"
             onChange={handleChange}
             value={inputs.biography}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[540px] border border-black rounded-[15px]"
           ></input>
 
@@ -227,12 +322,27 @@ function AddArtworkComp() {
             name="statement"
             onChange={handleChange}
             value={inputs.statement}
+            required
             className="pl-4 bg-white absolute w-[468px] h-[107px] left-[25px] top-[635px] border border-black rounded-[15px]"
           ></input>
+          {errors.statement && (
+            <div className="text-red-500 absolute left-[26px] top-[746px] bg-white text-xs">
+              {errors.statement}
+            </div>
+          )}
 
+          {/* Disable the button if any of the fields are empty */}
           <Button
             className="absolute left-[433px] top-[796px]"
             onClick={nextStep}
+            disabled={
+              !inputs.name ||
+              !inputs.email ||
+              !inputs.pNumber ||
+              !inputs.website ||
+              !inputs.biography ||
+              !inputs.statement
+            }
           >
             Next
           </Button>
@@ -257,8 +367,14 @@ function AddArtworkComp() {
             name="title"
             onChange={handleChange}
             value={inputs.title}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
           />
+          {errors.title && (
+            <div className="text-red-500 absolute left-[26px] top-[205px] bg-white text-xs">
+              {errors.title}
+            </div>
+          )}
 
           <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
             Medium
@@ -267,6 +383,7 @@ function AddArtworkComp() {
             name="medium"
             onChange={handleChange}
             value={inputs.medium}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
           >
             <option value="">Select Medium</option>
@@ -284,6 +401,7 @@ function AddArtworkComp() {
             name="dimensions"
             onChange={handleChange}
             value={inputs.dimensions}
+            required
             className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[348px] border border-black rounded-[15px]"
           >
             <option value="">Select Dimensions</option>
@@ -301,6 +419,8 @@ function AddArtworkComp() {
             name="date"
             onChange={handleChange}
             value={inputs.date}
+            required
+            max={todayString} // Restrict future dates
             className="pl-4 pr-3 bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
           ></input>
 
@@ -313,8 +433,14 @@ function AddArtworkComp() {
             name="description"
             onChange={handleChange}
             value={inputs.description}
+            required
             className="pl-4  bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
           ></input>
+          {errors.description && (
+            <div className="text-red-500 absolute left-[26px] top-[655px] bg-white text-xs">
+              {errors.description}
+            </div>
+          )}
 
           <Button
             className="absolute left-[20px] top-[726px]"
@@ -322,9 +448,18 @@ function AddArtworkComp() {
           >
             Back
           </Button>
+
+          {/* Disable the button if any of the fields are empty */}
           <Button
             className="absolute left-[433px] top-[726px]"
             onClick={nextStep}
+            disabled={
+              !inputs.title ||
+              !inputs.medium ||
+              !inputs.dimensions ||
+              !inputs.date ||
+              !inputs.description
+            }
           >
             Next
           </Button>
@@ -388,8 +523,15 @@ function AddArtworkComp() {
                 <input
                   type="text"
                   name="price"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Check if input is a number or empty (to allow deletion)
+                    if (!isNaN(value) || value === "") {
+                      handleChange(e);
+                    }
+                  }}
                   value={inputs.price}
+                  required
                   placeholder="Enter the starting bid price"
                   className="pl-2 w-full h-full border-none outline-none bg-white rounded-[15px]"
                 />
@@ -417,21 +559,17 @@ function AddArtworkComp() {
             </div>
 
             <div className="bg-white absolute left-[25px] top-[500px] flex space-x-2">
-              <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                #paint
-              </span>
-              <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                #wallart
-              </span>
-              <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                #wood
-              </span>
-              <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                #abstract
-              </span>
-              <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                #portrait
-              </span>
+              {["#paint", "#wallart", "#wood", "#abstract", "#portrait"].map(
+                (tag) => (
+                  <span
+                    key={tag}
+                    className="text-white text-[14px] font-[400] bg-black px-2 py-1 rounded-lg cursor-pointer "
+                    onClick={() => handleTagClick(tag)}
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
             </div>
 
             <input
@@ -439,6 +577,7 @@ function AddArtworkComp() {
               name="tags"
               onChange={handleChange}
               value={inputs.tags}
+              required
               className="bg-white absolute w-[470px] h-[48px] left-[25px] top-[550px] border border-black rounded-[15px] px-4"
             />
           </div>
@@ -449,9 +588,11 @@ function AddArtworkComp() {
           >
             Back
           </Button>
+          {/* Disable the button if any of the fields are empty */}
           <Button
             className="absolute left-[433px] top-[726px]"
             onClick={nextStep}
+            disabled={!inputs.place || !inputs.tags}
           >
             Next
           </Button>

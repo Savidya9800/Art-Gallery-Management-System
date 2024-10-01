@@ -12,13 +12,10 @@ const InquiryAdminSchema = new Schema({
     },
     inquirystatus: {
         type: String,
-        required: true
+        required:true
     },
     
-    Date: {
-        type: Date,
-        required: true
-    }
+  
 });
 
 module.exports = mongoose.model('InquiryAdminModel', InquiryAdminSchema);

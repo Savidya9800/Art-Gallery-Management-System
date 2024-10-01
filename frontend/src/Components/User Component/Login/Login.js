@@ -10,7 +10,6 @@ import {
 import BookingUserService from "../../../Services/UserService";
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +40,7 @@ const Login = () => {
       if (response.data.user.role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/mainHome");
+        navigate("/");
       }
     } catch (err) {
       console.error(err);
@@ -69,7 +68,7 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             style={{ borderColor: "#d1b77d" }}

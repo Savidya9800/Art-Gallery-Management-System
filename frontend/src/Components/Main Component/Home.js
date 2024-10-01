@@ -14,17 +14,26 @@ import './Home.css';
 
 function Home() {
   const [index, setIndex] = useState(0);
+  const [popupImage, setPopupImage] = useState(null);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
+  const handleImageClick = (src) => {
+    setPopupImage(src);
+  };
+
+  const handleClosePopup = () => {
+    setPopupImage(null);
+  };
+
   const AboutGallery = () => {
     return (
-      <div className="bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">ABOUT OUR GALLERY</h2>
-          <h3 className="text-center text-xl font-semibold text-gray-700 mt-2">VICTORY ART</h3>
+      <div className="py-12 bg-white">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold text-center text-gray-900">ABOUT OUR GALLERY</h2>
+          <h3 className="mt-2 text-xl font-semibold text-center text-gray-700">VICTORY ART</h3>
 
           {/* Content Section */}
           <div className="mt-10 lg:grid lg:grid-cols-2 lg:gap-8">
@@ -44,7 +53,7 @@ function Home() {
                 </p>
               </div>
 
-              <button className="px-6 py-2 border border-gray-900 text-gray-900 rounded-md hover:bg-gray-100">
+              <button className="px-6 py-2 text-gray-900 border border-gray-900 rounded-md bg-gray-50 hover:bg-gray-100">
                 Read More
               </button>
             </div>
@@ -53,8 +62,9 @@ function Home() {
             <div className="mt-10 lg:mt-0">
               <img
                 className="w-full rounded-lg shadow-lg"
-                src={img4} // You can replace this with the actual image path or use an imported image
+                src={img4}
                 alt="Gallery"
+                onClick={() => handleImageClick(img4)} // Click to open popup
               />
             </div>
           </div>
@@ -65,72 +75,72 @@ function Home() {
 
   const CollectionGallery = () => {
     return (
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-12 bg-white">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           {/* Title Section */}
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">EXPLORE</h2>
-          <h3 className="text-center text-xl font-medium text-gray-500 mt-2">LATEST COLLECTION IN OUR GALLERY</h3>
-  
+          <h2 className="text-3xl font-extrabold text-center text-gray-900">EXPLORE</h2>
+          <h3 className="mt-2 text-xl font-medium text-center text-gray-500">LATEST COLLECTION IN OUR GALLERY</h3>
+
           {/* Collection Grid */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            
+          <div className="grid grid-cols-1 gap-8 mt-10 sm:grid-cols-2 lg:grid-cols-3">
             {/* Collection 1 */}
             <div className="text-center">
               <img
-                className="w-full h-64 object-cover rounded-lg shadow-lg"
-                src= {img7}
+                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
+                src={img7}
                 alt="Autumn Curation"
+                onClick={() => handleImageClick(img7)} // Click to open popup
               />
               <h4 className="mt-4 text-lg font-semibold text-gray-900">AUTUMN CURATION</h4>
               <p className="mt-2 text-gray-600">
-                Celebrate the arrival of autumn with us! Our curators have carefully selected a stunning array of autumn-inspired artworks for you. Explore our 
+                Celebrate the arrival of autumn with us! Our curators have carefully selected a stunning array of autumn-inspired artworks for you. Explore our
                 <span className="font-semibold text-gray-800"> Autumn Collection now!</span>
               </p>
-              <button className="mt-4 px-6 py-2 border border-gray-800 text-gray-900 rounded-md hover:bg-gray-100">
+              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md bg-gray-50 hover:bg-gray-100">
                 Explore
               </button>
             </div>
-  
+
             {/* Collection 2 */}
             <div className="text-center">
               <img
-                className="w-full h-64 object-cover rounded-lg shadow-lg"
+                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
                 src={img8}
                 alt="Maják Collection"
+                onClick={() => handleImageClick(img8)} // Click to open popup
               />
               <h4 className="mt-4 text-lg font-semibold text-gray-900">MAJÁK COLLECTION</h4>
               <p className="mt-2 text-gray-600">
-                Explore the art of talented deaf blind artists. Discover a whole new world of art that's created in a way you've never seen before! For more information, click 
+                Explore the art of talented deaf blind artists. Discover a whole new world of art that's created in a way you've never seen before! For more information, click
                 <span className="font-semibold text-blue-600"> here!</span>
               </p>
-              <button className="mt-4 px-6 py-2 border border-gray-800 text-gray-900 rounded-md hover:bg-gray-100">
+              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md bg-gray-50 hover:bg-gray-100">
                 Explore
               </button>
             </div>
-  
+
             {/* Collection 3 */}
             <div className="text-center">
               <img
-                className="w-full h-64 object-cover rounded-lg shadow-lg"
+                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
                 src={img5}
                 alt="Limited Merch Collection"
+                onClick={() => handleImageClick(img5)} // Click to open popup
               />
               <h4 className="mt-4 text-lg font-semibold text-gray-900">LIMITED MERCH COLLECTION</h4>
               <p className="mt-2 text-gray-600">
-                Victory Art is excited to announce its limited edition merch collection. Explore our collection 
+                Victory Art is excited to announce its limited edition merch collection. Explore our collection
                 <span className="font-semibold text-blue-600"> here!</span>
               </p>
-              <button className="mt-4 px-6 py-2 border border-gray-800 text-gray-900 rounded-md hover:bg-gray-100">
+              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md hover:bg-gray-100 bg-gray-50">
                 Explore
               </button>
             </div>
-  
           </div>
         </div>
       </div>
     );
   };
-  
 
   return (
     <div>
@@ -141,21 +151,21 @@ function Home() {
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
             <img
-              className="w-full h-96 object-cover"
+              className="object-cover w-full h-96"
               src={img1}
               alt="First slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
-              className="w-full h-96 object-cover"
+              className="object-cover w-full h-96"
               src={img2}
               alt="Second slide"
             />
           </Carousel.Item>
           <Carousel.Item>
             <img
-              className="w-full h-96 object-cover"
+              className="object-cover w-full h-96"
               src={img3}
               alt="Third slide"
             />
@@ -165,6 +175,26 @@ function Home() {
       <AboutGallery />
       <CollectionGallery />
       <FooterComp />
+
+      {/* Popup Image Modal */}
+      {popupImage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative">
+            <img
+              className="rounded-lg shadow-lg"
+              src={popupImage}
+              alt="Popup"
+              onClick={handleClosePopup}
+            />
+            <button
+              className="absolute top-0 right-0 p-2 text-white bg-red-500 rounded-full hover:bg-red-600"
+              onClick={handleClosePopup}
+            >
+              X
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

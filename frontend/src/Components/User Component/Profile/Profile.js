@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   Container,
   Card,
@@ -21,7 +23,11 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserData();
+    if (localStorage.getItem("user")) {
+      fetchUserData();
+    } else {
+      navigate("/login");
+    }
   }, []);
 
   const fetchUserData = async () => {
@@ -185,6 +191,11 @@ const Profile = () => {
               <Button variant="danger" onClick={handleDeleteAccount}>
                 Delete Account
               </Button>
+              <Link to="/mainArtworkDetails">
+                <button type="button" className="ml-2 btn btn-primary">
+                  Artwork Details
+                </button>
+              </Link>
             </Col>
           </Row>
         </Card.Body>

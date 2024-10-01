@@ -4,6 +4,7 @@ import axios from 'axios';
 import Visitor from '../Visitor/Visitor';
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
+import { Link } from 'react-router-dom';
 
 const URL = 'http://localhost:5000/visitors'; // Corrected URL
 
@@ -45,6 +46,7 @@ function Visitors() {
   return (
     <div>
       <NavigationBar />
+      
       <br></br>
       <input
         onChange={(e) => setSearchQuery(e.target.value)}

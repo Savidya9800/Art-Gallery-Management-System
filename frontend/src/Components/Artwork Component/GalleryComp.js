@@ -1,27 +1,20 @@
 import React from "react";
 import NavigationBar from "../Nav Component/NavigationBar";
 import FooterComp from "../Nav Component/FooterComp";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import ImgUploader from "./ImgUploader/ImgUploader";
 
 function GalleryComp() {
+  const { id } = useParams(); // Get the id from the URL parameters
+
   return (
     <div>
-      <NavigationBar />
-      <h1>Gallery</h1>
-      <br></br>
-      <Link to="/mainArtworkDetails">
-        <button type="button" class="btn btn-primary">
-          Artwork Details
-        </button>
-      </Link>
-      <br></br>
-      <br></br>
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
 
-      <Link to="/mainAdminArtworks">
-        <button type="button" class="btn btn-primary">
-          Artwork Details-Admin
-        </button>
-      </Link>
+      {/* Pass the id prop to ImgUploader */}
+      <ImgUploader artworkId={id} />
 
       <FooterComp />
     </div>
