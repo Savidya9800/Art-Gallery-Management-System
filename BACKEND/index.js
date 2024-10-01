@@ -5,14 +5,16 @@ const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
 //Artwork-manager
 const router = require("./Routes/artWorkRoutes");
 
+//Inquiry-manager
 const inquiryrouter = require("./Routes/inquiryRoutes"); //Inquiry-manager
 const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
+
+//Bidding-manager
 const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
 const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
 
 //Financial-manager
-const pdfSchema = require("./Models/artWorkImgModel"); //pdf
-const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
+
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
 
