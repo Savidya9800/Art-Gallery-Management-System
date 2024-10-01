@@ -10,6 +10,9 @@ const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
 const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
 const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
 
+//Financial-manager
+const pdfSchema = require("./Models/artWorkImgModel"); //pdf
+const pdfSchema2 = require("./Models/paymentReceiptModel"); //pdf
 const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
 
@@ -20,12 +23,19 @@ const RequestEventrouter = require("./Routes/EventRoutes/requestEventRoutes"); /
 //user
 const bookingUserRoutes = require("./Routes/user.route");
 
+//Finance
+const financeRouter = require("./Routes/financeRouter"); // event
+const transactionRouter = require("./Routes/transactionRoutes"); // event
+
 const app = express();
 const cors = require("cors");
 
 //Middleware
 app.use(express.json());
 app.use(cors());
+
+//Inventory Manager
+app.use("/inventory", routerinv); //Mayomi
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -43,7 +53,6 @@ app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
-
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -65,9 +74,9 @@ app.use("/requestEvent", RequestEventrouter);
 app.use("/artWorks", router);
 app.use("/api/bookingUsers", bookingUserRoutes);
 
-//Financial Manager
-//app.use("/transactions", transactionRoutes);
-//app.use("/api/payments", paymentRoutes);
+app.use("/finance", financeRouter); //Financial Manager
+app.use('/transaction', transactionRouter);
+
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd

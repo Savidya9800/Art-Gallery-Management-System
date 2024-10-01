@@ -72,12 +72,19 @@ import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfi
 import Profile from "./Components/User Component/Profile/Profile";
 import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
 
+
+//Finance Manager
+import PaymentGateway from "./Components/Finance Component/PaymentGateway/Payment";
+import Payments from "./Components/Finance Component/PaymentGateway/PaymentDetails";
+import Transactions from "./Components/Finance Component/TransactionDetails/Transaction";
+
 //Inventory Manager
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
 import AddInventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
 import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
+
 
 function App() {
   return (
@@ -170,6 +177,9 @@ function App() {
           <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
           {/* Financial Manager */}
+          <Route path="/paymentgateway" element={<PaymentGateway />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/transactions" element={<Transactions />} />
 
           {/* User Manager */}
           <Route path="/admin/users" element={<AdminUsers />} />
