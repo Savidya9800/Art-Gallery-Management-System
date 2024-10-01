@@ -48,7 +48,9 @@ function AdminArtworks() {
 
   return (
     <div className="flex-col min-h-screen">
-      <NavigationBar />
+     <div className="relative z-10">
+        <NavigationBar />
+      </div>
 
       {/* Search Bar */}
       <div className="mt-2">

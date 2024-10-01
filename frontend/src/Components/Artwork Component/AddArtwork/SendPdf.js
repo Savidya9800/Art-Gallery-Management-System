@@ -49,7 +49,9 @@ function SendPdf() {
 
   return (
     <div>
-      <NavigationBar />
+     <div className="relative z-10">
+        <NavigationBar />
+      </div>
       <br></br>
       <br></br>
       <div className="flex items-center justify-center flex-grow">

@@ -35,7 +35,9 @@ function Addinventory() {
     }
   return (
     <div>
-        <NavigationBar/>
+        <div className="relative z-10">
+        <NavigationBar />
+      </div>
       <h1>Add Item</h1>
       <form onSubmit={handleSubmit}>
         <label>productname</label>
