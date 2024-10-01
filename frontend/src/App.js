@@ -17,26 +17,22 @@ import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry";
 
-
 //Inquiry Admin imports
 import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
 import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
 import Updateresponse from "./Components/Inquiry Component/Inquiry admin/Updateresponse";
 import AdminInquiryPage from "./Components/Inquiry Component/Inquiry admin//adminreadinquiry/AdminInquiryPage";
-
 import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
 //Bidding user imports are here
-
 import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
 import CreateBid from "./Components/Bidding Component/BiddingAdd/CreateBid";
 import BidUpdate from "./Components/Bidding Component/UpdateBid/BidUpdate";
 
 //Bidding Admin imports are here
-
 import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBidAdd";
 import ArtBidView from "./Components/Bidding Component/AdminBid/AdminBidView/ArtBidView";
 import ArtBidUpdate from "./Components/Bidding Component/AdminBid/AdminBidUpdate/ArtBidUpdate";
@@ -47,12 +43,6 @@ import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtwork
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 import UploadImage from "./Components/Artwork Component/AddArtwork/UploadImage";
 import SendPdf from "./Components/Artwork Component/AddArtwork/SendPdf";
-
-//Inventory Manager
-import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
-import Addinventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
-import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
-import UpdateInventory from "./Components/Inventory Component/Inventory/InventoryUpdate/UpdateInventory";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
@@ -66,8 +56,6 @@ import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Compon
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
 import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
-
-
 
 //Event-manager
 import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
@@ -83,6 +71,13 @@ import Login from "./Components/User Component/Login/Login";
 import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
 import Profile from "./Components/User Component/Profile/Profile";
 import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
+
+//Inventory Manager
+import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
+import AddInventory from "./Components/Inventory Component/InventoryDetails/Addinventory";
+import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
+import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
+import ShopView from "./Components/Inventory Component/Shop/ShopView";
 
 function App() {
   return (
@@ -116,9 +111,10 @@ function App() {
 
           {/* Inventory Manager */}
           <Route path="/mainInventory" element={<AdminUi />} />
-          <Route path="/addinventoryform" element={<Addinventory />} />
+          <Route path="/addinventoryform" element={<AddInventory />} />
           <Route path="/itemview" element={<InventoryComp />} />
           <Route path="/itemview/:id" element={<UpdateInventory />} />
+          <Route path="/shopView" element={<ShopView />} />
 
           {/* Ticket-manager */}
           <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
@@ -127,7 +123,10 @@ function App() {
           <Route path="/addVisitor" element={<AddVisitor />} />
           <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
           <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route path="/bookingConfirmation" element={<BookingConfirmation />} />
+          <Route
+            path="/bookingConfirmation"
+            element={<BookingConfirmation />}
+          />
           <Route path="/messageAdmin" element={<MessageAdmin />} />
           <Route path="/messageResult" element={<MessageResult />} />
           <Route path="/message" element={<Messages />} />
@@ -143,9 +142,6 @@ function App() {
           <Route path="/Addresponse" element={<Addresponse />} />
           <Route path="/updateresponse/:id" element={<Updateresponse />} />
 
-          
-
-
           {/* Event Manager */}
           <Route
             path="/event-manager-request"
@@ -160,7 +156,6 @@ function App() {
           <Route path="/artistLogin" element={<ArtistLogin />} />
           <Route path="/artistRegister" element={<ArtistRegister />} />
           <Route path="/requestEventForm" element={<RequestEventForm />} />
-
 
           {/* Bidding Manager */}
 
@@ -182,7 +177,6 @@ function App() {
           <Route path="/register" element={<CreaetProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
-
         </Routes>
       </React.Fragment>
     </div>
