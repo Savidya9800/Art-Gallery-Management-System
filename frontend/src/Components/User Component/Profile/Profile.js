@@ -192,7 +192,7 @@ const Profile = () => {
                 Delete Account
               </Button>
               <Link to="/mainArtworkDetails">
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="ml-2 btn btn-primary">
                   Artwork Details
                 </button>
               </Link>
