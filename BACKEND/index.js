@@ -27,12 +27,9 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-//Inventory Manager
-app.use("/inventory", routerinv); //Mayomi
-
 //Artwork-manager
 app.use("/artWorks", router);
-app.use('/images', express.static('./file/')); 
+app.use("/images", express.static("./file/"));
 
 //Inquiryuser
 app.use("/inquiry", inquiryrouter); //inquiry is using the local host 5000/inquiry.
@@ -46,6 +43,7 @@ app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
+
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -127,8 +125,6 @@ app.get("/getFile", async (req, res) => {
   }
 });
 
-
-
 //Image -----
 //Image model part
 require("./Models/artWorkImgModel");
@@ -156,11 +152,13 @@ app.post("/uploadImg", uploadimg.single("image"), async (req, res) => {
   try {
     await ImgSchema.create({ image: imageName });
     // res.json({ status: "ok" });
-    res.status(200).send({ status: 200, message: "Image uploaded successfully" });
+    res
+      .status(200)
+      .send({ status: 200, message: "Image uploaded successfully" });
   } catch (error) {
     res.json({ status: "error" });
   }
-}); 
+});
 
 // app.get("/getImage", async (req, res) => {
 //   try {
