@@ -40,7 +40,9 @@ function UploadImage() {
 
   return (
     <div>
-      <NavigationBar />
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
       <br></br>
       <br></br>
       <form
