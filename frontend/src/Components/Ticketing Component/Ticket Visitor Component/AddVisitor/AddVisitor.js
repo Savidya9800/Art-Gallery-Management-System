@@ -24,26 +24,23 @@ function AddVisitor() {
 
   const [inputs, setInputs] = useState(initialFormState);
   const [remainingSlots, setRemainingSlots] = useState({}); // Stores remaining slots per time
-  const [visitorCount, setVisitorCount] = useState(0);
+  const [visitorCount, setVisitorCount] = useState(0); // Stores the total visitor count for the selected date
   const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (inputs.date) {
       fetchRemainingSlots(inputs.date);
+      fetchVisitorCount(inputs.date); // Fetch visitor count for the selected date
     }
   }, [inputs.date]);
-
-  useEffect(() => {
-    fetchVisitorCount(); // Fetch total visitor count
-  }, []);
 
   const fetchVisitorCount = async (date) => {
     try {
       const response = await axios.get('http://localhost:5000/api/visitorCount', {
         params: { date }
       });
-      setVisitorCount(response.data.count); // Update state with the count
+      setVisitorCount(response.data.count); // Update state with the visitor count
     } catch (err) {
       console.error('Error fetching visitor count:', err);
     }
@@ -90,8 +87,6 @@ function AddVisitor() {
       return;
     }
   
-  
-
     setInputs({
       ...inputs,
       [name]: value,
@@ -178,6 +173,13 @@ function AddVisitor() {
               required
             />
             <br />
+
+            {inputs.date && (
+              <p className="bg-white text-sm text-gray-700 mt-2">
+                Available visitors for {inputs.date}: {MAX_SLOTS - visitorCount}
+              </p>
+            )}
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4 mb-2">Time</label>
             <select
               name="time"
