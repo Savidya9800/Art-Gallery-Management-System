@@ -18,6 +18,7 @@ const ticketissuesroutes = require("./Routes/ticketIssuesRoutes")
 //event
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
 const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
+const membershipRoutes = require("./Routes/membershipRoutes"); //Membership Manager
 
 
 //user
@@ -67,16 +68,13 @@ app.use("/bidding", biddingrouter); //bidding is using the local host 5000/biddi
 //bidding admin
 app.use("/Adminbid", adminBiddingRouter); //bidding is using the local host 5000/bidding
 
-
-
 //event
 app.use('/artist', Artistrouter);
 app.use('/requestEvent', RequestEventrouter);
 
 //user
-///routes
-app.use("/artWorks", router);
 app.use("/api/bookingUsers", bookingUserRoutes);
+app.use("/api/membership", membershipRoutes);
 
 //Financial Manager
 //app.use("/transactions", transactionRoutes);
@@ -84,6 +82,7 @@ app.use("/api/bookingUsers", bookingUserRoutes);
 
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
+
 
 
 mongoose

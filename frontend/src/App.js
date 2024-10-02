@@ -85,7 +85,9 @@ import Login from "./Components/User Component/Login/Login";
 import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
 import Profile from "./Components/User Component/Profile/Profile";
 import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
-
+import CreateMembership from "./Components/User Component/membership/CreateMembership";
+import AllMembership from "./Components/User Component/membership/AllMembership";
+import EditMembership from "./Components/User Component/AdminMemberships/EditMembership";
 
 function App() {
   return (
@@ -178,6 +180,9 @@ function App() {
           <Route path="/register" element={<CreaetProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/membership" element={<CreateMembership />} />
+          <Route path="/allMembership" element={<AllMembership />} />
+          <Route path="/edit-membership/:id" element={<EditMembership />} />
 
           {/* Event Manager */}
         </Routes>

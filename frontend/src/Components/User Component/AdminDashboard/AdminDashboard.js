@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import AdminUsers from "../AdminUsers/AdminUsers";
+import AdminMemberships from "../AdminMemberships/AdminMemberships";
 const AdminDashboard = () => {
   const [activeIndex, setActiveIndex] = useState(1);
   return (
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
       <div style={{ flex: 5, height: "100%" }}>
         {activeIndex === 1 && <AdminUsers />}
         {activeIndex === 2 && <div />}
+        {activeIndex === 3 && <AdminMemberships />}
       </div>
     </div>
   );
@@ -38,6 +40,13 @@ const Sidebar = ({ setActiveIndex }) => {
           }}
           icon={FaUser}
           label="Users"
+        />
+        <SidebarItem
+          onClick={() => {
+            setActiveIndex(3);
+          }}
+          icon={FaUser}
+          label="Memberships"
         />
         <SidebarItem
           onClick={() => {
