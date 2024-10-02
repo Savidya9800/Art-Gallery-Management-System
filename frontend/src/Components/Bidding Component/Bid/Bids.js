@@ -4,17 +4,21 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
+
 function Bids(props) {
     const {_id,name, email, amount} = props.bidding;  //here bidding is what was used as assumed in ViewBid.js
 
     const history = useNavigate();
 //delete function
-    const deleteHandler = async () => {
+const deleteHandler = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this bid?");
+    if (confirmDelete) {
         await axios.delete(`http://localhost:5000/bidding/${_id}`)
-       .then(res=> res.data)
-       .then(() =>history("/"))
-       .then(() =>history("/mainViewBid"))
+            .then(res => res.data)
+            .then(() => history("/"))
+            .then(() => history("/mainViewBid"));
     }
+}
 
 
 
@@ -49,7 +53,9 @@ function Bids(props) {
                     </div>
                 </form>
             </div>
+           
         </div>
+        
   )
 }
 

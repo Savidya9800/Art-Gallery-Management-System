@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import {
   Container,
   Card,
@@ -163,11 +165,11 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <Container fluid className="bg-light min-vh-100 py-3">
+    <Container fluid className="py-3 bg-light min-vh-100">
       <NavigationBar />
       <Card className="mt-4">
         <Card.Body>
-          <Row className="align-items-center mb-4">
+          <Row className="mb-4 align-items-center">
             <Col xs="auto">
               <Image
                 src="\dp.png"
@@ -400,6 +402,11 @@ const Profile = () => {
               <Button variant="danger" onClick={handleDeleteAccount}>
                 Delete Account
               </Button>
+              <Link to="/mainArtworkDetails">
+                <button type="button" className="ml-2 btn btn-primary">
+                  Artwork Details
+                </button>
+              </Link>
             </Col>
           </Row>
         </Card.Body>
