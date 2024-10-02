@@ -36,7 +36,7 @@ function ArtistLogin() {
 
   return (
     <div>
-      <h2>Artist Login</h2>
+      <h2>Enter Credential</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>

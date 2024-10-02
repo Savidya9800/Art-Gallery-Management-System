@@ -66,7 +66,7 @@ function BookingConfirmation() {
       `Time: ${time}`,
       `City: ${city}`,
       `Country: ${country}`,
-      `Total Amount: $${totalAmount.toFixed(2)}`
+      `Total Amount: Rs.${totalAmount.toFixed(2)}`
     ];
 
     // Add a line below the title
@@ -86,7 +86,7 @@ function BookingConfirmation() {
     doc.setFontSize(12);
     tickets.forEach((ticket, index) => {
       doc.text(
-        `${ticket.type}: ${ticket.count} tickets at $${ticket.price} each`,
+        `${ticket.type}: ${ticket.count} tickets at Rs.${ticket.price} each`,
         14,
         startY + (details.length * lineHeight) + (index * lineHeight) + 20
       );
@@ -130,7 +130,7 @@ function BookingConfirmation() {
             </li>
             {tickets.map((ticket, index) => (
               <li key={index}>
-                <strong>{ticket.type}:</strong> {ticket.count} tickets at ${ticket.price} each
+                <strong>{ticket.type}:</strong> {ticket.count} tickets at Rs.{ticket.price} each
               </li>
             ))}
             <li>
@@ -140,7 +140,7 @@ function BookingConfirmation() {
               <strong>Country:</strong> {country}
             </li>
             <li>
-              <strong>Total Amount:</strong> ${totalAmount.toFixed(2)}
+              <strong>Total Amount:</strong> Rs.{totalAmount.toFixed(2)}
             </li>
           </ul>
 
