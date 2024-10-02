@@ -19,11 +19,12 @@ const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
 
 //event
-const Artistrouter = require("./Routes/EventRoutes/artistRoutes"); // event
-const RequestEventrouter = require("./Routes/EventRoutes/requestEventRoutes"); // event
+const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
+const RequestEventrouter = require('./Routes/EventRoutes/requestEventRoutes') // event
 
 //user
 const bookingUserRoutes = require("./Routes/user.route");
+const membershipRoutes = require("./Routes/membershipRoutes"); //Membership Manager
 
 //Finance
 const financeRouter = require("./Routes/financeRouter"); // event
@@ -73,10 +74,11 @@ app.use("/artist", Artistrouter);
 app.use("/requestEvent", RequestEventrouter);
 
 //user
-app.use("/artWorks", router);
 app.use("/api/bookingUsers", bookingUserRoutes);
+app.use("/api/membership", membershipRoutes);
 
-app.use("/finance", financeRouter); //Financial Manager
+//Financial Manager
+app.use("/finance", financeRouter); 
 app.use('/transaction', transactionRouter);
 
 
