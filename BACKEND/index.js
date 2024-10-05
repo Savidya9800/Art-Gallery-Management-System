@@ -179,3 +179,15 @@ app.get("/getImage", async (req, res) => {
     res.json({ status: "error", message: error.message });
   }
 });
+
+const inventoryStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./file"); // folder for inventory images
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname); // Save with unique timestamp
+  },
+});
+
+const uploadInventoryImg = multer({ storage: inventoryStorage });
