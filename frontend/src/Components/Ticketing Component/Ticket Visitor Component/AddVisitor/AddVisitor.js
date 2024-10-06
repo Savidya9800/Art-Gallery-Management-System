@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddVisitor() {
+  const MAX_SLOTS = 10; // Maximum number of visitors per date
   const initialFormState = {
     date: "",
     time: "",
@@ -22,38 +23,35 @@ function AddVisitor() {
   };
 
   const [inputs, setInputs] = useState(initialFormState);
-  const [remainingSlots, setRemainingSlots] = useState(10);
-  const [visitorCount, setVisitorCount] = useState(0); 
+  const [remainingSlots, setRemainingSlots] = useState({}); // Stores remaining slots per time
+  const [visitorCount, setVisitorCount] = useState(0); // Stores the total visitor count for the selected date
   const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    if (inputs.date && inputs.time) {
-      fetchRemainingSlots(inputs.date, inputs.time);
+    if (inputs.date) {
+      fetchRemainingSlots(inputs.date);
+      fetchVisitorCount(inputs.date); // Fetch visitor count for the selected date
     }
-  }, [inputs.date, inputs.time]);
+  }, [inputs.date]);
 
-  useEffect(() => {
-    fetchVisitorCount();
-  }, []);
-
-  const fetchVisitorCount = async () => {
+  const fetchVisitorCount = async (date) => {
     try {
-      const response = await axios.get('http://localhost:5000/visitorCount');
-      setVisitorCount(response.data.count);
+      const response = await axios.get('http://localhost:5000/api/visitorCount', {
+        params: { date }
+      });
+      setVisitorCount(response.data.count); // Update state with the visitor count
     } catch (err) {
       console.error('Error fetching visitor count:', err);
     }
   };
 
-  const fetchRemainingSlots = async (date, time) => {
+  const fetchRemainingSlots = async (date) => {
     try {
-      const response = await axios.get('http://localhost:5000/visitorCountForSlot', {
-        params: { date, time }
+      const response = await axios.get('http://localhost:5000/remainingSlots', {
+        params: { date }
       });
-      const count = response.data.count;
-      setRemainingSlots(10 - count);
+      setRemainingSlots(response.data.slots); // Store the remaining slots per time slot for the selected date
     } catch (err) {
       console.error('Error fetching remaining slots:', err);
     }
@@ -61,13 +59,34 @@ function AddVisitor() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if ((name === "fname" || name === "lname" || name === "city" || name === "country") && !/^[a-zA-Z\s]*$/.test(value)) {
+      return; 
+    }
+    
+    // Validate phone number to allow only exactly 10 digits
     if (name === "phone") {
-      const regex = /^[0-9]*$/;
-      if (!regex.test(value)) {
+      if (!/^\d{0,10}$/.test(value)) {
         return;
       }
     }
 
+    if (name === "email") {
+      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/; 
+      const lowercasedEmail = value.toLowerCase();
+      if (!emailPattern.test(lowercasedEmail)) {
+        setError("Please enter a valid email addres");
+      } else {
+        setError(""); 
+      }
+
+      setInputs({
+        ...inputs,
+        [name]: lowercasedEmail, // Set the email in lowercase
+      });
+      return;
+    }
+  
     setInputs({
       ...inputs,
       [name]: value,
@@ -86,26 +105,46 @@ function AddVisitor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const totalTickets = inputs.tickets.reduce((sum, ticket) => sum + parseInt(ticket.count), 0);
     
-    if (totalTickets + visitorCount > 10) {
-      setError("The total number of visitors exceeds the limit of 10 for this time slot.");
-      return; 
+    // Validate that all required fields are filled
+    if (!inputs.date || !inputs.time || !inputs.fname || !inputs.lname || !inputs.email || !inputs.phone || !inputs.city || !inputs.country) {
+      setError("Please fill all fields.");
+      return;
+    }
+
+    // Check if the phone number is exactly 10 digits
+    if (inputs.phone.length !== 10) {
+      setError("Phone number must be exactly 10 digits.");
+      return;
+    }
+
+    // Check if at least one ticket is selected
+    const totalTickets = inputs.tickets.reduce((sum, ticket) => sum + parseInt(ticket.count), 0);
+    if (totalTickets === 0) {
+      setError("Please select at least one ticket.");
+      return;
+    }
+
+    // Check if total slots available are exceeded
+    if (remainingSlots[inputs.time] - totalTickets < 0) {
+      setError("Not enough slots available for the selected time.");
+      return;
     }
 
     try {
       const response = await axios.post('http://localhost:5000/visitors', inputs);
       alert('Visitor added successfully');
-      const remainingSlots = response.data.remainingSlots;
-      setRemainingSlots(remainingSlots);
+      
+      // Update the remaining slots after a successful reservation
+      setRemainingSlots(prevSlots => ({
+        ...prevSlots,
+        [inputs.time]: prevSlots[inputs.time] - totalTickets
+      }));
+
       navigate('/bookingConfirmation', { state: { visitor: response.data.visitor } });
     } catch (err) {
       console.error('Error adding visitor:', err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Failed to add visitor');
-      }
+      setError('Failed to add visitor');
     }
   };
 
@@ -134,6 +173,13 @@ function AddVisitor() {
               required
             />
             <br />
+
+            {inputs.date && (
+              <p className="bg-white text-sm text-gray-700 mt-2">
+                Available visitors for {inputs.date}: {MAX_SLOTS - visitorCount}
+              </p>
+            )}
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4 mb-2">Time</label>
             <select
               name="time"
@@ -143,14 +189,14 @@ function AddVisitor() {
               required
             >
               <option value="">Select Time</option>
-              <option value="8.30" disabled={remainingSlots <= 0}>8.30</option>
-              <option value="12.30" disabled={remainingSlots <= 0}>12.30</option>
-              <option value="3.30" disabled={remainingSlots <= 0}>3.30</option>
+              <option value="8.30" disabled={remainingSlots["8.30"] <= 0}>8.30 {remainingSlots["8.30"] <= 0 ? "(Full)" : `(Remaining: ${remainingSlots["8.30"] || 10})`}</option>
+              <option value="12.30" disabled={remainingSlots["12.30"] <= 0}>12.30 {remainingSlots["12.30"] <= 0 ? "(Full)" : `(Remaining: ${remainingSlots["12.30"] || 10})`}</option>
+              <option value="3.30" disabled={remainingSlots["3.30"] <= 0}>3.30 {remainingSlots["3.30"] <= 0 ? "(Full)" : `(Remaining: ${remainingSlots["3.30"] || 10})`}</option>
             </select>
             <br />
-            {inputs.date && inputs.time && (
+            {inputs.date && inputs.time && remainingSlots[inputs.time] !== undefined && (
               <p className="bg-white text-sm text-gray-700 mt-2">
-                Remaining slots for {inputs.date} at {inputs.time}: {remainingSlots}
+                Remaining slots for {inputs.date} at {inputs.time}: {remainingSlots[inputs.time]}
               </p>
             )}
             {inputs.tickets.map((ticket, index) => (
@@ -211,8 +257,6 @@ function AddVisitor() {
               className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
               onChange={handleChange}
               value={inputs.phone}
-              maxLength="10"
-              pattern="[0-9]*"
               required
             />
             <br />
@@ -235,16 +279,21 @@ function AddVisitor() {
               value={inputs.country}
               required
             />
-            <br />
-            {error && <p className="text-red-500">{error}</p>}
-            <button
-              type="submit"
-              className="bg-[#A78F51]  text-white mt-6 py-2 px-4 rounded hover:bg-[#A78F51] "
-            >
-              Add Visitor
-            </button>
           </div>
         </form>
+
+        {error && (
+          <div className="bg-white text-red-500 mt-4 text-center">{error}</div>
+        )}
+
+        <div className="bg-white mt-6">
+          <button
+            className="bg-black text-white py-2 px-6 rounded-md"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </div>
       <FooterComp />
     </div>

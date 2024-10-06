@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Image, Alert } from "react-bootstrap";
 import BookingUserService from "../../../Services/UserService";
 import { useNavigate } from "react-router-dom";
+
 const CreateProfile = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -16,12 +17,31 @@ const CreateProfile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-
   // Mobile number validation function
   const validateMobile = (contactNumber) => {
-    const mobilePattern = /^[0-9]{10}$/;  // Regular expression for exactly 10 digits
+    const mobilePattern = /^[0-9]{10}$/; // Regular expression for exactly 10 digits
     if (!mobilePattern.test(contactNumber)) {
       return "Contact number must be exactly 10 digits.";
+    }
+    return null;
+  };
+
+  // Function to validate names and username
+  const validateNamesAndUsername = (name, fieldName) => {
+    if (/^\d/.test(name)) {
+      return `${fieldName} cannot start with a number.`;
+    }
+    if (/^\d+$/.test(name)) {
+      return `${fieldName} cannot contain all numbers.`;
+    }
+    return null;
+  };
+
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email pattern
+    if (!emailPattern.test(email)) {
+      return "Enter a valid email address.";
     }
     return null;
   };
@@ -35,22 +55,52 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate first name
+    const firstNameError = validateNamesAndUsername(formData.firstName, "First name");
+    if (firstNameError) {
+      setError(firstNameError);
+      return;
+    }
+
+    // Validate last name
+    const lastNameError = validateNamesAndUsername(formData.lastName, "Last name");
+    if (lastNameError) {
+      setError(lastNameError);
+      return;
+    }
+
+    // Validate username
+    const usernameError = validateNamesAndUsername(formData.username, "Username");
+    if (usernameError) {
+      setError(usernameError);
+      return;
+    }
+
+    // Validate email
+    const emailError = validateEmail(formData.email);
+    if (emailError) {
+      setError(emailError);
+      return;
+    }
+
+    // Password validation
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
 
     // Phone number validation
-  const mobilePattern = /^[0-9]{10}$/; // Regular expression for 10 digits
-  if (!mobilePattern.test(formData.contactNumber)) {
-    setError("Contact number must be exactly 10 digits.");
-    return;
-  }
+    const mobileError = validateMobile(formData.contactNumber);
+    if (mobileError) {
+      setError(mobileError);
+      return;
+    }
 
     try {
       await BookingUserService.registerUser(formData);
       alert("User registered successfully!");
-
+      navigate("/login"); // Redirect to login page after successful registration
     } catch (error) {
       setError(error.message);
     }
@@ -210,4 +260,5 @@ const CreateProfile = () => {
 };
 
 export default CreateProfile;
+
 
