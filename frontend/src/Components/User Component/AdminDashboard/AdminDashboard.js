@@ -29,6 +29,7 @@ const AdminDashboard = () => {
     inventory: "inventory",
     finance: "finance",
     inquiry: "inquiry",
+    membership: "membership",
   };
 
   const validatePasscode = (passcode, correctPasscode, callback) => {
@@ -135,7 +136,15 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
           label="Inquiry Management"
         />
 
-        
+        <SidebarItem
+         onClick={() => {
+           validatePasscode(prompt("Enter passcode:"), passcodes.membership, () => setActiveIndex(2));
+           }}
+           icon={FaCreditCard}
+           label="Membership Management"
+        />
+
+
       </ListGroup>
       <Button style={styles.logoutButton}>
         <FaSignOutAlt /> Log out
