@@ -210,6 +210,7 @@ app.get('/api/visitorCount', async (req, res) => {
   }
 });
 
+//updated
 // Remaining slots route
 app.get('/remainingSlots', async (req, res) => {
   try {
