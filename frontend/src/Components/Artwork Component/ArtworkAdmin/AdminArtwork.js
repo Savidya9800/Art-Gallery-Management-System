@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
-import logo from '../../Nav Component/logo.JPG';
+import logo from "../../Nav Component/logo.JPG";
 
 function AdminArtwork(props) {
   const {
@@ -61,46 +61,45 @@ function AdminArtwork(props) {
     // Artist Details
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0); // Reset to black for content
-    doc.text(`Submission ID: ${_id}`, 14, 50);
-    doc.text(`Artist: ${name}`, 14, 60);
-    doc.text(`Email: ${email}`, 14, 70);
-    doc.text(`Phone Number: ${pNumber}`, 14, 80);
-    doc.text(`Website: ${website}`, 14, 90);
-    doc.text(`Biography: ${biography}`, 14, 100);
-    doc.text(`Statement: ${statement}`, 14, 110);
+    doc.text(`Artist: ${name}`, 14, 50);
+    doc.text(`Email: ${email}`, 14, 60);
+    doc.text(`Phone Number: ${pNumber}`, 14, 70);
+    doc.text(`Website: ${website}`, 14, 80);
+    doc.text(`Biography: ${biography}`, 14, 90);
+    doc.text(`Statement: ${statement}`, 14, 100);
 
     // Add a small divider
     doc.setLineWidth(0.5);
-    doc.line(10, 120, 200, 120);
+    doc.line(10, 110, 200, 110);
 
     // Artwork Details Section
     doc.setFontSize(16);
     doc.setTextColor(0, 0, 128); // Navy color
-    doc.text("Artwork Details", 14, 130);
+    doc.text("Artwork Details", 14, 120);
 
     // Artwork Details
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0); // Reset to black for content
-    doc.text(`Title: ${title}`, 14, 140);
-    doc.text(`Medium: ${medium}`, 14, 150);
-    doc.text(`Dimensions: ${dimensions}`, 14, 160);
-    doc.text(`Date: ${date}`, 14, 170);
-    doc.text(`Description: ${description}`, 14, 180);
+    doc.text(`Title: ${title}`, 14, 130);
+    doc.text(`Medium: ${medium}`, 14, 140);
+    doc.text(`Dimensions: ${dimensions}`, 14, 150);
+    doc.text(`Date: ${date}`, 14, 160);
+    doc.text(`Description: ${description}`, 14, 170);
 
     // Add a small divider
     doc.setLineWidth(0.5);
-    doc.line(10, 190, 200, 190);
+    doc.line(10, 180, 200, 180);
 
     // Artwork Upload
     doc.setFontSize(16);
     doc.setTextColor(0, 0, 128); // Navy color
-    doc.text("Additional Information", 14, 200);
+    doc.text("Additional Information", 14, 190);
 
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0); // Reset to black for content
-    doc.text(`Status: ${place}`, 14, 210);
-    doc.text(`Tags: ${tags}`, 14, 220);
-    doc.text(`Price: ${price}`, 14, 230);
+    doc.text(`Status: ${place}`, 14, 200);
+    doc.text(`Tags: ${tags}`, 14, 210);
+    doc.text(`Price: ${price}`, 14, 220);
 
     // Add footer with date and page number
     doc.setFontSize(10);
@@ -139,7 +138,10 @@ function AdminArtwork(props) {
     };
 
     try {
-      const response = await axios.patch(`http://localhost:5000/artWorks/updateart/${_id}`, updatedData);
+      const response = await axios.patch(
+        `http://localhost:5000/artWorks/updateart/${_id}`,
+        updatedData
+      );
       console.log("Artwork updated successfully:", response.data);
       setAccepted(true); // Update accepted state in UI
     } catch (error) {
@@ -149,9 +151,12 @@ function AdminArtwork(props) {
 
   return (
     <>
-      <td className="p-2 border border-gray-300">{_id}</td>
       <td className="p-2 border border-gray-300">{name}</td>
       <td className="p-2 border border-gray-300">{title}</td>
+      <td className="p-2 border border-gray-300">{email}</td>
+      <td className="p-2 border border-gray-300">{pNumber}</td>
+      <td className="p-2 border border-gray-300">{statement}</td>
+      <td className="p-2 border border-gray-300">{biography}</td>
       <td className="p-2 border border-gray-300">
         <label className="items-center ">
           <input
@@ -205,12 +210,16 @@ function AdminArtwork(props) {
         </Button>
         |
         <Link to={`/mainGallery/`}>
-          <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
+          <Button
+            onClick={handleAccept}
+            variant="success"
+            className="ml-1 mr-1"
+          >
             Accept
           </Button>
         </Link>
         |
-        <Button onClick={deleteHandler} variant="danger" className="ml-1">
+        <Button onClick={deleteHandler} variant="danger" className="ml-1 -mr-14">
           Reject
         </Button>
       </td>
