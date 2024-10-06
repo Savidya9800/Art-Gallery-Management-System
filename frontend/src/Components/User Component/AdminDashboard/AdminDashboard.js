@@ -3,17 +3,10 @@ import { ListGroup, Button } from "react-bootstrap";
 import {
   FaUser,
   FaBell,
-  FaCreditCard,
-  FaEnvelope,
-  FaHeart,
-  FaHistory,
-  FaCalendarAlt,
-  FaStar,
   FaSignOutAlt,
 } from "react-icons/fa";
 import AdminUsers from "../AdminUsers/AdminUsers";
 import AdminMemberships from "../AdminMemberships/AdminMemberships";
-import Notifications from "./Pages/Notification"; 
 import ArtworkAdmin from "./Pages/ArtworkAdmin";
 import BiddingAdmin from "./Pages/BiddingAdmin";
 import EventAdmin from "./Pages/EventAdmin";
@@ -21,7 +14,6 @@ import TicketAdmin from "./Pages/TicketAdmin";
 import InventoryAdmin from "./Pages/InventoryAdmin"; 
 import FinanceAdmin from "./Pages/FinanceAdmin"; 
 import InquiryAdmin from "./Pages/InquiryAdmin";
-import DashHome from "./DashHome";
 import Profile from "../Profile/Profile";
 
 const AdminDashboard = () => {
@@ -176,7 +168,6 @@ const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
 // Styles
 const styles = {
   sidebarContainer: {
-    padding: "100px",
     borderRight: "1px solid #ddd",
     padding: "20px 10px",
     height: "187vh",

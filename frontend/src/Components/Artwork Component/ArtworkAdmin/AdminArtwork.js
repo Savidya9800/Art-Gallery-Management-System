@@ -25,7 +25,7 @@ function AdminArtwork(props) {
     price,
   } = props.ARTWORK;
   const history = useNavigate();
-  const [accepted, setAccepted] = useState(false); // Initialize accepted state
+  const [setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
@@ -219,7 +219,11 @@ function AdminArtwork(props) {
           </Button>
         </Link>
         |
-        <Button onClick={deleteHandler} variant="danger" className="ml-1 -mr-14">
+        <Button
+          onClick={deleteHandler}
+          variant="danger"
+          className="ml-1 -mr-14"
+        >
           Reject
         </Button>
       </td>
