@@ -15,7 +15,6 @@ const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admi
 
 //Ticket-manager
 const ticketrouter = require("./Routes/ticketRoutes");
-const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
 const Visitor = require("./Models/ticketModel");
 
