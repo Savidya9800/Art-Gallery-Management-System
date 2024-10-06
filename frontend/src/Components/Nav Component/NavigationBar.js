@@ -11,8 +11,11 @@ import img1 from "./logo.JPG";
 import img2 from "./UserImg.png";
 
 function NavigationBar() {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
-    <Navbar expand="lg" className="navbar">
+    <Navbar expand="lg" className="navbar ">
       <Container
         fluid
         style={{ backgroundColor: "#b1a48982", paddingRight: "inherit" }}
@@ -53,13 +56,13 @@ function NavigationBar() {
               About Us
               <span></span>
             </Nav.Link>
-           
+
             <NavDropdown title="More" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>
+              {user?.role == "artist" && <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>}
+              {user?.role == "user" && <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>}
               <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
@@ -79,11 +82,11 @@ function NavigationBar() {
 
           <a
             href="/profile">
-          <img
-            src={img2}
-            style={{ height: "50px", marginRight: "10px" }}
-            alt="User"
-          />
+            <img
+              src={img2}
+              style={{ height: "50px", marginRight: "10px" }}
+              alt="User"
+            />
           </a>
         </Navbar.Collapse>
       </Container>

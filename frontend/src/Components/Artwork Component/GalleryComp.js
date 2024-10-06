@@ -9,25 +9,9 @@ function GalleryComp() {
 
   return (
     <div>
-      <NavigationBar />
-      <h1>Gallery</h1>
-      <br />
-      <Link to="/mainArtworkDetails">
-        <button type="button" className="btn btn-primary">
-          Artwork Details
-        </button>
-      </Link>
-      <br />
-      <br />
-
-      <Link to="/mainAdminArtworks">
-        <button type="button" className="btn btn-primary">
-          Artwork Details - Admin
-        </button>
-      </Link>
-
-      <br />
-      <br />
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
 
       {/* Pass the id prop to ImgUploader */}
       <ImgUploader artworkId={id} />
