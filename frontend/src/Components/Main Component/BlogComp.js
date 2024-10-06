@@ -5,7 +5,9 @@ import FooterComp from '../Nav Component/FooterComp'
 function Blog() {
   return (
     <div>
-      <NavigationBar/>
+     <div className="relative z-10">
+        <NavigationBar />
+      </div>
         <h1>Blog</h1>
         <FooterComp/>
     </div>

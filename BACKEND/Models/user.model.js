@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+
+//db insertions
 const bookingUserSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },

@@ -120,7 +120,6 @@ const updateArtWork = async (req, res, next) => {
     price,
     accepted,
   } = req.body;
-  console.log(accepted, "accccccccccccccccccccc");
   try {
     const updatedArtwork = await artWork.findByIdAndUpdate(
       id,
