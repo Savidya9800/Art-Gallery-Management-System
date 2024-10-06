@@ -82,7 +82,6 @@ app.use("/api/membership", membershipRoutes);
 app.use("/finance", financeRouter); 
 app.use('/transaction', transactionRouter);
 
-
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
 
@@ -139,23 +138,11 @@ app.get("/getFile", async (req, res) => {
   }
 });
 
-//Image -----
 //Image model part
 require("./Models/artWorkImgModel");
 const ImgSchema = mongoose.model("ArtworkImage");
 
 const multerimg = require("multer");
-
-// const storageimg = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "../frontend/src/Components/Artwork Component/ImgUploader/files");
-//   },
-
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now();
-//     cb(null, uniqueSuffix + file.originalname);
-//   },
-// });
 
 const uploadimg = multerimg({ storage: storage });
 
@@ -174,15 +161,6 @@ app.post("/uploadImg", uploadimg.single("image"), async (req, res) => {
   }
 });
 
-// app.get("/getImage", async (req, res) => {
-//   try {
-//     ImgSchema.find({}).then((data) => {
-//       res.send({ status: "ok", data: data });
-//     });
-//   } catch (error) {
-//     res.json({ status: error });
-//   }
-// });
 app.get("/getImage", async (req, res) => {
   try {
     // Find and sort by createdAt in descending order (most recent first)

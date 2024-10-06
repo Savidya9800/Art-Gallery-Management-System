@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function ArtworkComp(props) {
-  const { _id, title, medium, place, description } = props.ARTWORK;
+  const { _id, title, medium, place, date, description } = props.ARTWORK;
   const history = useNavigate();
 
   const deleteHandler = async () => {
@@ -29,7 +29,6 @@ function ArtworkComp(props) {
 
   return (
     <>
-      <td className="p-2 border border-gray-300">{_id}</td>
       <td className="p-2 border border-gray-300">{title}</td>
       <td className="p-2 border border-gray-300">{medium}</td>
       <td className="p-2 border border-gray-300">
@@ -78,6 +77,7 @@ function ArtworkComp(props) {
           </span>
         </label>
       </td>
+      <td className="p-2 border border-gray-300">{date}</td>
       <td className="p-2 border border-gray-300">{description}</td>
       <td className="p-2 border border-gray-300">
         <Link to={`/mainArtworkDetails/${_id}`}>
