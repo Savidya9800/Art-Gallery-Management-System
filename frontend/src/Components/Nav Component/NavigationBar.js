@@ -61,7 +61,7 @@ function NavigationBar() {
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
-              {user?.role == "artist" && <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>}
+              {user?.role == "user" && <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>}
               {user?.role == "user" && <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>}
               <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
               <NavDropdown.Divider />

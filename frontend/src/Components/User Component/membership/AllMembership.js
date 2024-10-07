@@ -29,7 +29,7 @@ const AllMembership = () => {
     };
 
     return (
-        <Container fluid className="bg-light min-vh-100 py-3">
+        <Container fluid className="py-3 bg-light min-vh-100">
             <NavigationBar />
             <Table striped bordered hover>
                 <thead>

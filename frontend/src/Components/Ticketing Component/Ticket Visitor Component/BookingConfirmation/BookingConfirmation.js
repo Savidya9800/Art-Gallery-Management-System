@@ -14,6 +14,9 @@ function BookingConfirmation() {
   // Calculate total amount
   const totalAmount = tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
 
+  // Format the ID to "RES" followed by the last three digits of the ID
+  const formattedId = `RES${_id.slice(-3)}`;
+
   // Function to handle payment process
   const handlePayNow = () => {
     alert('Redirecting to payment gateway...');
@@ -31,9 +34,8 @@ function BookingConfirmation() {
     doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
     doc.text('Reservation Confirmation', 14, 20);
 
-    //Add logo
+    // Add logo
     const pageWidth = doc.internal.pageSize.getWidth();
-
     const imgWidth = 25; // Width of the logo
     const imgHeight = 20; // Height of the logo
     const xPosition = pageWidth - imgWidth - 10;
@@ -58,7 +60,7 @@ function BookingConfirmation() {
 
     // Add personal details
     const details = [
-      `ID: ${_id}`,
+      `ID: ${formattedId}`,  // Using formatted ID here
       `Name: ${fname} ${lname}`,
       `Email: ${email}`,
       `Phone: ${phone}`,
@@ -68,11 +70,6 @@ function BookingConfirmation() {
       `Country: ${country}`,
       `Total Amount: Rs.${totalAmount.toFixed(2)}`
     ];
-
-    // Add a line below the title
-    doc.setLineWidth(0.5);
-    doc.setDrawColor(169, 169, 169); // Gray color
-    doc.line(10, 30, 200, 30);
 
     details.forEach((detail, index) => {
       doc.text(detail, 14, startY + (index * lineHeight));
@@ -93,7 +90,7 @@ function BookingConfirmation() {
     });
 
     // Final save
-    doc.save(`${_id}_Reservation_Confirmation.pdf`);
+    doc.save(`${formattedId}_Reservation_Confirmation.pdf`);
   };
 
   return (
@@ -111,7 +108,7 @@ function BookingConfirmation() {
           </p>
           <ul className="custom-details-list">
             <li>
-              <strong>ID:</strong> {_id}
+              <strong>ID:</strong> {formattedId}
             </li>
             <li>
               <strong>Name:</strong> {fname} {lname}
