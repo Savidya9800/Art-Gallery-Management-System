@@ -12,6 +12,7 @@ function Addinventory() {
     itemCount: "",
     date: new Date().toISOString().split("T")[0], // Set today's date
   });
+  const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -21,38 +22,31 @@ function Addinventory() {
     }));
   };
 
-  // validation
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const validate = () => {
     let tempErrors = {};
-
-    // Product name validation
     const productNamePattern = /^[a-zA-Z\s\W]+$/;
     tempErrors.productname =
       inputs.productname && productNamePattern.test(inputs.productname)
         ? ""
         : "Product name must contain only letters and special characters, no numbers allowed.";
 
-    // Price validation
     const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/;
     tempErrors.price =
-      inputs.price &&
-      pricePattern.test(inputs.price) &&
-      Number(inputs.price) > 0
+      inputs.price && pricePattern.test(inputs.price) && Number(inputs.price) > 0
         ? ""
         : "Price must be a valid positive number without special characters.";
 
-    // Item count validation
     tempErrors.itemCount =
-      inputs.itemCount &&
-      !isNaN(inputs.itemCount) &&
-      Number(inputs.itemCount) >= 0
+      inputs.itemCount && !isNaN(inputs.itemCount) && Number(inputs.itemCount) >= 0
         ? ""
         : "Item count must be a valid positive number.";
 
-    // Date validation
     const today = new Date().toISOString().split("T")[0];
-    tempErrors.date =
-      inputs.date === today ? "" : "You can only select today's date.";
+    tempErrors.date = inputs.date === today ? "" : "You can only select today's date.";
 
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === "");
@@ -61,53 +55,63 @@ function Addinventory() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      await sendRequest().then(() => history("/itemview"));
+      console.log("Submitting form data:", { inputs, image });
+      try {
+        await sendRequest();
+        history("/itemview"); // Redirect to item view on success
+      } catch (error) {
+        console.error("Submission failed", error);
+        setErrors((prevErrors) => ({ ...prevErrors, submit: "Failed to add item. Please try again." }));
+      }
     } else {
       console.log("Invalid form");
     }
   };
 
   const sendRequest = async () => {
+    const formData = new FormData();
+    formData.append("productname", inputs.productname);
+    formData.append("price", inputs.price);
+    formData.append("itemCount", inputs.itemCount);
+    formData.append("date", inputs.date);
+
+    if (image) {
+      formData.append("image", image);
+    }
+
     try {
-      const result = await axios.post("http://localhost:5000/inventory", {
-        productname: String(inputs.productname),
-        price: Number(inputs.price),
-        itemCount: Number(inputs.itemCount),
-        date: String(inputs.date),
+      const result = await axios.post("http://localhost:5000/inventory", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log("Result", result);
     } catch (error) {
-      console.error("Error adding the item:", error);
+      console.error("Error adding the item:", error.response.data); // Log the specific error from the response
     }
   };
 
   return (
     <div>
-      <div className="relative z-10 ">
+      <div className="relative z-10">
         <NavigationBar />
-              
       </div>
-      <div className="shadow-md rounded-lg p-2 ">
+      <div className="shadow-md rounded-lg p-2">
         <button
           className="bg-[#A78F51] hover:bg-[#8e7b44] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={() => history("/itemview")}
         >
-          Currunt Inventory
+          Current Inventory
         </button>
       </div>
 
       <div className="flex justify-center items-center">
         <div className="w-full max-w-md">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          >
+          <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h1 className="text-xl font-bold mb-6 bg-white">Add New Item</h1>
 
             <div className="mb-4 bg-white">
-              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">
-                Product Name
-              </label>
+              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Product Name</label>
               <input
                 type="text"
                 name="productname"
@@ -117,16 +121,12 @@ function Addinventory() {
                 required
               />
               {errors.productname && (
-                <p className="bg-white text-red-500 text-xs mt-1">
-                  {errors.productname}
-                </p>
+                <p className="bg-white text-red-500 text-xs mt-1">{errors.productname}</p>
               )}
             </div>
 
             <div className="mb-4 bg-white">
-              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">
-                Price
-              </label>
+              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Price</label>
               <input
                 type="text"
                 name="price"
@@ -136,16 +136,12 @@ function Addinventory() {
                 required
               />
               {errors.price && (
-                <p className="bg-white text-red-500 text-xs mt-1">
-                  {errors.price}
-                </p>
+                <p className="bg-white text-red-500 text-xs mt-1">{errors.price}</p>
               )}
             </div>
 
             <div className="mb-4 bg-white">
-              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">
-                Item Count
-              </label>
+              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Item Count</label>
               <input
                 type="number"
                 name="itemCount"
@@ -160,9 +156,7 @@ function Addinventory() {
             </div>
 
             <div className="mb-4 bg-white">
-              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">
-                Date
-              </label>
+              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Date</label>
               <input
                 type="date"
                 name="date"
@@ -174,6 +168,17 @@ function Addinventory() {
               {errors.date && (
                 <p className="text-red-500 text-xs mt-1">{errors.date}</p>
               )}
+            </div>
+
+            <div className="mb-4 bg-white">
+              <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Upload Image (Optional)</label>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
             </div>
 
             <div className="flex justify-center bg-white">

@@ -59,12 +59,18 @@ const Login = () => {
         src="/welcome.png"
         alt="Awarna Art Gallery"
         width={150}
-        className="mb-4"
+        className="mb-4 " 
       />
-      <h1 className="mb-4" style={{ fontSize: "24px", color: "#a49256" }}>
+      <h1
+        className="mb-4"
+        style={{ fontSize: "24px", color: "#a49256", background: "#f8f8f8" }}
+      >
         Welcome Back to Awarna Art Gallery!
       </h1>
-      <Form onSubmit={handleLogin} style={{ width: "300px" }}>
+      <Form
+        onSubmit={handleLogin}
+        style={{ width: "300px", background: "#f8f8f8" }}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="text"
@@ -100,11 +106,18 @@ const Login = () => {
           {loading ? <Spinner animation="border" size="sm" /> : "Log in"}
         </Button>
       </Form>
-      <p className="mt-3" style={{ fontSize: "14px", color: "#333" }}>
+      <p
+        className="mt-3"
+        style={{ fontSize: "14px", color: "#333", background: "#f8f8f8" }}
+      >
         Don't have an account?{" "}
         <a
           href="/register"
-          style={{ color: "#a49256", textDecoration: "none" }}
+          style={{
+            color: "#a49256",
+            textDecoration: "none",
+            background: "#f8f8f8",
+          }}
         >
           Register here
         </a>
