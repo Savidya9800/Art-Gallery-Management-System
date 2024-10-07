@@ -60,24 +60,31 @@ function AddVisitor() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Only allow letters and spaces in these fields
     if ((name === "fname" || name === "lname" || name === "city" || name === "country") && !/^[a-zA-Z\s]*$/.test(value)) {
       return; 
     }
     
-    // Validate phone number to allow only exactly 10 digits
+    // Validate phone number to allow country code (e.g., +1234567890)
     if (name === "phone") {
-      if (!/^\d{0,10}$/.test(value)) {
+      // Allow optional + at the beginning, followed by up to 15 digits
+      const phonePattern = /^\+?[0-9]{0,15}$/;
+      if (!phonePattern.test(value)) {
+        setError("Please enter a valid phone number (e.g., +1234567890).");
         return;
+      } else {
+        setError(""); // Clear the error if the phone number is valid
       }
     }
 
+    // Validate email format
     if (name === "email") {
-      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/; 
+      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
       const lowercasedEmail = value.toLowerCase();
       if (!emailPattern.test(lowercasedEmail)) {
-        setError("Please enter a valid email addres");
+        setError("Please enter a valid email address.");
       } else {
-        setError(""); 
+        setError(""); // Clear the error if the email is valid
       }
 
       setInputs({
@@ -86,7 +93,7 @@ function AddVisitor() {
       });
       return;
     }
-  
+
     setInputs({
       ...inputs,
       [name]: value,
@@ -112,9 +119,9 @@ function AddVisitor() {
       return;
     }
 
-    // Check if the phone number is exactly 10 digits
-    if (inputs.phone.length !== 10) {
-      setError("Phone number must be exactly 10 digits.");
+    // Check if phone number is valid with country code (allowing numbers like +1234567890)
+    if (!/^\+?[0-9]{10,15}$/.test(inputs.phone)) {
+      setError("Please enter a valid phone number with the country code.");
       return;
     }
 
@@ -250,7 +257,7 @@ function AddVisitor() {
               required
             />
             <br />
-            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone</label>
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone (with country code)</label>
             <input
               type="tel"
               name="phone"
@@ -258,6 +265,7 @@ function AddVisitor() {
               onChange={handleChange}
               value={inputs.phone}
               required
+              placeholder="+1234567890"
             />
             <br />
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">City</label>

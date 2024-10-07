@@ -13,20 +13,27 @@ function Visitor(props) {
     try {
       await axios.delete(`http://localhost:5000/visitors/${_id}`);
       alert("Visitor deleted successfully!");
-      history("/"); // Redirect to home
-      history("/visitorDetails"); // Redirect to the visitor details page
+
+      const visitorName = `${fname} ${lname}`;
+      const message = `Hello ${visitorName}, Reservation has successfully been cancelled. Please contact us for further assistance.`;
+
+      const phoneNumber = phone; 
+      const WhatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+      window.open(WhatsAppUrl, "_blank");
+
+      history("/");
+      history("/visitorDetails");
     } catch (err) {
       console.error("Error deleting visitor:", err);
       alert("Failed to delete visitor. Please try again.");
     }
   };
-  
 
   // Calculate total amount
   const totalAmount = tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
 
   return (
-    
     <div>      
       <div className="visitor-container"> 
         <table className="visitor-table">
@@ -92,7 +99,6 @@ function Visitor(props) {
         <button className="delete-btn" onClick={deleteVisitor}>Delete</button>
         <Link to={`/visitorDetails/${_id}`} className="update-link">Update</Link>
       </div>
-      
     </div>
   );
 }
