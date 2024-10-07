@@ -13,10 +13,11 @@ const responserouter = require("./Routes/responseRouter"); //Inquiry Admin
 const biddingrouter = require("./Routes/biddingRoutes"); //Bidding-manager
 const adminBiddingRouter = require("./Routes/adminBiddingRoute"); //Bidding-admin
 
-//Financial-manager
-
-const ticketrouter = require("./Routes/ticketRoutes"); //Ticket-manager
+//Ticket-manager
+const ticketrouter = require("./Routes/ticketRoutes");
 const ticketissuesroutes = require("./Routes/ticketIssuesRoutes");
+const Visitor = require("./Models/ticketModel");
+
 
 //event
 const Artistrouter = require('./Routes/EventRoutes/artistRoutes') // event 
@@ -81,7 +82,6 @@ app.use("/api/membership", membershipRoutes);
 app.use("/finance", financeRouter); 
 app.use('/transaction', transactionRouter);
 
-
 //DB Connection
 //DB pw-: ohYTKpIAkkGLhNTd
 
@@ -138,23 +138,11 @@ app.get("/getFile", async (req, res) => {
   }
 });
 
-//Image -----
 //Image model part
 require("./Models/artWorkImgModel");
 const ImgSchema = mongoose.model("ArtworkImage");
 
 const multerimg = require("multer");
-
-// const storageimg = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "../frontend/src/Components/Artwork Component/ImgUploader/files");
-//   },
-
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now();
-//     cb(null, uniqueSuffix + file.originalname);
-//   },
-// });
 
 const uploadimg = multerimg({ storage: storage });
 
@@ -173,15 +161,6 @@ app.post("/uploadImg", uploadimg.single("image"), async (req, res) => {
   }
 });
 
-// app.get("/getImage", async (req, res) => {
-//   try {
-//     ImgSchema.find({}).then((data) => {
-//       res.send({ status: "ok", data: data });
-//     });
-//   } catch (error) {
-//     res.json({ status: error });
-//   }
-// });
 app.get("/getImage", async (req, res) => {
   try {
     // Find and sort by createdAt in descending order (most recent first)
@@ -192,3 +171,62 @@ app.get("/getImage", async (req, res) => {
     res.json({ status: "error", message: error.message });
   }
 });
+
+const inventoryStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./file"); // folder for inventory images
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname); // Save with unique timestamp
+  },
+});
+
+const uploadInventoryImg = multer({ storage: inventoryStorage });
+
+// Visitor count route
+app.get('/api/visitorCount', async (req, res) => {
+  try {
+    const { date } = req.query;
+
+    // Query the database to get the total number of visitors for the selected date
+    const visitorCount = await Visitor.countDocuments({ date });
+
+    res.json({ count: visitorCount });
+  } catch (err) {
+    console.error('Error fetching visitor count:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+//updated
+// Remaining slots route
+app.get('/remainingSlots', async (req, res) => {
+  try {
+    const { date } = req.query;
+
+    // Query the database to get all visitors for the selected date
+    const visitors = await Visitor.find({ date });
+
+    // Create an object to hold the remaining slots per time slot
+    const timeSlots = {
+      "8.30": 10,
+      "12.30": 10,
+      "3.30": 10,
+    };
+
+    // Reduce the available slots by the number of tickets for each time slot
+    visitors.forEach((visitor) => {
+      if (timeSlots[visitor.time] !== undefined) {
+        const totalTickets = visitor.tickets.reduce((sum, ticket) => sum + ticket.count, 0);
+        timeSlots[visitor.time] -= totalTickets;
+      }
+    });
+
+    res.json({ slots: timeSlots });
+  } catch (err) {
+    console.error('Error fetching remaining slots:', err);
+    res.status(500).send('Server error');
+  }
+});
+

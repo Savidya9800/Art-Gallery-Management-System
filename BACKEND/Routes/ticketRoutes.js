@@ -11,7 +11,7 @@ router.get("/", ticketController.getAllVisitors);
 router.post("/", ticketController.addVisitors);
 router.get("/:id", ticketController.getByID);
 router.put("/:id", ticketController.updateVisitor);
-router.delete("/:id", VisitorController.deleteVisitor);  
+router.delete("/:id", VisitorController.deleteVisitor);
 
 
 //export
