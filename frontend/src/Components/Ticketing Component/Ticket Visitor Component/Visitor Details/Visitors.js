@@ -43,6 +43,14 @@ function Visitors() {
     });
   };
 
+  const handleSendReport = (visitor) => {
+    const phoneNumber = visitor.phone; 
+    const visitorDetails = `Visitor Details:\nName: ${visitor.fname} ${visitor.lname}\nEmail: ${visitor.email}\nPhone: ${visitor.phone}\nDate: ${visitor.date}\nTime: ${visitor.time}\nAddress: ${visitor.address}`;
+    const WhatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(visitorDetails)}`;
+
+    window.open(WhatsAppUrl, "_blank");
+  };
+
   return (
     <div>
       <NavigationBar />
@@ -73,7 +81,15 @@ function Visitors() {
           {visitors.length > 0 ? (
             visitors.map((visitor, i) => (
               <div key={i}>
+                <button
+                  onClick={() => handleSendReport(visitor)}
+                  className="ml-5 bg-green-500 text-white font-semibold py-2 px-4 rounded-md mt-2"
+                >
+                  Send WhatsApp Report
+                </button>
+                
                 <Visitor visitor={visitor} />
+                
               </div>
             ))
           ) : (
