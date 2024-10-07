@@ -52,7 +52,8 @@ const EventManagerRequest = () => {
       <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 border-b text-left">Name</th>
+            <th className="px-4 py-2 border-b text-left">Event Name</th>
+            <th className="px-4 py-2 border-b text-left">Artist</th>
             <th className="px-4 py-2 border-b text-left">Email</th>
             <th className="px-4 py-2 border-b text-left">Mobile Number</th>
             <th className="px-4 py-2 border-b text-left">Member Count</th>
@@ -68,6 +69,7 @@ const EventManagerRequest = () => {
           {pendingRequests.map((request) => (
             <tr key={request._id} className="hover:bg-gray-50">
               <td className="px-4 py-2 border-b">{request.name}</td>
+              <td className="px-4 py-2 border-b">{request.artist}</td>
               <td className="px-4 py-2 border-b">{request.email}</td>
               <td className="px-4 py-2 border-b">{request.mobileNumber}</td>
               <td className="px-4 py-2 border-b">{request.memberCount}</td>
@@ -104,7 +106,8 @@ const EventManagerRequest = () => {
       <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 border-b text-left">Name</th>
+            <th className="px-4 py-2 border-b text-left">Event Name</th>
+            <th className="px-4 py-2 border-b text-left">Artist</th>
             <th className="px-4 py-2 border-b text-left">Email</th>
             <th className="px-4 py-2 border-b text-left">Mobile Number</th>
             <th className="px-4 py-2 border-b text-left">Member Count</th>
@@ -120,6 +123,7 @@ const EventManagerRequest = () => {
           {acceptedRequests.map((request) => (
             <tr key={request._id} className="hover:bg-gray-50">
               <td className="px-4 py-2 border-b">{request.name}</td>
+              <td className="px-4 py-2 border-b">{request.artist}</td>
               <td className="px-4 py-2 border-b">{request.email}</td>
               <td className="px-4 py-2 border-b">{request.mobileNumber}</td>
               <td className="px-4 py-2 border-b">{request.memberCount}</td>
@@ -150,7 +154,8 @@ const EventManagerRequest = () => {
       <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 border-b text-left">Name</th>
+            <th className="px-4 py-2 border-b text-left">Event Name</th>
+            <th className="px-4 py-2 border-b text-left">Artist</th>
             <th className="px-4 py-2 border-b text-left">Email</th>
             <th className="px-4 py-2 border-b text-left">Mobile Number</th>
             <th className="px-4 py-2 border-b text-left">Member Count</th>
@@ -166,6 +171,7 @@ const EventManagerRequest = () => {
           {rejectedRequests.map((request) => (
             <tr key={request._id} className="hover:bg-gray-50">
               <td className="px-4 py-2 border-b">{request.name}</td>
+              <td className="px-4 py-2 border-b">{request.artist}</td>
               <td className="px-4 py-2 border-b">{request.email}</td>
               <td className="px-4 py-2 border-b">{request.mobileNumber}</td>
               <td className="px-4 py-2 border-b">{request.memberCount}</td>
