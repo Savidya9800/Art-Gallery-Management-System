@@ -45,6 +45,7 @@ const TicketIssues = () => {
 function VisitorsCount() {
   const [groupedVisitors, setGroupedVisitors] = useState({});
   const [monthlyVisitorCounts, setMonthlyVisitorCounts] = useState({});
+  const [refreshData, setRefreshData] = useState(false); // State to trigger data refresh
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -52,9 +53,7 @@ function VisitorsCount() {
         groupVisitorsByDateAndTime(data.visitors);
       }
     });
-  }, []);
-
-  
+  }, [refreshData]); // Dependency on refreshData
 
   // Function to group visitors by date and time slot, and calculate total visitors per month
   const groupVisitorsByDateAndTime = (visitors) => {
@@ -92,6 +91,11 @@ function VisitorsCount() {
     setMonthlyVisitorCounts(monthGroups);
   };
 
+  // Function to refresh the visitor data
+  const refreshVisitorData = () => {
+    setRefreshData((prev) => !prev); // Toggle refreshData state
+  };
+
   return (
     <div>
       <NavigationBar />
@@ -102,6 +106,14 @@ function VisitorsCount() {
       <br />
       <div className="container mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-5">Visitor Count by Date and Time Slot</h2>
+
+        {/* Button to refresh visitor data */}
+        <button 
+          onClick={refreshVisitorData} 
+          className="mb-5 bg-blue-500 text-white font-semibold py-2 px-4 rounded"
+        >
+          Refresh Visitor Data
+        </button>
 
         {/* Table for Date, Time Slot, and Visitor Count */}
         {Object.keys(groupedVisitors).length > 0 ? (
@@ -157,6 +169,5 @@ function VisitorsCount() {
     </div>
   );
 }
-
 
 export default VisitorsCount;
