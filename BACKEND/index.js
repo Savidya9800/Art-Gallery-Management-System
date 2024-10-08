@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
+const cartrouter = require("./Routes/CartRoutes"); //Inventory Manager
 
 //Artwork-manager
 const router = require("./Routes/artWorkRoutes");
@@ -43,7 +44,7 @@ app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
-
+app.use("/cart",cartrouter);
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -64,6 +65,9 @@ app.use("/requestEvent", RequestEventrouter);
 //user
 app.use("/artWorks", router);
 app.use("/api/bookingUsers", bookingUserRoutes);
+
+//cart
+const Cart = require("./Routes/CartRoutes");
 
 //Financial Manager
 //app.use("/transactions", transactionRoutes);

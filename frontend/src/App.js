@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import "./App.css";
+import { CartProvider } from "../../frontend/src/Components/Inventory Component/Shop/CartContext";
 
 //Main Components
 import Home from "./Components/Main Component/Home";
@@ -78,9 +79,11 @@ import AddInventory from "./Components/Inventory Component/InventoryDetails/Addi
 import InventoryComp from "./Components/Inventory Component/InventoryDetails/InventoryComp";
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
+import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
   return (
+    <CartProvider>
     <div>
       <React.Fragment>
         <Routes>
@@ -115,7 +118,7 @@ function App() {
           <Route path="/itemview" element={<InventoryComp />} />
           <Route path="/itemview/:id" element={<UpdateInventory />} />
           <Route path="/shopView" element={<ShopView />} />
-
+         
 
           {/* Ticket-manager */}
           <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
@@ -178,10 +181,15 @@ function App() {
           <Route path="/register" element={<CreaetProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+
+          {/* Cart */}
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </React.Fragment>
     </div>
+    </CartProvider>
   );
 }
+
 
 export default App;
