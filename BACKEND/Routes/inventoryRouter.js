@@ -10,7 +10,7 @@ const inventoryController = require("../Controllers/inventoryController");
 const path = require('path');
 const inventoryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, './file')); // Ensure the path is correctly set
+    cb(null, path.join(__dirname, '../file')); // Ensure the path is correctly set
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + file.originalname;
