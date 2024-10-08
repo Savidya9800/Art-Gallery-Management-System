@@ -72,6 +72,14 @@ import Login from "./Components/User Component/Login/Login";
 import CreaetProfile from "./Components/User Component/CreateProfile/CreaetProfile";
 import Profile from "./Components/User Component/Profile/Profile";
 import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDashboard";
+import CreateMembership from "./Components/User Component/membership/CreateMembership";
+import AllMembership from "./Components/User Component/membership/AllMembership";
+import EditMembership from "./Components/User Component/AdminMemberships/EditMembership";
+
+//Finance Manager
+import PaymentGateway from "./Components/Finance Component/PaymentGateway/Payment";
+import Payments from "./Components/Finance Component/PaymentGateway/PaymentDetails";
+import Transactions from "./Components/Finance Component/TransactionDetails/Transaction";
 
 //Inventory Manager
 import AdminUi from "./Components/Inventory Component/Inventory/AdminUi";
@@ -80,6 +88,7 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
+
 
 function App() {
   return (
@@ -174,6 +183,9 @@ function App() {
           <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
           {/* Financial Manager */}
+          <Route path="/paymentgateway" element={<PaymentGateway />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/transactions" element={<Transactions />} />
 
           {/* User Manager */}
           <Route path="/admin/users" element={<AdminUsers />} />
@@ -181,9 +193,17 @@ function App() {
           <Route path="/register" element={<CreaetProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+<<<<<<< HEAD
 
           {/* Cart */}
           <Route path="/cart" element={<CartPage />} />
+=======
+          <Route path="/membership" element={<CreateMembership />} />
+          <Route path="/allMembership" element={<AllMembership />} />
+          <Route path="/edit-membership/:id" element={<EditMembership />} />
+
+          {/* Event Manager */}
+>>>>>>> c3e9bc73afa8636ed80f4bc68f802dcebf9ce2dd
         </Routes>
       </React.Fragment>
     </div>
