@@ -116,6 +116,7 @@ function App() {
           <Route path="/itemview/:id" element={<UpdateInventory />} />
           <Route path="/shopView" element={<ShopView />} />
 
+
           {/* Ticket-manager */}
           <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
           <Route path="/visitor" element={<Visitor />} />

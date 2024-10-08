@@ -182,7 +182,7 @@ app.get("/getImage", async (req, res) => {
 
 const inventoryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./file"); // folder for inventory images
+    cb(null, "./file"); // Make sure this folder exists and is writable
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -190,4 +190,16 @@ const inventoryStorage = multer.diskStorage({
   },
 });
 
-const uploadInventoryImg = multer({ storage: inventoryStorage });
+const uploadInventoryImg = multer({ storage: inventoryStorage });
+app.post("/uploadInventoryImage", uploadInventoryImg.single("image"), async (req, res) => {
+  console.log(req.file);
+  const imageName = req.file.filename;
+
+  try {
+    await InventorySchema.create({ image: imageName, ...otherInventoryFields });
+    res.status(200).send({ status: 200, message: "Inventory image uploaded successfully" });
+  } catch (error) {
+    console.log("Error uploading inventory image:", error.message);
+    res.status(500).send({ status: 500, message: "Image not uploaded" });
+  }
+});

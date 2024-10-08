@@ -10,7 +10,9 @@ function UpdateInventory() {
     price: "",
     itemCount: "",
     date: "",
+    image: "", // Add image to state
   });
+  const [selectedImage, setSelectedImage] = useState(null); // State to handle file input
   const history = useNavigate();
   const { id } = useParams();
 
@@ -19,7 +21,6 @@ function UpdateInventory() {
       try {
         const res = await axios.get(`http://localhost:5000/inventory/${id}`);
         const data = await res.data;
-        // Assuming date comes in a compatible format, or you might want to format it
         setInputs(data.inventory);
       } catch (err) {
         console.error("Error fetching inventory: ", err);
@@ -29,12 +30,22 @@ function UpdateInventory() {
   }, [id]);
 
   const sendRequest = async () => {
+    const formData = new FormData(); // Create a FormData object to handle file uploads
+    formData.append("productname", inputs.productname);
+    formData.append("price", inputs.price);
+    formData.append("itemCount", inputs.itemCount);
+    formData.append("date", inputs.date);
+    
+    // Only append the image if one is selected
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+
     try {
-      await axios.put(`http://localhost:5000/inventory/${id}`, {
-        productname: String(inputs.productname),
-        price: Number(inputs.price),
-        itemCount: Number(inputs.itemCount),
-        date: String(inputs.date), // Ensure date is in a compatible format like YYYY-MM-DD
+      await axios.put(`http://localhost:5000/inventory/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
     } catch (err) {
       console.error("Error updating inventory: ", err);
@@ -46,6 +57,10 @@ function UpdateInventory() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedImage(e.target.files[0]); // Capture the selected file
   };
 
   const handleSubmit = async (e) => {
@@ -116,6 +131,19 @@ function UpdateInventory() {
               required
               className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm
              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileChange} // Handle image selection
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm
+              focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
 

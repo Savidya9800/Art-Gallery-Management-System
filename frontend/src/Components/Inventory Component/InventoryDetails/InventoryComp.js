@@ -31,15 +31,15 @@ function InventoryComp() {
 
     // Title: Inventory List
     doc.setFontSize(22);
-   doc.setTextColor(240, 237, 230);
+    doc.setTextColor(240, 237, 230);
     doc.text("Inventory List", 14, 20);
 
-    //logo
+    // Logo
     const pageWidth = doc.internal.pageSize.getWidth();
     const imgWidth = 25;
     const imgHeight = 20;
     const xPosition = pageWidth - imgWidth - 10;
-    doc.addImage(logo,'JPEG', xPosition, 10, imgWidth, imgHeight);
+    doc.addImage(logo, 'JPEG', xPosition, 10, imgWidth, imgHeight);
 
     // Subtitle and Date
     doc.setFontSize(12);
@@ -54,10 +54,11 @@ function InventoryComp() {
       item.price || "N/A",
       item.itemCount || "N/A",
       new Date(item.date).toLocaleDateString() || "N/A",
+      item.image ? item.image : "No Image" // Include image filename or "No Image"
     ]);
 
     doc.autoTable({
-      head: [["Product Code", "Product Name", "Price", "Item Count", "Date"]],
+      head: [["Product Code", "Product Name", "Price", "Item Count", "Date", "Image"]],
       body: inventoryData.length > 0 ? inventoryData : [["No inventory items found"]],
       startY: 40,
       theme: "grid",
@@ -81,7 +82,7 @@ function InventoryComp() {
     <div>
       <div className="relative z-10 ">
         <NavigationBar />
-      </div>
+      </div>
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Inventory List</h1>
         <button
@@ -99,6 +100,7 @@ function InventoryComp() {
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">Price</th>
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">Item Count</th>
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">Date</th>
+                <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">Image</th> {/* New Image Column */}
                 <th className="px-6 py-3 text-left text-sm font-bold text-gray-700">Actions</th>
               </tr>
             </thead>
@@ -109,7 +111,7 @@ function InventoryComp() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center">
+                  <td colSpan="7" className="px-6 py-4 text-center">
                     No inventory items found.
                   </td>
                 </tr>

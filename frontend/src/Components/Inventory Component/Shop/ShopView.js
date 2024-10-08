@@ -5,6 +5,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import shop from "../Shop/shop.png";
 
+
 const URL = "http://localhost:5000/inventory";
 
 const fetchHandler = async () => {
@@ -41,22 +42,14 @@ export default function Shopview() {
     }
   }, [searchQuery, inventory]);
 
+ 
   return (
     <div>
       <div className="relative z-10 ">
         <NavigationBar />
       </div>
 
-      <div className="flex items-center p-4">
-        {/* Search input field */}
-        <input
-          onChange={(e) => setSearchQuery(e.target.value)}
-          type="text"
-          name="search"
-          placeholder="Search items"
-          className="border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#A78F51] mr-4"
-        />
-      </div>
+     
 
       {/*  if no results found */}
       {noResults ? (
@@ -68,6 +61,17 @@ export default function Shopview() {
           <img src={shop} alt="shop" className="mx-auto object-contain" />
           <br />
           <br />
+
+          <div className="flex items-center p-4">
+        {/* Search input field */}
+        <input
+          onChange={(e) => setSearchQuery(e.target.value)}
+          type="text"
+          name="search"
+          placeholder="Search items"
+          className="border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#A78F51] mr-4"
+        />
+      </div>
 
           {/* Display filtered inventory */}
           <div className="flex flex-wrap gap-4 justify-center">
