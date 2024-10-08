@@ -58,10 +58,7 @@ app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
-<<<<<<< HEAD
 app.use("/cart",cartrouter);
-=======
->>>>>>> c3e9bc73afa8636ed80f4bc68f802dcebf9ce2dd
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -212,7 +209,6 @@ const inventoryStorage = multer.diskStorage({
   },
 });
 
-<<<<<<< HEAD
 const uploadInventoryImg = multer({ storage: inventoryStorage });
 app.post("/uploadInventoryImage", uploadInventoryImg.single("image"), async (req, res) => {
   console.log(req.file);
@@ -226,8 +222,6 @@ app.post("/uploadInventoryImage", uploadInventoryImg.single("image"), async (req
     res.status(500).send({ status: 500, message: "Image not uploaded" });
   }
 });
-=======
-const uploadInventoryImg = multer({ storage: inventoryStorage });
 
 // Visitor count route
 app.get('/api/visitorCount', async (req, res) => {
@@ -275,4 +269,3 @@ app.get('/remainingSlots', async (req, res) => {
   }
 });
 
->>>>>>> c3e9bc73afa8636ed80f4bc68f802dcebf9ce2dd
