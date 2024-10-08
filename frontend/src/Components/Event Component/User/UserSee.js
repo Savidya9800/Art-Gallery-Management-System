@@ -5,6 +5,15 @@ import bgImage from '../User/Gallery.jpeg';
 import { useNavigate } from 'react-router-dom';
 import FooterComp from '../../Nav Component/FooterComp';
 
+import event1 from './Event1.jpeg';
+import event2 from './Event2.jpeg';
+import event3 from './Event3.jpeg';
+import event4 from './Event4.jpeg';
+import event5 from './Event5.jpeg';
+import event6 from './Event6.jpeg';
+import event7 from './Event7.jpeg';
+import event8 from './Event8.jpeg';
+
 function UserSee() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,6 +23,8 @@ function UserSee() {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+  const eventImages = [event1, event2, event3, event4, event5, event6, event7, event8];
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -121,6 +132,7 @@ function UserSee() {
                 className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
               >
                 <h2 className="bg-white text-center text-xl font-bold mb-2 text-gray-900">{request.name}</h2>
+                <img src={eventImages[request.imageId - 1] || event1} alt="Event" className="w-full h-48 object-cover rounded-lg"/>
                 <p className="bg-white text-gray-700">
                   <strong className="bg-white">Message:</strong> {request.message}
                 </p>
