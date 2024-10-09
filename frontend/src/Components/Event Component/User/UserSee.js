@@ -22,6 +22,7 @@ function UserSee() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [sortOrder, setSortOrder] = useState('desc'); // Set default sort order to 'desc'
   const navigate = useNavigate();
 
   const eventImages = [event1, event2, event3, event4, event5, event6, event7, event8];
@@ -43,15 +44,17 @@ function UserSee() {
   }, []);
 
   // Filter accepted requests
-  const acceptedRequests = requests.filter(request => request.status === 'Accepted');
+  const acceptedRequests = requests.filter((request) => request.status === 'Accepted');
 
-  // Sort accepted requests by eventDate
+  // Sort accepted requests by eventDate based on sortOrder
   const sortedAcceptedRequests = acceptedRequests.sort((a, b) => {
-    return new Date(a.eventDate) - new Date(b.eventDate);
+    return sortOrder === 'desc'
+      ? new Date(b.eventDate) - new Date(a.eventDate) // Sort recent events first
+      : new Date(a.eventDate) - new Date(b.eventDate); // Sort older events first
   });
 
   // Filter the sorted requests based on the search term
-  const filteredRequests = sortedAcceptedRequests.filter(request =>
+  const filteredRequests = sortedAcceptedRequests.filter((request) =>
     request.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -63,8 +66,6 @@ function UserSee() {
       console.log('get record ', response);
       if (response.data.success) {
         alert('Login successful');
-        // Navigate to RequestEventForm with email and name as state
-        console.log(response.data.name);
         navigate('/requestEventForm', {
           state: {
             email: response.data.artist.email,
@@ -89,6 +90,10 @@ function UserSee() {
     setShowModal(false); // Close the modal
     setEmail(''); // Clear email field
     setPassword(''); // Clear password field
+  };
+
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value); // Update sort order
   };
 
   if (loading) return <p className="text-center text-lg font-semibold">Loading...</p>;
@@ -123,6 +128,15 @@ function UserSee() {
           />
         </div>
 
+        {/* Sort Dropdown - Moved to left corner */}
+        <div className="mb-6 flex justify-start">
+          <label className="mr-2">Sort by date:</label>
+          <select value={sortOrder} onChange={handleSortChange} className="border border-gray-300 p-2 rounded">
+            <option value="desc">Recent First</option> {/* Show recent events first */}
+            <option value="asc">Oldest First</option>
+          </select>
+        </div>
+
         {/* Event Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRequests.length > 0 ? (
@@ -132,7 +146,7 @@ function UserSee() {
                 className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
               >
                 <h2 className="bg-white text-center text-xl font-bold mb-2 text-gray-900">{request.name}</h2>
-                <img src={eventImages[request.imageId - 1] || event1} alt="Event" className="w-full h-48 object-cover rounded-lg"/>
+                <img src={eventImages[request.imageId - 1] || event1} alt="Event" className="w-full h-48 object-cover rounded-lg" />
                 <p className="bg-white text-gray-700">
                   <strong className="bg-white">Message:</strong> {request.message}
                 </p>
@@ -149,51 +163,50 @@ function UserSee() {
 
       {/* Modal for Login */}
       {showModal && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-8 rounded-lg shadow-xl w-80">
-      <h2 className="text-2xl font-bold text-center p-4 mb-6">Login</h2>
-      <form onSubmit={handleLogin}>
-        <div className="p-4 mb-4">
-          <label className="text-sm text-black font-semibold block mb-2">Username</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="border-b-2 border-black focus:outline-none p-2 w-full"
-            placeholder="Username"
-          />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-xl w-80">
+            <h2 className="text-2xl font-bold text-center p-4 mb-6">Login</h2>
+            <form onSubmit={handleLogin}>
+              <div className="p-4 mb-4">
+                <label className="text-sm text-black font-semibold block mb-2">Username</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="border-b-2 border-black focus:outline-none p-2 w-full"
+                  placeholder="Username"
+                />
+              </div>
+              <div className="p-4 mb-6">
+                <label className="text-sm text-black font-semibold block mb-2">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="border-b-2 border-black focus:outline-none p-2 w-full"
+                  placeholder="Password"
+                />
+              </div>
+              <div className="text-right mb-4">
+                <a href="#" className="text-xs text-black hover:underline">Forgot password?</a>
+              </div>
+              <div className="flex justify-center mb-6 p-4">
+                <button
+                  type="submit"
+                  className="bg-[#A78F51] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-blue-600 transition"
+                >
+                  Login
+                </button>
+              </div>
+              <div className="text-center text-sm">
+                Don't have an account? <a href="/artistRegister" className="text-black hover:underline">SignUp</a>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="p-4 mb-6">
-          <label className="text-sm text-black font-semibold block mb-2">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="border-b-2 border-black focus:outline-none p-2 w-full"
-            placeholder="Password"
-          />
-        </div>
-        <div className="text-right mb-4">
-          <a href="#" className="text-xs text-black hover:underline">Forgot password?</a>
-        </div>
-        <div className="flex justify-center mb-6 p-4">
-          <button
-            type="submit"
-            className="bg-[#A78F51] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-blue-600 transition"
-          >
-            Login
-          </button>
-        </div>
-        <div className="text-center text-sm">
-          Don't have an account? <a href="/artistRegister" className="text-black hover:underline">SignUp</a>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
+      )}
 
       <FooterComp />
     </div>

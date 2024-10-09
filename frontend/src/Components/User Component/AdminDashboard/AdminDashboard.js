@@ -29,6 +29,7 @@ const AdminDashboard = () => {
     inventory: "inventory",
     finance: "finance",
     inquiry: "inquiry",
+    memberships: "membership"
   };
 
   const validatePasscode = (passcode, correctPasscode, callback) => {
@@ -77,6 +78,13 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
           }}
           icon={FaUser}
           label="User Management"
+        />
+        <SidebarItem
+          onClick={() => {
+            validatePasscode(prompt("Enter passcode:"), passcodes.memberships, () => setActiveIndex(2)); // Update for Memberships
+          }}
+          icon={FaBell}
+          label="Membership Management" 
         />
         <SidebarItem
           onClick={() => {
