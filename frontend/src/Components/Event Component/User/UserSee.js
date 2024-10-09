@@ -84,6 +84,7 @@ function UserSee() {
 
   const handleButtonClick = () => {
     navigate(`/requestEventForm`) // Show the modal when the button is clicked
+    navigate('/artistLogin'); // Show the modal when the button is clicked
   };
 
   const closeModal = () => {

@@ -192,13 +192,13 @@ const TicketPrices = () => {
           </p>
 
           {/* Ticket Table */}
-          <TicketTable />
+          
 
           {/* Group Visit Info, Ticket Purchase Section, Admin Button, and Message Admin (Horizontally aligned) */}
           <div className="flex flex-col lg:flex-row justify-between mt-6 space-y-6 lg:space-y-0 lg:space-x-6">
             {/* Group Visit Info */}
             <div className="w-full lg:w-1/4">
-              <GroupVisitInfo />
+            <TicketTable />
             </div>
 
             {/* Ticket Purchase Section */}
