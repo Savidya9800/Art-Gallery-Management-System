@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function ShopComp(props) {
-  const {_id, productname, price, itemCount, date} = props.INVENTORY;
+  const {_id, productname, price, itemCount, date, image} = props.INVENTORY; // Add image to destructuring
 
   // Delete function
   const history = useNavigate();
@@ -23,6 +23,17 @@ function ShopComp(props) {
       <td className="px-6 py-3">LKR {price.toFixed(2)}</td>
       <td className="px-6 py-3">{itemCount}</td>
       <td className="px-6 py-3">{new Date(date).toLocaleDateString()}</td>
+      <td className="px-6 py-3">
+        {image ? ( // Check if the image exists
+          <img
+          src={`http://localhost:5000/images/${image}`} // Use /images instead of /file
+          alt={productname}
+          className="w-16 h-16 object-cover"
+        />        
+        ) : (
+          <span>No Image</span> // Fallback if no image is available
+        )}
+      </td>
       <td className="px-6 py-3 flex gap-2">
         <Link to={`/itemview/${_id}`} className="bg-yellow-500 text-white px-4 py-1 rounded">
           Edit
