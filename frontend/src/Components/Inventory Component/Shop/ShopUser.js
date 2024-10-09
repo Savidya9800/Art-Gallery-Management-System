@@ -5,7 +5,6 @@ export default function ShopUser({ INVENTORY }) {
   const { productname, price, itemCount: initialItemCount, image } = INVENTORY;
   const { addToCart } = useContext(CartContext);
 
-  // State to manage the current item count
   const [itemCount, setItemCount] = useState(initialItemCount);
 
   const handleAddToCart = () => {
@@ -42,7 +41,7 @@ export default function ShopUser({ INVENTORY }) {
           className="bg-[#A78F51] hover:bg-black text-white font-bold py-2 px-4 rounded flex-1 mr-2"
           onClick={handleAddToCart}
         >
-          Add to cart
+        Add to cart
         </button>
       </div>
     </div>

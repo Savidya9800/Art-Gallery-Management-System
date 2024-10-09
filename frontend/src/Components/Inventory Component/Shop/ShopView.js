@@ -5,7 +5,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import shop from "../Shop/shop.png";
 import { useNavigate } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa"; // Import cart icon from react-icons (Font Awesome)
+import { FaShoppingCart } from "react-icons/fa"; 
 
 const URL = "http://localhost:5000/inventory";
 
@@ -15,15 +15,15 @@ const fetchHandler = async () => {
 
 export default function Shopview() {
   const [inventory, setInventory] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // Search query state
-  const [filteredInventory, setFilteredInventory] = useState([]); // For filtered items
-  const [minPrice, setMinPrice] = useState(""); // Min price state
-  const [maxPrice, setMaxPrice] = useState(""); // Max price state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredInventory, setFilteredInventory] = useState([]); 
+  const [minPrice, setMinPrice] = useState(""); 
+  const [maxPrice, setMaxPrice] = useState(""); 
   const [noResults, setNoResults] = useState(false);
 
-  const navigate = useNavigate(); // Use navigate to redirect to cart page
+  const navigate = useNavigate(); 
 
-  // Fetch inventory data
+ 
   useEffect(() => {
     fetchHandler().then((data) => {
       console.log("Inventory data:", data.inventory);
@@ -36,14 +36,13 @@ export default function Shopview() {
   useEffect(() => {
     let filtered = inventory;
 
-    // Filter by search query
+    
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((item) =>
         item.productname.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
-    // Filter by price range
     if (minPrice !== "" && maxPrice !== "") {
       filtered = filtered.filter(
         (item) => item.price >= parseFloat(minPrice) && item.price <= parseFloat(maxPrice)
@@ -51,7 +50,7 @@ export default function Shopview() {
     }
 
     setFilteredInventory(filtered);
-    setNoResults(filtered.length === 0); // If no items found
+    setNoResults(filtered.length === 0); 
   }, [searchQuery, inventory, minPrice, maxPrice]);
 
   return (
@@ -66,7 +65,6 @@ export default function Shopview() {
         <br />
 
         <div className="flex items-center p-4 gap-4">
-  {/* Search input field */}
   <input
     onChange={(e) => setSearchQuery(e.target.value)}
     type="text"
@@ -75,7 +73,7 @@ export default function Shopview() {
     className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
   />
 
-  {/* Min Price Input */}
+ 
   <input
     type="number"
     value={minPrice}
@@ -84,7 +82,7 @@ export default function Shopview() {
     className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
   />
 
-  {/* Max Price Input */}
+ 
   <input
     type="number"
     value={maxPrice}
@@ -93,7 +91,7 @@ export default function Shopview() {
     className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
   />
 
-  {/* Cart Icon */}
+  
   <button
     className="text-[#A78F51] text-xl hover:text-gray-600 flex items-center ml-auto"
     onClick={() => navigate("/cart")}
@@ -103,7 +101,7 @@ export default function Shopview() {
 </div>
 
 
-        {/* If no results found */}
+        
         {noResults ? (
           <div className="text-center">
             <p>No results found for "{searchQuery}"</p>
