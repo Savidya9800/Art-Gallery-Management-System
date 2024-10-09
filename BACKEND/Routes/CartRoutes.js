@@ -4,7 +4,7 @@ const cartrouter = express.Router();
 
 cartrouter.post('/add', CartController.addItemToCart);
 cartrouter.get('/', CartController.getCartItems);
-cartrouter.put('/update/:id', CartController.updateItemQuantity);
-cartrouter.delete('/remove/:id', CartController.removeItemFromCart);
+cartrouter.put('/update/:productId', CartController.updateItemQuantity);
+cartrouter.delete('/remove/:productId', CartController.removeItemFromCart);
 
 module.exports = cartrouter;
