@@ -48,6 +48,19 @@ class BookingUserService {
       throw new Error(error.response?.data?.message || "Error fetching users");
     }
   }
+  async getArtistById() {
+    try {
+      const id = JSON.parse(localStorage.getItem("artist").toString())["_id"];
+      const response = await axios.get(`${BASE_URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || "Error fetching users");
+    }
+  }
 
   async updateUser(data) {
     try {
