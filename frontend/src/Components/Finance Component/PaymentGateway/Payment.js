@@ -4,7 +4,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import axios from "axios"; // For making API calls
 import { jsPDF } from "jspdf"; // For generating PDF
 import logo from "../TransactionDetails/logo.JPG";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const PaymentGateway = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ const PaymentGateway = () => {
   const [totalAmount, setTotalAmount] = useState(0 * 1.015); // Initial total amount with 1.5% service charge
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", content: "" });
+  const navigate = useNavigate(); // Add this in your component before `handleSubmit`
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -41,20 +42,16 @@ const PaymentGateway = () => {
       return; // Prevent invalid characters from being entered
     }
 
-    setFormData({ ...formData, [name]: value });
-
     // If amount changes, calculate total with 1.5% service charge
     if (name === "amount") {
-      const amountValue = parseFloat(value) || 0;
+      const sanitizedValue = value.replace("-", "");
+      const amountValue = parseFloat(sanitizedValue) || 0;
 
-      // Check if the amount is negative
-      if (amountValue < 0) {
-        alert("Amount cannot be negative.");
-        return; // Prevent further execution if the amount is negative
-      }
       const updatedTotal = amountValue * 1.015; // Adding 1.5% service charge
       setTotalAmount(updatedTotal);
     }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   // Validate expiry date format and future month/year
@@ -144,17 +141,15 @@ const PaymentGateway = () => {
         const totalAmountPaid = response.data.totalAmount.toFixed(2);
         setMessage({
           type: "success",
-          content: `Payment successful! Total Amount Paid: $${totalAmountPaid}`,
+          content: `Payment successful! Total Amount Paid: $${totalAmountPaid}. You will now be redirect in 3 Seconds`,
         });
 
         // Generate the payment slip PDF
         generatePaymentSlip(totalAmountPaid);
 
-        //alert("Payment successful! Redirecting to homepage...");
-
-        // setTimeout(() => {
-        // window.location.href = "/"; // Redirect to the homepage or any other page
-        // }, 2000); // Wait for 2 seconds before redirecting
+        setTimeout(() => {
+          navigate("/"); // Redirect to home
+        }, 5000);
       }
     } catch (error) {
       // Handle errors during the payment process
@@ -203,6 +198,7 @@ const PaymentGateway = () => {
                 id="amount"
                 name="amount"
                 placeholder="Enter amount"
+                min="0"
                 value={formData.amount}
                 onChange={handleChange}
                 required
