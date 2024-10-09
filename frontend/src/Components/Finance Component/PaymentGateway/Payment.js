@@ -46,6 +46,12 @@ const PaymentGateway = () => {
     // If amount changes, calculate total with 1.5% service charge
     if (name === "amount") {
       const amountValue = parseFloat(value) || 0;
+
+      // Check if the amount is negative
+      if (amountValue < 0) {
+        alert("Amount cannot be negative.");
+        return; // Prevent further execution if the amount is negative
+      }
       const updatedTotal = amountValue * 1.015; // Adding 1.5% service charge
       setTotalAmount(updatedTotal);
     }
