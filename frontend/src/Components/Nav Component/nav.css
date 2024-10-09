@@ -5,7 +5,7 @@
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: large;
-  /* z-index: 0; */
+  z-index: 0;
 }
 
 .navbar-nav .nav-link {

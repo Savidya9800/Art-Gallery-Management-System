@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
 import FooterComp from '../../../Nav Component/FooterComp';
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import './BookingConfirmation.css'; // Importing the redeveloped external CSS
@@ -8,18 +8,20 @@ import logo from '../../../Nav Component/logo.JPG';
 
 function BookingConfirmation() {
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize useNavigate
   const { visitor } = location.state;
   const { _id, date, time, tickets, fname, lname, email, phone, city, country } = visitor;
 
   // Calculate total amount
   const totalAmount = tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
 
-  // Format the ID to "RES" followed by the last three digits of the ID
-  const formattedId = `RES${_id.slice(-3)}`;
+  // Format the ID to display only the last three digits
+  const formattedId = `REF ` + _id.slice(-3); // Get the last three characters of the _id
 
   // Function to handle payment process
   const handlePayNow = () => {
-    alert('Redirecting to payment gateway...');
+    // Navigate to the payments page
+    navigate('/paymentgateway');
   };
 
   const generatePDFReport = () => {

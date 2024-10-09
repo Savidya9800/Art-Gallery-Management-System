@@ -7,7 +7,7 @@ class BookingUserService {
       return await newUser.save();
     } catch (error) {
       console.error(error);
-      throw new Error("Error creating booking user");
+      throw new Error("Email is already in use");
     }
   }
 
@@ -44,7 +44,7 @@ class BookingUserService {
       const token = jwt.sign(
         { id: user._id, email: user.email, role: user.role },
         "process.env.JWT_SECRET",
-        { expiresIn: "1h" }
+        { expiresIn: "5h" }
       );
       return { user, token };
     } catch (error) {
