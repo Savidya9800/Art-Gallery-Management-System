@@ -15,7 +15,7 @@ router.get(
   "/:id",
 
   authenticateToken,
-  authorize("admin", "user"),
+  authorize("admin", "user", "artist"),
   bookingUserController.getUserById
 );
 router.post("/login", bookingUserController.login);
