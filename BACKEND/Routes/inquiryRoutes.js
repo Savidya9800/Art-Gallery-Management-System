@@ -12,8 +12,10 @@ const inquiryC = require('../Controllers/InquiryController');
 
 router.get("/", inquiryC.getAllInquiries); //Get All Inquiries
 router.post("/", inquiryC.addInquiry); //Insert new Inquiries
-router.get("/:id", inquiryC.getInquiryById); //Get Inquiry by ID
+router.post("/:id",  inquiryC.getInquiryById); //Get Inquiry by ID
+router.post("/i/:email",  inquiryC.getInquiryByEmail); //Get Inquiry by ID
 router.put("/:id", inquiryC.updateInquiry); //Update Inquiry
 router.delete("/:id", inquiryC.deleteInquiry); //Delete Inquiry
+
 
 module.exports = router;

@@ -54,7 +54,7 @@ const TicketPurchaseSection = () => {
       <p className="mb-4">Click here to buy your tickets</p>
       <a
         href="/addVisitor"
-        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-full"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         Buy tickets
       </a>

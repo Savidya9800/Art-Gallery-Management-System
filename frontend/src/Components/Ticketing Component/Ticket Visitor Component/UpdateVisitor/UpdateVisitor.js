@@ -330,7 +330,7 @@ const Visitor = () => {
           <button
             type="button"
             onClick={updateVisitor}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-black hover:bg-green-700 text-white font-bold w-full py-2 px-4 rounded"
           >
             Update Visitor
           </button>

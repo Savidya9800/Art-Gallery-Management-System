@@ -93,8 +93,8 @@ function ArtworkComp(props) {
       <td className="p-2 border border-gray-300">{date}</td>
       <td className="p-2 border border-gray-300">{description}</td>
       <td className="p-2 border border-gray-300">
-        <Button onClick={handleViewAll} variant="primary" className="ml-1">
-          View All
+        <Button onClick={handleViewAll} variant="primary" className="mr-1 ml-">
+          Details
         </Button>
         |
         <Link to={`/mainArtworkDetails/${_id}`}>

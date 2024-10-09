@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 //Document table is here 
 const InquirySchema = new Schema({
+
     name: {
         type: String,
         required: true
@@ -24,7 +25,10 @@ const InquirySchema = new Schema({
     inquiryMessage: {
         type: String,
         required: true
-    }
+    },
+
+   
+  
 });
 
 module.exports = mongoose.model('Inquiry', InquirySchema);
