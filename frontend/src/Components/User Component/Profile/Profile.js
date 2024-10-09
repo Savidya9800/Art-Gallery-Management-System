@@ -127,9 +127,9 @@ const Profile = () => {
       );
       return;
     }
-
+    
     setErrorMessage(""); // Clear error message if validations pass
-
+  
     try {
       await axios.put(
         `http://localhost:5000/api/membership/${membership._id}`,
@@ -141,7 +141,7 @@ const Profile = () => {
       console.error("Error updating membership:", error);
     }
   };
-
+  
   const handleMembershipChange = (e) => {
     setEditedMembership({
       ...editedMembership,
@@ -188,289 +188,280 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <div>
+    <Container fluid className="py-3 bg-light min-vh-100">
       <NavigationBar />
-      <Container fluid className="py-3 bg-light min-vh-100">
-        <Card className="mt-4">
-          <Card.Body>
-            <Row className="mb-4 align-items-center">
-              <Col xs="auto">
-                <Image src="\dp.png" roundedCircle width={100} height={100} />
-              </Col>
-              <Col>
-                <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-                <p className="text-muted">User</p>
-              </Col>
+      <Card className="mt-4">
+        <Card.Body>
+          <Row className="mb-4 align-items-center">
+            <Col xs="auto">
+              <Image
+                src="\dp.png"
+                roundedCircle
+                width={100}
+                height={100}
+              />
+            </Col>
+            <Col>
+              <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
+              <p className="text-muted">User</p>
+            </Col>
+            <Col xs="auto">
+              <Button
+                variant="outline-primary"
+                onClick={isEditing ? handleSave : handleEdit}
+              >
+                {isEditing ? "Save Profile" : "Edit Profile"}
+              </Button>
+            </Col>
+            {(membership === null && user.role !== "admin") && (
               <Col xs="auto">
                 <Button
-                className="btn-primary"
-                  
-                  onClick={isEditing ? handleSave : handleEdit}
+                  variant="outline-primary"
+                  onClick={handleApplyMembership}
                 >
-                  {isEditing ? "Save Profile" : "Edit Profile"}
+                  Apply for membership
                 </Button>
               </Col>
-              {membership === null && user.role !== "admin" && (
+            )}
+          </Row>
+
+          {errorMessage && (
+            <div className="alert alert-danger">{errorMessage}</div> // Display error message
+          )}
+
+          <Form>
+            <Row>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">
+                    FIRST NAME
+                  </Form.Label>
+                  <Form.Control
+                    name="firstName"
+                    value={isEditing ? editedUser.firstName : user.firstName}
+                    onChange={handleChange}
+                    readOnly={!isEditing}
+                    plaintext={!isEditing}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">
+                    LAST NAME
+                  </Form.Label>
+                  <Form.Control
+                    name="lastName"
+                    value={isEditing ? editedUser.lastName : user.lastName}
+                    onChange={handleChange}
+                    readOnly={!isEditing}
+                    plaintext={!isEditing}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">USERNAME</Form.Label>
+                  <Form.Control
+                    name="username"
+                    value={isEditing ? editedUser.username : user.username}
+                    onChange={handleChange}
+                    readOnly={!isEditing}
+                    plaintext={!isEditing}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">
+                    EMAIL ADDRESS
+                  </Form.Label>
+                  <Form.Control
+                    name="email" // Add name attribute for email
+                    value={isEditing ? editedUser.email : user.email} // Enable editing
+                    onChange={handleChange} // Update on change
+                    readOnly={!isEditing}
+                    plaintext={!isEditing}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">
+                    CONTACT NUMBER
+                  </Form.Label>
+                  <Form.Control
+                    name="contactNumber"
+                    value={
+                      isEditing ? editedUser.contactNumber : user.contactNumber
+                    }
+                    onChange={handleChange}
+                    readOnly={!isEditing}
+                    plaintext={!isEditing}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} className="mb-3">
+                <Form.Group>
+                  <Form.Label className="text-muted small">PASSWORD</Form.Label>
+                  <Form.Control value="************" readOnly plaintext />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+
+          {membership !== null && (
+            <>
+              <Row className="align-items-end justify-content-end mb-4">
                 <Col xs="auto">
-                  <Link to="/mainArtworkDetails">
-                    <button type="button" className="mr-5 btn btn-primary">
-                      Artwork Details
-                    </button>
-                  </Link>
                   <Button
-                    className="btn-primary"
-                    onClick={handleApplyMembership}
+                    variant="outline-primary"
+                    onClick={
+                      isMembershipEditing
+                        ? handleMembershipSave
+                        : handleMembershipEdit
+                    }
                   >
-                    Apply for membership
+                    {isMembershipEditing ? "Save Membership" : "Edit Membership"}
                   </Button>
                 </Col>
-              )}
-            </Row>
-
-            {errorMessage && (
-              <div className="alert alert-danger">{errorMessage}</div> // Display error message
-            )}
-
-            <Form>
-              <Row>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      FIRST NAME
-                    </Form.Label>
-                    <Form.Control
-                      name="firstName"
-                      value={isEditing ? editedUser.firstName : user.firstName}
-                      onChange={handleChange}
-                      readOnly={!isEditing}
-                      plaintext={!isEditing}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      LAST NAME
-                    </Form.Label>
-                    <Form.Control
-                      name="lastName"
-                      value={isEditing ? editedUser.lastName : user.lastName}
-                      onChange={handleChange}
-                      readOnly={!isEditing}
-                      plaintext={!isEditing}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      USERNAME
-                    </Form.Label>
-                    <Form.Control
-                      name="username"
-                      value={isEditing ? editedUser.username : user.username}
-                      onChange={handleChange}
-                      readOnly={!isEditing}
-                      plaintext={!isEditing}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      EMAIL ADDRESS
-                    </Form.Label>
-                    <Form.Control
-                      name="email" // Add name attribute for email
-                      value={isEditing ? editedUser.email : user.email} // Enable editing
-                      onChange={handleChange} // Update on change
-                      readOnly={!isEditing}
-                      plaintext={!isEditing}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      CONTACT NUMBER
-                    </Form.Label>
-                    <Form.Control
-                      name="contactNumber"
-                      value={
-                        isEditing
-                          ? editedUser.contactNumber
-                          : user.contactNumber
-                      }
-                      onChange={handleChange}
-                      readOnly={!isEditing}
-                      plaintext={!isEditing}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className="mb-3">
-                  <Form.Group>
-                    <Form.Label className="text-muted small">
-                      PASSWORD
-                    </Form.Label>
-                    <Form.Control value="************" readOnly plaintext />
-                  </Form.Group>
+                <Col xs="auto">
+                  <Button variant="outline-danger" onClick={handleDeleteMembership}>
+                    Delete Membership
+                  </Button>
                 </Col>
               </Row>
-            </Form>
-
-            {membership !== null && (
-              <>
-                <Row className="mb-4 align-items-end justify-content-end">
-                  <Col xs="auto">
-                    <Button
-                      variant="outline-primary"
-                      onClick={
-                        isMembershipEditing
-                          ? handleMembershipSave
-                          : handleMembershipEdit
-                      }
-                    >
-                      {isMembershipEditing
-                        ? "Save Membership"
-                        : "Edit Membership"}
-                    </Button>
+              <Form>
+                <Row>
+                  <Col md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-muted small">
+                        MEMBERSHIP TYPE
+                      </Form.Label>
+                      <Form.Control
+                        value={
+                          isMembershipEditing
+                            ? editedMembership.membershipType
+                            : membership.membershipType
+                        }
+                        name="membershipType"
+                        onChange={handleMembershipChange}
+                        readOnly={!isMembershipEditing}
+                        plaintext={!isMembershipEditing}
+                      />
+                    </Form.Group>
                   </Col>
-                  <Col xs="auto">
-                    <Button
-                      variant="outline-danger"
-                      onClick={handleDeleteMembership}
-                    >
-                      Delete Membership
-                    </Button>
+                  <Col md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-muted small">
+                        MEMBERSHIP PRICE
+                      </Form.Label>
+                      <Form.Control
+                        value={
+                          isMembershipEditing
+                            ? editedMembership.membershipPrice
+                            : membership.membershipPrice
+                        }
+                        name="membershipPrice"
+                        onChange={handleMembershipChange}
+                        readOnly={!isMembershipEditing}
+                        plaintext={!isMembershipEditing}
+                      />
+                    </Form.Group>
                   </Col>
                 </Row>
-                <Form>
-                  <Row>
-                    <Col md={6} className="mb-3">
-                      <Form.Group>
-                        <Form.Label className="text-muted small">
-                          MEMBERSHIP TYPE
-                        </Form.Label>
-                        <Form.Control
-                          value={
-                            isMembershipEditing
-                              ? editedMembership.membershipType
-                              : membership.membershipType
-                          }
-                          name="membershipType"
-                          onChange={handleMembershipChange}
-                          readOnly={!isMembershipEditing}
-                          plaintext={!isMembershipEditing}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6} className="mb-3">
-                      <Form.Group>
-                        <Form.Label className="text-muted small">
-                          MEMBERSHIP PRICE
-                        </Form.Label>
-                        <Form.Control
-                          value={
-                            isMembershipEditing
-                              ? editedMembership.membershipPrice
-                              : membership.membershipPrice
-                          }
-                          name="membershipPrice"
-                          onChange={handleMembershipChange}
-                          readOnly={!isMembershipEditing}
-                          plaintext={!isMembershipEditing}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={6} className="mb-3">
-                      <Form.Group>
-                        <Form.Label className="text-muted small">
-                          ADDRESS
-                        </Form.Label>
-                        <Form.Control
-                          value={
-                            isMembershipEditing
-                              ? editedMembership.address
-                              : membership.address
-                          }
-                          name="address"
-                          onChange={handleMembershipChange}
-                          readOnly={!isMembershipEditing}
-                          plaintext={!isMembershipEditing}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6} className="mb-3">
-                      <Form.Group>
-                        <Form.Label className="text-muted small">
-                          CONTACT NUMBER
-                        </Form.Label>
-                        <Form.Control
-                          value={
-                            isMembershipEditing
-                              ? editedMembership.contactNumber
-                              : membership.contactNumber
-                          }
-                          name="contactNumber"
-                          onChange={handleMembershipChange}
-                          readOnly={!isMembershipEditing}
-                          plaintext={!isMembershipEditing}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </Form>
-              </>
-            )}
+                <Row>
+                  <Col md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-muted small">
+                        ADDRESS
+                      </Form.Label>
+                      <Form.Control
+                        value={
+                          isMembershipEditing
+                            ? editedMembership.address
+                            : membership.address
+                        }
+                        name="address"
+                        onChange={handleMembershipChange}
+                        readOnly={!isMembershipEditing}
+                        plaintext={!isMembershipEditing}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <Form.Group>
+                      <Form.Label className="text-muted small">
+                        CONTACT NUMBER
+                      </Form.Label>
+                      <Form.Control
+                        value={
+                          isMembershipEditing
+                            ? editedMembership.contactNumber
+                            : membership.contactNumber
+                        }
+                        name="contactNumber"
+                        onChange={handleMembershipChange}
+                        readOnly={!isMembershipEditing}
+                        plaintext={!isMembershipEditing}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Form>
+            </>
+          )}
 
-            <Row className="mt-4">
-              <Col>
-                <Button variant="primary" onClick={handleLogout}>
-                  Log out
-                </Button>
-              </Col>
-              <Col className="text-center">
-                <Button variant="secondary">Contact Us</Button>
-              </Col>
-              <Col className="text-end">
-                <Button variant="danger" onClick={handleDeleteAccount}>
-                  Delete Account
-                </Button>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
+          <Row className="mt-4">
+            <Col>
+              <Button variant="primary" onClick={handleLogout}>
+                Log out
+              </Button>
+            </Col>
+            <Col className="text-center">
+              <Button variant="secondary">Contact Us</Button>
+            </Col>
+            <Col className="text-end">
+              <Button variant="danger" onClick={handleDeleteAccount}>
+                Delete Account
+              </Button>
+              <Link to="/mainArtworkDetails">
+                <button type="button" className="ml-2 btn btn-primary">
+                  Artwork Details
+                </button>
+              </Link>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
 
-        <Modal
-          show={showDeleteConfirmation}
-          onHide={() => setShowDeleteConfirmation(false)}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Delete Account</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              Are you sure you want to delete your account? This action cannot
-              be undone.
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => setShowDeleteConfirmation(false)}
-            >
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={confirmDeleteAccount}>
-              Yes, delete my account
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Container>
-    </div>
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={() => setShowDeleteConfirmation(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to delete your account? This action cannot be
+            undone.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirmation(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDeleteAccount}>
+            Yes, delete my account
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 
