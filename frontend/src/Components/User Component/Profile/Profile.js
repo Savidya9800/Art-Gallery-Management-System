@@ -62,6 +62,28 @@ const Profile = () => {
     setIsEditing(true);
   };
 
+  function SomeComponent() {
+  const user = null; // Replace with actual user fetching logic
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  useEffect(() => {
+    if (!user) {
+      // If the user is not logged in, redirect to the login page
+      navigate('/login');
+    }
+  }, [user, navigate]); // Dependencies include user and navigate
+
+  // If user is available, display the component's content
+  if (!user) return null; // No need for Loading... since we're redirecting
+
+  return (
+    <div>
+      {/* Your component's content goes here */}
+      <h1>Welcome, {user.name}</h1>
+    </div>
+  );
+}
+
   const handleSave = async () => {
     if (!validatePhoneNumber(editedUser.contactNumber)) {
       setErrorMessage("Contact number must be a valid 10-digit number.");
