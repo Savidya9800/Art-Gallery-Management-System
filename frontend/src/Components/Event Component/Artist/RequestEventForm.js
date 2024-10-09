@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import RighSideImage from "../Artist/background.jpg";
 import FooterComp from "../../Nav Component/FooterComp";
 
+import "./date_change.css";
+
 const RequestEventForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -82,7 +84,8 @@ const RequestEventForm = () => {
   ];
 
   const initialFormData = {
-    name: name || "",
+    name: "",
+    artist:  "",
     email: email || "",
     mobileNumber: "",
     memberCount: "",
@@ -159,17 +162,16 @@ const RequestEventForm = () => {
     setFormData(initialFormData);
   };
 
-
-
   const handleChoosePackage = (requestId) => {
     const selectedRequest = userRequests.accepted.find(
       (req) => req._id === requestId
     );
+    
     if (selectedRequest) {
       const matchedPackage = packages.find(
         (pkg) => pkg.name === selectedRequest.packageName
       );
-
+  
       if (matchedPackage) {
         setSelectedPackage(matchedPackage);
         setFormData({
@@ -179,9 +181,9 @@ const RequestEventForm = () => {
           Decoration: matchedPackage.Decoration,
           Venue: matchedPackage.Venue,
         });
-
-        // Navigate to the PDF generator page and pass the details
-        navigate("/pdf-generator", {
+  
+        // Navigate to the payment page and pass the necessary details
+        navigate("/paymentgateway", {
           state: {
             selectedPackage: matchedPackage,
             email: selectedRequest.email, // assuming email is part of selectedRequest
@@ -194,6 +196,7 @@ const RequestEventForm = () => {
       }
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -210,6 +213,17 @@ const RequestEventForm = () => {
     } catch (error) {
       console.error("There was an error submitting the form!", error);
     }
+
+    e.preventDefault(); // Prevent form default submission
+
+    if (!formData.eventDate) {
+      alert("Please select a date and time for the event.");
+      return; // Stop the form submission if the date is not selected
+    }
+
+    // Proceed with form submission logic if validation passes
+    console.log("Form submitted with data:", formData);
+    // Add your submission logic here (e.g., sending form data to a server)
   };
 
   const fetchUserRequests = async () => {
@@ -267,17 +281,26 @@ const RequestEventForm = () => {
   };
 
   const handleSaveClick = async () => {
-    try {
-      await axios.put(
-        `http://localhost:5000/requestEvent/updaterequest/${editingRequestId}`,
-        editedRequestData
-      );
-      alert("Request updated successfully!");
-      setEditingRequestId(null);
-      fetchUserRequests();
-    } catch (error) {
-      console.error("Error updating request:", error);
+    const phoneNumber = editedRequestData.mobileNumber;
+    const message = editedRequestData.message;
+
+    // Phone number validation
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
     }
+
+    // Message validation
+    if (message.trim() === "") {
+      alert("Message field cannot be empty.");
+      return;
+    }
+
+    // Proceed with saving data only if both validations pass
+    console.log("Data is valid, saving the request...", editedRequestData);
+
+    // Assuming you have your save logic here, after validations succeed
+    setEditingRequestId(null);
   };
 
   const handleEditedChange = (e) => {
@@ -319,10 +342,9 @@ const RequestEventForm = () => {
             Request Event
           </button>
 
-
           {isModalOpen && (
             <div className="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-              <div className="modal-content bg-white p-6 rounded-lg shadow-lg w-full max-w-lg h-auto max-h-[90vh] overflow-auto">
+              <div className="modal-content bg-white p-10 rounded-lg shadow-lg w-full h-auto max-h-[90vh] overflow-auto">
                 <span
                   className="close text-red-500 cursor-pointer"
                   onClick={toggleModal}
@@ -330,32 +352,51 @@ const RequestEventForm = () => {
                   &times;
                 </span>
 
-                <h1 className="bg-white heading text-xl text-center font-bold mb-4">
-                  Allocate Your Date & Time
+                <h1 className="bg-white heading text-4xl text-center font-bold mb-4">
+                  Plan Your Event
                 </h1>
                 <form onSubmit={handleSubmit}>
-                  <div className="date-picker-container mb-4 w-  bg-white">
-                    <label className="block font-semibold">
-                      Event Date and Time:{" "}
-                    </label>
+                <div className="date-picker-container mb-4 bg-white flex justify-center">
+                <div className="w-full max-w-lg">
+                  <label className="block font-semibold text-center mb-2">
+                    Event Date and Time:
+                  </label>
+                  <div className="w-full">
                     <DatePicker
                       selected={formData.eventDate}
                       onChange={handleDateChange}
                       showTimeSelect
                       dateFormat="Pp"
                       inline
+                      className="w-full" // Full width for DatePicker
                     />
                   </div>
+                </div>
+              </div>
+
 
                   <div className="form-fields  bg-white">
                     <div className="mb-4  bg-white">
                       <label className="block font-semibold  bg-white">
-                        Name:{" "}
+                        Event Name:{" "}
                       </label>
                       <input
                         type="text"
                         name="name"
                         value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                      />
+                    </div>
+                    <div className="mb-4  bg-white">
+                      <label className="block font-semibold  bg-white">
+                        Artist Name:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        name="artist"
+                        value={formData.artist}
                         onChange={handleChange}
                         required
                         className="border border-gray-300 p-2 w-full rounded  bg-white"
@@ -394,19 +435,24 @@ const RequestEventForm = () => {
                       />
                     </div>
 
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
-                        Member Count:{" "}
-                      </label>
-                      <input
-                        type="number"
-                        name="memberCount"
-                        value={formData.memberCount}
-                        onChange={handleMemberCountChange}
-                        required
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
-                      />
-                    </div>
+                    <div className="mb-4 bg-white">
+                  <label className="block font-semibold bg-white">Member Count:</label>
+                  <input
+                    type="number"
+                    name="memberCount"
+                    value={formData.memberCount}
+                    onChange={handleMemberCountChange}
+                    min="0" // This ensures no negative values are entered
+                    onKeyPress={(e) => {
+                      if (e.key === "-" || e.key === "+" || e.key === "e") {
+                        e.preventDefault(); // Prevents typing minus, plus, and scientific notation
+                      }
+                    }}
+                    required
+                    className="border border-gray-300 p-2 w-full rounded bg-white"
+                  />
+                </div>
+                    
 
                     <div className="mb-4  bg-white">
                       <label className="block font-semibold  bg-white">
@@ -531,7 +577,6 @@ const RequestEventForm = () => {
                         className="request-card rejected p-4 bg-red-50 border-l-4 border-yellow-600 rounded-lg"
                         style={{ width: "1400px" }}
                       >
-                        
                         {editingRequestId === request._id ? (
                           <div className="space-y-4 bg-red-50 ">
                             <div>
@@ -542,10 +587,25 @@ const RequestEventForm = () => {
                                 type="text"
                                 name="mobileNumber"
                                 value={editedRequestData.mobileNumber}
-                                onChange={handleEditedChange}
+                                onChange={(e) => {
+                                  const phoneNumber = e.target.value;
+
+                                  // Only allow numbers and ensure length is no more than 10 digits
+                                  if (/^\d{0,10}$/.test(phoneNumber)) {
+                                    handleEditedChange(e);
+                                  }
+                                }}
                                 className="w-full p-2 border border-gray-50 rounded bg-red-50"
                               />
+                              {/* Show validation error message if needed */}
+                              {editedRequestData.mobileNumber &&
+                                editedRequestData.mobileNumber.length < 10 && (
+                                  <p className="text-red-600 mt-2">
+                                    Mobile number must be exactly 10 digits.
+                                  </p>
+                                )}
                             </div>
+
                             <div>
                               <label className="block font-semibold text-gray-700 bg-red-50">
                                 Message:
@@ -553,10 +613,19 @@ const RequestEventForm = () => {
                               <textarea
                                 name="message"
                                 value={editedRequestData.message}
-                                onChange={handleEditedChange}
+                                onChange={(e) => {
+                                  handleEditedChange(e);
+                                }}
                                 className="w-full p-2 border border-gray-50 rounded bg-red-50"
                               />
+                              {/* Show validation error message if message is empty */}
+                              {editedRequestData.message === "" && (
+                                <p className="text-red-600 mt-2">
+                                  Message field cannot be empty.
+                                </p>
+                              )}
                             </div>
+
                             <div className="flex space-x-4 bg-red-50">
                               <button
                                 onClick={handleSaveClick}
@@ -582,6 +651,9 @@ const RequestEventForm = () => {
                               <span className="text-yellow-600">
                                 {request.status}
                               </span>
+                            </p>
+                            <p className="text-gray-600">
+                              <strong>Artist:</strong> {request.artist}
                             </p>
                             <p className="text-gray-600">
                               <strong>Budget:</strong> {request.budget}

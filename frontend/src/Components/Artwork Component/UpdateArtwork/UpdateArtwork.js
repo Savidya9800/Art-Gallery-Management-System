@@ -14,6 +14,14 @@ function UpdateArtwork() {
   const [inputs, setInputs] = useState({});
   const history = useNavigate();
   const id = useParams().id;
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    website: "",
+    statement: "",
+    title: "",
+    description: "",
+  });
 
   useEffect(() => {
     const fetchHandler = async () => {
@@ -49,7 +57,72 @@ function UpdateArtwork() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: value }));
+
+    // Validate Full Name to restrict symbols and numbers
+    if (name === "name" && !/^[a-zA-Z\s]*$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "Full Name can only contain letters and spaces.",
+      }));
+    }
+    // Validate email to match the abc@gmail.com format
+    else if (
+      name === "email" &&
+      !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value)
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Email must be in the format abc@gmail.com.",
+      }));
+    }
+    // Validate Website/Portfolio to end with .com or .lk
+    else if (
+      name === "website" &&
+      !/^(https?:\/\/)?([a-zA-Z0-9.-]+)\.(com|lk)$/.test(value)
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        website: "Website must end with .com or .lk.",
+      }));
+    }
+    // Validate Artist Statement to not exceed 10 words
+    else if (
+      name === "statement" &&
+      value.split(" ").filter(Boolean).length > 10
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        statement: "Artist Statement can only contain up to 10 words.",
+      }));
+    }
+    // Validate Title of Artwork to restrict symbols and numbers
+    else if (name === "title" && !/^[a-zA-Z\s\-']*$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        title:
+          "Title can only contain letters, spaces, hyphens, and apostrophes.",
+      }));
+    }
+    // Validate Description to not exceed 15 words
+    else if (
+      name === "description" &&
+      value.split(" ").filter(Boolean).length > 15
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        description: "Description can only contain up to 15 words.",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
+
+    setInputs((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -100,10 +173,19 @@ function UpdateArtwork() {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  const handleTagClick = (tag) => {
+    // Append the clicked tag to the input value
+    const updatedTags = inputs.tags ? `${inputs.tags} ${tag}` : tag;
+    handleChange({ target: { name: "tags", value: updatedTags } });
+  };
+
   return (
     <div>
-      <NavigationBar />
-      <div className="mt-8 ml-48 w-96">
+      <div className="relative z-10">
+        <NavigationBar />
+              
+      </div>
+      <div className="mt-0 ml-48 w-96">
         <Carousel>
           <Carousel.Item>
             <img
@@ -130,10 +212,10 @@ function UpdateArtwork() {
         </Carousel>
       </div>
       <div className="-mt-[570px]">
-        <form className="form ml-[60%] mt-5" onSubmit={handleSubmit}>
+        <form className="form ml-[60%] mt-4" onSubmit={handleSubmit}>
           {currentStep === 1 && (
             <div className=" relative w-[523px] h-[800px]">
-              <div className="absolute w-[513px] h-[700px] bg-white border-2 border-black rounded-[25px]"></div>
+              <div className="absolute w-[513px] h-[776px] bg-white border-2 border-black rounded-[25px]"></div>
               <div className=" bg-white absolute left-[100px] top-[25px] text-[#A78F51] text-[25px] font-[400] font-Inter">
                 Artwork Submission form
               </div>
@@ -151,6 +233,11 @@ function UpdateArtwork() {
                 value={inputs.name}
                 className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
               />
+              {errors.name && (
+                <div className="text-red-500 absolute left-[26px] top-[205px] bg-white text-xs">
+                  {errors.name}
+                </div>
+              )}
 
               <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
                 Email
@@ -163,6 +250,11 @@ function UpdateArtwork() {
                 value={inputs.email}
                 className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[252px] border border-black rounded-[15px]"
               ></input>
+              {errors.email && (
+                <div className="text-red-500 absolute left-[26px] top-[300px] bg-white text-xs">
+                  {errors.email}
+                </div>
+              )}
 
               <div className=" bg-white absolute left-[25px] top-[316px] text-black text-[18px] font-[400] font-Inter">
                 Phone Number
@@ -193,6 +285,11 @@ function UpdateArtwork() {
                 value={inputs.website}
                 className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[440px] border border-black rounded-[15px]"
               ></input>
+              {errors.website && (
+                <div className="text-red-500 absolute left-[26px] top-[488px] bg-white text-xs">
+                  {errors.website}
+                </div>
+              )}
 
               <div className=" bg-white absolute left-[28px] top-[508px] text-black text-[18px] font-[400] font-Inter">
                 Biography
@@ -214,12 +311,26 @@ function UpdateArtwork() {
                 name="statement"
                 onChange={handleChange}
                 value={inputs.statement}
-                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[635px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[468px] h-[107px] left-[25px] top-[635px] border border-black rounded-[15px]"
               ></input>
+              {errors.statement && (
+                <div className="text-red-500 absolute left-[26px] top-[746px] bg-white text-xs">
+                  {errors.statement}
+                </div>
+              )}
 
+              {/* Disable the button if any of the fields are empty */}
               <Button
-                className="absolute left-[433px] top-[726px]"
+                className="absolute left-[433px] top-[796px]"
                 onClick={nextStep}
+                disabled={
+                  !inputs.name ||
+                  !inputs.email ||
+                  !inputs.pNumber ||
+                  !inputs.website ||
+                  !inputs.biography ||
+                  !inputs.statement
+                }
               >
                 Next
               </Button>
@@ -246,6 +357,11 @@ function UpdateArtwork() {
                 value={inputs.title}
                 className="pl-4 bg-white absolute w-[470px] h-[48px] left-[26px] top-[157px] border border-black rounded-[15px]"
               />
+              {errors.title && (
+                <div className="text-red-500 absolute left-[26px] top-[205px] bg-white text-xs">
+                  {errors.title}
+                </div>
+              )}
 
               <div className=" bg-white absolute left-[25px] top-[222px] text-black text-[18px] font-[400] font-Inter">
                 Medium
@@ -302,6 +418,11 @@ function UpdateArtwork() {
                 value={inputs.description}
                 className="pl-4 bg-white absolute w-[468px] h-[110px] left-[26px] top-[540px] border border-black rounded-[15px]"
               ></input>
+              {errors.description && (
+                <div className="text-red-500 absolute left-[26px] top-[655px] bg-white text-xs">
+                  {errors.description}
+                </div>
+              )}
 
               <Button
                 className="absolute left-[20px] top-[726px]"
@@ -390,22 +511,22 @@ function UpdateArtwork() {
                 <div className="bg-white absolute left-[25px] top-[286px] text-black text-[18px] font-[400] font-Inter">
                   Image Tags
                 </div>
-                <div className="bg-white absolute left-[25px] top-[320px] flex space-x-2">
-                  <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                    #paint
-                  </span>
-                  <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                    #wallart
-                  </span>
-                  <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                    #wood
-                  </span>
-                  <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                    #abstract
-                  </span>
-                  <span className="text-gray-500 text-[14px] font-[400] bg-gray-100 px-2 py-1 rounded-lg">
-                    #portrait
-                  </span>
+                <div className="bg-white absolute left-[25px] top-[318px] flex space-x-2">
+                  {[
+                    "#paint",
+                    "#wallart",
+                    "#wood",
+                    "#abstract",
+                    "#portrait",
+                  ].map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-white text-[14px] font-[400] bg-black px-2 py-1 rounded-lg cursor-pointer "
+                      onClick={() => handleTagClick(tag)}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
                 <input
                   type="text"
