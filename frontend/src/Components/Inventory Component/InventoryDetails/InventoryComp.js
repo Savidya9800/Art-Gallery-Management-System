@@ -6,6 +6,8 @@ import FooterComp from "../../Nav Component/FooterComp";
 import jsPDF from "jspdf";
 import "jspdf-autotable"; 
 import logo from "../../Nav Component/logo.JPG";
+import { useNavigate } from 'react-router-dom';
+
 
 const URL = "http://localhost:5000/inventory";
 
@@ -15,6 +17,7 @@ const fetchHandler = async () => {
 
 function InventoryComp() {
   const [inventory, setInventory] = useState([]);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -91,6 +94,13 @@ function InventoryComp() {
         >
           Download PDF
         </button>
+      <br/>
+      <br/>
+        <button 
+      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-2 px-4 rounded 
+      focus:outline-none focus:shadow-outline"
+       onClick={()=>Navigate('/addinventoryform')}>Add item</button><br></br>
+
         <div className="overflow-x-auto">
           <table id="inventory-table" className="min-w-full bg-white border border-gray-300">
             <thead className="bg-gray-200">
