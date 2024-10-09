@@ -58,6 +58,28 @@ const getInquiryById = async (req, res) => {
     return res.status(200).json({ inquiryData });
 };
 
+// Get an inquiry by email
+const getInquiryByEmail = async (req, res) => {
+    const email = req.params.email; // Expecting email in the URL as a param
+    console.log(email);
+
+    let inquiryData;
+    try {
+        inquiryData = await Inquiry.findOne({ email: email }); // Find by email
+        console.log(email, '2');
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error fetching inquiry' });
+    }
+
+    if (!inquiryData) {
+        return res.status(404).json({ message: 'Inquiry not found' });
+    }
+    console.log(email, '3');
+    return res.status(200).json({ inquiryData });
+};
+
+
 // Update an inquiry
 const updateInquiry = async (req, res) => {
     const id = req.params.id;
@@ -105,6 +127,7 @@ const deleteInquiry = async (req, res) => {
 exports.getAllInquiries = getAllInquiries;
 exports.addInquiry = addInquiry;
 exports.getInquiryById = getInquiryById;
+exports.getInquiryByEmail = getInquiryByEmail;
 exports.updateInquiry = updateInquiry;
 exports.deleteInquiry = deleteInquiry;
 
