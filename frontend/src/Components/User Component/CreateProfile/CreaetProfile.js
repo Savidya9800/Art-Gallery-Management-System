@@ -17,7 +17,7 @@ const CreateProfile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Mobile number validation function
+  // Validation functions remain the same...
   const validateMobile = (contactNumber) => {
     const mobilePattern = /^[0-9]{10}$/; // Regular expression for exactly 10 digits
     if (!mobilePattern.test(contactNumber)) {
@@ -55,8 +55,8 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate first name
+
+    // Form validation logic remains the same...
     const firstNameError = validateNamesAndUsername(formData.firstName, "First name");
     if (firstNameError) {
       setError(firstNameError);
@@ -109,22 +109,24 @@ const CreateProfile = () => {
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <div
-        className="bg-white p-4 rounded shadow"
-        style={{ maxWidth: "600px" }} // Increased the maxWidth to 600px
+        className="bg-white p-5 rounded shadow-lg"
+        style={{ maxWidth: "900px", width: "100%" }} // Set maxWidth to 900px and ensure full width
+        
       >
-        <div className="text-center mb-4">
-          <Image 
-            src="/welcome.png" 
-            alt="Awarna Art Gallery" 
-            width={200} 
-            className="mx-auto d-block" // Adding this class for centering
+        <div className="text-center mb-5">
+          <Image
+            src="/welcome.png"
+            alt="Awarna Art Gallery"
+            width={200}
+            className="mx-auto d-block"
           />
-
           <h2
-            className="mt-3"
+            className="mt-4"
             style={{
               color: "#9a7b4f",
               fontFamily: "Times New Roman, Times, serif",
+              fontWeight: "bold",
+              fontSize: "36px", 
             }}
           >
             Welcome to Awarna Art Gallery!
@@ -135,7 +137,7 @@ const CreateProfile = () => {
         {error && <Alert variant="danger">{error}</Alert>}
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="text"
               name="firstName"
@@ -143,10 +145,19 @@ const CreateProfile = () => {
               value={formData.firstName}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%", // Explicitly set width to 80%
+                margin: "0 auto", // Center input fields
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="text"
               name="lastName"
@@ -154,10 +165,19 @@ const CreateProfile = () => {
               value={formData.lastName}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="text"
               name="username"
@@ -165,10 +185,19 @@ const CreateProfile = () => {
               value={formData.username}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="email"
               name="email"
@@ -176,10 +205,19 @@ const CreateProfile = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="text"
               name="contactNumber"
@@ -187,10 +225,19 @@ const CreateProfile = () => {
               value={formData.contactNumber}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <div className="d-flex justify-content-around">
               <Form.Check
                 type="radio"
@@ -211,7 +258,7 @@ const CreateProfile = () => {
             </div>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="password"
               name="password"
@@ -219,10 +266,19 @@ const CreateProfile = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-4">
             <Form.Control
               type="password"
               name="confirmPassword"
@@ -230,6 +286,15 @@ const CreateProfile = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
+              className="p-3"
+              style={{
+                borderColor: "#ced4da",
+                borderWidth: "2px",
+                borderRadius: "8px",
+                width: "80%",
+                margin: "0 auto",
+                display: "block",
+              }}
             />
           </Form.Group>
 
@@ -237,15 +302,21 @@ const CreateProfile = () => {
             variant="primary"
             type="submit"
             className="w-100"
-            style={{ backgroundColor: "#9a7b4f", borderColor: "#9a7b4f" }}
+            style={{
+              backgroundColor: "#9a7b4f",
+              borderColor: "#9a7b4f",
+              padding: "12px",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
           >
             Register
           </Button>
         </Form>
 
-        <div className="text-center mt-3">
+        <div className="text-center mt-4">
           <small>
-            Or already have an account?{" "}
+            Already have an account?{" "}
             <a
               href="/login"
               style={{ color: "#9a7b4f", textDecoration: "none" }}
@@ -258,6 +329,8 @@ const CreateProfile = () => {
     </Container>
   );
 };
+
+
 
 export default CreateProfile;
 
