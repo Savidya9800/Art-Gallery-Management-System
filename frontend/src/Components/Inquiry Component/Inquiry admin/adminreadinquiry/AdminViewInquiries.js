@@ -32,8 +32,14 @@ export default function AdminViewInquiries(props) {
                 </table>
                 <div className="mt-6 flex justify-end">
                     <button
-                        onClick={() => navigate("/Addresponse")}
+                        onClick={() => navigate(`/Addresponse/${_id}`)} // Pass inquiry ID to the Addresponse route
                         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border border-black transition duration-200">Response</button>
+
+<button
+                        onClick={() => navigate(`/ViewResponse/${_id}`)} // Pass inquiry ID to the ViewResponse route
+                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 border border-black transition duration-200">
+                        Status
+                    </button>
                 </div>
             </div>
         </div>

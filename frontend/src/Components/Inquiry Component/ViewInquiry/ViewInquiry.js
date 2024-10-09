@@ -1,4 +1,3 @@
-
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Viewinquiries from './ViewInquiries';
@@ -8,14 +7,14 @@ import FooterComp from '../../Nav Component/FooterComp';
 
 const URL ="http://localhost:5000/inquiry";
 
-
+// Fetching data from the backend
 const fetchHandler = async () => {
     return await axios.get(URL).then((res) => res.data);
 };
 
 
 export default function ViewInquiry(){
-    const [inquiryData, setInquiries] = useState();
+    const [inquiryData, setInquiries] = useState(); 
 
     useEffect(() => {                                                                                                                                                                                                                                                                                                       
         fetchHandler().then((data) => setInquiries(data.inquiryData)); 
