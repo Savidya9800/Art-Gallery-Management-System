@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
 
 const MessageAdmin = () => {
   const initialFormState = {
@@ -65,12 +66,12 @@ const MessageAdmin = () => {
               required
             />
           </div>
-          <button
+          <Button
             type="submit"
-            className="w-full bg-[#A78F51] text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+            variant="dark"
           >
             Send Message
-          </button>
+          </Button>
           {error && <p className="text-red-500 mt-4">{error}</p>}
         </form>
       </div>

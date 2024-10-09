@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Visitor.css';
 import FooterComp from '../../../Nav Component/FooterComp';
 import NavigationBar from '../../../Nav Component/NavigationBar';
+import Button from 'react-bootstrap/Button';
 
 function Visitor(props) {
   const { _id, date, time, tickets, fname, lname, email, phone, city, country } = props.visitor;
@@ -99,7 +100,7 @@ function Visitor(props) {
             </tr>
           </tbody>
         </table>
-        <button className="delete-btn" onClick={deleteVisitor}>Delete</button>
+        <Button variant="danger" onClick={deleteVisitor}>Delete</Button>
         <Link to={`/visitorDetails/${_id}`} className="update-link">Update</Link>
       </div>
     </div>
