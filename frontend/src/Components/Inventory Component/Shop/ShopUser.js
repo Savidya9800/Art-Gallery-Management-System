@@ -14,12 +14,13 @@ export default function ShopUser({ INVENTORY }) {
   };
 
   return (
-      <div className="bg-white shadow-md rounded-lg p-4 border border-gray-300 w-72">
+      <div className="bg-white shadow-md rounded-lg p-4 border border-gray-300 mx-auto">
         <div className="bg-white">
-        {image ? ( // Check if the image exists
+        {image ? ( 
           <img
           src={`http://localhost:5000/images/${image}`} 
-          className="bg-white w-50 h-50 object-cover"
+          className="bg-white w-40 h-40 object-cover"
+          alt="product"
         />        
         ) : (
           <span className="bg-white">No Image</span> // Fallback if no image is available

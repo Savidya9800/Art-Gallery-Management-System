@@ -17,6 +17,8 @@ export default function Shopview() {
   const [inventory, setInventory] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const [filteredInventory, setFilteredInventory] = useState([]); // For filtered items
+  const [minPrice, setMinPrice] = useState(""); // Min price state
+  const [maxPrice, setMaxPrice] = useState(""); // Max price state
   const [noResults, setNoResults] = useState(false);
 
   const navigate = useNavigate(); // Use navigate to redirect to cart page
@@ -30,20 +32,27 @@ export default function Shopview() {
     });
   }, []);
 
-  // search filtering
+  // Search and price filtering
   useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredInventory(inventory); // if search is empty
-      setNoResults(false);
-    } else {
-      const filtered = inventory.filter((item) =>
+    let filtered = inventory;
+
+    // Filter by search query
+    if (searchQuery.trim() !== "") {
+      filtered = filtered.filter((item) =>
         item.productname.toLowerCase().includes(searchQuery.toLowerCase())
       );
-
-      setFilteredInventory(filtered);
-      setNoResults(filtered.length === 0); // If no items found
     }
-  }, [searchQuery, inventory]);
+
+    // Filter by price range
+    if (minPrice !== "" && maxPrice !== "") {
+      filtered = filtered.filter(
+        (item) => item.price >= parseFloat(minPrice) && item.price <= parseFloat(maxPrice)
+      );
+    }
+
+    setFilteredInventory(filtered);
+    setNoResults(filtered.length === 0); // If no items found
+  }, [searchQuery, inventory, minPrice, maxPrice]);
 
   return (
     <div>
@@ -51,32 +60,50 @@ export default function Shopview() {
         <NavigationBar />
       </div>
 
-      {/* Search bar with cart icon */}
       <div className="p-6">
         <img src={shop} alt="shop" className="mx-auto object-contain" />
         <br />
         <br />
 
-        <div className="flex items-center p-4">
-          {/* Search input field */}
-          <input
-            onChange={(e) => setSearchQuery(e.target.value)}
-            type="text"
-            name="search"
-            placeholder="Search items"
-            className="border border-black rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#A78F51] mr-4 "
-          />
+        <div className="flex items-center p-4 gap-4">
+  {/* Search input field */}
+  <input
+    onChange={(e) => setSearchQuery(e.target.value)}
+    type="text"
+    name="search"
+    placeholder="Search items"
+    className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
+  />
 
-          {/* Cart Icon */}
-          <button
-            className="text-[#A78F51] text-xl hover:text-gray flex items-center"
-            onClick={() => navigate("/cart")} // Navigate to cart page when clicked
-          >
-            <FaShoppingCart style={{ fontSize: "40px" }} />
-          </button>
-        </div>
+  {/* Min Price Input */}
+  <input
+    type="number"
+    value={minPrice}
+    onChange={(e) => setMinPrice(e.target.value)}
+    placeholder="Min Price"
+    className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
+  />
 
-        {/*  if no results found */}
+  {/* Max Price Input */}
+  <input
+    type="number"
+    value={maxPrice}
+    onChange={(e) => setMaxPrice(e.target.value)}
+    placeholder="Max Price"
+    className="border border-gray-300 rounded-lg py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
+  />
+
+  {/* Cart Icon */}
+  <button
+    className="text-[#A78F51] text-xl hover:text-gray-600 flex items-center ml-auto"
+    onClick={() => navigate("/cart")}
+  >
+    <FaShoppingCart style={{ fontSize: "30px" }} />
+  </button>
+</div>
+
+
+        {/* If no results found */}
         {noResults ? (
           <div className="text-center">
             <p>No results found for "{searchQuery}"</p>
