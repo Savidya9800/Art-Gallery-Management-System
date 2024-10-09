@@ -84,7 +84,7 @@ function ArtistLogin() {
       </Form>
       <p className="mt-3" style={{ fontSize: '14px', color: '#333', background: '#f8f8f8' }}>
         Don't have an account?{' '}
-        <a href="/register" style={{ color: '#a49256', textDecoration: 'none', background: '#f8f8f8' }}>
+        <a href="/artistRegister" style={{ color: '#a49256', textDecoration: 'none', background: '#f8f8f8' }}>
           Register here
         </a>
       </p>
