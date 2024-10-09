@@ -3,16 +3,10 @@ import { ListGroup, Button } from "react-bootstrap";
 import {
   FaUser,
   FaBell,
-  FaCreditCard,
-  FaEnvelope,
-  FaHeart,
-  FaHistory,
-  FaCalendarAlt,
-  FaStar,
   FaSignOutAlt,
 } from "react-icons/fa";
 import AdminUsers from "../AdminUsers/AdminUsers";
-import Notifications from "./Pages/Notification"; 
+import AdminMemberships from "../AdminMemberships/AdminMemberships";
 import ArtworkAdmin from "./Pages/ArtworkAdmin";
 import BiddingAdmin from "./Pages/BiddingAdmin";
 import EventAdmin from "./Pages/EventAdmin";
@@ -20,7 +14,6 @@ import TicketAdmin from "./Pages/TicketAdmin";
 import InventoryAdmin from "./Pages/InventoryAdmin"; 
 import FinanceAdmin from "./Pages/FinanceAdmin"; 
 import InquiryAdmin from "./Pages/InquiryAdmin";
-import DashHome from "./DashHome";
 import Profile from "../Profile/Profile";
 
 const AdminDashboard = () => {
@@ -36,6 +29,7 @@ const AdminDashboard = () => {
     inventory: "inventory",
     finance: "finance",
     inquiry: "inquiry",
+    memberships: "membership"
   };
 
   const validatePasscode = (passcode, correctPasscode, callback) => {
@@ -52,13 +46,14 @@ const AdminDashboard = () => {
       <div style={{ flex: 5, height: "100%" }}>
         {activeIndex === 0 && <Profile />} 
         {activeIndex === 1 && <AdminUsers />}
-        {activeIndex === 2 && <ArtworkAdmin />}
-        {activeIndex === 3 && <EventAdmin />}
-        {activeIndex === 4 && <BiddingAdmin />}
-        {activeIndex === 5 && <TicketAdmin />}
-        {activeIndex === 6 && <InventoryAdmin />}
-        {activeIndex === 7 && <FinanceAdmin />}
-        {activeIndex === 8 && <InquiryAdmin />}
+        {activeIndex === 2 && <AdminMemberships />}
+        {activeIndex === 3 && <ArtworkAdmin />}
+        {activeIndex === 4 && <EventAdmin />}
+        {activeIndex === 5 && <BiddingAdmin />}
+        {activeIndex === 6 && <TicketAdmin />}
+        {activeIndex === 7 && <InventoryAdmin />}
+        {activeIndex === 8 && <FinanceAdmin />}
+        {activeIndex === 9 && <InquiryAdmin />}
       </div>
     </div>
   );
@@ -86,7 +81,14 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
         />
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.artwork, () => setActiveIndex(2));
+            validatePasscode(prompt("Enter passcode:"), passcodes.memberships, () => setActiveIndex(2)); // Update for Memberships
+          }}
+          icon={FaBell}
+          label="Membership Management" 
+        />
+        <SidebarItem
+          onClick={() => {
+            validatePasscode(prompt("Enter passcode:"), passcodes.artwork, () => setActiveIndex(3));
           }}
           icon={FaBell}
           label="Artwork Management"  
@@ -94,15 +96,16 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
 
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.event, () => setActiveIndex(3));
+            validatePasscode(prompt("Enter passcode:"), passcodes.event, () => setActiveIndex(4));
           }}
           icon={FaBell}
           label="Event Management"
         />
-
+       
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.bidding, () => setActiveIndex(4));
+            setActiveIndex(2);
+            validatePasscode(prompt("Enter passcode:"), passcodes.bidding, () => setActiveIndex(5));
           }}
           icon={FaBell}
           label="Bidding Management"
@@ -110,7 +113,7 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
 
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.ticket, () => setActiveIndex(5));
+            validatePasscode(prompt("Enter passcode:"), passcodes.ticket, () => setActiveIndex(6));
           }}
           icon={FaBell}
           label="Ticket Management"
@@ -118,7 +121,7 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
 
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.inventory, () => setActiveIndex(6));
+            validatePasscode(prompt("Enter passcode:"), passcodes.inventory, () => setActiveIndex(7));
           }}
           icon={FaBell}
           label="Inventory Management"
@@ -126,7 +129,7 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
 
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.finance, () => setActiveIndex(7));
+            validatePasscode(prompt("Enter passcode:"), passcodes.finance, () => setActiveIndex(8));
           }}
           icon={FaBell}
           label="Finance Management"
@@ -134,7 +137,7 @@ const Sidebar = ({ setActiveIndex, validatePasscode, passcodes }) => {
 
         <SidebarItem
           onClick={() => {
-            validatePasscode(prompt("Enter passcode:"), passcodes.inquiry, () => setActiveIndex(8));
+            validatePasscode(prompt("Enter passcode:"), passcodes.inquiry, () => setActiveIndex(9));
           }}
           icon={FaBell}
           label="Inquiry Management"
@@ -164,7 +167,6 @@ const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
 // Styles
 const styles = {
   sidebarContainer: {
-    padding: "100px",
     borderRight: "1px solid #ddd",
     padding: "20px 10px",
     height: "187vh",

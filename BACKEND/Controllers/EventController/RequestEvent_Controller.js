@@ -3,11 +3,12 @@ const RequestEvent = require('../../Models/EventModels/RequestEvent_model');
 // Submit a new request
 const submitRequest = async (req, res) => {
   try {
-    const { name, email, mobileNumber, memberCount, message, eventDate, status, budget, packageName } = req.body;
+    const { name,artist, email, mobileNumber, memberCount, message, eventDate, status, budget, packageName } = req.body;
 
     // Create a new RequestEvent document
     const newRequest = new RequestEvent({
       name,
+      artist,
       email,
       mobileNumber,
       memberCount,
