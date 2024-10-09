@@ -17,6 +17,8 @@ import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry";
+import UserReadResponse from "./Components/Inquiry Component/UserReadresponse/userReadResponse";
+
 
 //Inquiry Admin imports
 import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
@@ -91,7 +93,7 @@ import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
   return (
-    <CartProvider>
+
       <div>
         <React.Fragment>
           <Routes>
@@ -148,12 +150,13 @@ function App() {
             {/* Inquiry Manager */}
             <Route path="/mainInquary" element={<InquiryComp />} />
             <Route path="/newInquiry" element={<AddInquiry />} />
-            <Route path="/inquiries" element={<ViewInquiry />} />
+           <Route path="/inquiries" element={<ViewInquiry />} />
             <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
-            <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
-            <Route path="/Viewresponse" element={<ViewResponse />} />
-            <Route path="/Addresponse" element={<Addresponse />} />
-            <Route path="/updateresponse/:id" element={<Updateresponse />} />
+            <Route path="/userReadResponse" element={<UserReadResponse />} />
+           <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
+          <Route path="/Viewresponse/:id" element={<ViewResponse />} />
+          <Route path="/Addresponse/:id" element={<Addresponse />} />
+          <Route path="/updateresponse/:id/:inquiryID" element={<Updateresponse />} />
 
             {/* Event Manager */}
             <Route
@@ -198,7 +201,7 @@ function App() {
           </Routes>
         </React.Fragment>
       </div>
-    </CartProvider>
+
   );
 }
 
