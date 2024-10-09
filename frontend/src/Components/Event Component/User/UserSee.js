@@ -22,6 +22,7 @@ function UserSee() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [sortOrder, setSortOrder] = useState('desc'); // Set default sort order to 'desc'
   const navigate = useNavigate();
 
   const eventImages = [event1, event2, event3, event4, event5, event6, event7, event8];
@@ -43,15 +44,17 @@ function UserSee() {
   }, []);
 
   // Filter accepted requests
-  const acceptedRequests = requests.filter(request => request.status === 'Accepted');
+  const acceptedRequests = requests.filter((request) => request.status === 'Accepted');
 
-  // Sort accepted requests by eventDate
+  // Sort accepted requests by eventDate based on sortOrder
   const sortedAcceptedRequests = acceptedRequests.sort((a, b) => {
-    return new Date(a.eventDate) - new Date(b.eventDate);
+    return sortOrder === 'desc'
+      ? new Date(b.eventDate) - new Date(a.eventDate) // Sort recent events first
+      : new Date(a.eventDate) - new Date(b.eventDate); // Sort older events first
   });
 
   // Filter the sorted requests based on the search term
-  const filteredRequests = sortedAcceptedRequests.filter(request =>
+  const filteredRequests = sortedAcceptedRequests.filter((request) =>
     request.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -63,8 +66,6 @@ function UserSee() {
       console.log('get record ', response);
       if (response.data.success) {
         alert('Login successful');
-        // Navigate to RequestEventForm with email and name as state
-        console.log(response.data.name);
         navigate('/requestEventForm', {
           state: {
             email: response.data.artist.email,
@@ -123,6 +124,15 @@ function UserSee() {
           />
         </div>
 
+        {/* Sort Dropdown - Moved to left corner */}
+        <div className="mb-6 flex justify-start">
+          <label className="mr-2">Sort by date:</label>
+          <select value={sortOrder} onChange={handleSortChange} className="border border-gray-300 p-2 rounded">
+            <option value="desc">Recent First</option> {/* Show recent events first */}
+            <option value="asc">Oldest First</option>
+          </select>
+        </div>
+
         {/* Event Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredRequests.length > 0 ? (
@@ -134,6 +144,7 @@ function UserSee() {
                 <h2 className="mb-2 text-xl font-bold text-center text-gray-900 bg-white">{request.name}</h2>
                 <img src={eventImages[request.imageId - 1] || event1} alt="Event" className="object-cover w-full h-48 rounded-lg"/>
                 <p className="text-gray-700 bg-white">
+
                   <strong className="bg-white">Message:</strong> {request.message}
                 </p>
                 <p className="text-gray-700 bg-white">
@@ -192,6 +203,7 @@ function UserSee() {
     </div>
   </div> 
 )}
+
 
 
       <FooterComp />

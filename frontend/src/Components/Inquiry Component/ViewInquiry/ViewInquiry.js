@@ -7,6 +7,7 @@ import FooterComp from '../../Nav Component/FooterComp';
 const URL = "http://localhost:5000/inquiry";
 const email = localStorage.getItem('email');
 
+
 const fetchHandler = async () => {
     try {
         const response = await axios.post(`${URL}/i/${email}`);
@@ -20,6 +21,7 @@ const fetchHandler = async () => {
 
 export default function ViewInquiry() {
     const [inquiryData, setInquiryData] = useState(null); // Initialize as null
+
 
     useEffect(() => {                                                                                                                                                                                                                                                                                                       
         fetchHandler().then((data) => {

@@ -17,4 +17,5 @@ router.post("/i/:email",  inquiryC.getInquiryByEmail); //Get Inquiry by ID
 router.put("/:id", inquiryC.updateInquiry); //Update Inquiry
 router.delete("/:id", inquiryC.deleteInquiry); //Delete Inquiry
 
+
 module.exports = router;

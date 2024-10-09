@@ -25,6 +25,7 @@ const addInquiry = async (req, res) => {
     let newInquiry;
     try {
         newInquiry = new Inquiry({
+            
             name,
             email,
             inquiryType,
@@ -104,6 +105,25 @@ const updateInquiry = async (req, res) => {
     return res.status(200).json({ inquiryData });
 };
 
+// Get all inquiries by a specific ID (e.g., userID)
+const getmyInquiries = async (req, res) => {
+    const id = req.params.id;
+
+    let inquiries;
+    try {
+        inquiries = await Inquiry.find({ userID: id }); // Adjust 'userID' based on your actual field
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error fetching inquiries' });
+    }
+
+    if (!inquiries || inquiries.length === 0) {
+        return res.status(404).json({ message: 'No inquiries found for the given ID' });
+    }
+
+    return res.status(200).json({ inquiries });
+};
+
 // Delete an inquiry
 const deleteInquiry = async (req, res) => {
     const id = req.params.id;
@@ -123,13 +143,18 @@ const deleteInquiry = async (req, res) => {
     return res.status(200).json({ message: 'Inquiry deleted successfully' });
 };
 
+
+
+
 // Exporting the functions in here
 exports.getAllInquiries = getAllInquiries;
 exports.addInquiry = addInquiry;
 exports.getInquiryById = getInquiryById;
 exports.getInquiryByEmail = getInquiryByEmail;
 exports.updateInquiry = updateInquiry;
+exports.getmyInquiries = updateInquiry;
 exports.deleteInquiry = deleteInquiry;
+
 
 
 

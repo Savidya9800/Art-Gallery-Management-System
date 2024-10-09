@@ -21,7 +21,7 @@ const AdminButton = () => {
     <div className="border border-gray-300 rounded-lg p-4 w-full">
       <a
         href="/visitordetails"
-        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         View Visitor Details (Admin)
       </a>
@@ -34,7 +34,7 @@ const TicketIssues = () => {
     <div className="border border-gray-300 rounded-lg p-4 w-full">
       <a
         href="/message"
-        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         View Messages (Admin)
       </a>
@@ -106,14 +106,6 @@ function VisitorsCount() {
       <br />
       <div className="container mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-5">Visitor Count by Date and Time Slot</h2>
-
-        {/* Button to refresh visitor data */}
-        <button 
-          onClick={refreshVisitorData} 
-          className="mb-5 bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-        >
-          Refresh Visitor Data
-        </button>
 
         {/* Table for Date, Time Slot, and Visitor Count */}
         {Object.keys(groupedVisitors).length > 0 ? (

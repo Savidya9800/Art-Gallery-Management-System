@@ -3,6 +3,8 @@ import axios from 'axios';
 import Visitor from '../Visitor/Visitor';
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
+import Button from 'react-bootstrap/Button';
+
 
 const URL = 'http://localhost:5000/visitors'; // Corrected URL
 
@@ -67,12 +69,12 @@ function Visitors() {
         className="ml-10 border rounded-md py-3 px-10 text-gray-900 focus:outline-none focus:ring-2 focus:ring-black"
       />
 
-      <button
+      <Button
         onClick={handleSearch}
-        className="ml-5 bg-[#A78F51] text-white font-semibold py-3 px-8 rounded-md"
+        variant="success"
       >
         Search
-      </button>
+      </Button>
 
       {noResult ? (
         <div>
@@ -87,7 +89,7 @@ function Visitors() {
                   onClick={() => handleSendReport(visitor)}
                   className="ml-5 bg-green-500 text-white font-semibold py-2 px-4 rounded-md mt-2"
                 >
-                  Send WhatsApp Report
+                  Send Report
                 </button>
                 
                 <Visitor visitor={visitor} />

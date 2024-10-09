@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Viewresponses(props) {
-  const { _id, response, inquirystatus } = props.RESPONSE;
+  const { _id, response, inquirystatus, inquiryID } = props.RESPONSE;
 
   const history = useNavigate();
 
@@ -14,12 +14,11 @@ export default function Viewresponses(props) {
       .delete(`http://localhost:5000/adminResponse/${_id}`)
       .then((res) => res.data)
       .then(() => history("/"))
-      .then(() => history("/Viewresponse"));
+      .then(() => history(`/Viewresponse/${inquiryID}`));
   };
 
   return (
-   
-      
+  
 
     <div className="border-2 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-xl">
       <div className="p-2 rounded-t-lg text-[#A78F51]">
@@ -37,7 +36,7 @@ export default function Viewresponses(props) {
       </div>
 
       <div className="flex justify-between mt-5">
-        <Link to={`/updateresponse/${_id}`} className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500 transition duration-300">
+        <Link to={`/updateresponse/${_id}/${inquiryID}`} className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500 transition duration-300">
           Update
         </Link>
         <button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-500 transition duration-300" onClick={deleteHandler}>
