@@ -69,7 +69,7 @@ export default function Shopview() {
 
           {/* Cart Icon */}
           <button
-            className="text-gray-600 text-xl hover:text-[#A78F51] flex items-center"
+            className="text-[#A78F51] text-xl hover:text-gray flex items-center"
             onClick={() => navigate("/cart")} // Navigate to cart page when clicked
           >
             <FaShoppingCart style={{ fontSize: "40px" }} />
