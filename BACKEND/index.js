@@ -81,7 +81,7 @@ app.use("/api/bookingUsers", bookingUserRoutes);
 app.use("/api/membership", membershipRoutes);
 
 //cart
-const Cart = require("./Routes/CartRoutes");
+app.use('/api/cart',cartrouter)
 
 //Financial Manager
 app.use("/finance", financeRouter); 
