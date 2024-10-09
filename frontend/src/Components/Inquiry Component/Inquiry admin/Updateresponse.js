@@ -10,7 +10,7 @@ export default function UpdateResponse() {
     });
     const [loading, setLoading] = useState(true); // Loading state
     const history = useNavigate();
-    const id = useParams().id;
+    const {id, inquiryID }  = useParams();
 
     useEffect(() => {
         const fetchHandler = async () => {
@@ -36,6 +36,7 @@ export default function UpdateResponse() {
         await axios.put(`http://localhost:5000/adminResponse/${id}`, {
             response: String(inputs.response),
             inquirystatus: String(inputs.inquirystatus),
+            inquiryID: inquiryID,
         }).then((res) => res.data);
     };
 
@@ -48,7 +49,7 @@ export default function UpdateResponse() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sendRequest().then(() => history("/Viewresponse"));
+        sendRequest().then(() => history(`/Viewresponse/${inquiryID}`));
     };
 
     // If data is still loading, show a loading message

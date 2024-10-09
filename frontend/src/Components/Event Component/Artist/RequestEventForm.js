@@ -167,11 +167,12 @@ const RequestEventForm = () => {
     const selectedRequest = userRequests.accepted.find(
       (req) => req._id === requestId
     );
+    
     if (selectedRequest) {
       const matchedPackage = packages.find(
         (pkg) => pkg.name === selectedRequest.packageName
       );
-
+  
       if (matchedPackage) {
         setSelectedPackage(matchedPackage);
         setFormData({
@@ -181,9 +182,9 @@ const RequestEventForm = () => {
           Decoration: matchedPackage.Decoration,
           Venue: matchedPackage.Venue,
         });
-
-        // Navigate to the PDF generator page and pass the details
-        navigate("/pdf-generator", {
+  
+        // Navigate to the payment page and pass the necessary details
+        navigate("/paymentgateway", {
           state: {
             selectedPackage: matchedPackage,
             email: selectedRequest.email, // assuming email is part of selectedRequest
@@ -196,6 +197,7 @@ const RequestEventForm = () => {
       }
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
