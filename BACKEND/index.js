@@ -100,6 +100,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+//Artwork Manager
 //PDF - - - - - - - -
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -246,4 +247,5 @@ app.get('/remainingSlots', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
