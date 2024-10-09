@@ -4,6 +4,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import ArtworkComp from "../Artwork/ArtworkComp";
 import Button from "react-bootstrap/Button";
+import ArtworkModal from "../ArtworkDetails/ArtworkModal";
 
 const URL = "http://localhost:5000/artWorks";
 
@@ -24,6 +25,8 @@ function ArtworksComp() {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [noResults, setNoResults] = useState(false);
   const [sortOption, setSortOption] = useState(""); // State for sorting option
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [selectedArtwork, setSelectedArtwork] = useState(null); // State for selected artwork
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -71,6 +74,18 @@ function ArtworksComp() {
     setFilteredArtworks(sorted); // Update the artworks with the sorted ones
   };
 
+  // Function to open the modal and set the selected artwork
+  const handleArtworkClick = (artwork) => {
+    setSelectedArtwork(artwork);
+    setShowModal(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedArtwork(null);
+  };
+
   return (
     <div className="flex-col min-h-screen">
       <div className="relative z-10">
@@ -87,7 +102,7 @@ function ArtworksComp() {
             onChange={handleInputChange} // Handle input change
             placeholder="Search Artworks by Title"
             className="p-2 px-3 mr-2 transition duration-300 ease-in-out bg-gray-100 border border-gray-300 rounded-lg shadow-sm ml-7 w-[240px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          />
           <Button variant="success" onClick={handleSearch}>
             {" "}
             {/* Handle search button click */}
@@ -146,6 +161,12 @@ function ArtworksComp() {
           )}
         </table>
       </div>
+      {/* Artwork Modal */}
+      <ArtworkModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        artwork={selectedArtwork}
+      />
 
       <FooterComp />
     </div>

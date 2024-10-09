@@ -60,10 +60,7 @@ function AdminArtworks() {
 
   return (
     <div className="flex-col min-h-screen">
-      <div className="relative z-10">
-        <NavigationBar />
-              
-      </div>
+      <div className="relative z-10">      </div>
 
       {/* Search Bar */}
       <div className="mt-2">
@@ -112,8 +109,6 @@ function AdminArtworks() {
           )}
         </table>
       </div>
-
-      <FooterComp />
     </div>
   );
 }
