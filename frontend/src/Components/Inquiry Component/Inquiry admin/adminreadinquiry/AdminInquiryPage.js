@@ -41,8 +41,8 @@ export default function AdminInquiryPage() {
             inquiry._id,
             `${inquiry.name} `,
             inquiry.email,
-            inquiry.Date,
-            inquiry.inquiryType
+            inquiry.inquiryType,
+            inquiry.inquiryMessage
             
         ]);
 
@@ -69,6 +69,8 @@ export default function AdminInquiryPage() {
    doc.save("InquiryReport.pdf"); // Downloads the PDF
 
     };
+
+    //Search Inquiry
 
     const [searchQuery, setSearchQuery] = useState("");
     const [noResults, setNoResults] = useState(false);

@@ -16,6 +16,8 @@ import InquiryComp from "./Components/Inquiry Component/InquiryComp";
 import AddInquiry from "./Components/Inquiry Component/AddInquiry/AddInquiry";
 import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry";
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry";
+import UserReadResponse from "./Components/Inquiry Component/UserReadresponse/userReadResponse";
+
 
 
 //Inquiry Admin imports
@@ -145,10 +147,11 @@ function App() {
           <Route path="/newInquiry" element={<AddInquiry />} />
           <Route path="/inquiries" element={<ViewInquiry />} />
           <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
+          <Route path="/userReadResponse" element={<UserReadResponse />} />
           <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
-          <Route path="/Viewresponse" element={<ViewResponse />} />
-          <Route path="/Addresponse" element={<Addresponse />} />
-          <Route path="/updateresponse/:id" element={<Updateresponse />} />
+          <Route path="/Viewresponse/:id" element={<ViewResponse />} />
+          <Route path="/Addresponse/:id" element={<Addresponse />} />
+          <Route path="/updateresponse/:id/:inquiryID" element={<Updateresponse />} />
         
 
           {/* <Route path="/mainNewsFeed" element={<NewsFeedComp/>} /> */}

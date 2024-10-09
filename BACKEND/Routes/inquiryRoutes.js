@@ -16,4 +16,5 @@ router.get("/:id", inquiryC.getInquiryById); //Get Inquiry by ID
 router.put("/:id", inquiryC.updateInquiry); //Update Inquiry
 router.delete("/:id", inquiryC.deleteInquiry); //Delete Inquiry
 
+
 module.exports = router;
