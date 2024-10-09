@@ -33,6 +33,9 @@ function Visitor(props) {
   // Calculate total amount
   const totalAmount = tickets.reduce((acc, ticket) => acc + (ticket.count * ticket.price), 0);
 
+  // Extract last three digits of the _id
+  const displayId = `REF ` + _id.slice(-3); // Get the last three characters of the _id
+
   return (
     <div>      
       <div className="visitor-container"> 
@@ -40,7 +43,7 @@ function Visitor(props) {
           <tbody>
             <tr>
               <th>ID</th>
-              <td>{_id}</td>
+              <td>{displayId}</td> 
             </tr>
             <tr>
               <th>First Name</th>
@@ -78,7 +81,7 @@ function Visitor(props) {
                 </tr>
                 <tr>
                   <th>Price</th>
-                  <td>${ticket.price}</td>
+                  <td>Rs {ticket.price}</td>
                 </tr>
               </React.Fragment>
             ))}
@@ -92,7 +95,7 @@ function Visitor(props) {
             </tr>
             <tr>
               <th>Total Amount</th>
-              <td>${totalAmount.toFixed(2)}</td>
+              <td>Rs {totalAmount.toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

@@ -25,7 +25,7 @@ function AddVisitor() {
   const [inputs, setInputs] = useState(initialFormState);
   const [remainingSlots, setRemainingSlots] = useState({}); // Stores remaining slots per time
   const [visitorCount, setVisitorCount] = useState(0); // Stores the total visitor count for the selected date
-  const [error, setError] = useState(""); 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,35 +64,6 @@ function AddVisitor() {
     if ((name === "fname" || name === "lname" || name === "city" || name === "country") && !/^[a-zA-Z\s]*$/.test(value)) {
       return; 
     }
-    
-    // Validate phone number to allow country code (e.g., +1234567890)
-    if (name === "phone") {
-      // Allow optional + at the beginning, followed by up to 15 digits
-      const phonePattern = /^\+?[0-9]{0,15}$/;
-      if (!phonePattern.test(value)) {
-        setError("Please enter a valid phone number (e.g., +1234567890).");
-        return;
-      } else {
-        setError(""); // Clear the error if the phone number is valid
-      }
-    }
-
-    // Validate email format
-    if (name === "email") {
-      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-      const lowercasedEmail = value.toLowerCase();
-      if (!emailPattern.test(lowercasedEmail)) {
-        setError("Please enter a valid email address.");
-      } else {
-        setError(""); // Clear the error if the email is valid
-      }
-
-      setInputs({
-        ...inputs,
-        [name]: lowercasedEmail, // Set the email in lowercase
-      });
-      return;
-    }
 
     setInputs({
       ...inputs,
@@ -110,32 +81,51 @@ function AddVisitor() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+  const validateForm = () => {
+    let formErrors = {};
+
     // Validate that all required fields are filled
-    if (!inputs.date || !inputs.time || !inputs.fname || !inputs.lname || !inputs.email || !inputs.phone || !inputs.city || !inputs.country) {
-      setError("Please fill all fields.");
-      return;
+    if (!inputs.date) formErrors.date = "Date is required.";
+    if (!inputs.time) formErrors.time = "Time is required.";
+    if (!inputs.fname) formErrors.fname = "First name is required.";
+    if (!inputs.lname) formErrors.lname = "Last name is required.";
+    if (!inputs.email) formErrors.email = "Email is required.";
+    if (!inputs.phone) formErrors.phone = "Phone number is required.";
+    if (!inputs.city) formErrors.city = "City is required.";
+    if (!inputs.country) formErrors.country = "Country is required.";
+
+    // Updated phone validation (11 digits with a "+" sign in front)
+    const phonePattern = /^\+(\d{11})$/;
+    if (inputs.phone && !phonePattern.test(inputs.phone)) {
+      formErrors.phone = "Please enter a valid phone number starting with + and followed by 11 digits (e.g., +12345678901).";
     }
 
-    // Check if phone number is valid with country code (allowing numbers like +1234567890)
-    if (!/^\+?[0-9]{10,15}$/.test(inputs.phone)) {
-      setError("Please enter a valid phone number with the country code.");
-      return;
+    // Validate email format
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    if (inputs.email && !emailPattern.test(inputs.email.toLowerCase())) {
+      formErrors.email = "Please enter a valid email address.";
     }
 
     // Check if at least one ticket is selected
     const totalTickets = inputs.tickets.reduce((sum, ticket) => sum + parseInt(ticket.count), 0);
     if (totalTickets === 0) {
-      setError("Please select at least one ticket.");
-      return;
+      formErrors.tickets = "Please select at least one ticket.";
     }
 
     // Check if total slots available are exceeded
     if (remainingSlots[inputs.time] - totalTickets < 0) {
-      setError("Not enough slots available for the selected time.");
-      return;
+      formErrors.slots = "Not enough slots available for the selected time.";
+    }
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0; // Return true if no errors
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return; // Stop if form is not valid
     }
 
     try {
@@ -145,13 +135,13 @@ function AddVisitor() {
       // Update the remaining slots after a successful reservation
       setRemainingSlots(prevSlots => ({
         ...prevSlots,
-        [inputs.time]: prevSlots[inputs.time] - totalTickets
+        [inputs.time]: prevSlots[inputs.time] - inputs.tickets.reduce((sum, ticket) => sum + parseInt(ticket.count), 0)
       }));
 
       navigate('/bookingConfirmation', { state: { visitor: response.data.visitor } });
     } catch (err) {
       console.error('Error adding visitor:', err);
-      setError('Failed to add visitor');
+      setErrors({ submit: 'Failed to add visitor' });
     }
   };
 
@@ -219,9 +209,7 @@ function AddVisitor() {
                   max={10}
                   min={0}
                   value={ticket.count}
-                  required
                 />
-                <br />
               </div>
             ))}
           </div>
@@ -236,7 +224,7 @@ function AddVisitor() {
               value={inputs.fname}
               required
             />
-            <br />
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Last Name</label>
             <input
               type="text"
@@ -246,7 +234,7 @@ function AddVisitor() {
               value={inputs.lname}
               required
             />
-            <br />
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Email</label>
             <input
               type="email"
@@ -256,18 +244,17 @@ function AddVisitor() {
               value={inputs.email}
               required
             />
-            <br />
-            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone (with country code)</label>
+
+            <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Phone Number</label>
             <input
-              type="tel"
+              type="text"
               name="phone"
               className="bg-white w-full border border-black rounded-md py-2 px-3 text-gray-900"
               onChange={handleChange}
               value={inputs.phone}
               required
-              placeholder="+1234567890"
             />
-            <br />
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">City</label>
             <input
               type="text"
@@ -277,7 +264,7 @@ function AddVisitor() {
               value={inputs.city}
               required
             />
-            <br />
+
             <label className="bg-white block text-sm font-medium text-gray-700 mt-4">Country</label>
             <input
               type="text"
@@ -288,20 +275,23 @@ function AddVisitor() {
               required
             />
           </div>
-        </form>
 
-        {error && (
-          <div className="bg-white text-red-500 mt-4 text-center">{error}</div>
-        )}
+          {/* Display validation errors */}
+          <div className="lg:col-span-2">
+            {Object.keys(errors).map((key, index) => (
+              <p key={index} className="bg-white text-red-500 text-sm">
+                {errors[key]}
+              </p>
+            ))}
+          </div>
 
-        <div className="bg-white mt-6">
           <button
-            className="bg-black text-white py-2 px-6 rounded-md"
-            onClick={handleSubmit}
+            type="submit"
+            className="lg:col-span-2 bg-gray-800 text-white px-4 py-2 rounded-md mt-4 hover:bg-gray-900"
           >
             Submit
           </button>
-        </div>
+        </form>
       </div>
       <FooterComp />
     </div>

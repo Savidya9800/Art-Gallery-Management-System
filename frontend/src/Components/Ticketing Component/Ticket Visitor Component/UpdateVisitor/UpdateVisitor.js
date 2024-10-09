@@ -320,7 +320,7 @@ const Visitor = () => {
                     required
                   />
                 </td>
-                <td className="bg-white border border-black p-2">${ticket.price}</td>
+                <td className="bg-white border border-black p-2">Rs {ticket.price}</td>
               </tr>
             ))}
           </tbody>
