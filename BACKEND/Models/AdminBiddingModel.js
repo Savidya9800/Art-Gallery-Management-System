@@ -37,6 +37,11 @@ const addBidArtSchema = new Schema({
         required:true,
     },
 
+    image:{
+        type:String,
+        required:false,
+    },
+
     })
 
     module.exports = mongoose.model(
