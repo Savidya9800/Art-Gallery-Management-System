@@ -34,8 +34,29 @@ const AdminUsers = () => {
     }
   };
 
-  const generatePDF = () => {
+const generatePDF = () => {
     const doc = new jsPDF();
+
+    // Header
+    doc.setFillColor(167, 143, 81); 
+    doc.rect(10, 10, 190, 15, "F"); 
+
+    doc.setFontSize(22);
+    doc.setTextColor(240, 237, 230); 
+    doc.text("Memberships List", 14, 20); // Adjusted for membership list
+
+    // Add logo
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const imgWidth = 25; 
+    const imgHeight = 20; 
+    const xPosition = pageWidth - imgWidth - 10;
+    doc.addImage('logo.png', "PNG", xPosition, 10, imgWidth, imgHeight);
+    // Add line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169); 
+    doc.line(10, 30, 200, 30);
+
+    // Table
     const tableColumn = ["Membership Type", "Membership Price", "Name", "Address", "Contact Number"];
     const tableRows = [];
 
@@ -44,10 +65,27 @@ const AdminUsers = () => {
       tableRows.push(membershipData);
     });
 
-    doc.autoTable(tableColumn, tableRows, { startY: 20 });
-    doc.text("Memberships List", 14, 15);
+    doc.autoTable(tableColumn, tableRows, { startY: 35 });
+
+    // Footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169); 
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text("Address: 58, Parakrama Mawatha, Wennappuwa", pageWidth - 14, footerY + 5, { align: "right" });
+    doc.text("Contact: +94 765 456 789 | Email: awarnaArts@gmail.com", pageWidth - 14, footerY + 10, { align: "right" });
+
+    doc.line(10, footerY + 15, 200, footerY + 15);
+
+    // Save the PDF
     doc.save("memberships_list.pdf");
-  };
+};
+
 
   // Filtered memberships based on search query
   const filteredMemberships = memberships.filter((membership) =>

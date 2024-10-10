@@ -201,8 +201,24 @@ const Profile = () => {
             </Col>
             <Col>
               <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
+
+//               {/* Conditionally render "User" or "Member" tag */}
+//               <p
+//                 className="badge"
+//                 style={{
+//                   backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
+//                   color: "#000",
+//                   borderRadius: "12px",
+//                   padding: "5px 10px",
+//                 }}
+//               >
+//                 {membership ? "Member" : "User"}
+//               </p>
+
               <p className="text-muted">{user.role}</p>
+
             </Col>
+
             <Col xs="auto">
               {user.role === "artist" && (
                 <Link to="/mainArtworkDetails">
