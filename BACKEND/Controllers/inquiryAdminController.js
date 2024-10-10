@@ -26,13 +26,13 @@ const getAllResponses = async (req, res) => {
 
 const addResponse = async (req, res,next) => {
 
-    const { response, inquirystatus } = req.body; //Request data to body
+    const { response, inquirystatus , inquiryID } = req.body; //Request data to body
 
     let createResponse;
 
     try {
         
-        createResponse = new InquiryAdmin({ response, inquirystatus });
+        createResponse = new InquiryAdmin({ response, inquirystatus , inquiryID });
         await createResponse.save();
     }
 
@@ -83,12 +83,12 @@ const getResponseById = async (req, res,next) => {
 const updateResponse = async (req, res,next) => {
 
     const id = req.params.id;
-    const { response, inquirystatus } = req.body;
+    const { response, inquirystatus, inquiryID } = req.body;
 
     let updateResponse;
 
     try {
-        updateResponse = await InquiryAdmin.findByIdAndUpdate(id, { response, inquirystatus });
+        updateResponse = await InquiryAdmin.findByIdAndUpdate(id, { response, inquirystatus,inquiryID });
 
         updateResponse = await InquiryAdmin.findById(id);
     }catch (error) {
@@ -122,9 +122,28 @@ const deleteResponse = async (req, res,next) => {
 };
 
 
+const getResponseByInquiryID = async (req, res) => {
+    const { inquiryID } = req.params; // Extract inquiryId from request parameters
+
+    try {
+        // Find all responses related to the given inquiryId
+        const responses = await InquiryAdmin.find({ inquiryID });
+
+        if (responses.length > 0) {
+            res.status(200).json({ Responses: responses });
+        } else {
+            res.status(200).json({ Responses: [] }); // Return an empty array if no responses found
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch responses' });
+    }
+};
+
+
 
 exports.getAllResponses = getAllResponses;
 exports.addResponse = addResponse;
 exports.getResponseById = getResponseById;
 exports.updateResponse = updateResponse;
 exports.deleteResponse = deleteResponse;
+exports.getResponseByInquiryID = getResponseByInquiryID;

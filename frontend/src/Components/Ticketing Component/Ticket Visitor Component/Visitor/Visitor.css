@@ -28,7 +28,6 @@
 }
 
 .delete-btn, .update-link {
-  padding: 5px 10px;
   color: #fff;
   text-decoration: none;
   border: none;
@@ -43,7 +42,8 @@
 
 .update-link {
   background-color: #3498db;
-  padding: 5px 10px;
+  margin-left: 5px;
+  padding: 8px;
 }
 
 .delete-btn:hover {

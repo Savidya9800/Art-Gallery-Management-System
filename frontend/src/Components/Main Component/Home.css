@@ -1,4 +1,196 @@
-.carousel-indicators [data-bs-target] {
-    background-color: transparent; /* Remove background color */
-    border: 1px solid #000; /* Optional: Add a border to make the indicators visible */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* carousel2 Styles */
+.carousel2 {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+}
+
+.carousel2 .list .item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.carousel2 .list .item.active {
+  opacity: 1;
+}
+
+.carousel2 .list .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel2 .list .item .content {
+  position: absolute;
+  background-color: transparent;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1140px;
+  max-width: 80%;
+  padding-right: 30%;
+  box-sizing: border-box;
+  color: inherit; /* Inherit text color */
+  text-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+}
+
+.carousel2 .list .item .author {
+  font-weight: bold;
+  background-color: transparent;
+  letter-spacing: 10px;
+  color: inherit; /* Inherit text color */
+}
+
+.carousel2 .list .item .title,
+.carousel2 .list .item .topic {
+  font-size: 5em;
+  font-weight: bold;
+  background-color: transparent;
+  line-height: 1.3em;
+  color: inherit; /* Inherit text color */
+}
+
+.carousel2 .list .item .topic {
+  /* Removed the original color: #f1683a */
+  color: inherit; /* Inherit text color */
+  background-color: transparent;
+}
+
+.carousel2 .list .item .des {
+  margin-top: 10px;
+  color: inherit; /* Inherit text color */
+  background-color: transparent;
+}
+
+.carousel2 .list .item .buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  background-color: transparent;
+}
+
+.carousel2 .list .item .buttons button {
+  border: none;
+  background-color:transparent;
+  letter-spacing: 3px;
+  padding: 10px 20px;
+}
+
+.carousel2 .list .item .buttons button:nth-child(2) {
+  background-color: transparent;
+  border: 1px solid #000000;
+  color: #000000;
+}
+
+/* Thumbnail */
+.thumbnail {
+  position: absolute;
+  background-color: transparent;
+  bottom: 50px;
+  left: 75%;
+  display: flex;
+  gap: 20px;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.thumbnail .item {
+  width: 150px;
+  height: 220px;
+  position: relative;
+  background-color: transparent;
+}
+
+.thumbnail .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.thumbnail .item .content {
+  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: transparent;
+}
+
+.thumbnail .item .content .title {
+  font-weight: 500;
+}
+
+.thumbnail .item .content .description {
+  font-weight: 300;
+}
+
+/* Arrows */
+.arrows {
+  position: absolute;
+  background-color: transparent;
+  top: 80%;
+  right: 52%;
+  display: flex;
+  gap: 10px;
+}
+
+.arrows button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(238, 238, 238, 0.25);
+  border: none;
+  color: #fff;
+  font-family: monospace;
+  font-weight: bold;
+  transition: 0.5s;
+}
+
+.arrows button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Time running bar */
+.carousel2 .time {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background-color: #fff;
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+/* Media Queries */
+@media screen and (max-width: 678px) {
+  .carousel2 .list .item .content {
+    padding-right: 0;
+    background-color: transparent;
   }
+
+  .carousel2 .list .item .content .title {
+    font-size: 30px;
+    background-color: transparent;
+  }
+}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import NavigationBar from "../../Nav Component/NavigationBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"; // Import useParams to access URL parameters
 import axios from "axios";
 
-export default function Addresponse() {
-
+export default function Addresponse() { 
+    const { id: inquiryID } = useParams(); // Get inquiryID from URL parameters
     const history = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -31,13 +31,14 @@ export default function Addresponse() {
         }
 
         console.log(inputs);
-        sendRequest().then(() => history("/ViewResponse"));
+        sendRequest().then(() => history(`/ViewResponse/${inquiryID}`));
     };
 
     const sendRequest = async () => {
         await axios.post("http://localhost:5000/adminResponse", {
             response: String(inputs.response),
-            inquirystatus: String(inputs.inquirystatus)
+            inquirystatus: String(inputs.inquirystatus),
+            inquiryID: inquiryID // Include the inquiry ID in the request
         }).then((res) => res.data);
     };
 

@@ -38,12 +38,12 @@ const ArtistRegister = () => {
   return (
     <div>
     <NavigationBar/>
-    <div className="flex justify-center items-center">
+    <div className="flex items-center justify-center">
       <div className="bg-[#FAF3E0] p-8 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-center text-2xl font-bold text-[#B69E51] mb-6">Register Artist</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Enter Name</label>
+            <label className="block mb-2 font-semibold text-gray-700">Enter Name</label>
             <input
               type="text"
               name="name"
@@ -56,7 +56,7 @@ const ArtistRegister = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Enter Email</label>
+            <label className="block mb-2 font-semibold text-gray-700">Enter Email</label>
             <input
               type="email"
               name="email"
@@ -69,7 +69,7 @@ const ArtistRegister = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 font-semibold mb-2">Password</label>
+            <label className="block mb-2 font-semibold text-gray-700">Password</label>
             <input
               type="password"
               name="password"
