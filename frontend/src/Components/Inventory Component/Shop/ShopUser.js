@@ -38,7 +38,7 @@ export default function ShopUser({ INVENTORY }) {
 
       <div className="bg-white flex justify-between mt-4">
         <button
-          className="bg-[#A78F51] hover:bg-black text-white font-bold py-2 px-4 rounded flex-1 mr-2"
+          className="bg-[#A78F51] hover:bg-black text-white font-bold py-2 px-4 rounded-full flex-1 mr-2"
           onClick={handleAddToCart}
         >
         Add to cart
