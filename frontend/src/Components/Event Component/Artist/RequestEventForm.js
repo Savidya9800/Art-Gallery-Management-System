@@ -492,7 +492,7 @@ const RequestEventForm = () => {
                         onChange={handleChange}
                         required
                         readOnly
-                        className="w-full p-2 bg-white bg-gray-200 border border-gray-300 rounded"
+                        className="w-full p-2 bg-gray-200 border rounded"
                       />
                     </div>
 
