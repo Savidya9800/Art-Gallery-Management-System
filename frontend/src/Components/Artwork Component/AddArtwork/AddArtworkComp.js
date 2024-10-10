@@ -615,13 +615,17 @@ function AddArtworkComp() {
           <br></br>
 
           <div className="bg-white absolute left-[26px] top-[165px]">
+          <h6 className="mt-1 text-sm bg-white bg-customColor">
+              Only JPG Image are accepted and must be smaller than 1MB in size
+            </h6>
             <a
-              href="/mainUploadReceipt"
+              href="/paymentgateway"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button type="button" className="btn btn-primary">
-                Upload Receipt
+              
+              <button type="button" className="btn btn-success">
+                Pay Now
               </button>
             </a>
           </div>
