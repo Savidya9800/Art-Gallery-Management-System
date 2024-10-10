@@ -11,7 +11,12 @@ const EditMembership = () => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/membership/${id}`)
-            .then((response) => setMembership(response.data))
+            .then((response) => {
+                const data = response.data;
+                // Set the price based on the initial membership type
+                const price = data.membershipType === "Monthly" ? 15 : data.membershipType === "Annual" ? 130 : 0;
+                setMembership({ ...data, membershipPrice: price });
+            })
             .catch((error) => console.error(error));
     }, [id]);
 

@@ -52,9 +52,10 @@ const Login = () => {
   };
 
   return (
+    <div className="bg-gray-100">
     <Container
-      className="d-flex flex-column align-items-center justify-content-center vh-100"
-      style={{ backgroundColor: "#f8f8f8" }}
+      className="bg-gray-100 d-flex flex-column align-items-center justify-content-center vh-100"
+     
     >
       <Image
         src="/welcome.png"
@@ -63,7 +64,7 @@ const Login = () => {
         className="mb-4 " 
       />
       <h1
-        className="mb-4"
+        className="mb-3"
         style={{ fontSize: "24px", color: "#a49256", background: "#f8f8f8" }}
       >
         Welcome Back to Awarna Art Gallery!
@@ -124,6 +125,7 @@ const Login = () => {
         </a>
       </p>
     </Container>
+    </div>
   );
 };
 

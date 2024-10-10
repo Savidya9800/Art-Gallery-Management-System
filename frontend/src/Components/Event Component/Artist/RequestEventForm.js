@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import RighSideImage from "../Artist/background.jpg";
 import FooterComp from "../../Nav Component/FooterComp";
+import Button from 'react-bootstrap/Button';
 
 import "./date_change.css";
 
@@ -281,6 +282,16 @@ const RequestEventForm = () => {
   };
 
   const handleSaveClick = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5000/requestEvent/updaterequest/${editingRequestId}`,
+        editedRequestData
+      );
+      alert("Request updated successfully!");
+      setEditingRequestId(null);
+      fetchUserRequests();
+    } catch (error) {
+      console.error("Error updating request:", error);
     const phoneNumber = editedRequestData.mobileNumber;
     const message = editedRequestData.message;
 
@@ -302,6 +313,7 @@ const RequestEventForm = () => {
     // Assuming you have your save logic here, after validations succeed
     setEditingRequestId(null);
   };
+};
 
   const handleEditedChange = (e) => {
     setEditedRequestData({
@@ -362,14 +374,16 @@ const RequestEventForm = () => {
                     Event Date and Time:
                   </label>
                   <div className="w-full">
-                    <DatePicker
-                      selected={formData.eventDate}
-                      onChange={handleDateChange}
-                      showTimeSelect
-                      dateFormat="Pp"
-                      inline
-                      className="w-full" // Full width for DatePicker
-                    />
+                  <DatePicker
+  selected={formData.eventDate}
+  onChange={handleDateChange}
+  showTimeSelect
+  dateFormat="Pp"
+  inline
+  className="w-full" // Full width for DatePicker
+  minDate={new Date()} // Disable past dates
+/>
+
                   </div>
                 </div>
               </div>
@@ -503,12 +517,12 @@ const RequestEventForm = () => {
                       value={formData.status}
                     />
 
-                    <button
+                    <Button
                       type="submit"
-                      className="bg-[#A78F51] text-black px-4 py-2 rounded "
+                      variant="dark"
                     >
                       Submit
-                    </button>
+                    </Button>
                   </div>
                 </form>
 
@@ -557,7 +571,7 @@ const RequestEventForm = () => {
           )}
 
           <div className="user-requests p-6  rounded-lg shadow-md">
-            <h2 className="topic text-2xl text-center font-bold mb-4 text-gray-800">
+            <h2 className="topic text-3xl text-center font-bold mb-4 text-gray-800">
               EVENT REQUESTS
             </h2>
 
@@ -566,7 +580,7 @@ const RequestEventForm = () => {
             </h3>
 
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.pending.length > 0 ? (
@@ -574,7 +588,7 @@ const RequestEventForm = () => {
                   {userRequests.pending.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-yellow-600 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-yellow-600 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         {editingRequestId === request._id ? (
@@ -627,18 +641,18 @@ const RequestEventForm = () => {
                             </div>
 
                             <div className="flex space-x-4 bg-red-50">
-                              <button
+                              <Button
                                 onClick={handleSaveClick}
-                                className="px-4 py-2 bg-[#A78F51] text-white font-semibold rounded "
+                                variant="primary"
                               >
                                 Save
-                              </button>
-                              <button
+                              </Button>
+                              <Button
                                 onClick={() => setEditingRequestId(null)}
-                                className="px-4 py-2 bg-[#A78F51] text-white font-semibold rounded "
+                                variant="danger"
                               >
                                 Cancel
-                              </button>
+                              </Button>
                             </div>
                           </div>
                         ) : (
@@ -679,18 +693,18 @@ const RequestEventForm = () => {
                                 : "No Date"}
                             </p>
                             <div className="flex space-x-4">
-                              <button
-                                className="edit-button px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600"
+                              <Button
+                                variant="primary"
                                 onClick={() => handleEditClick(request)}
                               >
                                 Edit
-                              </button>
-                              <button
-                                className="delete_button px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600"
+                              </Button>
+                              <Button
+                                variant="danger"
                                 onClick={() => deleteRequest(request._id)}
                               >
                                 Delete
-                              </button>
+                              </Button>
                             </div>
                           </div>
                         )}
@@ -709,7 +723,7 @@ const RequestEventForm = () => {
               Accepted Requests
             </h3>
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.accepted.length > 0 ? (
@@ -717,7 +731,7 @@ const RequestEventForm = () => {
                   {userRequests.accepted.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-green-600 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-green-600 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">
@@ -751,18 +765,18 @@ const RequestEventForm = () => {
                             : "No Date"}
                         </p>
                         <div className="flex space-x-4">
-                          <button
-                            className="choose-package-button px-4 py-2 bg-[#A78F51]  font-semibold rounded -600 mt-2"
+                          <Button
+                            variant="info"
                             onClick={() => handleChoosePackage(request._id)}
                           >
                             Generate PDF
-                          </button>
-                          <button
-                            className="choose-package-button px-4 py-2 bg-red-500 bg-blue-500 font-semibold rounded  mt-2"
+                          </Button>
+                          <Button
+                            variant="dark"
                             onClick={() => handleChoosePackage(request._id)}
                           >
                             Pay Now
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     </li>
@@ -777,7 +791,7 @@ const RequestEventForm = () => {
               Rejected Requests
             </h3>
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.rejected.length > 0 ? (
@@ -785,7 +799,7 @@ const RequestEventForm = () => {
                   {userRequests.rejected.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-red-500 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-red-500 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">
@@ -816,12 +830,12 @@ const RequestEventForm = () => {
                             ? new Date(request.eventDate).toLocaleString()
                             : "No Date"}
                         </p>
-                        <button
-                          className="delete_button px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 mt-2"
+                        <Button
+                          variant="danger"
                           onClick={() => deleteRequest(request._id)}
                         >
                           Delete
-                        </button>
+                        </Button>
                       </div>
                     </li>
                   ))}

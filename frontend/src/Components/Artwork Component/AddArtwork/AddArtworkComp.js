@@ -601,7 +601,7 @@ function AddArtworkComp() {
 
       {currentStep === 4 && (
         <div className=" relative w-[523px] h-[830px]">
-          <div className="absolute w-[513px] h-[276px] bg-white border-2 border-black rounded-[25px]"></div>
+          <div className="absolute w-[513px] h-[324px] bg-white border-2 border-black rounded-[25px]"></div>
           <div className=" bg-white absolute left-[100px] top-[25px] text-[#A78F51] text-[25px] font-[400] font-Inter">
             Artwork Submission form
           </div>
@@ -615,24 +615,27 @@ function AddArtworkComp() {
           <br></br>
 
           <div className="bg-white absolute left-[26px] top-[165px]">
-            <a
-              href="/mainUploadReceipt"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button type="button" className="btn btn-primary">
-                Upload Receipt
+            <h6 className="mt-0 -mb-2 text-sm bg-white bg-customColor">
+            Artwork Bidding fee: Rs.1500
+            </h6>
+            <hr></hr>
+            <h6 className="mb-3 -mt-2 text-sm bg-white bg-customColor">
+            Artwork Promote fee: Rs.2000
+            </h6>
+            <a href="/paymentgateway" target="_blank" rel="noopener noreferrer">
+              <button type="button" className="btn btn-success">
+                Pay Now
               </button>
             </a>
           </div>
 
           <Button
-            className="absolute left-[20px] top-[296px]"
+            className="absolute left-[20px] top-[336px]"
             onClick={prevStep}
           >
             Back
           </Button>
-          <Button className="absolute left-[433px] top-[296px]" type="submit">
+          <Button className="absolute left-[433px] top-[336px]" type="submit">
             Submit
           </Button>
         </div>

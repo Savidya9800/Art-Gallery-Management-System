@@ -25,7 +25,7 @@ function AdminArtwork(props) {
     price,
   } = props.ARTWORK;
   const history = useNavigate();
-  const [setAccepted] = useState(false); // Initialize accepted state
+  // const [accepted, setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
@@ -102,10 +102,37 @@ function AdminArtwork(props) {
     doc.text(`Price: ${price}`, 14, 220);
 
     // Add footer with date and page number
+    // Add a line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, 30, 200, 30);
+
+    // Add line above the footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    // Footer text (right-aligned)
     doc.setFontSize(10);
-    doc.setTextColor(169, 169, 169); // Gray color
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 285); // Current date
-    doc.text(`Page 1 of 1`, 180, 285); // Page number
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Awarna Art Gallery", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
+
+    // Add line below the footer
+    doc.line(10, footerY + 15, 200, footerY + 15);
 
     // Save the PDF
     doc.save(`${title}_Artwork_Report.pdf`);
@@ -121,7 +148,15 @@ function AdminArtwork(props) {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/artWorks/${_id}`);
+      const response = await axios.delete(
+        `http://localhost:5000/artWorks/${_id}`
+      );
+      if (response.status === 200) {
+        alert("Artwork Rejected! and email sent!");
+      } else {
+        // Handle other error statuses
+        console.error("Error:");
+      }
       history("/"); // Redirects after successful deletion
       history("/mainArtworkDetails");
     } catch (error) {
@@ -143,7 +178,14 @@ function AdminArtwork(props) {
         updatedData
       );
       console.log("Artwork updated successfully:", response.data);
-      setAccepted(true); // Update accepted state in UI
+      if (response.status === 200) {
+        alert("Artwork accepted and email sent!");
+        window.location.reload(); // Refresh the page
+      } else {
+        // Handle other error statuses
+        console.error("Error:");
+      }
+      // setAccepted(true); // Update accepted state in UI
     } catch (error) {
       console.error("Error updating artwork:", error.response.data);
     }
@@ -209,15 +251,9 @@ function AdminArtwork(props) {
           Generate Report
         </Button>
         |
-        <Link to={`/mainGallery/`}>
-          <Button
-            onClick={handleAccept}
-            variant="success"
-            className="ml-1 mr-1"
-          >
-            Accept
-          </Button>
-        </Link>
+        <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
+          Accept
+        </Button>
         |
         <Button
           onClick={deleteHandler}
