@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import "./App.css";
-import { CartProvider } from "../../frontend/src/Components/Inventory Component/Shop/CartContext";
+import { CartProvider } from "./Components/Inventory Component/Shop/CartContext";
 
 //Main Components
 import Home from "./Components/Main Component/Home";
@@ -11,6 +11,7 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+
 
 //Inquiry imports
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
@@ -92,7 +93,7 @@ import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
-  return (
+ return (
      <CartProvider>
       <div>
         <React.Fragment>
