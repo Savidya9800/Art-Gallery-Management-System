@@ -92,6 +92,7 @@ import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
   return (
+<CartProvider> 
     <div>
       <React.Fragment>
         <Routes>
@@ -154,35 +155,35 @@ function App() {
           <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
           <Route path="/Viewresponse/:id" element={<ViewResponse />} />
           <Route path="/Addresponse/:id" element={<Addresponse />} />
-          <Route
-            path="/updateresponse/:id/:inquiryID"
-            element={<Updateresponse />}
-          />
+          <Route path="/updateresponse/:id/:inquiryID" element={<Updateresponse />} />
 
-          {/* Event Manager */}
-          <Route
-            path="/event-manager-request"
-            element={<EventMangerRequest />}
-          />
-          <Route path="/userSee" element={<UserSee />} />
-          <Route path="/pdf-generator" element={<PdfGenerator />} />
-          <Route
-            path="/event-manager-request"
-            element={<EventMangerRequest />}
-          />
-          <Route path="/artistLogin" element={<ArtistLogin />} />
-          <Route path="/artistRegister" element={<ArtistRegister />} />
-          <Route path="/requestEventForm" element={<RequestEventForm />} />
+            {/* Event Manager */}
+            <Route
+              path="/event-manager-request"
+              element={<EventMangerRequest />}
+            />
+            <Route path="/userSee" element={<UserSee />} />
+            <Route path="/pdf-generator" element={<PdfGenerator />} />
+            <Route
+              path="/event-manager-request"
+              element={<EventMangerRequest />}
+            />
+            <Route path="/artistLogin" element={<ArtistLogin />} />
+            <Route path="/artistRegister" element={<ArtistRegister />} />
+            <Route path="/requestEventForm" element={<RequestEventForm />} />
+
+            {/* Bidding Manager */}
+            <Route path="/mainBidding" element={<BiddingComp />} />
+            <Route path="/mainViewBid" element={<ViewBid />} />
+            <Route path="/startBidding" element={<StartBid />} />
+            <Route path="/mainCreateBid" element={<CreateBid />} />
+            <Route path="/mainViewBid/:id" element={<BidUpdate />} />
+            <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
+            <Route path="/adminBidView" element={<ArtBidView />} />
+            <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
 
-            
-            
-           
-            
-           
-           
 
-           <Route path="/mainBidding" element={<BiddingComp />} />
 
            {/* Bidding Manager */}
 
@@ -223,6 +224,8 @@ function App() {
         </Routes>
       </React.Fragment>
     </div>
+</CartProvider> 
+
   );
 }
 

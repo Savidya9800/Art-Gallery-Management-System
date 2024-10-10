@@ -95,7 +95,9 @@ const generatePDF = () => {
 
   return (
     <Container className="">
+      <div className="relative z-10">
       <NavigationBar />
+      </div>
       <Form className="mb-3">
         <Form.Group controlId="search">
           <Form.Control
