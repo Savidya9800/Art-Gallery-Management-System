@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Home.css';
-import img18 from '../Main Component/Images Home/img18.jpg'
-import img17 from '../Main Component/Images Home/img17.jpg'
-import img14 from '../Main Component/Images Home/img14.jpg'
-import img16 from '../Main Component/Images Home/img16.jpg'
+import img18 from '../Main Component/Images Home/img18.jpg';
+import img17 from '../Main Component/Images Home/img17.jpg';
+import img14 from '../Main Component/Images Home/img14.jpg';
+import img16 from '../Main Component/Images Home/img16.jpg';
 import NavigationBar from '../Nav Component/NavigationBar';
 import FooterComp from '../Nav Component/FooterComp';
 import Button from 'react-bootstrap/Button';
@@ -38,48 +37,114 @@ const Carousel = () => {
     return () => clearInterval(autoSlide);
   }, [currentIndex]);
 
+  const carouselStyles = {
+    height: '100vh',
+    width: '100vw',
+    overflow: 'hidden',
+    position: 'relative',
+    margin: '0',
+  };
+
+  const listStyles = {
+    position: 'relative',
+  };
+
+  const itemStyles = (isActive) => ({
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    inset: '0',
+    opacity: isActive ? 1 : 0,
+    transition: 'opacity 0.5s ease',
+  });
+
+  const contentStyles = {
+    position: 'absolute',
+    top: '20%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '1140px',
+    maxWidth: '80%',
+    paddingRight: '30%',
+    color: 'inherit',
+    textShadow: '0 5px 10px rgba(0, 0, 0, 0.25)',
+    overflow: 'hidden',	
+  };
+
+  const thumbnailStyles = {
+    position: 'absolute',
+    bottom: '50px',
+    left: '75%',
+    display: 'flex',
+    gap: '20px',
+    transform: 'translateX(-50%)',
+    zIndex: 100,
+  };
+
+  const arrowButtonStyles = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    backgroundColor: 'rgba(238, 238, 238, 0.25)',
+    border: 'none',
+    color: '#fff',
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    transition: '0.5s',
+  };
+
+  const arrowContainerStyles = {
+    position: 'absolute',
+    top: '80%',
+    right: '52%',
+    display: 'flex',
+    gap: '10px',
+  };
+
   return (
     <div>
-
-    <div className="carousel" ref={carouselRef}>
-    <div className="relative z-10">
-      <NavigationBar />
-      </div>
-      <div className="list">
-        {sliderItems.map((item, index) => (
-          <div className={`item ${index === currentIndex ? 'active' : ''}`} key={item.id}>
-            <img src={item.imgSrc} alt={item.title} />
-            <div className="content">
-              <div className="author">{item.author}</div>
-              <div className="title">{item.title}</div>
-              <div className="topic">{item.topic}</div>
-              <div className="des">{item.description}</div>
-              <div className="buttons">
-                <button>SEE MORE</button>
-                <Button variant="outline-dark">Explore</Button>
+      <div className="carousel" ref={carouselRef} style={carouselStyles}>
+        <div className="relative z-10">
+          <NavigationBar />
+        </div>
+        <div className="list" style={listStyles}>
+          {sliderItems.map((item, index) => (
+            <div
+              className={`item ${index === currentIndex ? 'active' : ''}`}
+              key={item.id}
+              style={itemStyles(index === currentIndex)}
+            >
+              <img src={item.imgSrc} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div className="content" style={contentStyles}>
+                <div className="author" style={{ fontWeight: 'bold', letterSpacing: '10px' }}>{item.author}</div>
+                <div className="title" style={{ fontSize: '5em', fontWeight: 'bold', lineHeight: '1.3em' }}>{item.title}</div>
+                <div className="topic" style={{ fontSize: '5em', fontWeight: 'bold' }}>{item.topic}</div>
+                <div className="des" style={{ marginTop: '10px' }}>{item.description}</div>
+                <div className="buttons" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                  <button style={{ border: 'none', backgroundColor: 'transparent', letterSpacing: '3px', padding: '10px 20px' }}>SEE MORE</button>
+                  <Button variant="outline-dark">Explore</Button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <br/>
+          ))}
+        </div>
+        <br />
+        <div className="thumbnail" style={thumbnailStyles}>
+          {sliderItems.map((item, index) => (
+            <div className={`item ${index === currentIndex ? 'active' : ''}`} key={item.id}>
+              <img src={item.imgSrc} alt={item.title} style={{ width: '150px', height: '220px', objectFit: 'cover', borderRadius: '20px' }} />
+            </div>
+          ))}
+        </div>
 
-      <div className="thumbnail">
-        {sliderItems.map((item, index) => (
-          <div className={`item ${index === currentIndex ? 'active' : ''}`} key={item.id}>
-            <img src={item.imgSrc} alt={item.title} />
-          </div>
-        ))}
-      </div>
+        <div className="arrows" style={arrowContainerStyles}>
+          <button id="prev" onClick={() => showSlider('prev')} style={arrowButtonStyles}>&lt;</button>
+          <button id="next" onClick={() => showSlider('next')} style={arrowButtonStyles}>&gt;</button>
+        </div>
 
-      <div className="arrows">
-        <button id="prev" onClick={() => showSlider('prev')}>&lt;</button>
-        <button id="next" onClick={() => showSlider('next')}>&gt;</button>
+        <div className="time" style={{ width: `${((timeRunning / timeAutoNext) * 100)}%`, height: '3px', backgroundColor: '#fff', position: 'absolute', top: '0', left: '0', zIndex: 1000 }}></div>
       </div>
-
-      <div className="time" style={{ width: `${((timeRunning / timeAutoNext) * 100)}%` }}></div>
-    </div>
-    <FooterComp/>
+      <FooterComp />
     </div>
   );
 };

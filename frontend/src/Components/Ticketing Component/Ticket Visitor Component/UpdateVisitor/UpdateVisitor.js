@@ -151,8 +151,32 @@ const Visitor = () => {
 
   const updateVisitor = async () => {
     if (validateForm()) {
+      // Calculate the total number of tickets being updated (new count from user input)
+      const totalNewTickets = ticketData.reduce((total, ticket) => total + ticket.count, 0);
+  
+      // Fetch already booked tickets for the selected time
+      const alreadyBookedTickets = ticketData.reduce((total, ticket) => {
+        return total + (ticket.time === formData.time ? ticket.count : 0);
+      }, 0);
+  
+      // Available slots for the selected time
+      const remainingAvailableSlots = availableSlots[formData.time];
+  
+      // Check if total updated tickets (already booked + new) exceed available slots
+      if (totalNewTickets + alreadyBookedTickets > remainingAvailableSlots) {
+        alert(
+          `You currently have ${alreadyBookedTickets} tickets booked, and there are ${remainingAvailableSlots} slots remaining. You can only add up to ${
+            remainingAvailableSlots - alreadyBookedTickets
+          } more tickets.`
+        );
+        return; // Prevent form submission
+      }
+  
       try {
-        const updatedVisitor = { ...formData, tickets: ticketData }; // Prepare data for update
+        // Merge new ticket data with existing visitor data
+        const updatedVisitor = { ...formData, tickets: ticketData };
+  
+        // Send PUT request to update visitor data
         const response = await axios.put(
           `http://localhost:5000/visitors/${id}`,
           updatedVisitor
@@ -169,6 +193,9 @@ const Visitor = () => {
       alert("Please fix the validation errors before submitting.");
     }
   };
+  
+  
+  
 
   // Loading and error handling
   if (loading) {
