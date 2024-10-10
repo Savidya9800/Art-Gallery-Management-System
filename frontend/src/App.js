@@ -19,7 +19,6 @@ import ViewInquiry from "./Components/Inquiry Component/ViewInquiry/ViewInquiry"
 import UpdateInquiry from "./Components/Inquiry Component/UpdateInquiry/UpdateInquiry";
 import UserReadResponse from "./Components/Inquiry Component/UserReadresponse/userReadResponse";
 
-
 //Inquiry Admin imports
 import ViewResponse from "./Components/Inquiry Component/Inquiry admin/ViewResponse";
 import Addresponse from "./Components/Inquiry Component/Inquiry admin/Addresponse";
@@ -93,7 +92,7 @@ import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
   return (
-
+    <CartProvider>
       <div>
         <React.Fragment>
           <Routes>
@@ -150,13 +149,16 @@ function App() {
             {/* Inquiry Manager */}
             <Route path="/mainInquary" element={<InquiryComp />} />
             <Route path="/newInquiry" element={<AddInquiry />} />
-           <Route path="/inquiries" element={<ViewInquiry />} />
+            <Route path="/inquiries" element={<ViewInquiry />} />
             <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
             <Route path="/userReadResponse" element={<UserReadResponse />} />
-           <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
-          <Route path="/Viewresponse/:id" element={<ViewResponse />} />
-          <Route path="/Addresponse/:id" element={<Addresponse />} />
-          <Route path="/updateresponse/:id/:inquiryID" element={<Updateresponse />} />
+            <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
+            <Route path="/Viewresponse/:id" element={<ViewResponse />} />
+            <Route path="/Addresponse/:id" element={<Addresponse />} />
+            <Route
+              path="/updateresponse/:id/:inquiryID"
+              element={<Updateresponse />}
+            />
 
             {/* Event Manager */}
             <Route
@@ -174,11 +176,15 @@ function App() {
             <Route path="/requestEventForm" element={<RequestEventForm />} />
 
             {/* Bidding Manager */}
+
             <Route path="/mainBidding" element={<BiddingComp />} />
-            <Route path="/mainViewBid" element={<ViewBid />} />
+            <Route path="/mainViewBid/:id" element={<ViewBid />} />
             <Route path="/startBidding" element={<StartBid />} />
-            <Route path="/mainCreateBid" element={<CreateBid />} />
-            <Route path="/mainViewBid/:id" element={<BidUpdate />} />
+            <Route path="/mainCreateBid/:id" element={<CreateBid />} />
+            <Route
+              path="/mainUpdateBid/:id/:artworkId"
+              element={<BidUpdate />}
+            />
             <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
             <Route path="/adminBidView" element={<ArtBidView />} />
             <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
@@ -197,11 +203,10 @@ function App() {
             <Route path="/membership" element={<CreateMembership />} />
             <Route path="/allMembership" element={<AllMembership />} />
             <Route path="/edit-membership/:id" element={<EditMembership />} />
-
           </Routes>
         </React.Fragment>
       </div>
-
+    </CartProvider>
   );
 }
 

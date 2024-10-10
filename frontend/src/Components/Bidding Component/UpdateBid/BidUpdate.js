@@ -7,40 +7,29 @@ import FooterComp from '../../Nav Component/FooterComp';
 
 function BidUpdate() {
   const [inputs, setInputs] = useState({});
-  const history = useNavigate();
-  const id = useParams().id;
+  const navigate = useNavigate();
+  const { id, artworkId } = useParams(); // Get both bid ID and artwork ID from the URL
 
+  // Fetch bid details by ID
   useEffect(() => {
     const fetchHandler = async () => {
       await axios
-        .get(`http://localhost:5000/bidding/${id}`)
+        .get(`http://localhost:5000/bidding/${id}`) // Fetch the specific bid by ID
         .then((res) => res.data)
-        .then((data) => setInputs(data.IDBidder)); // Ensure the correct constant is used
+        .then((data) => setInputs(data.IDBidder));
     };
     fetchHandler();
   }, [id]);
 
-  const sendRequest = async () => {
-    await axios
-      .put(`http://localhost:5000/bidding/${id}`, {
-        name: String(inputs.name),
-        email: String(inputs.email),
-        amount: Number(inputs.amount),
-      })
-      .then((res) => res.data);
-  };
-
-  // Handle change with validations
+  // Handle input changes with validation
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Name validation only allow text (no numbers or symbols)
     if (name === 'name' && !/^[a-zA-Z\s]*$/.test(value)) {
       alert('Name can only contain letters and spaces.');
       return;
     }
 
-    // Amount validation no negative numbers allowed
     if (name === 'amount' && value < 0) {
       alert('Amount cannot be negative.');
       return;
@@ -52,31 +41,40 @@ function BidUpdate() {
     }));
   };
 
-  // When update button is clicked
+  // Send the updated data to the server
+  const sendRequest = async () => {
+    await axios
+      .put(`http://localhost:5000/bidding/${id}`, {
+        name: String(inputs.name),
+        email: String(inputs.email),
+        amount: Number(inputs.amount),
+        artworkId: artworkId, // Include artworkId in the request
+      })
+      .then((res) => res.data);
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(inputs.email)) {
       alert('Please enter a valid email address.');
       return;
     }
 
-    console.log(inputs);
     sendRequest().then(() => {
-      alert('Update was successful!');
-      history('/mainViewBid');
+      alert('Bid updated successfully!');
+      navigate(`/mainViewBid/${artworkId}`); // Redirect to artwork's specific page
     });
   };
 
   return (
     <div>
       <div className='relative z-10'>
-      <NavigationBar />
-
+        <NavigationBar />
       </div>
-      
+
       <div className="flex justify-center items-center h-screen">
         <div className="p-10 border-2 border-black rounded-lg shadow-lg w-full max-w-lg">
           <h1 className="text-2xl text-[#A78F51] text-center mb-6">Update Bid</h1>
@@ -87,7 +85,7 @@ function BidUpdate() {
               type="text"
               name="name"
               onChange={handleChange}
-              value={inputs.name}
+              value={inputs.name || ''}
               placeholder="Enter Name"
               required
               className="w-full p-3 mb-4 border border-black rounded-md text-sm"
@@ -98,7 +96,7 @@ function BidUpdate() {
               type="email"
               name="email"
               onChange={handleChange}
-              value={inputs.email}
+              value={inputs.email || ''}
               placeholder="Enter Email (for contact purposes)"
               required
               className="w-full p-3 mb-4 border border-black rounded-md text-sm"
@@ -109,7 +107,7 @@ function BidUpdate() {
               type="number"
               name="amount"
               onChange={handleChange}
-              value={inputs.amount}
+              value={inputs.amount || ''}
               placeholder="Enter Amount"
               required
               className="w-full p-3 mb-4 border border-black rounded-md text-sm"
@@ -126,7 +124,7 @@ function BidUpdate() {
           </form>
         </div>
       </div>
-      <FooterComp/>
+      <FooterComp />
     </div>
   );
 }

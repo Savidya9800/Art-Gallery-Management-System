@@ -39,9 +39,10 @@ function SellArtComp() {
           </Carousel.Item>
         </Carousel>
       </div>
-      <div className="-mt-[570px]">
+      <div className="-mt-[570px] mb-5">
         <AddArtworkComp />
       </div>
+      
       <FooterComp />
     </div>
   );

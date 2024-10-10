@@ -3,6 +3,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import FooterComp from "../../Nav Component/FooterComp";
+import Button from 'react-bootstrap/Button';
 
 function Addinventory() {
   const history = useNavigate();
@@ -97,12 +98,12 @@ function Addinventory() {
         <NavigationBar />
       </div>
       <div className="shadow-md rounded-lg p-2">
-        <button
-          className="bg-[#A78F51] hover:bg-[#8e7b44] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        <Button
+        variant="dark"
           onClick={() => history("/itemview")}
         >
           Current Inventory
-        </button>
+        </Button>
       </div>
 
       <div className="flex justify-center items-center">
@@ -182,12 +183,12 @@ function Addinventory() {
             </div>
 
             <div className="flex justify-center bg-white">
-              <button
+              <Button
                 type="submit"
-                className="bg-[#A78F51] hover:bg-[#8e7b44] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                variant="dark"
               >
                 Upload item
-              </button>
+              </Button>
             </div>
           </form>
         </div>
