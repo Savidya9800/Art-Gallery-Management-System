@@ -7,7 +7,7 @@ import MessageAdmin from "../Ticketing Component/Ticket Issues/MessageAdmin"; //
 // Ticket Table Component
 const TicketTable = () => {
   return (
-    <div>
+    <div className="relative z-10">
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead className="bg-gray-100">
@@ -25,25 +25,19 @@ const TicketTable = () => {
               <td className="py-2 px-4 border-b border-gray-300">
                 Adult (Age 19+)
               </td>
-              <td className="py-2 px-4 border-b border-gray-300">£10.00</td>
-            </tr>
-            <tr>
-              <td className="py-2 px-4 border-b border-gray-300">
-                Student (Full-time with valid I.D)
-              </td>
-              <td className="py-2 px-4 border-b border-gray-300">$20</td>
+              <td className="py-2 px-4 border-b border-gray-300">Rs.1550</td>
             </tr>
             <tr>
               <td className="py-2 px-4 border-b border-gray-300">
                 Senior (Age 65+)
               </td>
-              <td className="py-2 px-4 border-b border-gray-300">$15</td>
+              <td className="py-2 px-4 border-b border-gray-300">Rs.1300</td>
             </tr>
             <tr>
               <td className="py-2 px-4 border-b border-gray-300">
                 Child (Age 6-18)
               </td>
-              <td className="py-2 px-4 border-b border-gray-300">$10</td>
+              <td className="py-2 px-4 border-b border-gray-300">Rs.950</td>
             </tr>
           </tbody>
         </table>
@@ -60,7 +54,7 @@ const TicketPurchaseSection = () => {
       <p className="mb-4">Click here to buy your tickets</p>
       <a
         href="/addVisitor"
-        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-full"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         Buy tickets
       </a>
@@ -157,7 +151,7 @@ const VisitorCount = () => {
 // Banner Component
 const Banner = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center relative z-0">
       <div className="w-full">
         <img
           src={bannerImage}
@@ -182,7 +176,9 @@ const Banner = () => {
 const TicketPrices = () => {
   return (
     <div>
+      <div className="relative z-10">
       <NavigationBar />
+      </div>
       
       {/* Banner Section */}
       <Banner />
@@ -196,13 +192,13 @@ const TicketPrices = () => {
           </p>
 
           {/* Ticket Table */}
-          <TicketTable />
+          
 
           {/* Group Visit Info, Ticket Purchase Section, Admin Button, and Message Admin (Horizontally aligned) */}
           <div className="flex flex-col lg:flex-row justify-between mt-6 space-y-6 lg:space-y-0 lg:space-x-6">
             {/* Group Visit Info */}
             <div className="w-full lg:w-1/4">
-              <GroupVisitInfo />
+            <TicketTable />
             </div>
 
             {/* Ticket Purchase Section */}
@@ -217,12 +213,6 @@ const TicketPrices = () => {
               <MessageAdmin />
             </div>
           </div>
-          {/* Admin Button Section */}
-          <div className="w-full lg:w-1/4">
-              <AdminButton />
-              <TicketIssues/>
-              <VisitorCount />
-            </div>
         </div>
       </div>
 

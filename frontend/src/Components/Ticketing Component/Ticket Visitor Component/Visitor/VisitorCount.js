@@ -4,7 +4,7 @@ import NavigationBar from '../../../Nav Component/NavigationBar';
 import FooterComp from '../../../Nav Component/FooterComp';
 import { Link } from 'react-router-dom';
 
-const URL = 'http://localhost:5000/visitors'; // Your API endpoint for fetching visitors
+const URL = 'http://localhost:5000/visitors'; 
 
 const fetchHandler = async () => {
   try {
@@ -21,7 +21,7 @@ const AdminButton = () => {
     <div className="border border-gray-300 rounded-lg p-4 w-full">
       <a
         href="/visitordetails"
-        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         View Visitor Details (Admin)
       </a>
@@ -34,9 +34,9 @@ const TicketIssues = () => {
     <div className="border border-gray-300 rounded-lg p-4 w-full">
       <a
         href="/message"
-        className="inline-block bg-red-400 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-500"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
-        View Visitor Details (Admin)
+        View Messages (Admin)
       </a>
     </div>
   );
@@ -45,6 +45,7 @@ const TicketIssues = () => {
 function VisitorsCount() {
   const [groupedVisitors, setGroupedVisitors] = useState({});
   const [monthlyVisitorCounts, setMonthlyVisitorCounts] = useState({});
+  const [refreshData, setRefreshData] = useState(false); // State to trigger data refresh
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -52,9 +53,7 @@ function VisitorsCount() {
         groupVisitorsByDateAndTime(data.visitors);
       }
     });
-  }, []);
-
-  
+  }, [refreshData]); // Dependency on refreshData
 
   // Function to group visitors by date and time slot, and calculate total visitors per month
   const groupVisitorsByDateAndTime = (visitors) => {
@@ -90,6 +89,11 @@ function VisitorsCount() {
 
     setGroupedVisitors(dateGroups);
     setMonthlyVisitorCounts(monthGroups);
+  };
+
+  // Function to refresh the visitor data
+  const refreshVisitorData = () => {
+    setRefreshData((prev) => !prev); // Toggle refreshData state
   };
 
   return (
@@ -157,6 +161,5 @@ function VisitorsCount() {
     </div>
   );
 }
-
 
 export default VisitorsCount;

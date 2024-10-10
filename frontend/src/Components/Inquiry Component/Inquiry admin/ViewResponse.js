@@ -1,48 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-
-import NavigationBar from '../../Nav Component/NavigationBar';
+import { useParams } from 'react-router-dom'; // To get inquiryID from the URL
 import Viewresponses from './Viewresponses';
+import NavigationBar from '../../Nav Component/NavigationBar';
 import FooterComp from '../../Nav Component/FooterComp';
 
-const URL = "http://localhost:5000/adminResponse";
+const URL = "http://localhost:5000/adminResponse"; // Base URL for fetching responses
 
-const fetchHandler = async () => {
-    return await axios.get(URL).then((res) => res.data);
+// Fetch responses for a specific inquiryId
+const fetchHandler = async (inquiryID) => {
+    return await axios.get(`${URL}/inquiry/${inquiryID}`).then((res) => res.data.Responses);
 };
 
-export default function ViewResponse() {
+function ViewResponse() {
+    const { id: inquiryID } = useParams(); // Get inquiryID from the route params
+    const [responseData, setResponses] = useState([]); // State for storing the fetched responses
+    const [noResults, setNoResults] = useState(false); // State for handling no results
 
-    
-
-    const[responseData, setResponses] = useState();
-
+    // Fetch responses for the selected inquiry when the component is mounted
     useEffect(() => {
-        fetchHandler().then((data) => setResponses(data.responseData)); //backend display 
-
-}, []);
+        if (inquiryID) {
+            fetchHandler(inquiryID).then((data) => {
+                setResponses(data); // Set fetched responses directly
+                setNoResults(data.length === 0); // Update noResults state based on fetched data
+            });
+        }
+    }, [inquiryID]); // Effect runs when inquiryID changes
 
     return (
-    
-<div>
+        <div style={{ backgroundColor: '#eee8dc', minHeight: '100vh' }}>
             <NavigationBar />
-            <br></br>
 
-            <div>
+            <div className="border-0 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-4xl">
+                <h1 className="text-center text-3xl font-semibold text-gray-700 mb-8">Admin Responses</h1>
 
-                <h1>Admin Responses</h1>
-
-                {responseData && responseData.map((RESPONSE, i) => (
+                {/* Conditional rendering based on noResults state */}
+                {noResults ? (
+                    <div style={{ fontWeight: 'bold', color: 'black', textAlign: 'center' }}>No responses found for this inquiry.</div>
+                ) : (
                     <div>
-                        <Viewresponses key={i} RESPONSE={RESPONSE} />
+                        {responseData && responseData.map((response, i) => (
+                            <Viewresponses key={i} RESPONSE={response} />  // Render Viewresponses component for each response
+                        ))}
                     </div>
-                    
-                ))}
-
-                </div>
-            <FooterComp />
+                )}
             </div>
-    );
 
+            <FooterComp />
+        </div>
+    );
 }
+
+export default ViewResponse;

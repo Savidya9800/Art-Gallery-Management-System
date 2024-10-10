@@ -36,6 +36,7 @@ const Login = () => {
 
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("email", username);
 
       if (response.data.user.role === "admin") {
         navigate("/admin");
@@ -51,24 +52,31 @@ const Login = () => {
   };
 
   return (
+    <div className="bg-gray-100">
     <Container
-      className="d-flex flex-column align-items-center justify-content-center vh-100"
-      style={{ backgroundColor: "#f8f8f8" }}
+      className="bg-gray-100 d-flex flex-column align-items-center justify-content-center vh-100"
+     
     >
       <Image
         src="/welcome.png"
         alt="Awarna Art Gallery"
         width={150}
-        className="mb-4"
+        className="mb-4 " 
       />
-      <h1 className="mb-4" style={{ fontSize: "24px", color: "#a49256" }}>
+      <h1
+        className="mb-3"
+        style={{ fontSize: "24px", color: "#a49256", background: "#f8f8f8" }}
+      >
         Welcome Back to Awarna Art Gallery!
       </h1>
-      <Form onSubmit={handleLogin} style={{ width: "300px" }}>
+      <Form
+        onSubmit={handleLogin}
+        style={{ width: "300px", background: "#f8f8f8" }}
+      >
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             style={{ borderColor: "#d1b77d" }}
@@ -100,16 +108,24 @@ const Login = () => {
           {loading ? <Spinner animation="border" size="sm" /> : "Log in"}
         </Button>
       </Form>
-      <p className="mt-3" style={{ fontSize: "14px", color: "#333" }}>
+      <p
+        className="mt-3"
+        style={{ fontSize: "14px", color: "#333", background: "#f8f8f8" }}
+      >
         Don't have an account?{" "}
         <a
           href="/register"
-          style={{ color: "#a49256", textDecoration: "none" }}
+          style={{
+            color: "#a49256",
+            textDecoration: "none",
+            background: "#f8f8f8",
+          }}
         >
           Register here
         </a>
       </p>
     </Container>
+    </div>
   );
 };
 

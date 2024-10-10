@@ -1,12 +1,20 @@
 const artWork = require("../Models/artWorkModel");
-
+const ImgSchema = require("../Models/artWorkImgModel");
+const nodemailer = require("nodemailer");
 //Data Display
 const getAllArtWorks = async (req, res) => {
   let artWorks;
-
+  const email = req.query.email;
+  console.log(email);
   //Get all artWorks
+  
+
   try {
-    artWorks = await artWork.find();
+    if (email) {
+      artWorks = await artWork.find({ email: email });
+    } else {
+      artWorks = await artWork.find();
+    }
   } catch (err) {
     console.log(err);
   }
@@ -34,7 +42,6 @@ const addArtWorks = async (req, res, next) => {
     dimensions,
     date,
     description,
-    img,
     place,
     tags,
     price,
@@ -43,6 +50,11 @@ const addArtWorks = async (req, res, next) => {
   let artWorks;
 
   try {
+    // Fetch the last uploaded image from the database
+    const lastImage = await ImgSchema.findOne({}).sort({ createdAt: -1 });
+    const img = lastImage ? lastImage.image : null; 
+    // const img = lastImage ? lastImage._id : null;
+
     artWorks = new artWork({
       name,
       email,
@@ -72,28 +84,51 @@ const addArtWorks = async (req, res, next) => {
   return res.status(200).json({ artWorks });
 };
 
-//Get by Id
+// Get Artwork by ID
 const getById = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; // Extract ID from request parameters
 
   let artWorks;
 
   try {
+    // Attempt to find artwork by ID
     artWorks = await artWork.findById(id);
   } catch (err) {
-    console.log(err);
+    console.error("Error fetching artwork:", err);
+    return res.status(500).json({ message: "Server Error" }); // Handle database errors
   }
 
-  //not available artWorks
+  // If no artwork is found
   if (!artWorks) {
-    return res.status(404).json({ message: "Artwork Not Found" });
+    return res.status(404).json({ message: "Artwork Not Found" }); // Return not found message
   }
+
+  // Return the found artwork
   return res.status(200).json({ artWorks });
 };
 
-//Update artwork Details
 const updateArtWork = async (req, res, next) => {
   const id = req.params.id;
+  let gemail;
+  try {
+    // Fetch the artwork by its ID
+    const artworkf = await artWork.findById(id);
+
+    // If no artwork is found, send an error response
+    if (!artworkf) {
+      return res.status(404).json({ message: "Artwork not found" });
+    }
+
+    // Get the email from the fetched artwork
+    gemail = artworkf.email;
+
+    // Now, you can use the email variable for any further operations
+    console.log("Email from artwork:", gemail);
+  } catch(err){
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+
   const {
     name,
     email,
@@ -110,41 +145,106 @@ const updateArtWork = async (req, res, next) => {
     place,
     tags,
     price,
+    accepted,
   } = req.body;
 
-  let artworks;
-
+  
   try {
-    artworks = await artWork.findByIdAndUpdate(id, {
-      name,
-      email,
-      pNumber,
-      website,
-      biography,
-      statement,
-      title,
-      medium,
-      dimensions,
-      date,
-      description,
-      img,
-      place,
-      tags,
-      price,
+    const updatedArtwork = await artWork.findByIdAndUpdate(
+      id,
+      {
+        name,
+        email,
+        pNumber,
+        website,
+        biography,
+        statement,
+        title,
+        medium,
+        dimensions,
+        date,
+        description,
+        img,
+        place,
+        tags,
+        price,
+        accepted,
+      },
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedArtwork) {
+      return res.status(404).json({ message: "Artwork Not Found" });
+    }
+
+    const useremail = "savidyajayalath@gmail.com";
+    const pass = "rofk zebl vrwb gjti";
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: useremail,
+        pass: pass,
+      },
     });
-    artworks = await artworks.save();
+
+
+    const mailOptions = {
+      from: useremail,
+      to: gemail,
+      subject: title,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <p>Artwork Accepted</p>
+          </body>
+        </html>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("Email sent: " + info.response);
+      return res.status(409).json({ message: "Accepted, Email sent!" });
+    });
+
+    return res.status(200).json({ artwork: updatedArtwork });
+
+  
+
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
   }
-  if (!artworks) {
-    return res.status(404).json({ message: "Artwork Not Found" });
-  }
-  return res.status(200).json({ artworks });
 };
+
 
 //Delete artwork
 const deleteArtWork = async (req, res, next) => {
   const id = req.params.id;
+
+  let gemail;
+  try {
+    // Fetch the artwork by its ID
+    const artworkf = await artWork.findById(id);
+
+    // If no artwork is found, send an error response
+    if (!artworkf) {
+      return res.status(404).json({ message: "Artwork not found" });
+    }
+
+    // Get the email from the fetched artwork
+    gemail = artworkf.email;
+
+    // Now, you can use the email variable for any further operations
+    console.log("Email from artwork:", gemail);
+  } catch(err){
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
 
   let artworks;
 
@@ -158,6 +258,42 @@ const deleteArtWork = async (req, res, next) => {
       .status(404)
       .json({ message: "Unable to Delete Artwork Details" });
   }
+
+  const useremail = "savidyajayalath@gmail.com";
+    const pass = "rofk zebl vrwb gjti";
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: useremail,
+        pass: pass,
+      },
+    });
+
+
+    const mailOptions = {
+      from: useremail,
+      to: gemail,
+      subject: "title",
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <p>Artwork Rejected</p>
+          </body>
+        </html>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("Email sent: " + info.response);
+
+      return res.status(409).json({ message: "Accepted, Email sent!" });
+    });
+
   return res.status(200).json({ artworks });
 };
 

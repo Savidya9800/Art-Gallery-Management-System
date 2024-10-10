@@ -10,8 +10,10 @@ import Carousel from "react-bootstrap/Carousel";
 function SellArtComp() {
   return (
     <div>
-      <NavigationBar />
-      <div className="mt-8 ml-48 w-96">
+      <div className="relative z-10 ">
+        <NavigationBar />
+      </div>
+      <div className="mt-0 ml-48 w-96">
         <Carousel>
           <Carousel.Item>
             <img

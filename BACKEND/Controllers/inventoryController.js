@@ -1,101 +1,114 @@
 const Inventory = require("../Models/inventoryModel");
 
+// Get all inventory
 const getAllInventory = async (req, res) => {
-
     let inventory;
-    //get all Inventory
-    try{
-        inventory = await Inventory.find();
 
-    }catch (err){
-        console.log(err);
+    try {
+        inventory = await Inventory.find();
+    } catch (err) {
+        return res.status(500).json({ message: "Server Error", error: err.message });
     }
-    //not Found
-    if(!inventory){
-        return res.status(400).json({message:"Inventory not found"});
+
+    if (!inventory || inventory.length === 0) {
+        return res.status(404).json({ message: "Inventory not found" });
     }
-    //Display all inventories
+
     return res.status(200).json({ inventory });
 };
 
-//data insert
-const addInventory = async (req, res, next) => {
-    const {productname,price,itemCount,date}= req.body;
+// Add new inventory with image upload
+const addInventory = async (req, res) => {
+    const { productname, price, itemCount, date } = req.body;
 
     let inventory;
+    let imageName = req.file ? req.file.filename : null; // Check if image is uploaded
 
-    try{
-        inventory = new Inventory({productname,price,itemCount,date});
+    try {
+        inventory = new Inventory({
+            productname,
+            price,
+            itemCount,
+            date,
+            image: imageName // Store image filename in the inventory document
+        });
         await inventory.save();
-    }catch(err) {
-        console.log(err);
+    } catch (err) {
+        return res.status(500).json({ message: "Unable to add inventory", error: err.message });
     }
-    //not insert inventory
-    if(!inventory){
-        return res.status(404).json({message:"unable to add inventory"});
-        }
-        return res.status(200).json({ inventory });
+
+    return res.status(201).json({ message: "Inventory added successfully", inventory });
 };
 
-//get by id
-const getByID = async (req, res, next)=>{
-
+// Get inventory by ID
+const getByID = async (req, res) => {
     const id = req.params.id;
-
     let inventory;
 
-    try{
+    try {
         inventory = await Inventory.findById(id);
-        }catch(err) {
-            console.log(err);
-                }
+    } catch (err) {
+        return res.status(500).json({ message: "Server Error", error: err.message });
+    }
 
-    //not available inventory
-    if(!inventory){
-        return res.status(404).json({message:"Inventory not found"});
-        }
-        return res.status(200).json({ inventory });
+    if (!inventory) {
+        return res.status(404).json({ message: "Inventory not found" });
+    }
+
+    return res.status(200).json({ inventory });
 };
 
-//update inventory details
-const updateInventory = async (req,res,next) => {
-
+// Update inventory details including image
+const updateInventory = async (req, res) => {
     const id = req.params.id;
-    const {productname,price,itemCount,date}= req.body;
-
+    const { productname, price, itemCount, date } = req.body;
+    
+    let imageName = req.file ? req.file.filename : null; // Check if a new image is uploaded
     let inventory;
 
-    try{
-        inventory = await Inventory.findByIdAndUpdate(id,
-            {productname:name,price: Number, itemCount:Number,date:date});
-            inventory = await inventory.save();
-    }catch(err) {
-        console.log(err);
-            }
+    try {
+        inventory = await Inventory.findById(id);
 
-    if(!inventory){
-        return res.status(404).json({message:"unable to update user Details"});
+        if (!inventory) {
+            return res.status(404).json({ message: "Inventory not found" });
         }
-        return res.status(200).json({ inventory });
 
-};
-// delete inventory details
-const deleteInventory = async (req,res,next) =>{
-    const id = req.params.id;
+        // Update the fields, and only change the image if a new one is uploaded
+        inventory.productname = productname || inventory.productname;
+        inventory.price = price || inventory.price;
+        inventory.itemCount = itemCount || inventory.itemCount;
+        inventory.date = date || inventory.date;
 
-    let inventory; 
+        if (imageName) {
+            inventory.image = imageName; // Update the image if a new one is uploaded
+        }
 
-    try{
-        inventory = await Inventory.findByIdAndDelete(id)
-    }catch(err){
-        console.log(err);
+        await inventory.save();
+
+    } catch (err) {
+        return res.status(500).json({ message: "Unable to update inventory", error: err.message });
     }
-    if(!inventory){
-        return res.status(404).json({message:"unable to delete user Details"});
-        }
-        return res.status(200).json({ inventory });
+
+    return res.status(200).json({ message: "Inventory updated successfully", inventory });
 };
 
+// Delete inventory item
+const deleteInventory = async (req, res) => {
+    const id = req.params.id;
+    let inventory;
+
+    try {
+        inventory = await Inventory.findByIdAndDelete(id);
+    } catch (err) {
+        return res.status(500).json({ message: "Unable to delete inventory", error: err.message });
+    }
+
+    if (!inventory) {
+        return res.status(404).json({ message: "Inventory not found for delete" });
+    }
+
+    return res.status(200).json({ message: "Inventory deleted successfully", inventory });
+};
 
 exports.getAllInventory = getAllInventory;
 exports.addInventory = addInventory;

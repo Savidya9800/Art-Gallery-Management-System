@@ -12,14 +12,19 @@ const InquiryAdminSchema = new Schema({
     },
     inquirystatus: {
         type: String,
-        required: true
+        required:true
     },
     
-    Date: {
-        type: Date,
-        required: true
-    }
+    inquiryID: {
+        type: mongoose.Schema.Types.ObjectId, // Reference to the InquiryModel
+        ref: 'InquiryModel', // This links to the inquiry model
+        required: true,
+      },
+    
+      
+  
 });
+
 
 module.exports = mongoose.model('InquiryAdminModel', InquiryAdminSchema);
 
