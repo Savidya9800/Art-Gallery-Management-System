@@ -25,7 +25,7 @@ function AdminArtwork(props) {
     price,
   } = props.ARTWORK;
   const history = useNavigate();
-  const [setAccepted] = useState(false); // Initialize accepted state
+  // const [accepted, setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
@@ -121,9 +121,19 @@ function AdminArtwork(props) {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/artWorks/${_id}`);
+      const response = await axios.delete(`http://localhost:5000/artWorks/${_id}`);
+      if (response.status === 200) {
+      
+        alert("Artwork Rejected! and email sent!");
+      } else {
+        // Handle other error statuses
+        console.error("Error:");
+        
+      }
       history("/"); // Redirects after successful deletion
       history("/mainArtworkDetails");
+      
+      
     } catch (error) {
       console.error("Error deleting artwork:", error);
       alert("Failed to delete the artwork. Please try again.");
@@ -143,7 +153,16 @@ function AdminArtwork(props) {
         updatedData
       );
       console.log("Artwork updated successfully:", response.data);
-      setAccepted(true); // Update accepted state in UI
+      if (response.status === 200) {
+      
+        alert("Artwork accepted and email sent!");
+        window.location.reload(); // Refresh the page
+      } else {
+        // Handle other error statuses
+        console.error("Error:");
+        
+      }
+      // setAccepted(true); // Update accepted state in UI
     } catch (error) {
       console.error("Error updating artwork:", error.response.data);
     }
@@ -209,7 +228,7 @@ function AdminArtwork(props) {
           Generate Report
         </Button>
         |
-        <Link to={`/mainGallery/`}>
+       
           <Button
             onClick={handleAccept}
             variant="success"
@@ -217,7 +236,7 @@ function AdminArtwork(props) {
           >
             Accept
           </Button>
-        </Link>
+      
         |
         <Button
           onClick={deleteHandler}

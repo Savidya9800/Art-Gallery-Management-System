@@ -10,7 +10,7 @@ function Addinventory() {
     productname: "",
     price: "",
     itemCount: "",
-    date: new Date().toISOString().split("T")[0], // Set today's date
+    date: new Date().toISOString().split("T")[0], 
   });
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
@@ -58,7 +58,7 @@ function Addinventory() {
       console.log("Submitting form data:", { inputs, image });
       try {
         await sendRequest();
-        history("/itemview"); // Redirect to item view on success
+        history("/itemview"); 
       } catch (error) {
         console.error("Submission failed", error);
         setErrors((prevErrors) => ({ ...prevErrors, submit: "Failed to add item. Please try again." }));
@@ -87,7 +87,7 @@ function Addinventory() {
       });
       console.log("Result", result);
     } catch (error) {
-      console.error("Error adding the item:", error.response.data); // Log the specific error from the response
+      console.error("Error adding the item:", error.response.data); 
     }
   };
 
