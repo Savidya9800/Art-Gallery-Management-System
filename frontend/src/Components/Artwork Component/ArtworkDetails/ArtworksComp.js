@@ -7,11 +7,17 @@ import Button from "react-bootstrap/Button";
 import ArtworkModal from "../ArtworkDetails/ArtworkModal";
 
 const URL = "http://localhost:5000/artWorks";
+const email = localStorage.getItem("email");
 
 // fetchHandler
 const fetchHandler = async () => {
   try {
-    const res = await axios.get(URL);
+    const res = await axios.get(`${URL}`, {
+      params: { email } // Pass the email as a query parameter
+    });
+    console.log(email);
+    console.log(res.data); // Log the full response
+   
     return res.data;
   } catch (error) {
     console.error("Error fetching artworks:", error);
