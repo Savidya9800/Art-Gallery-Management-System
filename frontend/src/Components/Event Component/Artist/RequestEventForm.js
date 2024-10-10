@@ -282,6 +282,16 @@ const RequestEventForm = () => {
   };
 
   const handleSaveClick = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5000/requestEvent/updaterequest/${editingRequestId}`,
+        editedRequestData
+      );
+      alert("Request updated successfully!");
+      setEditingRequestId(null);
+      fetchUserRequests();
+    } catch (error) {
+      console.error("Error updating request:", error);
     const phoneNumber = editedRequestData.mobileNumber;
     const message = editedRequestData.message;
 
@@ -303,6 +313,7 @@ const RequestEventForm = () => {
     // Assuming you have your save logic here, after validations succeed
     setEditingRequestId(null);
   };
+};
 
   const handleEditedChange = (e) => {
     setEditedRequestData({
@@ -569,7 +580,7 @@ const RequestEventForm = () => {
             </h3>
 
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.pending.length > 0 ? (
@@ -577,7 +588,7 @@ const RequestEventForm = () => {
                   {userRequests.pending.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-yellow-600 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-yellow-600 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         {editingRequestId === request._id ? (
@@ -712,7 +723,7 @@ const RequestEventForm = () => {
               Accepted Requests
             </h3>
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.accepted.length > 0 ? (
@@ -720,7 +731,7 @@ const RequestEventForm = () => {
                   {userRequests.accepted.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-green-600 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-green-600 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">
@@ -780,7 +791,7 @@ const RequestEventForm = () => {
               Rejected Requests
             </h3>
             <div
-              className="user-requests-section bg-white rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
               style={{ height: "400px" }}
             >
               {userRequests.rejected.length > 0 ? (
@@ -788,7 +799,7 @@ const RequestEventForm = () => {
                   {userRequests.rejected.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4 bg-red-50 border-l-4 border-red-500 rounded-lg"
+                        className="request-card rejected p-4  border-l-4 border-red-500 rounded-lg"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">
