@@ -1,10 +1,10 @@
-// ArtworkComp.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import ArtworkModal from "../ArtworkDetails/ArtworkModal"; // Import the modal component
+import { Modal } from "react-bootstrap"; // Import Modal from react-bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap styles are imported
 
 function ArtworkComp(props) {
   const { _id, title, medium, place, date, description } = props.ARTWORK;
@@ -45,7 +45,44 @@ function ArtworkComp(props) {
   const handleUpdateArtwork = (updatedArtwork) => {
     // Update the local artwork state with the new data
     props.ARTWORK = { ...props.ARTWORK, ...updatedArtwork }; // Update props.ARTWORK directly
-    // Optionally, you might want to trigger a re-fetch or state update in the parent component.
+  };
+
+  // ArtworkModal component
+  const ArtworkModal = ({ show, handleClose, artwork, onUpdate }) => {
+    const handleSubmit = () => {
+      // Logic for submitting any updates to the artwork goes here
+      const updatedArtwork = {
+        title: artwork.title, // Add logic to handle the update
+        medium: artwork.medium,
+        place: artwork.place,
+        date: artwork.date,
+        description: artwork.description,
+      };
+      onUpdate(updatedArtwork); // Call the update handler with new data
+      handleClose(); // Close the modal after updating
+    };
+
+    return (
+      <Modal show={show} onHide={handleClose} centered className="custom-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>{artwork?.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p><strong>Medium:</strong> {artwork?.medium}</p>
+          <p><strong>Date Created:</strong> {artwork?.date}</p>
+          <p><strong>Description:</strong> {artwork?.description}</p>
+          {/* Add more fields or edit fields as needed */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
   };
 
   return (
@@ -93,27 +130,29 @@ function ArtworkComp(props) {
       <td className="p-2 border border-gray-300">{date}</td>
       <td className="p-2 border border-gray-300">{description}</td>
       <td className="p-2 border border-gray-300">
-        <Button onClick={handleViewAll} variant="primary" className="mr-1 ml-">
+        <Button onClick={handleViewAll} variant="primary" className="mr-1">
           Details
         </Button>
         |
         <Link to={`/mainArtworkDetails/${_id}`}>
-          <Button variant="primary" className="ml-1">
+          <Button variant="primary" className="ml-1 mr-1">
             Edit
-          </Button>{" "}
-        </Link>{" "}
+          </Button>
+        </Link>
         |
         <Button onClick={deleteHandler} variant="danger" className="ml-1">
           Remove Artwork
-        </Button>{" "}
+        </Button>
       </td>
       {/* Artwork Modal */}
-      <ArtworkModal
-        show={showModal}
-        handleClose={handleCloseModal}
-        artwork={selectedArtwork}
-        onUpdate={handleUpdateArtwork} // Pass the update handler to the modal
-      />
+      {showModal && selectedArtwork && (
+        <ArtworkModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          artwork={selectedArtwork}
+          onUpdate={handleUpdateArtwork} // Pass the update handler to the modal
+        />
+      )}
     </>
   );
 }

@@ -26,7 +26,7 @@ function ImgUploader() {
   }, []);
 
   return (
-    <div className="container p-4 mx-auto">
+    <div className="p-4 mx-auto ">
       {artworks.length === 0 ? (
         <p className="text-center text-gray-500">
           No artworks available at the moment. Please check back later.
