@@ -5,6 +5,15 @@ import bgImage from '../User/Gallery.jpeg';
 import { useNavigate } from 'react-router-dom';
 import FooterComp from '../../Nav Component/FooterComp';
 
+import event1 from './Event1.jpeg';
+import event2 from './Event2.jpeg';
+import event3 from './Event3.jpeg';
+import event4 from './Event4.jpeg';
+import event5 from './Event5.jpeg';
+import event6 from './Event6.jpeg';
+import event7 from './Event7.jpeg';
+import event8 from './Event8.jpeg';
+
 function UserSee() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +22,10 @@ function UserSee() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [sortOrder, setSortOrder] = useState('recent'); // New state for sorting order
   const navigate = useNavigate();
+
+  const eventImages = [event1, event2, event3, event4, event5, event6, event7, event8];
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -34,9 +46,12 @@ function UserSee() {
   // Filter accepted requests
   const acceptedRequests = requests.filter(request => request.status === 'Accepted');
 
-  // Sort accepted requests by eventDate
+  // Sort accepted requests based on the selected sortOrder
   const sortedAcceptedRequests = acceptedRequests.sort((a, b) => {
-    return new Date(a.eventDate) - new Date(b.eventDate);
+    if (sortOrder === 'recent') {
+      return new Date(b.eventDate) - new Date(a.eventDate); // Sort by most recent
+    }
+    return new Date(a.eventDate) - new Date(b.eventDate); // Sort by oldest
   });
 
   // Filter the sorted requests based on the search term
@@ -49,18 +64,15 @@ function UserSee() {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/artist/login', { email, password });
-      console.log('get record ', response);
       if (response.data.success) {
         alert('Login successful');
-        // Navigate to RequestEventForm with email and name as state
-        console.log(response.data.name);
         navigate('/requestEventForm', {
           state: {
             email: response.data.artist.email,
             name: response.data.artist.name,
           },
         });
-        setShowModal(false); // Close the modal on successful login
+        setShowModal(false);
       } else {
         alert('Invalid email or password');
       }
@@ -71,117 +83,133 @@ function UserSee() {
   };
 
   const handleButtonClick = () => {
-    setShowModal(true); // Show the modal when the button is clicked
+    navigate('/artistLogin');
   };
 
   const closeModal = () => {
-    setShowModal(false); // Close the modal
-    setEmail(''); // Clear email field
-    setPassword(''); // Clear password field
+    setShowModal(false);
+    setEmail('');
+    setPassword('');
   };
 
-  if (loading) return <p className="text-center text-lg font-semibold">Loading...</p>;
-  if (error) return <p className="text-red-500 text-center font-semibold">{error}</p>;
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value); // Update the sort order based on dropdown selection
+  };
+
+  if (loading) return <p className="text-lg font-semibold text-center">Loading...</p>;
+  if (error) return <p className="font-semibold text-center text-red-500">{error}</p>;
 
   return (
     <div>
       <NavigationBar />
 
-      <img src={bgImage} alt="Event" className="w-full h-72 object-cover rounded-lg" />
+      <img src={bgImage} alt="Event" className="object-cover w-full rounded-lg h-72" />
 
-      <div className="p-6 max-w-6xl mx-auto">
+      <div className="max-w-6xl p-6 mx-auto">
         <div className="flex justify-center">
           <button
-            className="bg-[#A78F51] text-white font-bold py-2 px-4 rounded-full"
+            className="bg-[#A78F51] text-white font-bold py-2 px-4 rounded-lg"
             onClick={handleButtonClick}
           >
             Plan Event
           </button>
         </div>
         <br />
-        <h1 className="text-5xl font-extrabold mb-6 text-center text-gray-800 ">UPCOMING EVENT</h1>
+        <h1 className="mb-6 text-5xl font-extrabold text-center text-gray-800">UPCOMING EVENTS</h1>
 
         {/* Search Input */}
-        <div className="mb-6 flex justify-center">
+        <div className="flex justify-center mb-6">
           <input
             type="text"
             placeholder="Search event by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 p-2 w-full max-w-md rounded"
+            className="w-full max-w-md p-2 border border-gray-300 rounded"
           />
         </div>
 
+        {/* Dropdown for sorting */}
+        <div className="flex justify-left mb-6">
+          <select
+            value={sortOrder}
+            onChange={handleSortChange}
+            className="w-full max-w-xs p-2 border border-gray-300 rounded"
+          >
+            <option value="recent">Sort by Most Recent</option>
+            <option value="oldest">Sort by Oldest</option>
+          </select>
+        </div>
+
         {/* Event Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRequests.length > 0 ? (
-            filteredRequests.map((request) => (
-              <div
-                key={request._id}
-                className="border border-gray-200 rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-              >
-                <h2 className="bg-white text-center text-xl font-bold mb-2 text-gray-900">{request.name}</h2>
-                <p className="bg-white text-gray-700">
-                  <strong className="bg-white">Message:</strong> {request.message}
-                </p>
-                <p className="bg-white text-gray-700">
-                  <strong className="bg-white">Event Date:</strong> {new Date(request.eventDate).toLocaleString()}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-lg font-semibold">No events found</p>
-          )}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredRequests.map((request, index) => (
+            <div
+              key={request._id}
+              className="p-6 transition-shadow duration-300 ease-in-out bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl"
+            >
+              <h2 className="mb-2 text-xl font-bold text-center text-gray-900 bg-white">{request.name}</h2>
+              <img
+                src={eventImages[index % eventImages.length]} // Dynamically assign image based on index
+                alt="Event"
+                className="object-cover w-full h-48 rounded-lg"
+              />
+              <p className="text-gray-700 bg-white">
+                <strong className="bg-white">Message:</strong> {request.message}
+              </p>
+              <p className="text-gray-700 bg-white">
+                <strong className="bg-white">Event Date:</strong> {new Date(request.eventDate).toLocaleString()}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Modal for Login */}
       {showModal && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-8 rounded-lg shadow-xl w-80">
-      <h2 className="text-2xl font-bold text-center p-4 mb-6">Login</h2>
-      <form onSubmit={handleLogin}>
-        <div className="p-4 mb-4">
-          <label className="text-sm text-black font-semibold block mb-2">Username</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="border-b-2 border-black focus:outline-none p-2 w-full"
-            placeholder="Username"
-          />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="p-8 bg-white rounded-lg shadow-xl w-80">
+            <h2 className="p-4 mb-6 text-2xl font-bold text-center">Login</h2>
+            <form onSubmit={handleLogin}>
+              <div className="p-4 mb-4">
+                <label className="block mb-2 text-sm font-semibold text-black">Username</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-2 border-b-2 border-black focus:outline-none"
+                  placeholder="Username"
+                />
+              </div>
+              <div className="p-4 mb-6">
+                <label className="block mb-2 text-sm font-semibold text-black">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full p-2 border-b-2 border-black focus:outline-none"
+                  placeholder="Password"
+                />
+              </div>
+              <div className="mb-4 text-right">
+                <a href="#" className="text-xs text-black hover:underline">Forgot password?</a>
+              </div>
+              <div className="flex justify-center p-4 mb-6">
+                <button
+                  type="submit"
+                  className="bg-[#A78F51] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-blue-600 transition"
+                >
+                  Login
+                </button>
+              </div>
+              <div className="text-sm text-center">
+                Don't have an account? <a href="/artistRegister" className="text-black hover:underline">SignUp</a>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="p-4 mb-6">
-          <label className="text-sm text-black font-semibold block mb-2">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="border-b-2 border-black focus:outline-none p-2 w-full"
-            placeholder="Password"
-          />
-        </div>
-        <div className="text-right mb-4">
-          <a href="#" className="text-xs text-black hover:underline">Forgot password?</a>
-        </div>
-        <div className="flex justify-center mb-6 p-4">
-          <button
-            type="submit"
-            className="bg-[#A78F51] text-white font-bold py-2 px-6 rounded-full w-full hover:bg-blue-600 transition"
-          >
-            Login
-          </button>
-        </div>
-        <div className="text-center text-sm">
-          Don't have an account? <a href="/artistRegister" className="text-black hover:underline">SignUp</a>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
+      )}
 
       <FooterComp />
     </div>

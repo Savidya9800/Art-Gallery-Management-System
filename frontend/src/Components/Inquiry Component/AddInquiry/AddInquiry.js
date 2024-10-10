@@ -31,6 +31,7 @@ export default function AddInquiry() {
         const currentDate = new Date().toISOString().split('T')[0];
         if (inputs.date !== currentDate) {
             setError("**You can only select today's date for the inquiry**");
+         
             return;
         }
 
@@ -129,10 +130,8 @@ export default function AddInquiry() {
                     <button
                         type="submit"
                         className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
-                        id="submitbtn"
-                    >
-                        Add Inquiry
-                    </button>
+                        id="submitbtn">Add Inquiry
+ </button>
                 </form>
             </div>
             <FooterComp />

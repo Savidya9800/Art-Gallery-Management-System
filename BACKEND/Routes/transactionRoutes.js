@@ -1,30 +1,19 @@
 const express = require("express");
 const router = express.Router();
+
 const {
-  addTransaction,
+  createTransaction,
   getAllTransactions,
   getTransactionById,
-  getTransactionsByUserId,
   updateTransaction,
   deleteTransaction,
-} = require("../controllers/transactionController.js");
+} = require("../Controllers/transactionController");
 
-// POST - Add new transaction (Create)
-router.post("/", addTransaction);
-
-// GET - Get all transactions (Read)
-router.get("/", getAllTransactions);
-
-// GET - Get a transaction by ID (Read)
-router.get("/:id", getTransactionById);
-
-// GET - Get transactions by user ID (Read)
-router.get("/user/:userId", getTransactionsByUserId);
-
-// PUT - Update a transaction by ID (Update)
-router.put("/:id", updateTransaction);
-
-// DELETE - Delete a transaction by ID (Delete)
-router.delete("/:id", deleteTransaction);
+// Define routes
+router.post("/transactions", createTransaction); // Create a new transaction
+router.get("/transactions", getAllTransactions); // Get all transactions
+router.get("/transactions/:id", getTransactionById); // Get a transaction by ID
+router.put("/transactions/:id", updateTransaction); // Update a transaction
+router.delete("/transactions/:id", deleteTransaction); // Delete a transaction
 
 module.exports = router;

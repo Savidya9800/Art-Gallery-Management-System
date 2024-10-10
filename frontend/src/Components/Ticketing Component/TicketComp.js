@@ -54,7 +54,7 @@ const TicketPurchaseSection = () => {
       <p className="mb-4">Click here to buy your tickets</p>
       <a
         href="/addVisitor"
-        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-full"
+        className="inline-block bg-[#A78F51] text-white font-semibold py-2 px-6 rounded-md"
       >
         Buy tickets
       </a>
@@ -192,13 +192,13 @@ const TicketPrices = () => {
           </p>
 
           {/* Ticket Table */}
-          <TicketTable />
+          
 
           {/* Group Visit Info, Ticket Purchase Section, Admin Button, and Message Admin (Horizontally aligned) */}
           <div className="flex flex-col lg:flex-row justify-between mt-6 space-y-6 lg:space-y-0 lg:space-x-6">
             {/* Group Visit Info */}
             <div className="w-full lg:w-1/4">
-              <GroupVisitInfo />
+            <TicketTable />
             </div>
 
             {/* Ticket Purchase Section */}

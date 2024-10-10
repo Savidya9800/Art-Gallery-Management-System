@@ -79,12 +79,12 @@ const MessageResult = () => {
 
             {/* Button to toggle edit mode */}
             <button onClick={toggleEdit} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-              Edit Message
+              Edit
             </button>
 
             {/* Button to delete message */}
             <button onClick={handleDelete} className="ml-4 mt-4 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600">
-              Delete Message
+              Delete
             </button>
           </>
         ) : (

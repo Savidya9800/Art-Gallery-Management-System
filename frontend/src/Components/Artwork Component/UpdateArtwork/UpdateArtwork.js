@@ -183,7 +183,8 @@ function UpdateArtwork() {
     <div>
       <div className="relative z-10">
         <NavigationBar />
-      </div>
+              
+      </div>
       <div className="mt-0 ml-48 w-96">
         <Carousel>
           <Carousel.Item>
@@ -214,7 +215,7 @@ function UpdateArtwork() {
         <form className="form ml-[60%] mt-4" onSubmit={handleSubmit}>
           {currentStep === 1 && (
             <div className=" relative w-[523px] h-[800px]">
-              <div className="absolute w-[513px] h-[700px] bg-white border-2 border-black rounded-[25px]"></div>
+              <div className="absolute w-[513px] h-[776px] bg-white border-2 border-black rounded-[25px]"></div>
               <div className=" bg-white absolute left-[100px] top-[25px] text-[#A78F51] text-[25px] font-[400] font-Inter">
                 Artwork Submission form
               </div>
@@ -310,7 +311,7 @@ function UpdateArtwork() {
                 name="statement"
                 onChange={handleChange}
                 value={inputs.statement}
-                className="pl-4 bg-white absolute w-[470px] h-[48px] left-[25px] top-[635px] border border-black rounded-[15px]"
+                className="pl-4 bg-white absolute w-[468px] h-[107px] left-[25px] top-[635px] border border-black rounded-[15px]"
               ></input>
               {errors.statement && (
                 <div className="text-red-500 absolute left-[26px] top-[746px] bg-white text-xs">
