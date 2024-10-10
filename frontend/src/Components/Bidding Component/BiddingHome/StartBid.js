@@ -37,12 +37,11 @@ function StartBid() {
   if (error) return <p>{error}</p>;
 
   return (
-   
     <div className="p-6">
-      <div className='relative z-10'>
-      <NavigationBar />
+      <div className="relative z-10">
+        <NavigationBar />
       </div>
-      
+
       <h1 className="text-3xl font-bold mb-6 text-center">Available Bids</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -78,7 +77,18 @@ function StartBid() {
               <span className="text-red-500">Rs.{bid.minPrice}</span>
             </p>
 
-            
+            {/* Display the image */}
+            {bid.image && (
+              <div className="my-4">
+                <h1 className="text-lg text-gray-800">Image:</h1>
+                <img
+                  src={`http://localhost:5000/images/${bid.image}`} 
+                  alt={bid.title}
+                  style={{ maxWidth: "100%", height: "auto", objectFit: "cover" }}
+                />
+              </div>
+            )}
+
             <div className="flex justify-between mt-4">
               <Link
                 to={`/mainCreateBid/${bid._id}`} // Path for creating a bid
