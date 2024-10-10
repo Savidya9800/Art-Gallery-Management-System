@@ -111,6 +111,38 @@ const PaymentGateway = () => {
     doc.text(`Total Amount Paid: $${totalAmountPaid}`, 20, 70); // Adjusted Y position for amount
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 80); // Adjusted Y position for date
 
+    // Add a line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, 30, 200, 30);
+
+    // Add line above the footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    // Footer text (right-aligned)
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
+
+    // Add line below the footer
+    doc.line(10, footerY + 15, 200, footerY + 15);
+
     // Save the PDF
     doc.save("payment_receipt.pdf");
   };
@@ -172,158 +204,158 @@ const PaymentGateway = () => {
 
   return (
     <div>
-  <div className="payment-container min-h-screen flex flex-col bg-gray-100">
-    <NavigationBar />
-    <div className="payment-form flex-grow flex flex-col items-center justify-center p-4">
-      <h2 className="text-[25px] font-[600] font-Inter mb-4">
-        Payment Gateway
-      </h2>
-      <h3 className="text-[18px] font-[400] font-Inter mb-4">
-        Total Amount (Including Service Charge): ${totalAmount.toFixed(2)}
-      </h3>
+      <div className="payment-container min-h-screen flex flex-col bg-gray-100">
+        <NavigationBar />
+        <div className="payment-form flex-grow flex flex-col items-center justify-center p-4">
+          <h2 className="text-[25px] font-[600] font-Inter mb-4">
+            Payment Gateway
+          </h2>
+          <h3 className="text-[18px] font-[400] font-Inter mb-4">
+            Total Amount (Including Service Charge): ${totalAmount.toFixed(2)}
+          </h3>
 
-      {message.content && (
-        <div
-          className={`message ${
-            message.type === "success" ? "text-green-500" : "text-red-500"
-          } mb-4`}
-        >
-          {message.content}
-        </div>
-      )}
+          {message.content && (
+            <div
+              className={`message ${
+                message.type === "success" ? "text-green-500" : "text-red-500"
+              } mb-4`}
+            >
+              {message.content}
+            </div>
+          )}
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-[480px] bg-[#e9d8b2] p-3 rounded-[15px] shadow-lg border border-gray-200 relative"
-      >
-        <div className="form-group mb-4">
-          <label
-            htmlFor="category"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
+          <form
+            onSubmit={handleSubmit}
+            className="w-[480px] bg-[#e9d8b2] p-3 rounded-[15px] shadow-lg border border-gray-200 relative"
           >
-            Category
-          </label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="membership">Membership</option>
-            <option value="shop">Shop</option>
-            <option value="art work">Art Work</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="category"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="membership">Membership</option>
+                <option value="shop">Shop</option>
+                <option value="art work">Art Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
-        <div className="form-group mb-4">
-          <label
-            htmlFor="amount"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
-          >
-            Amount
-          </label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            placeholder="Enter amount"
-            min="0"
-            value={formData.amount}
-            onChange={handleChange}
-            required
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="amount"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Amount
+              </label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="Enter amount"
+                min="0"
+                value={formData.amount}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
 
-        <div className="form-group mb-4">
-          <label
-            htmlFor="cardNumber"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
-          >
-            Card Number
-          </label>
-          <input
-            type="text"
-            id="cardNumber"
-            name="cardNumber"
-            placeholder="1234 5678 9012 3456"
-            minLength="16"
-            maxLength="16"
-            value={formData.cardNumber}
-            onChange={handleChange}
-            required
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="cardNumber"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Card Number
+              </label>
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                minLength="16"
+                maxLength="16"
+                value={formData.cardNumber}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
 
-        <div className="form-group mb-4">
-          <label
-            htmlFor="expiryDate"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
-          >
-            Expiry Date (MM/YY)
-          </label>
-          <input
-            type="text"
-            id="expiryDate"
-            name="expiryDate"
-            placeholder="MM/YY"
-            value={formData.expiryDate}
-            onChange={handleChange}
-            required
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="expiryDate"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Expiry Date (MM/YY)
+              </label>
+              <input
+                type="text"
+                id="expiryDate"
+                name="expiryDate"
+                placeholder="MM/YY"
+                value={formData.expiryDate}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
 
-        <div className="form-group mb-4">
-          <label
-            htmlFor="cvv"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
-          >
-            CVV
-          </label>
-          <input
-            type="number"
-            id="cvv"
-            name="cvv"
-            placeholder="123"
-            value={formData.cvv}
-            onChange={handleChange}
-            required
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="cvv"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                CVV
+              </label>
+              <input
+                type="number"
+                id="cvv"
+                name="cvv"
+                placeholder="123"
+                value={formData.cvv}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
 
-        <div className="form-group mb-4">
-          <label
-            htmlFor="cardName"
-            className="block text-[16px] font-[500] font-Inter text-black mb-2"
-          >
-            Name on Card
-          </label>
-          <input
-            type="text"
-            id="cardName"
-            name="cardName"
-            placeholder="John Doe"
-            value={formData.cardName}
-            onChange={handleChange}
-            required
-            className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+            <div className="form-group mb-4">
+              <label
+                htmlFor="cardName"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Name on Card
+              </label>
+              <input
+                type="text"
+                id="cardName"
+                name="cardName"
+                placeholder="John Doe"
+                value={formData.cardName}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
 
-        <button
-          type="submit"
-          className="w-full h-[45px] bg-indigo-500 text-white font-semibold rounded-[10px] hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-          disabled={loading}
-        >
-          {loading ? "Processing..." : "Pay Now"}
-        </button>
-      </form>
-    </div>
+            <button
+              type="submit"
+              className="w-full h-[45px] bg-indigo-500 text-white font-semibold rounded-[10px] hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "Pay Now"}
+            </button>
+          </form>
+        </div>
         <FooterComp />
       </div>
     </div>

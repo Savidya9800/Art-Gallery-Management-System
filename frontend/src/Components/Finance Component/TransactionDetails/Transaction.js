@@ -245,6 +245,38 @@ const Transactions = () => {
     doc.text(`Total Income: Rs. ${totalIncome}`, 14, startY);
     doc.text(`Total Expense: Rs. ${totalExpenses}`, 14, startY + 10);
 
+    // Add a line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, 30, 200, 30);
+
+    // Add line above the footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    // Footer text (right-aligned)
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
+
+    // Add line below the footer
+    doc.line(10, footerY + 15, 200, footerY + 15);
+
     // Save the PDF
     doc.save("transaction_report.pdf");
   };
