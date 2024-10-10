@@ -183,7 +183,6 @@ function App() {
             <Route path="/adminBidView" element={<ArtBidView />} />
             <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
-<<<<<<< HEAD
           <Route path="/mainBidding" element={<BiddingComp />} />
           <Route path="/mainViewBid/:id" element={<ViewBid />} />
           <Route path="/startBidding" element={<StartBid />} />
@@ -195,12 +194,10 @@ function App() {
           <Route path="/adminBidView" element={<ArtBidView />} />
           <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
          
-=======
             {/* Financial Manager */}
             <Route path="/paymentgateway" element={<PaymentGateway />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/transactions" element={<Transactions />} />
->>>>>>> 5ee70933883614935ebc880b83529ae77648478e
 
             {/* User Manager */}
             <Route path="/admin/users" element={<AdminUsers />} />
