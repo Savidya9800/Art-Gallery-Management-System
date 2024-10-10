@@ -210,7 +210,7 @@ const RequestEventForm = () => {
   const fetchUserRequests = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/requestEvent/getrequestsbyemail/${email}`
+        http://localhost:5000/requestEvent/getrequestsbyemail/${email}
       );
       const requests = response.data;
       const pendingRequests = requests.filter(
@@ -243,7 +243,7 @@ const RequestEventForm = () => {
   const deleteRequest = async (requestId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/requestEvent/deleterequest/${requestId}`
+        http://localhost:5000/requestEvent/deleterequest/${requestId}
       );
       alert("Request deleted successfully!");
       fetchUserRequests();
@@ -260,7 +260,7 @@ const RequestEventForm = () => {
   const handleSaveClick = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/requestEvent/updaterequest/${editingRequestId}`,
+        http://localhost:5000/requestEvent/updaterequest/${editingRequestId},
         editedRequestData
       );
       alert("Request updated successfully!");

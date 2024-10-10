@@ -192,7 +192,9 @@ const Profile = () => {
 
   return (
     <Container fluid className="py-3 bg-light min-vh-100">
-      <NavigationBar />
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
       <Card className="mt-4">
         <Card.Body>
           <Row className="mb-4 align-items-center">
