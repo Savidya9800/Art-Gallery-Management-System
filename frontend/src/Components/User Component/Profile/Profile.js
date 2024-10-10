@@ -154,7 +154,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/mainHome");
   };
 
   const handleDeleteAccount = () => setShowDeleteConfirmation(true);

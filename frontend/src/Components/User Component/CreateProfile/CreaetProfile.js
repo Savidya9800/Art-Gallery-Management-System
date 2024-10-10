@@ -47,9 +47,21 @@ const CreateProfile = () => {
   };
 
   const handleChange = (e) => {
+    const { name, value } = e.target; // Properly destructure name and value from e.target
+  
+    // Validation for username, first name, and last name
+    if (name === "username" || name === "firstName" || name === "lastName") {
+      if (/^\d/.test(value)) {
+        setError(`${name === "username" ? "Username" : name === "firstName" ? "First name" : "Last name"} cannot start with a number.`);
+        return; // Prevent updating the state with invalid value
+      } else {
+        setError(""); // Clear the error if valid
+      }
+    }
+  
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value, // Correctly update formData with the destructured name and value
     });
   };
 
@@ -105,6 +117,19 @@ const CreateProfile = () => {
       setError(error.message);
     }
   };
+
+  /* To add admin, and change role as "admin" in line 13 
+   const adminData = { ...formData, role: "admin" };
+
+    try {
+      await BookingUserService.registerUser(adminData); // Register admin
+      alert("Admin registered successfully!");
+      navigate("/login"); // Redirect to login page after successful registration
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+ */
 
   return (
     <div className="bg-gray-100">
@@ -223,6 +248,7 @@ const CreateProfile = () => {
                 className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
               />
             </Form.Group>
+
 
             <Form.Group className="mb-4">
               <Form.Control
