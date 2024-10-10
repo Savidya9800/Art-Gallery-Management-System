@@ -80,47 +80,54 @@ const Payments = () => {
       <NavigationBar />
 
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">All Paid Payments</h1>
-        <table className="min-w-full bg-white border border-gray-200">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">Card Number</th>
-              <th className="py-2 px-4 border-b">Card Name</th>
-              <th className="py-2 px-4 border-b">Paid Amount</th>
-              <th className="py-2 px-4 border-b">Payment Date</th>
-              <th className="py-2 px-4 border-b">Status</th>
-              <th className="py-2 px-4 border-b">Actions</th>
+  <h1 className="text-2xl font-bold mb-4">All Paid Payments</h1>
+  <div className="bg-[#e9d8b2] rounded-lg shadow-md p-4">
+    <table className="min-w-full bg-white border border-gray-300">
+      <thead>
+        <tr className="bg-gray-200">
+          <th className="py-2 px-4 border-b text-left">Payment ID</th>
+          <th className="py-2 px-4 border-b text-left">Card Number</th>
+          <th className="py-2 px-4 border-b text-left">Card Name</th>
+          <th className="py-2 px-4 border-b text-left">Category</th>
+          <th className="py-2 px-4 border-b text-left">Paid Amount</th>
+          <th className="py-2 px-4 border-b text-left">Payment Date</th>
+          <th className="py-2 px-4 border-b text-left">Status</th>
+          <th className="py-2 px-4 border-b text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {payments.map((payment, index) => {
+          return (
+            <tr key={index} className="hover:bg-gray-100">
+              <td className="py-2 px-4 border-b">{payment.paymentId}</td>
+              <td className="py-2 px-4 border-b">
+                {formatCardNumber(payment.cardNumber)}
+              </td>
+              <td className="py-2 px-4 border-b">{payment.cardName}</td>
+              <td className="py-2 px-4 border-b">{payment.category}</td>
+              <td className="py-2 px-4 border-b">{payment.amount}</td>
+              <td className="py-2 px-4 border-b">
+                {new Date(payment.paymentDate).toLocaleDateString()}
+              </td>
+              <td className="py-2 px-4 border-b">{payment.status}</td>
+              <td className="py-2 px-4 border-b">
+                <button
+                  className="bg-indigo-500 text-white py-1 px-3 rounded hover:bg-indigo-600"
+                  onClick={() =>
+                    handleStatusChange(payment._id, payment.status)
+                  }
+                >
+                  Change Status
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {payments.map((payment, index) => {
-              return (
-                <tr key={index} className="hover:bg-gray-100">
-                  <td className="py-2 px-4 border-b">
-                    {formatCardNumber(payment.cardNumber)}
-                  </td>
-                  <td className="py-2 px-4 border-b">{payment.cardName}</td>
-                  <td className="py-2 px-4 border-b">{payment.amount}</td>
-                  <td className="py-2 px-4 border-b">
-                    {new Date(payment.paymentDate).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4 border-b">{payment.status}</td>
-                  <td className="py-2 px-4 border-b">
-                    <button
-                      className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700"
-                      onClick={() =>
-                        handleStatusChange(payment._id, payment.status)
-                      }
-                    >
-                      Change Status
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</div>
+
       <FooterComp />
     </div>
   );
