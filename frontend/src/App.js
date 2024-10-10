@@ -93,7 +93,7 @@ import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
   return (
-
+     <CartProvider>
       <div>
         <React.Fragment>
           <Routes>
@@ -201,7 +201,7 @@ function App() {
           </Routes>
         </React.Fragment>
       </div>
-
+   </CartProvider>  
   );
 }
 
