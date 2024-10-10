@@ -12,8 +12,8 @@ a {
   text-decoration: none;
 }
 
-/* Carousel Styles */
-.carousel {
+/* carousel2 Styles */
+.carousel2 {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -21,7 +21,7 @@ a {
   margin: 0;
 }
 
-.carousel .list .item {
+.carousel2 .list .item {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -30,17 +30,17 @@ a {
   transition: opacity 0.5s ease;
 }
 
-.carousel .list .item.active {
+.carousel2 .list .item.active {
   opacity: 1;
 }
 
-.carousel .list .item img {
+.carousel2 .list .item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.carousel .list .item .content {
+.carousel2 .list .item .content {
   position: absolute;
   background-color: transparent;
   top: 20%;
@@ -54,15 +54,15 @@ a {
   text-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
 }
 
-.carousel .list .item .author {
+.carousel2 .list .item .author {
   font-weight: bold;
   background-color: transparent;
   letter-spacing: 10px;
   color: inherit; /* Inherit text color */
 }
 
-.carousel .list .item .title,
-.carousel .list .item .topic {
+.carousel2 .list .item .title,
+.carousel2 .list .item .topic {
   font-size: 5em;
   font-weight: bold;
   background-color: transparent;
@@ -70,33 +70,33 @@ a {
   color: inherit; /* Inherit text color */
 }
 
-.carousel .list .item .topic {
+.carousel2 .list .item .topic {
   /* Removed the original color: #f1683a */
   color: inherit; /* Inherit text color */
   background-color: transparent;
 }
 
-.carousel .list .item .des {
+.carousel2 .list .item .des {
   margin-top: 10px;
   color: inherit; /* Inherit text color */
   background-color: transparent;
 }
 
-.carousel .list .item .buttons {
+.carousel2 .list .item .buttons {
   display: flex;
   gap: 10px;
   margin-top: 20px;
   background-color: transparent;
 }
 
-.carousel .list .item .buttons button {
+.carousel2 .list .item .buttons button {
   border: none;
   background-color:transparent;
   letter-spacing: 3px;
   padding: 10px 20px;
 }
 
-.carousel .list .item .buttons button:nth-child(2) {
+.carousel2 .list .item .buttons button:nth-child(2) {
   background-color: transparent;
   border: 1px solid #000000;
   color: #000000;
@@ -172,7 +172,7 @@ a {
 }
 
 /* Time running bar */
-.carousel .time {
+.carousel2 .time {
   position: absolute;
   top: 0;
   left: 0;
@@ -184,12 +184,12 @@ a {
 
 /* Media Queries */
 @media screen and (max-width: 678px) {
-  .carousel .list .item .content {
+  .carousel2 .list .item .content {
     padding-right: 0;
     background-color: transparent;
   }
 
-  .carousel .list .item .content .title {
+  .carousel2 .list .item .content .title {
     font-size: 30px;
     background-color: transparent;
   }
