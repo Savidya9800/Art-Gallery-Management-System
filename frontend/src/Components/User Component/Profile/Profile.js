@@ -28,6 +28,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("token", localStorage.getItem("token"));
     if (localStorage.getItem("user")) {
       fetchUserData();
     } else {
@@ -46,12 +47,14 @@ const Profile = () => {
     }
     try {
       const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
+      console.log(id, "id");
       const response = await axios.get(
         `http://localhost:5000/api/membership/user/${id}`
       );
+      console.log(response.data, "1111");
       setMembership(response.data);
       setEditedMembership(response.data);
-      console.log(response.data);
+      console.log(response.data, "2222");
     } catch (error) {
       console.error("Error fetching membership:", error);
     }
@@ -61,6 +64,28 @@ const Profile = () => {
     setErrorMessage(""); // Clear error message when editing starts
     setIsEditing(true);
   };
+
+  function SomeComponent() {
+    const user = null; // Replace with actual user fetching logic
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    useEffect(() => {
+      if (!user) {
+        // If the user is not logged in, redirect to the login page
+        navigate("/login");
+      }
+    }, [user, navigate]); // Dependencies include user and navigate
+
+    // If user is available, display the component's content
+    if (!user) return null; // No need for Loading... since we're redirecting
+
+    return (
+      <div>
+        {/* Your component's content goes here */}
+        <h1>Welcome, {user.name}</h1>
+      </div>
+    );
+  }
 
   const handleSave = async () => {
     if (!validatePhoneNumber(editedUser.contactNumber)) {
@@ -105,9 +130,9 @@ const Profile = () => {
       );
       return;
     }
-    
+
     setErrorMessage(""); // Clear error message if validations pass
-  
+
     try {
       await axios.put(
         `http://localhost:5000/api/membership/${membership._id}`,
@@ -119,7 +144,7 @@ const Profile = () => {
       console.error("Error updating membership:", error);
     }
   };
-  
+
   const handleMembershipChange = (e) => {
     setEditedMembership({
       ...editedMembership,
@@ -172,43 +197,47 @@ const Profile = () => {
         <Card.Body>
           <Row className="mb-4 align-items-center">
             <Col xs="auto">
-              <Image
-                src="\dp.png"
-                roundedCircle
-                width={100}
-                height={100}
-              />
+              <Image src="\dp.png" roundedCircle width={100} height={100} />
             </Col>
             <Col>
               <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-              {/* Conditionally render "User" or "Member" tag */}
-              <p
-                className="badge"
-                style={{
-                  backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
-                  color: "#000",
-                  borderRadius: "12px",
-                  padding: "5px 10px",
-                }}
-              >
-                {membership ? "Member" : "User"}
-              </p>
+
+//               {/* Conditionally render "User" or "Member" tag */}
+//               <p
+//                 className="badge"
+//                 style={{
+//                   backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
+//                   color: "#000",
+//                   borderRadius: "12px",
+//                   padding: "5px 10px",
+//                 }}
+//               >
+//                 {membership ? "Member" : "User"}
+//               </p>
+
+              <p className="text-muted">{user.role}</p>
+
             </Col>
 
             <Col xs="auto">
+              {user.role === "artist" && (
+                <Link to="/mainArtworkDetails">
+                  <button type="button" className="mr-5 btn btn-primary">
+                    Artwork Details
+                  </button>
+                </Link>
+              )}
+
               <Button
-                variant="outline-primary"
+                variant="primary"
                 onClick={isEditing ? handleSave : handleEdit}
               >
                 {isEditing ? "Save Profile" : "Edit Profile"}
               </Button>
             </Col>
-            {(membership === null && user.role !== "admin") && (
+            {membership === null && user.role !== "admin" && (
               <Col xs="auto">
-                <Button
-                  variant="outline-primary"
-                  onClick={handleApplyMembership}
-                >
+                <Button variant="primary" onClick={handleApplyMembership}>
                   Apply for membership
                 </Button>
               </Col>
@@ -302,7 +331,7 @@ const Profile = () => {
 
           {membership !== null && (
             <>
-              <Row className="align-items-end justify-content-end mb-4">
+              <Row className="mb-4 align-items-end justify-content-end">
                 <Col xs="auto">
                   <Button
                     variant="outline-primary"
@@ -312,11 +341,16 @@ const Profile = () => {
                         : handleMembershipEdit
                     }
                   >
-                    {isMembershipEditing ? "Save Membership" : "Edit Membership"}
+                    {isMembershipEditing
+                      ? "Save Membership"
+                      : "Edit Membership"}
                   </Button>
                 </Col>
                 <Col xs="auto">
-                  <Button variant="outline-danger" onClick={handleDeleteMembership}>
+                  <Button
+                    variant="outline-danger"
+                    onClick={handleDeleteMembership}
+                  >
                     Delete Membership
                   </Button>
                 </Col>
@@ -415,11 +449,6 @@ const Profile = () => {
               <Button variant="danger" onClick={handleDeleteAccount}>
                 Delete Account
               </Button>
-              <Link to="/mainArtworkDetails">
-                <button type="button" className="ml-2 btn btn-primary">
-                  Artwork Details
-                </button>
-              </Link>
             </Col>
           </Row>
         </Card.Body>

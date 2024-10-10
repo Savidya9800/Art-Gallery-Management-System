@@ -1,9 +1,10 @@
 import React from 'react'
+import InventoryComp from './../../../Inventory Component/InventoryDetails/InventoryComp'
 
 function InventoryAdmin() {
   return (
     <div>
-      Inventory
+      <InventoryComp />
     </div>
   )
 }

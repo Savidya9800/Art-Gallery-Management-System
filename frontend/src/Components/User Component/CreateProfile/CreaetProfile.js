@@ -132,231 +132,160 @@ const CreateProfile = () => {
  */
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <div
-        className="bg-white p-5 rounded shadow-lg"
-        style={{ maxWidth: "900px", width: "100%" }} // Set maxWidth to 900px and ensure full width
-        
-      >
-        <div className="text-center mb-5">
-          <Image
-            src="/welcome.png"
-            alt="Awarna Art Gallery"
-            width={200}
-            className="mx-auto d-block"
-          />
-          <h2
-            className="mt-4"
-            style={{
-              color: "#9a7b4f",
-              fontFamily: "Times New Roman, Times, serif",
-              fontWeight: "bold",
-              fontSize: "36px", 
-            }}
-          >
-            Welcome to Awarna Art Gallery!
-          </h2>
-          <p className="text-muted">Create your profile</p>
-        </div>
-
-        {error && <Alert variant="danger">{error}</Alert>}
-
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%", // Explicitly set width to 80%
-                margin: "0 auto", // Center input fields
-                display: "block",
-              }}
+    <div className="bg-gray-100">
+      <Container className="bg-gray-100 d-flex justify-content-center align-items-center min-vh-100">
+        <div
+          className="p-4 m-4 bg-gray-100 rounded shadow-lg"
+          style={{ maxWidth: "900px", width: "100%" }} // Set maxWidth to 900px and ensure full width
+        >
+          <div className="mb-5 text-center bg-gray-100">
+            <Image
+              src="/welcome.png"
+              alt="Awarna Art Gallery"
+              width={200}
+              className="mx-auto d-block "
             />
-          </Form.Group>
+            <h2 className="mt-4 text-[#9a7b4f] font-serif font-bold text-4xl bg-gray-100">
+              Welcome to Awarna Art Gallery!
+            </h2>
+            <p className="bg-gray-100 text-muted">Create your profile</p>
+          </div>
 
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
+          {error && <Alert variant="danger">{error}</Alert>}
 
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="text"
-              name="contactNumber"
-              placeholder="Contact Number"
-              value={formData.contactNumber}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-4">
-            <div className="d-flex justify-content-around">
-              <Form.Check
-                type="radio"
-                label="Artist"
-                name="role"
-                value="artist"
-                checked={formData.role === "artist"}
+          <Form onSubmit={handleSubmit} className="bg-gray-100">
+            <Form.Group className="mb-4 ">
+              <Form.Control
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
                 onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md " // Tailwind classes
               />
-              <Form.Check
-                type="radio"
-                label="User (Buyer/Bidder)"
-                name="role"
-                value="user"
-                checked={formData.role === "user"}
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
                 onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
               />
-            </div>
-          </Form.Group>
+            </Form.Group>
 
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
+              />
+            </Form.Group>
 
-          <Form.Group className="mb-4">
-            <Form.Control
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className="p-3"
-              style={{
-                borderColor: "#ced4da",
-                borderWidth: "2px",
-                borderRadius: "8px",
-                width: "80%",
-                margin: "0 auto",
-                display: "block",
-              }}
-            />
-          </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
+              />
+            </Form.Group>
 
-          <Button
-            variant="primary"
-            type="submit"
-            className="w-100"
-            style={{
-              backgroundColor: "#9a7b4f",
-              borderColor: "#9a7b4f",
-              padding: "12px",
-              fontSize: "20px",
-              fontWeight: "bold",
-            }}
-          >
-            Register
-          </Button>
-        </Form>
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="text"
+                name="contactNumber"
+                placeholder="Contact Number"
+                value={formData.contactNumber}
+                onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
+              />
+            </Form.Group>
 
-        <div className="text-center mt-4">
-          <small>
-            Already have an account?{" "}
-            <a
-              href="/login"
-              style={{ color: "#9a7b4f", textDecoration: "none" }}
+            <Form.Group className="mb-4">
+              <div className="flex justify-around bg-gray-100">
+                <Form.Check
+                  type="radio"
+                  label="Artist"
+                  name="role"
+                  value="artist"
+                  checked={formData.role === "artist"}
+                  onChange={handleChange}
+                  className="bg-gray-100"
+                />
+                <Form.Check
+                  type="radio"
+                  label="User (Buyer/Bidder)"
+                  name="role"
+                  value="user"
+                  checked={formData.role === "user"}
+                  onChange={handleChange}
+                  className="bg-gray-100"
+                />
+              </div>
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
+              />
+            </Form.Group>
+
+
+            <Form.Group className="mb-4">
+              <Form.Control
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="w-4/5 p-3 mx-auto mt-2 border-2 border-gray-300 rounded-md"
+              />
+            </Form.Group>
+
+            <Button
+              variant="dark"
+              type="submit"
+              className="bg-[#9a7b4f] w-full mt-4"
             >
-              Log in
-            </a>
-          </small>
+              Register
+            </Button>
+          </Form>
+
+          <div className="mt-4 text-center bg-gray-100">
+            <small className="bg-gray-100">
+              Already have an account?{" "}
+              <a
+                href="/login"
+                className="text-[#9a7b4f] no-underline bg-gray-100"
+              >
+                Log in
+              </a>
+            </small>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
-
-
 export default CreateProfile;
-
-
