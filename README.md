@@ -5,3 +5,4 @@ A MERN stack web application for managing art galleries. Built with React.js and
 
 #updated
 
+#Updated

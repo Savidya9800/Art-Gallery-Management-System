@@ -176,14 +176,6 @@ function App() {
             <Route path="/requestEventForm" element={<RequestEventForm />} />
 
             {/* Bidding Manager */}
-            <Route path="/mainBidding" element={<BiddingComp />} />
-            <Route path="/mainViewBid" element={<ViewBid />} />
-            <Route path="/startBidding" element={<StartBid />} />
-            <Route path="/mainCreateBid" element={<CreateBid />} />
-            <Route path="/mainViewBid/:id" element={<BidUpdate />} />
-            <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
-            <Route path="/adminBidView" element={<ArtBidView />} />
-            <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
             <Route path="/mainBidding" element={<BiddingComp />} />
             <Route path="/mainViewBid/:id" element={<ViewBid />} />
