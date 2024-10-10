@@ -21,6 +21,8 @@ function ArtBidAdd() {
     minPrice: "",
   });
 
+  const [image, setImage] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -59,6 +61,10 @@ function ArtBidAdd() {
     }));
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   // When submitted
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,18 +82,33 @@ function ArtBidAdd() {
       });
   };
 
-  // Send request
-  const sendRequest = async () => {
-    await axios.post("http://Localhost:5000/Adminbid", {
-      title: String(inputs.title),
-      description: String(inputs.description),
-      artistName: String(inputs.artistName),
-      category: String(inputs.category),
-      startDate: new Date(inputs.startDate),
-      endDate: new Date(inputs.endDate),
-      minPrice: Number(inputs.minPrice),
-    }).then(res => res.data);
-  };
+ // Send request
+ const sendRequest = async () => {
+  const formData = new FormData();
+  
+  formData.append('title', inputs.title);
+  formData.append('description', inputs.description);
+  formData.append('artistName', inputs.artistName);
+  formData.append('category', inputs.category);
+  formData.append('startDate', inputs.startDate);
+  formData.append('endDate', inputs.endDate);
+  formData.append('minPrice', inputs.minPrice);
+
+  if (image) {
+    formData.append('image', image);
+  }
+
+  // Log FormData content
+  for (let pair of formData.entries()) {
+    console.log(pair[0] + ': ' + pair[1]);
+  }
+
+  await axios.post("http://localhost:5000/Adminbid", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }).then(res => res.data);
+};
 
   return (
     <div>
@@ -147,6 +168,15 @@ function ArtBidAdd() {
             <input type="number" name="minPrice" onChange={handleChange} value={inputs.minPrice} required
               className="border border-black rounded-md w-full p-1 mb-4 focus:outline-none focus:border-[#A78F51]" min="0" />
             <br />
+
+            <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Upload Image (Optional)</label>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
 
             <button className="bg-[#A78F51] text-white p-2 rounded-md w-full hover:bg-[#8f7c43] transition">Add Bid Artwork</button>
 

@@ -183,14 +183,29 @@ function App() {
             <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
 
 
-          <Route path="/mainBidding" element={<BiddingComp />} />
+
+
+           {/* Bidding Manager */}
+
+           <Route path="/mainBidding" element={<BiddingComp />} />
           <Route path="/mainViewBid/:id" element={<ViewBid />} />
           <Route path="/startBidding" element={<StartBid />} />
           <Route path="/mainCreateBid/:id" element={<CreateBid />} />
           <Route path="/mainUpdateBid/:id/:artworkId" element={<BidUpdate />} />
+
+          
           <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
           <Route path="/adminBidView" element={<ArtBidView />} />
           <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+
+
+
+         
+            {/* Financial Manager */}
+            <Route path="/paymentgateway" element={<PaymentGateway />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/transactions" element={<Transactions />} />
+
 
           {/* Financial Manager */}
           <Route path="/paymentgateway" element={<PaymentGateway />} />
