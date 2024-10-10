@@ -19,6 +19,7 @@ const fetchHandler = async () => {
 
 function InventoryComp() {
   const [inventory, setInventory] = useState([]);
+  const [searchTerm,setSearchTerm] = useState("");
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function InventoryComp() {
 
     // Table with Inventory Data
     const inventoryData = inventory.map((item) => [
-      item._id || "N/A",
+      `PID${item._id.slice(-4)}`,
       item.productname || "N/A",
       item.price || "N/A",
       item.itemCount || "N/A",
@@ -107,6 +108,14 @@ function InventoryComp() {
     doc.save("inventory-list.pdf");
   };
 
+  const filteredInventory = inventory.filter((item) => {
+    const formattedId =  `PID${item._id.slice(-4)}`;
+    return(
+      formattedId.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+      item.productname.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    );
+  });
+
   return (
     <div>
       <div className="relative z-10 ">
@@ -114,20 +123,33 @@ function InventoryComp() {
       </div>
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Inventory List</h1>
-        <button
-          onClick={generatePDF}
-          className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-2 px-4 rounded mb-4"
-        >
-          Download PDF
-        </button>
+        
+        <div className="flex items-center justify-between mb-4"> {/* Align items vertically */}
+  <input
+    type="text"
+    placeholder="Search Items"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="border border-gray-400 rounded-lg py-1 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200" // Adjusted border color and added focus styles
+  />
+  
+  <div className="flex items-center space-x-4">
+    <button
+      onClick={generatePDF}
+      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-1 px-4 rounded transition duration-200"
+    >
+      Download PDF
+    </button>
 
-        <div>
-        <button 
-      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-2 px-4 rounded 
-      focus:outline-none focus:shadow-outline"
-       onClick={()=>Navigate('/addinventoryform')}>Add item</button>
+    <button
+      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
+      onClick={() => Navigate('/addinventoryform')}
+    >
+      Add item
+    </button>
+  </div>
+</div>
 
-        </div>
         <div className="overflow-x-auto">
           <table id="inventory-table" className="min-w-full bg-white border border-gray-300">
             <thead className="bg-gray-200">
