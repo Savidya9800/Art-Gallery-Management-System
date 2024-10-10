@@ -25,9 +25,10 @@ const addBidArt = async (req, res, next) =>{
     const {title, description, artistName, category, startDate, endDate, minPrice} = req.body;
 
     let bidArtadd;
+    let imageName = req.file ? req.file.filename : null; //check if image is uploaded or not
 
     try{
-        bidArtadd = new Adminbid({title, description, artistName, category, startDate, endDate, minPrice});
+        bidArtadd = new Adminbid({title, description, artistName, category, startDate, endDate, minPrice, image: imageName});
         await bidArtadd.save();
     }catch{
         console.log(err);
@@ -68,13 +69,13 @@ const getBidArtById = async (req, res, next) =>{
 const updateBidArt = async(req, res, next) => {
 
     const bidId = req.params.bidId;
-    const {title, description, artistName, category, startDate, endDate, minPrice} = req.body;
+    const {title, description, artistName, category, startDate, endDate, minPrice, imageName} = req.body; //check image update
 
     let updateArtBid;
 
     try{
         updateArtBid = await Adminbid.findByIdAndUpdate(bidId,{
-            title: title, description: description, artistName: artistName, category: category, startDate: startDate, endDate: endDate, minPrice: minPrice });
+            title: title, description: description, artistName: artistName, category: category, startDate: startDate, endDate: endDate, minPrice: minPrice, image: imageName});
             updateArtBid = await updateArtBid.save();
        
 
