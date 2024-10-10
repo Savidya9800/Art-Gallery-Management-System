@@ -23,12 +23,12 @@ const getAllBidders = async (req, res) => {
 //data insert
 const addBid = async (req, res) =>
 {
-    const {name, email, amount} = req.body; //request to body
+    const {name, email, amount, artworkId} = req.body; //request to body
 
     let newBidder;
 
     try{
-        newBidder = new bidding({name, email, amount});
+        newBidder = new bidding({name, email, amount, artworkId});
         await newBidder.save();
     }catch (err) {
         console.log(err);
@@ -68,13 +68,13 @@ const getById = async (req, res) => {
 //update Bid
 const updateBid = async (req, res) => {
     const id = req.params.id;
-    const {name, email, amount} = req.body;
+    const {name, email, amount,artworkId } = req.body;
 
     let updateBidPlaced;
 
     try{
         updateBidPlaced = await bidding.findByIdAndUpdate(id, 
-            { name: name, email:email, amount: amount });
+            { name: name, email:email, amount: amount, artworkId: artworkId });
             updateBidPlaced = await updateBidPlaced.save();
     }catch(err) {
         console.log(err);
@@ -107,6 +107,20 @@ const deleteBid = async(req, res,next) => {
     return res.status(200).json({deleteBidPlaced});
 }
 
+const getBidsByArtworkId = async (req, res) => {
+
+    const { artworkId } = req.params;
+    try {
+        const bids = await bidding.find({ artworkId });
+        if (bids.length > 0) {
+            res.status(200).json({ Bidder: bids });
+        } else {
+            res.status(200).json({ Bidder: [] });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch bids' });
+    }
+}
 
 
 //export to route
@@ -116,4 +130,5 @@ exports.getAllBidders = getAllBidders;
  exports.getById = getById;
  exports.updateBid = updateBid;
  exports.deleteBid = deleteBid;
+ exports.getBidsByArtworkId = getBidsByArtworkId; 
  

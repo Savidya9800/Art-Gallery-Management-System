@@ -7,11 +7,10 @@ import jsPDF from "jspdf";
 import "jspdf-autotable"; 
 import logo from "../../Nav Component/logo.JPG";
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 
 const URL = "http://localhost:5000/inventory";
-
-
 
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
@@ -19,7 +18,7 @@ const fetchHandler = async () => {
 
 function InventoryComp() {
   const [inventory, setInventory] = useState([]);
-  const [searchTerm,setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +38,6 @@ function InventoryComp() {
     doc.setFontSize(22);
     doc.setTextColor(240, 237, 230);
     doc.text("Inventory List", 14, 20);
-
 
     // Table with Inventory Data
     const inventoryData = inventory.map((item) => [
@@ -75,13 +73,11 @@ function InventoryComp() {
     doc.setDrawColor(169, 169, 169); 
     doc.line(10, 30, 200, 30);
   
-      
     // Add line above the footer
     const footerY = doc.internal.pageSize.getHeight() - 30;
     doc.setLineWidth(0.5);
     doc.setDrawColor(169, 169, 169); 
     doc.line(10, footerY - 5, 200, footerY - 5); 
-
 
     // Footer text (right-aligned)
     doc.setFontSize(10);
@@ -108,11 +104,12 @@ function InventoryComp() {
     doc.save("inventory-list.pdf");
   };
 
+  // Search filtering logic
   const filteredInventory = inventory.filter((item) => {
-    const formattedId =  `PID${item._id.slice(-4)}`;
-    return(
-      formattedId.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
-      item.productname.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    const formattedId = `PID${item._id.slice(-4)}`;
+    return (
+      formattedId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.productname.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -125,30 +122,29 @@ function InventoryComp() {
         <h1 className="text-2xl font-bold mb-4 text-center">Inventory List</h1>
         
         <div className="flex items-center justify-between mb-4"> {/* Align items vertically */}
-  <input
-    type="text"
-    placeholder="Search Items"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="border border-gray-400 rounded-lg py-1 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200" // Adjusted border color and added focus styles
-  />
+          <input
+            type="text"
+            placeholder="Search Items"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-400 rounded-lg py-1 px-3 focus:outline-none focus:ring-2 focus:ring-[#A78F51] transition duration-200"
+          />
   
-  <div className="flex items-center space-x-4">
-    <button
-      onClick={generatePDF}
-      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-1 px-4 rounded transition duration-200"
-    >
-      Download PDF
-    </button>
+          <div className="flex items-center space-x-4">
+            <Button
+              onClick={generatePDF}
+              variant="info" >
+              Download PDF
+            </Button>
 
-    <button
-      className="bg-[#A78F51] hover:bg-[#8e7b44] text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
-      onClick={() => Navigate('/addinventoryform')}
-    >
-      Add item
-    </button>
-  </div>
-</div>
+            <Button
+            variant="dark"
+              onClick={() => Navigate('/addinventoryform')}
+            >
+              Add item
+            </Button>
+          </div>
+        </div>
 
         <div className="overflow-x-auto">
           <table id="inventory-table" className="min-w-full bg-white border border-gray-300">
@@ -164,8 +160,8 @@ function InventoryComp() {
               </tr>
             </thead>
             <tbody>
-              {inventory?.length > 0 ? (
-                inventory.map((INVENTORY) => (
+              {filteredInventory?.length > 0 ? (
+                filteredInventory.map((INVENTORY) => (
                   <ShopComp key={INVENTORY._id} INVENTORY={INVENTORY} />
                 ))
               ) : (
