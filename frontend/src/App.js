@@ -173,7 +173,7 @@ function App() {
             />
             <Route path="/artistLogin" element={<ArtistLogin />} />
             <Route path="/artistRegister" element={<ArtistRegister />} />
-            {/* <Route path="/requestEventForm" element={<RequestEventForm />} /> */}
+            <Route path="/requestEventForm" element={<RequestEventForm />} />
 
             {/* Bidding Manager */}
             <Route path="/mainBidding" element={<BiddingComp />} />
