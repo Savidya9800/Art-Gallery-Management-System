@@ -181,8 +181,20 @@ const Profile = () => {
             </Col>
             <Col>
               <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-              <p className="text-muted">User</p>
+              {/* Conditionally render "User" or "Member" tag */}
+              <p
+                className="badge"
+                style={{
+                  backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
+                  color: "#000",
+                  borderRadius: "12px",
+                  padding: "5px 10px",
+                }}
+              >
+                {membership ? "Member" : "User"}
+              </p>
             </Col>
+
             <Col xs="auto">
               <Button
                 variant="outline-primary"
