@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 function ArtBidForm(props) {
   
-  const { _id, title, description, artistName, category, startDate, endDate, minPrice } = props.BIDART;
+  const { _id, title, description, artistName, category, startDate, endDate, minPrice, image } = props.BIDART;
   const history = useNavigate();
 
   // Helper function to format date to yyyy-mm-dd
@@ -42,6 +42,17 @@ function ArtBidForm(props) {
         <h1 className="text-2xl font-bold">ID: { _id }</h1>
         <h1 className="text-2xl font-bold">Title: { title }</h1>
       </div>
+
+      {image && (
+        <div className="my-4">
+          <h1 className="text-lg text-gray-800">Image:</h1>
+
+          <img src={`http://Localhost:5000/images/${image}`} alt={title} style={{ maxWidth: '100%', height: 'auto', objectFit: 'cover' }} />
+        </div>
+      )}
+
+
+
       <p className="text-base text-gray-800 my-2">Description: { description }</p>
       <p className="text-base text-gray-800 my-2">Artist Name: { artistName }</p>
       <p className="text-base text-gray-800 my-2">Category: { category }</p>
