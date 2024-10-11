@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from './CartContext';
 import NavigationBar from '../../Nav Component/NavigationBar';
 import FooterComp from '../../Nav Component/FooterComp';
+import { useNavigate } from 'react-router-dom';
+
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart } = useContext(CartContext);
@@ -27,10 +29,7 @@ const CartPage = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
-  const handlePayNow = () => {
-    // Logic for handling payment or checkout
-    alert('Redirecting to payment gateway...');
-  };
+  const Navigate = useNavigate();
 
   return (
     <div>
@@ -99,7 +98,7 @@ const CartPage = () => {
                 Full Total: LKR {calculateTotal()}
               </h2>
               <button
-                onClick={handlePayNow}
+                onClick={() => Navigate("/paymentgateway")}
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg shadow-md transition duration-300 ease-in-out"
               >
                 Pay Now

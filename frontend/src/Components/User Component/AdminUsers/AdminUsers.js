@@ -5,10 +5,16 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import NavigationBar from "../../Nav Component/NavigationBar";
 import axios from "axios";
+import logo from "../../Nav Component/logo.JPG";
+import { useNavigate } from "react-router-dom";
+
 
 const AdminUsers = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
+ 
+
 
   useEffect(() => {
     fetchUsers();
@@ -51,7 +57,7 @@ const AdminUsers = () => {
     const imgWidth = 25; 
     const imgHeight = 20; 
     const xPosition = pageWidth - imgWidth - 10;
-    doc.addImage('logo.png', "PNG", xPosition, 10, imgWidth, imgHeight);
+    doc.addImage(logo, "JPEG", xPosition, 10, imgWidth, imgHeight);
 
     // Add line below the title
     doc.setLineWidth(0.5);
@@ -96,8 +102,12 @@ const AdminUsers = () => {
   );
 
   return (
+    <div>
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
     <Container>
-      <NavigationBar />
+      
       <Form className="mb-3">
         <Form.Group controlId="search">
           <Form.Control
@@ -108,6 +118,7 @@ const AdminUsers = () => {
           />
         </Form.Group>
       </Form>
+      <Button variant="success" onClick={() => navigate("/adminMember")} className="mb-3">Membership</Button>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -139,6 +150,7 @@ const AdminUsers = () => {
         Generate PDF
       </Button>
     </Container>
+    </div>
   );
 };
 
