@@ -23,6 +23,8 @@ const RequestEventForm = () => {
       name: "Package 1",
       memberCountRange: { min: 200, max: 500 },
       budget: 10000,
+      decoration: "Without ",
+      venue: "Community Center",
       Decoration: "Without Decoration",
       Venue: "Community Center",
     },
@@ -31,14 +33,19 @@ const RequestEventForm = () => {
       name: "Package 2",
       memberCountRange: { min: 200, max: 500 },
       budget: 15000,
+      decoration: "With decoration",
+      venue: "Community Center",
       Decoration: "With Decoration",
       Venue: "Community Center",
+
     },
     {
       id: "package3",
       name: "Package 3",
       memberCountRange: { min: 501, max: 1000 },
       budget: 20000,
+      decoration: "Without decoration",
+      venue: "Conference Hall",
       Decoration: "Without Decoration",
       Venue: "Conference Hall",
     },
@@ -47,6 +54,8 @@ const RequestEventForm = () => {
       name: "Package 4",
       memberCountRange: { min: 501, max: 1000 },
       budget: 25000,
+      decoration: "With decoration",
+      venue: "Conference Hall",
       Decoration: "With Decoration",
       Venue: "Conference Hall",
     },
@@ -55,6 +64,8 @@ const RequestEventForm = () => {
       name: "Package 5",
       memberCountRange: { min: 1001, max: 2000 },
       budget: 30000,
+      decoration: "Without decoration",
+      venue: "Local Park",
       Decoration: "Without Decoration",
       Venue: "Local Park",
     },
@@ -63,6 +74,9 @@ const RequestEventForm = () => {
       name: "Package 6",
       memberCountRange: { min: 1001, max: 2000 },
       budget: 35000,
+      decoration: "With decoration",
+      venue: "Local Park",
+
       Decoration: "With Decoration",
       Venue: "Local Park",
     },
@@ -71,6 +85,8 @@ const RequestEventForm = () => {
       name: "Package 7",
       memberCountRange: { min: 1, max: 199 },
       budget: 7000,
+      decoration: "Without decoration",
+      venue: "Local Park",
       Decoration: "Without Decoration",
       Venue: "Local Park",
     },
@@ -79,6 +95,9 @@ const RequestEventForm = () => {
       name: "Package 8",
       memberCountRange: { min: 1, max: 199 },
       budget: 9000,
+      decoration: "With decoration",
+      venue: "Local Park",
+
       Decoration: "With Decoration",
       Venue: "Local Park",
     },
@@ -182,6 +201,7 @@ const RequestEventForm = () => {
           Decoration: matchedPackage.Decoration,
           Venue: matchedPackage.Venue,
         });
+
 
         // Navigate to the payment page and pass the necessary details
         navigate("/paymentgateway", {
@@ -535,8 +555,8 @@ const RequestEventForm = () => {
                               Member Count: {pkg.memberCountRange.min} -{" "}
                               {pkg.memberCountRange.max}
                             </p>
-                            <p>Package Include: {pkg.Decoration}</p>
-                            <p>Venue: {pkg.Venue}</p>
+                            <p>Package Include: {pkg.decoration}</p>
+                            <p>Venue: {pkg.venue}</p>
                             <p>Budget: {pkg.budget}</p>
 
                             <button
