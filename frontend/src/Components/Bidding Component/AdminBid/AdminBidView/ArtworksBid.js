@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NavigationBar from "../../Nav Component/NavigationBar";
-import FooterComp from "../../Nav Component/FooterComp";
-import AdminArtwork from "./AdminArtwork";
 import Button from "react-bootstrap/Button";
+import NavigationBar from "../../../Nav Component/NavigationBar";
+import FooterComp from "../../../Nav Component/FooterComp";
+import ArtworkBid from "./ArtworkBid";
+
 
 const URL = "http://localhost:5000/artWorks";
 
@@ -23,7 +24,7 @@ const fetchHandler = async () => {
     return { artWorks: [] }; // Return an empty array in case of error
   }
 };
-function AdminArtworks() {
+function ArtworksBid() {
   const [artWorks, setArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]); // State for filtered artworks
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
@@ -61,7 +62,7 @@ function AdminArtworks() {
   return (
     <div className="relative z-10 flex-col min-h-screen">
       <NavigationBar />
-            
+        
       
       {/* Search Bar */}
       <div className="mt-0">
@@ -79,7 +80,7 @@ function AdminArtworks() {
           Search
         </Button>
       </div>
-      <div className="flex-grow p-4 mb-5">
+      <div className="flex-grow p-4 mb-28">
         <table className="min-w-full border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
@@ -89,7 +90,7 @@ function AdminArtworks() {
               <th className="p-2 border border-gray-300">Phone Number</th>
               <th className="p-2 border border-gray-300">Artist Statement</th>
               <th className="p-2 border border-gray-300">Biography</th>
-              <th className="p-2 border border-gray-300">Promote</th>
+              <th className="p-2 border border-gray-300">Bidding</th>
             </tr>
           </thead>
 
@@ -101,16 +102,16 @@ function AdminArtworks() {
             <tbody>
               {filteredArtworks.map((ARTWORK, i) => (
                 <tr key={i} className="hover:bg-gray-100">
-                  <AdminArtwork ARTWORK={ARTWORK} />
+                  <ArtworkBid ARTWORK={ARTWORK} />
                 </tr>
               ))}
             </tbody>
           )}
         </table>
       </div>
-      <FooterComp/>
+     <FooterComp/>
     </div>
   );
 }
 
-export default AdminArtworks;
+export default ArtworksBid;

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import ArtBidForm from '../AdminBidForm/ArtBidForm'; // ArtBidForm to display data
-import NavigationBar from '../../../Nav Component/NavigationBar';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ArtBidForm from "../AdminBidForm/ArtBidForm"; // ArtBidForm to display data
+import NavigationBar from "../../../Nav Component/NavigationBar";
+import { useNavigate } from "react-router-dom";
 
 const URL = "http://localhost:5000/Adminbid"; // Ensure URL is correct (case-sensitive)
 
 // Fetch handler
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
-}
+};
 
 function ArtBidView() {
   const [adminAddBid, setBidAddArt] = useState([]);
@@ -19,12 +19,12 @@ function ArtBidView() {
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchHandler().then((data) => {
       setBidAddArt(data.adminAddBid);
-      calculateCategoryCount(data.adminAddBid); 
+      calculateCategoryCount(data.adminAddBid);
     });
   }, []);
 
@@ -41,7 +41,6 @@ function ArtBidView() {
   const generatePDF = () => {
     const doc = new jsPDF();
 
-    // Background color
     doc.setFillColor("#FFFFFF");
     doc.rect(0, 0, 210, 297, "F");
 
@@ -59,6 +58,7 @@ function ArtBidView() {
     doc.text("Artwork Added for Bidding Report", 15, 50);
 
     const tableColumn = ["ID", "Title", "Artist Name", "Category", "Minimum Price"];
+
     const tableRows = [];
 
     adminAddBid.forEach((artwork) => {
@@ -67,7 +67,7 @@ function ArtBidView() {
         artwork.title,
         artwork.artistName,
         artwork.category,
-        artwork.minPrice
+        artwork.minPrice,
       ];
       tableRows.push(artworkData);
     });
@@ -85,7 +85,11 @@ function ArtBidView() {
     // Category summary
     doc.setTextColor(0, 0, 0); 
     doc.setFontSize(16);
-    doc.text("Summary of Artworks by Category:", 15, doc.lastAutoTable.finalY + 10);
+    doc.text(
+      "Summary of Artworks by Category:",
+      15,
+      doc.lastAutoTable.finalY + 10
+    );
 
     let yPos = doc.lastAutoTable.finalY + 20;
     Object.entries(categoryCount).forEach(([category, count]) => {
@@ -131,10 +135,10 @@ function ArtBidView() {
 
   return (
     <div>
-      <div className='relative z-10'>
+      <div className="relative z-10">
         <NavigationBar />
       </div>
-      
+
       <div className="p-6">
         {/* Container for Add New Record and Search Bar */}
         <div className="flex justify-center mb-4 space-x-4">
@@ -165,7 +169,7 @@ function ArtBidView() {
         </div>
 
         {noResults ? (
-          <div className="text-center mt-6">
+          <div className="mt-6 text-center">
             <p className="text-red-500">No Bid Art found</p>
           </div>
         ) : (
@@ -182,6 +186,20 @@ function ArtBidView() {
               onClick={generatePDF}
             >
               Download Summary Report
+            </button>
+            <button
+              className="px-5 py-2 text-lg bg-transparent text-[#A78F51] border-2 border-[#A78F51] rounded-md cursor-pointer transition duration-300 hover:text-[#c5b358] hover:border-[#A78F51] mr-2"
+              onClick={() => navigate("/adminArtBidAdd")}
+            >
+              Admin Art Bid insert →
+            </button>
+
+            <button
+              className="mt-6 px-4 py-2 bg-[#A78F51] text-white rounded-md shadow-md hover:bg-[#855E3E] transition duration-300 mr-2"
+              onClick={() => navigate("/adminArtworksBid")}
+              
+            >
+             Browse Bids
             </button>
           </div>
         )}

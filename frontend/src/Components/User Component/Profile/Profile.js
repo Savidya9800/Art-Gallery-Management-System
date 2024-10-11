@@ -154,7 +154,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/mainHome");
+    navigate("/login");
   };
 
   const handleDeleteAccount = () => setShowDeleteConfirmation(true);
@@ -223,7 +223,7 @@ const Profile = () => {
                 {isEditing ? "Save Profile" : "Edit Profile"}
               </Button>
             </Col>
-            {membership === null && user.role !== "admin" && (
+            {membership === null && user.role !== "admin" && user.role !== "artist" && (
               <Col xs="auto">
                 <Button variant="primary" onClick={handleApplyMembership}>
                   Apply for membership
@@ -431,7 +431,7 @@ const Profile = () => {
               </Button>
             </Col>
             <Col className="text-center">
-              <Button variant="secondary">Contact Us</Button>
+              <Button variant="secondary" onClick={() => navigate("/mainContactUs")}>Contact Us</Button>
             </Col>
             <Col className="text-end">
               <Button variant="danger" onClick={handleDeleteAccount}>

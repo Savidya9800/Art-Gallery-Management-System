@@ -28,6 +28,7 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
+
 //Bidding user imports are here
 import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
@@ -89,6 +90,7 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
+import ArtworksBid from "./Components/Bidding Component/AdminBid/AdminBidView/ArtworksBid";
 
 function App() {
   return (
@@ -158,7 +160,11 @@ function App() {
             <Route
               path="/updateresponse/:id/:inquiryID"
               element={<Updateresponse />}
+
+
+
             />
+           
 
             {/* Event Manager */}
             <Route
@@ -188,6 +194,7 @@ function App() {
             <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
             <Route path="/adminBidView" element={<ArtBidView />} />
             <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+            <Route path="/adminArtworksBid" element={<ArtworksBid />} />
 
             {/* Financial Manager */}
             <Route path="/paymentgateway" element={<PaymentGateway />} />
