@@ -191,10 +191,12 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <Container fluid className="py-3 bg-light min-vh-100">
+    <div>
       <div className="relative z-10">
         <NavigationBar />
       </div>
+    <Container fluid className="py-3 bg-light min-vh-100">
+      
       <Card className="mt-4">
         <Card.Body>
           <Row className="mb-4 align-items-center">
@@ -467,6 +469,7 @@ const Profile = () => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </div>
   );
 };
 

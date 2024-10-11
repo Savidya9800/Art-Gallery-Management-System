@@ -214,7 +214,7 @@ function UpdateArtwork() {
       <div className="-mt-[570px]">
         <form className="form ml-[60%] mt-4" onSubmit={handleSubmit}>
           {currentStep === 1 && (
-            <div className=" relative w-[523px] h-[800px]">
+            <div className=" relative w-[523px] h-[800px] mb-5">
               <div className="absolute w-[513px] h-[776px] bg-white border-2 border-black rounded-[25px]"></div>
               <div className=" bg-white absolute left-[100px] top-[25px] text-[#A78F51] text-[25px] font-[400] font-Inter">
                 Artwork Submission form
@@ -321,7 +321,7 @@ function UpdateArtwork() {
 
               {/* Disable the button if any of the fields are empty */}
               <Button
-                className="absolute left-[433px] top-[796px]"
+                className=" absolute left-[433px] top-[796px] "
                 onClick={nextStep}
                 disabled={
                   !inputs.name ||
