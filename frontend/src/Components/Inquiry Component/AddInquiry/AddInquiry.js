@@ -31,7 +31,33 @@ export default function AddInquiry() {
         const currentDate = new Date().toISOString().split('T')[0];
         if (inputs.date !== currentDate) {
             setError("**You can only select today's date for the inquiry**");
-         
+            return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(inputs.email)) {
+            setError("**Please enter a valid email address**");
+            return;
+        }
+
+        // Name validation
+        const nameRegex = /^[A-Za-z\s]+$/;
+        if (!nameRegex.test(inputs.name)) {
+            setError("**Name can only contain letters**");
+            return;
+        }
+
+        // Inquiry Message validation
+        const inquiryMessageRegex = /^(?=.*[A-Za-z]).+$/; // At least one letter must be present
+        if (!inquiryMessageRegex.test(inputs.inquiryMessage)) {
+            setError("**Inquiry message must include at least one letter and cannot be only numbers**");
+            return;
+        }
+
+        // Inquiry Type validation
+        if (inputs.inquiryType === "") {
+            setError("**Please select an inquiry type**");
             return;
         }
 
@@ -101,14 +127,23 @@ export default function AddInquiry() {
 
                     <div className="mb-6">
                         <label className="block text-gray-700 font-medium mb-2">Inquiry Type :</label>
-                        <input
-                            type="text"
+                        <select
                             name="inquiryType"
                             onChange={handleChange}
                             value={inputs.inquiryType}
                             required
                             className="w-full px-4 py-2 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
-                        />
+                        >
+                            <option value="">Select Inquiry Type</option>
+                            <option value="user">User inquiry</option>
+                            <option value="arteork">Artwork inquiry</option>
+                            <option value="bidding">Bidding inquiry</option>
+                            <option value="ticket">Ticketing inquiry</option>
+                            <option value="event">Event inquiry</option>
+                            <option value="payment">Payment inquiry</option>
+                            <option value="shop">Shop inquiry</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
 
                     <div className="mb-6">
@@ -119,7 +154,7 @@ export default function AddInquiry() {
                             onChange={handleChange}
                             value={inputs.inquiryMessage}
                             required
-                           className="w-full px-4 py-2 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
+                            className="w-full px-4 py-2 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
                         />
                     </div>
 
@@ -129,9 +164,8 @@ export default function AddInquiry() {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
-                        id="submitbtn">Add Inquiry
- </button>
+                        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
+                        id="submitbtn">Add Inquiry</button>
                 </form>
             </div>
             <FooterComp />

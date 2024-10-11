@@ -47,6 +47,62 @@ function ArtworkComp(props) {
     setShowModal(false);
   };
 
+  const modalOverlayStyle = {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+    zIndex: 1050,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backdropFilter: "blur(10px)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const modalStyle = {
+    maxWidth: "800px", // Increased width for better visibility
+    margin: "auto",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    padding: "40px", // Increased padding for spacing
+    borderRadius: "15px",
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+    fontFamily: "'Arial', sans-serif",
+    color: "#333",
+  };
+
+  const modalTitleStyle = {
+    textAlign: "center",
+    color: "#2b7a4c",
+    fontSize: "26px", // Increased font size for title
+    marginBottom: "20px",
+    background: "#f1f0f0",
+  };
+
+  const buttonContainerStyle = {
+    background: "#f1f0f0",
+    textAlign: "center",
+    marginTop: "20px",
+  };
+
+  const buttonStyle = {
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    color: "#fff",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+  };
+
+  // Component for displaying artwork details
+  const ArtworkDetail = ({ label, value }) => (
+    <>
+      <h5 style={{ color: "#0b5ed7", background: "#f1f0f0" }}>{label}</h5>
+      <p style={{ background: "#f1f0f0" }}>{value}</p>
+    </>
+  );
+
   return (
     <>
       <td className="p-2 border border-gray-300">{title}</td>
@@ -114,77 +170,23 @@ function ArtworkComp(props) {
           Remove Artwork
         </Button>
       </td>
-
       {/* Modal for Artwork Details */}
       {showModal && (
-        <div
-          style={{
-            position: "fixed", // Fixed position
-            top: "0", // Full viewport height
-            left: "0", // Full viewport width
-            width: "100%", // Full width
-            height: "100%", // Full height
-            zIndex: 1050, // Ensure it appears above other content
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay for focus
-            backdropFilter: "blur(10px)", // Blur effect
-            display: "flex", // Flexbox for centering
-            alignItems: "center", // Center vertically
-            justifyContent: "center", // Center horizontally
-          }}
-        >
-          <div
-            style={{
-              maxWidth: "600px", // Limit width
-              margin: "auto", // Center margin
-              backgroundColor: "rgba(255, 255, 255, 0.9)", // Light background with transparency
-              padding: "30px", // Spacing inside the modal
-              borderRadius: "15px", // Rounded corners
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)", // Subtle shadow for depth
-              fontFamily: "'Arial', sans-serif", // Font style
-              color: "#333", // Text color
-            }}
-          >
-            <h2
-              style={{
-                textAlign: "center", // Center the title
-                color: "#2b7a4c", // Tropical green color
-                fontSize: "24px", // Font size for title
-                marginBottom: "20px", // Space below the title
-                background: "#f1f0f0", // Light gray background
-              }}
-            >
-              {selectedArtwork?.title}
-            </h2>
-            <h5 style={{ color: "#2b7a4c", background: "#f1f0f0" }}>Medium:</h5>
-            <p style={{ background: "#f1f0f0" }}>{selectedArtwork?.medium}</p>
-            <h5 style={{ color: "#2b7a4c", background: "#f1f0f0" }}>Place:</h5>
-            <p style={{ background: "#f1f0f0" }}>{selectedArtwork?.place}</p>
-            <h5 style={{ color: "#2b7a4c", background: "#f1f0f0" }}>Date:</h5>
-            <p style={{ background: "#f1f0f0" }}>{selectedArtwork?.date}</p>
-            <h5 style={{ color: "#2b7a4c", background: "#f1f0f0" }}>
-              Description:
-            </h5>
-            <p style={{ background: "#f1f0f0" }}>
-              {selectedArtwork?.description}
-            </p>
-            <div
-              style={{
-                background: "#f1f0f0",
-                textAlign: "center",
-                marginTop: "20px",
-              }}
-            >
+        <div style={modalOverlayStyle}>
+          <div style={modalStyle}>
+            <h2 style={modalTitleStyle}>{selectedArtwork?.title}</h2>
+            <ArtworkDetail label="Medium:" value={selectedArtwork?.medium} />
+            <ArtworkDetail label="Place:" value={selectedArtwork?.place} />
+            <ArtworkDetail label="Date:" value={selectedArtwork?.date} />
+            <ArtworkDetail
+              label="Description:"
+              value={selectedArtwork?.description}
+            />
+            <div style={buttonContainerStyle}>
               <Button
                 variant="dark"
                 onClick={handleCloseModal}
-                style={{
-                  border: "none", // Remove border
-                  padding: "10px 20px", // Padding for button
-                  borderRadius: "5px", // Rounded button
-                  color: "#fff", // White text color
-                  cursor: "pointer", // Pointer on hover
-                  transition: "background-color 0.3s ease", // Transition effect
-                }}
+                style={buttonStyle}
               >
                 Close
               </Button>
