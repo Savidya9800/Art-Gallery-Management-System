@@ -26,6 +26,14 @@ const membershipSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    freeTrialStartDate: {
+        type: Date,
+        default: null, // Will be null initially, set when the free trial starts
+    },
+    isTrialExpired: {
+        type: Boolean,
+        default: false, // Tracks if the trial has expired
+    },
 });
 
 const membershipModel = mongoose.model("Membership", membershipSchema);

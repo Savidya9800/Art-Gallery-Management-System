@@ -25,7 +25,11 @@ const Profile = () => {
   const [isMembershipEditing, setIsMembershipEditing] = useState(false);
   const [editedMembership, setEditedMembership] = useState(null);
   const [errorMessage, setErrorMessage] = useState(""); // State to manage error messages
+  const [trialEndsIn, setTrialEndsIn] = useState(null); // Days left for free trial
+  const [isTrialExpired, setIsTrialExpired] = useState(false); // Check if trial has expired
+  
   const navigate = useNavigate();
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -35,6 +39,7 @@ const Profile = () => {
     }
   }, [navigate]);
 
+  // Fetch user and membership data
   const fetchUserData = async () => {
     try {
       const userData = await BookingUserService.getUserById();
@@ -44,6 +49,7 @@ const Profile = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
+
     try {
       const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
       const response = await axios.get(
@@ -52,8 +58,26 @@ const Profile = () => {
       setMembership(response.data);
       setEditedMembership(response.data);
       console.log(response.data);
+
+      // New logic: Calculate trial expiration
+      if (response.data && response.data.trialExpiryDate) {
+        const trialEndDate = new Date(response.data.trialExpiryDate);
+        const today = new Date();
+        const diffTime = trialEndDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        setTrialEndsIn(diffDays);
+
+        // If the trial has expired
+        if (response.data.isTrialExpired || diffDays <= 0) {
+          setIsTrialExpired(true);
+       } else {
+          setIsTrialExpired(false);
+      }
+  }
     } catch (error) {
       console.error("Error fetching membership:", error);
+      setErrorMessage("Error fetching membership details");
     }
   };
 
@@ -105,9 +129,9 @@ const Profile = () => {
       );
       return;
     }
-    
+
     setErrorMessage(""); // Clear error message if validations pass
-  
+
     try {
       await axios.put(
         `http://localhost:5000/api/membership/${membership._id}`,
@@ -119,7 +143,7 @@ const Profile = () => {
       console.error("Error updating membership:", error);
     }
   };
-  
+
   const handleMembershipChange = (e) => {
     setEditedMembership({
       ...editedMembership,
@@ -148,6 +172,7 @@ const Profile = () => {
     navigate("/membership");
   };
 
+  // Modify: Delete membership when trial is expired
   const handleDeleteMembership = async () => {
     if (window.confirm("Are you sure you want to delete your membership?")) {
       try {
@@ -163,296 +188,330 @@ const Profile = () => {
     }
   };
 
+  // Automatically delete membership if trial is expired
+  useEffect(() => {
+    if (isTrialExpired && membership) {
+      handleDeleteMembership();
+    }
+  }, [isTrialExpired, membership]);
+
   if (!user) return <div>Loading...</div>;
 
   return (
     <Container fluid className="py-3 bg-light min-vh-100">
-      <NavigationBar />
-      <Card className="mt-4">
-        <Card.Body>
-          <Row className="mb-4 align-items-center">
-            <Col xs="auto">
-              <Image
-                src="\dp.png"
-                roundedCircle
-                width={100}
-                height={100}
-              />
-            </Col>
-            <Col>
-              <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-              {/* Conditionally render "User" or "Member" tag */}
-              <p
-                className="badge"
-                style={{
-                  backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
-                  color: "#000",
-                  borderRadius: "12px",
-                  padding: "5px 10px",
-                }}
-              >
-                {membership ? "Member" : "User"}
-              </p>
-            </Col>
+    <NavigationBar />
+    <Card className="mt-4">
+      <Card.Body>
+        <Row className="mb-4 align-items-center">
+          <Col xs="auto">
+            <Image
+              src="\dp.png"
+              roundedCircle
+              width={100}
+              height={100}
+            />
+          </Col>
+          <Col>
+            <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
+            <p
+              className="badge"
+              style={{
+                backgroundColor: membership ? "#32CD32" : "#FFD700",
+                color: "#000",
+                borderRadius: "12px",
+                padding: "5px 10px",
+              }}
+            >
+              {membership ? "Member" : "User"}
+            </p>
+          </Col>
 
+          <Col xs="auto">
+            <Button
+              variant="outline-primary"
+              onClick={isEditing ? handleSave : handleEdit}
+            >
+              {isEditing ? "Save Profile" : "Edit Profile"}
+            </Button>
+          </Col>
+
+          {(membership === null && user.role !== "admin") && (
             <Col xs="auto">
               <Button
                 variant="outline-primary"
-                onClick={isEditing ? handleSave : handleEdit}
+                onClick={handleApplyMembership}
               >
-                {isEditing ? "Save Profile" : "Edit Profile"}
+                Apply for membership
               </Button>
             </Col>
-            {(membership === null && user.role !== "admin") && (
+          )}
+        </Row>
+
+        {errorMessage && (
+          <div className="alert alert-danger">{errorMessage}</div>
+        )}
+
+{/* Add free trial information here */}
+{membership === null && trialEndsIn > 0 && !isTrialExpired ? (
+  <div className="alert alert-info">
+    <p>Your free trial ends in <strong>{trialEndsIn}</strong> days.</p>
+    <p>Enjoy full access to our services during this period.</p>
+  </div>
+) : membership === null && isTrialExpired ? (
+  <div className="alert alert-warning">
+    <p>Your free trial has <strong>expired</strong>.</p>
+    <p>
+      To continue enjoying our services, please apply for a membership.
+      <Button
+        variant="outline-primary"
+        className="ml-3"
+        onClick={handleApplyMembership}
+      >
+        Apply for Membership
+      </Button>
+    </p>
+  </div>
+) : null}
+
+
+
+        <Form>
+          <Row>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  FIRST NAME
+                </Form.Label>
+                <Form.Control
+                  name="firstName"
+                  value={isEditing ? editedUser.firstName : user.firstName}
+                  onChange={handleChange}
+                  readOnly={!isEditing}
+                  plaintext={!isEditing}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  LAST NAME
+                </Form.Label>
+                <Form.Control
+                  name="lastName"
+                  value={isEditing ? editedUser.lastName : user.lastName}
+                  onChange={handleChange}
+                  readOnly={!isEditing}
+                  plaintext={!isEditing}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  USERNAME
+                </Form.Label>
+                <Form.Control
+                  name="username"
+                  value={isEditing ? editedUser.username : user.username}
+                  onChange={handleChange}
+                  readOnly={!isEditing}
+                  plaintext={!isEditing}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  EMAIL ADDRESS
+                </Form.Label>
+                <Form.Control
+                  name="email"
+                  value={isEditing ? editedUser.email : user.email}
+                  onChange={handleChange}
+                  readOnly={!isEditing}
+                  plaintext={!isEditing}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  CONTACT NUMBER
+                </Form.Label>
+                <Form.Control
+                  name="contactNumber"
+                  value={isEditing ? editedUser.contactNumber : user.contactNumber}
+                  onChange={handleChange}
+                  readOnly={!isEditing}
+                  plaintext={!isEditing}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="mb-3">
+              <Form.Group>
+                <Form.Label className="text-muted small">
+                  PASSWORD
+                </Form.Label>
+                <Form.Control value="************" readOnly plaintext />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
+
+        {membership !== null && (
+          <>
+            <Row className="align-items-end justify-content-end mb-4">
               <Col xs="auto">
                 <Button
                   variant="outline-primary"
-                  onClick={handleApplyMembership}
+                  onClick={
+                    isMembershipEditing
+                      ? handleMembershipSave
+                      : handleMembershipEdit
+                  }
                 >
-                  Apply for membership
+                  {isMembershipEditing ? "Save Membership" : "Edit Membership"}
                 </Button>
               </Col>
-            )}
-          </Row>
-
-          {errorMessage && (
-            <div className="alert alert-danger">{errorMessage}</div> // Display error message
-          )}
-
-          <Form>
-            <Row>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">
-                    FIRST NAME
-                  </Form.Label>
-                  <Form.Control
-                    name="firstName"
-                    value={isEditing ? editedUser.firstName : user.firstName}
-                    onChange={handleChange}
-                    readOnly={!isEditing}
-                    plaintext={!isEditing}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">
-                    LAST NAME
-                  </Form.Label>
-                  <Form.Control
-                    name="lastName"
-                    value={isEditing ? editedUser.lastName : user.lastName}
-                    onChange={handleChange}
-                    readOnly={!isEditing}
-                    plaintext={!isEditing}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">USERNAME</Form.Label>
-                  <Form.Control
-                    name="username"
-                    value={isEditing ? editedUser.username : user.username}
-                    onChange={handleChange}
-                    readOnly={!isEditing}
-                    plaintext={!isEditing}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">
-                    EMAIL ADDRESS
-                  </Form.Label>
-                  <Form.Control
-                    name="email" // Add name attribute for email
-                    value={isEditing ? editedUser.email : user.email} // Enable editing
-                    onChange={handleChange} // Update on change
-                    readOnly={!isEditing}
-                    plaintext={!isEditing}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">
-                    CONTACT NUMBER
-                  </Form.Label>
-                  <Form.Control
-                    name="contactNumber"
-                    value={
-                      isEditing ? editedUser.contactNumber : user.contactNumber
-                    }
-                    onChange={handleChange}
-                    readOnly={!isEditing}
-                    plaintext={!isEditing}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group>
-                  <Form.Label className="text-muted small">PASSWORD</Form.Label>
-                  <Form.Control value="************" readOnly plaintext />
-                </Form.Group>
+              <Col xs="auto">
+                <Button variant="outline-danger" onClick={handleDeleteMembership}>
+                  Delete Membership
+                </Button>
               </Col>
             </Row>
-          </Form>
-
-          {membership !== null && (
-            <>
-              <Row className="align-items-end justify-content-end mb-4">
-                <Col xs="auto">
-                  <Button
-                    variant="outline-primary"
-                    onClick={
-                      isMembershipEditing
-                        ? handleMembershipSave
-                        : handleMembershipEdit
-                    }
-                  >
-                    {isMembershipEditing ? "Save Membership" : "Edit Membership"}
-                  </Button>
+            <Form>
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group>
+                    <Form.Label className="text-muted small">
+                      MEMBERSHIP TYPE
+                    </Form.Label>
+                    <Form.Control
+                      value={
+                        isMembershipEditing
+                          ? editedMembership.membershipType
+                          : membership.membershipType
+                      }
+                      name="membershipType"
+                      onChange={handleMembershipChange}
+                      readOnly={!isMembershipEditing}
+                      plaintext={!isMembershipEditing}
+                    />
+                  </Form.Group>
                 </Col>
-                <Col xs="auto">
-                  <Button variant="outline-danger" onClick={handleDeleteMembership}>
-                    Delete Membership
-                  </Button>
+                <Col md={6} className="mb-3">
+                  <Form.Group>
+                    <Form.Label className="text-muted small">
+                      MEMBERSHIP PRICE
+                    </Form.Label>
+                    <Form.Control
+                      value={
+                        isMembershipEditing
+                          ? editedMembership.membershipPrice
+                          : membership.membershipPrice
+                      }
+                      name="membershipPrice"
+                      onChange={handleMembershipChange}
+                      readOnly={!isMembershipEditing}
+                      plaintext={!isMembershipEditing}
+                    />
+                  </Form.Group>
                 </Col>
               </Row>
-              <Form>
-                <Row>
-                  <Col md={6} className="mb-3">
-                    <Form.Group>
-                      <Form.Label className="text-muted small">
-                        MEMBERSHIP TYPE
-                      </Form.Label>
-                      <Form.Control
-                        value={
-                          isMembershipEditing
-                            ? editedMembership.membershipType
-                            : membership.membershipType
-                        }
-                        name="membershipType"
-                        onChange={handleMembershipChange}
-                        readOnly={!isMembershipEditing}
-                        plaintext={!isMembershipEditing}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Group>
-                      <Form.Label className="text-muted small">
-                        MEMBERSHIP PRICE
-                      </Form.Label>
-                      <Form.Control
-                        value={
-                          isMembershipEditing
-                            ? editedMembership.membershipPrice
-                            : membership.membershipPrice
-                        }
-                        name="membershipPrice"
-                        onChange={handleMembershipChange}
-                        readOnly={!isMembershipEditing}
-                        plaintext={!isMembershipEditing}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={6} className="mb-3">
-                    <Form.Group>
-                      <Form.Label className="text-muted small">
-                        ADDRESS
-                      </Form.Label>
-                      <Form.Control
-                        value={
-                          isMembershipEditing
-                            ? editedMembership.address
-                            : membership.address
-                        }
-                        name="address"
-                        onChange={handleMembershipChange}
-                        readOnly={!isMembershipEditing}
-                        plaintext={!isMembershipEditing}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Group>
-                      <Form.Label className="text-muted small">
-                        CONTACT NUMBER
-                      </Form.Label>
-                      <Form.Control
-                        value={
-                          isMembershipEditing
-                            ? editedMembership.contactNumber
-                            : membership.contactNumber
-                        }
-                        name="contactNumber"
-                        onChange={handleMembershipChange}
-                        readOnly={!isMembershipEditing}
-                        plaintext={!isMembershipEditing}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </Form>
-            </>
-          )}
+              <Row>
+                <Col md={6} className="mb-3">
+                  <Form.Group>
+                    <Form.Label className="text-muted small">
+                      ADDRESS
+                    </Form.Label>
+                    <Form.Control
+                      value={
+                        isMembershipEditing
+                          ? editedMembership.address
+                          : membership.address
+                      }
+                      name="address"
+                      onChange={handleMembershipChange}
+                      readOnly={!isMembershipEditing}
+                      plaintext={!isMembershipEditing}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group>
+                    <Form.Label className="text-muted small">
+                      CONTACT NUMBER
+                    </Form.Label>
+                    <Form.Control
+                      value={
+                        isMembershipEditing
+                          ? editedMembership.contactNumber
+                          : membership.contactNumber
+                      }
+                      name="contactNumber"
+                      onChange={handleMembershipChange}
+                      readOnly={!isMembershipEditing}
+                      plaintext={!isMembershipEditing}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Form>
+          </>
+        )}
 
-          <Row className="mt-4">
-            <Col>
-              <Button variant="primary" onClick={handleLogout}>
-                Log out
-              </Button>
-            </Col>
-            <Col className="text-center">
-              <Button variant="secondary">Contact Us</Button>
-            </Col>
-            <Col className="text-end">
-              <Button variant="danger" onClick={handleDeleteAccount}>
-                Delete Account
-              </Button>
-              <Link to="/mainArtworkDetails">
-                <button type="button" className="ml-2 btn btn-primary">
-                  Artwork Details
-                </button>
-              </Link>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
+        <Row className="mt-4">
+          <Col>
+            <Button variant="primary" onClick={handleLogout}>
+              Log out
+            </Button>
+          </Col>
+          <Col className="text-center">
+            <Button variant="secondary">Contact Us</Button>
+          </Col>
+          <Col className="text-end">
+            <Button variant="danger" onClick={handleDeleteAccount}>
+              Delete Account
+            </Button>
+            <Link to="/mainArtworkDetails">
+              <button type="button" className="ml-2 btn btn-primary">
+                Artwork Details
+              </button>
+            </Link>
+          </Col>
+        </Row>
+      </Card.Body>
+    </Card>
 
-      <Modal
-        show={showDeleteConfirmation}
-        onHide={() => setShowDeleteConfirmation(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Account</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Are you sure you want to delete your account? This action cannot be
-            undone.
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowDeleteConfirmation(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={confirmDeleteAccount}>
-            Yes, delete my account
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
-  );
+    <Modal
+      show={showDeleteConfirmation}
+      onHide={() => setShowDeleteConfirmation(false)}
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Delete Account</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          Are you sure you want to delete your account? This action cannot be
+          undone.
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => setShowDeleteConfirmation(false)}
+        >
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={confirmDeleteAccount}>
+          Yes, delete my account
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  </Container>
+);
+
 };
 
 export default Profile;
