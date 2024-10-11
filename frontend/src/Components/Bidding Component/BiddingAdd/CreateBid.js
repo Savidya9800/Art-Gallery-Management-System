@@ -54,7 +54,7 @@ function CreateBid() {
       return;
     }
 
-    if (Number(inputs.amount) < Number(minPrice)) {
+    if (Number(inputs.amount) <= Number(minPrice)) {
       setErrorMessage(`Amount should be higher than Rs.${minPrice}`);
       return;
     }
@@ -90,7 +90,7 @@ function CreateBid() {
           </div>
 
           <div className="w-1/2 p-10">
-            {/* Display the title on top of the form */}
+           
             <h1 className="text-3xl text-[#A78F51] text-center mb-6">{title ? `Insert Bid : ${title}` : 'Insert Bid'}</h1>
 
 
@@ -109,7 +109,7 @@ function CreateBid() {
               <input type="number" name="amount" onChange={handleChange} value={inputs.amount} placeholder={`Enter Amount (>= Rs.${minPrice})`} required
                 className="w-full p-2 mb-2 border border-black rounded-md text-sm" />
 
-                {/* Display error message if any */}
+             
               {errorMessage && <p className="text-red-600 text-sm mb-4">{errorMessage}</p>}
 
               <div className="text-center">
