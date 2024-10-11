@@ -68,7 +68,7 @@ const Messages = () => {
     <div>
       <NavigationBar/>
       <h2 className="text-xl font-semibold mb-4">All Messages</h2>
-      <table className="bg-white border-collapse border border-black w-full">
+      <table className="bg-white border-collapse border border-black w-full mb-40">
         <thead>
           <tr>
             <th className="bg-white border border-black px-2 py-1 w-1/4">Visitor ID</th>
