@@ -70,15 +70,9 @@ function NavigationBar() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex" style={{ marginRight: "10px" }}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
+          
             <Button className="searchbtn" variant="outline-success">Search</Button>
-          </Form>
+         
 
           <a
             href="/profile">

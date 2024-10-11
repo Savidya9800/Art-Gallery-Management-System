@@ -39,7 +39,7 @@ const Login = () => {
       localStorage.setItem("email", username);
 
       if (response.data.user.email === "artwork@gmail.com") {
-        navigate("/mainArtworkDetails");
+        navigate("/mainAdminArtworks");
       } else if (response.data.user.email === "ticket@gmail.com") {
         navigate("/visitor-count");
       } else if (response.data.user.email === "inquiry@gmail.com") {

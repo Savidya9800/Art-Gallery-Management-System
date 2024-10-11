@@ -4,7 +4,6 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import FooterComp from "../../Nav Component/FooterComp";
 import ArtworkComp from "../Artwork/ArtworkComp";
 import Button from "react-bootstrap/Button";
-import ArtworkModal from "../ArtworkDetails/ArtworkModal";
 
 const URL = "http://localhost:5000/artWorks";
 const email = localStorage.getItem("email");
@@ -13,11 +12,11 @@ const email = localStorage.getItem("email");
 const fetchHandler = async () => {
   try {
     const res = await axios.get(`${URL}`, {
-      params: { email } // Pass the email as a query parameter
+      params: { email }, // Pass the email as a query parameter
     });
     console.log(email);
     console.log(res.data); // Log the full response
-   
+
     return res.data;
   } catch (error) {
     console.error("Error fetching artworks:", error);
@@ -31,8 +30,6 @@ function ArtworksComp() {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [noResults, setNoResults] = useState(false);
   const [sortOption, setSortOption] = useState(""); // State for sorting option
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
-  const [selectedArtwork, setSelectedArtwork] = useState(null); // State for selected artwork
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -80,18 +77,6 @@ function ArtworksComp() {
     setFilteredArtworks(sorted); // Update the artworks with the sorted ones
   };
 
-  // Function to open the modal and set the selected artwork
-  const handleArtworkClick = (artwork) => {
-    setSelectedArtwork(artwork);
-    setShowModal(true);
-  };
-
-  // Function to close the modal
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedArtwork(null);
-  };
-
   return (
     <div className="flex-col min-h-screen">
       <div className="relative z-10">
@@ -134,7 +119,7 @@ function ArtworksComp() {
         </div>
       </div>
 
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 mb-10">
         <table className="min-w-full border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
@@ -167,12 +152,6 @@ function ArtworksComp() {
           )}
         </table>
       </div>
-      {/* Artwork Modal */}
-      <ArtworkModal
-        show={showModal}
-        handleClose={handleCloseModal}
-        artwork={selectedArtwork}
-      />
 
       <FooterComp />
     </div>
