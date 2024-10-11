@@ -228,53 +228,53 @@ const Profile = () => {
         <NavigationBar />
       </div>
     <Container fluid className="py-3 bg-light min-vh-100">
-    <NavigationBar />
-    <Card className="mt-4">
-      <Card.Body>
-        <Row className="mb-4 align-items-center">
-          <Col xs="auto">
-            <Image
-              src="\dp.png"
-              roundedCircle
-              width={100}
-              height={100}
-            />
-          </Col>
-          <Col>
-            <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-            <p
-              className="badge"
-              style={{
-                backgroundColor: membership ? "#32CD32" : "#FFD700",
-                color: "#000",
-                borderRadius: "12px",
-                padding: "5px 10px",
-              }}
-            >
-              {membership ? "Member" : "User"}
-            </p>
-          </Col>
+      <NavigationBar />
+      <Card className="mt-4">
+        <Card.Body>
+          <Row className="mb-4 align-items-center">
+            <Col xs="auto">
+              <Image
+                src="\dp.png"
+                roundedCircle
+                width={100}
+                height={100}
+              />
+            </Col>
+            <Col>
+              <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
+              {/* Conditionally render "User" or "Member" tag */}
+              <p
+                className="badge"
+                style={{
+                  backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
+                  color: "#000",
+                  borderRadius: "12px",
+                  padding: "5px 10px",
+                }}
+              >
+                {membership ? "Member" : "User"}
+              </p>
+            </Col>
 
-          <Col xs="auto">
-            <Button
-              variant="outline-primary"
-              onClick={isEditing ? handleSave : handleEdit}
-            >
-              {isEditing ? "Save Profile" : "Edit Profile"}
-            </Button>
-          </Col>
-
-          {(membership === null && user.role !== "admin") && (
             <Col xs="auto">
               <Button
                 variant="outline-primary"
-                onClick={handleApplyMembership}
+                onClick={isEditing ? handleSave : handleEdit}
               >
-                Apply for membership
+                {isEditing ? "Save Profile" : "Edit Profile"}
               </Button>
             </Col>
-          )}
-        </Row>
+            {(membership === null && user.role !== "admin") && (
+              <Col xs="auto">
+                <Button
+                  variant="outline-primary"
+                  onClick={handleApplyMembership}
+                >
+                  Apply for membership
+                </Button>
+              </Col>
+            )}
+          </Row>
 
         {errorMessage && (
           <div className="alert alert-danger">{errorMessage}</div>
@@ -514,8 +514,7 @@ const Profile = () => {
             </Link>
           </Col>
         </Row>
-      </Card.Body>
-    </Card>
+
           <Row className="mt-4">
             <Col>
               <Button variant="primary" onClick={handleLogout}>
