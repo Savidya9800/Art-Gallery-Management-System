@@ -47,7 +47,7 @@ function UploadImage() {
       <br></br>
       <form
         onSubmit={submitImg}
-        className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md "
+        className="max-w-md p-6 mx-auto mb-8 bg-white rounded-lg shadow-md"
       >
         <label className="block mt-4 text-sm font-medium text-gray-700 bg-white">
           Select Image
