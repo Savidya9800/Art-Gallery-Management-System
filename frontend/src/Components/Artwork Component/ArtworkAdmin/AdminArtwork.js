@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Button from "react-bootstrap/Button";
 import jsPDF from "jspdf";
 import logo from "../../Nav Component/logo.JPG";
@@ -24,25 +23,24 @@ function AdminArtwork(props) {
     tags,
     price,
   } = props.ARTWORK;
+
   const history = useNavigate();
-  // const [accepted, setAccepted] = useState(false); // Initialize accepted state
 
   // Function to generate PDF report
   const generatePDFReport = () => {
     const doc = new jsPDF();
 
     // Add a background color for the title
-    doc.setFillColor(167, 143, 81); // Light lavender background
-    doc.rect(10, 10, 190, 15, "F"); // Rectangle for title background
+    doc.setFillColor(167, 143, 81);
+    doc.rect(10, 10, 190, 15, "F");
 
     // Add title to the PDF
     doc.setFontSize(22);
-    doc.setTextColor(240, 237, 230); // Dark Slate Gray color for text
+    doc.setTextColor(240, 237, 230);
     doc.text("Artwork Report", 14, 20);
 
-    //Add logo
+    // Add logo
     const pageWidth = doc.internal.pageSize.getWidth();
-
     const imgWidth = 25; // Width of the logo
     const imgHeight = 20; // Height of the logo
     const xPosition = pageWidth - imgWidth - 10;
@@ -50,17 +48,17 @@ function AdminArtwork(props) {
 
     // Add a line below the title
     doc.setLineWidth(0.5);
-    doc.setDrawColor(169, 169, 169); // Gray color
+    doc.setDrawColor(169, 169, 169);
     doc.line(10, 30, 200, 30);
 
     // Artist Information Section
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 128); // Navy color
+    doc.setTextColor(0, 0, 128);
     doc.text("Artist Information", 14, 40);
 
     // Artist Details
     doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0); // Reset to black for content
+    doc.setTextColor(0, 0, 0);
     doc.text(`Artist: ${name}`, 14, 50);
     doc.text(`Email: ${email}`, 14, 60);
     doc.text(`Phone Number: ${pNumber}`, 14, 70);
@@ -74,12 +72,12 @@ function AdminArtwork(props) {
 
     // Artwork Details Section
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 128); // Navy color
+    doc.setTextColor(0, 0, 128);
     doc.text("Artwork Details", 14, 120);
 
     // Artwork Details
     doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0); // Reset to black for content
+    doc.setTextColor(0, 0, 0);
     doc.text(`Title: ${title}`, 14, 130);
     doc.text(`Medium: ${medium}`, 14, 140);
     doc.text(`Dimensions: ${dimensions}`, 14, 150);
@@ -92,20 +90,31 @@ function AdminArtwork(props) {
 
     // Artwork Upload
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 128); // Navy color
+    doc.setTextColor(0, 0, 128);
     doc.text("Additional Information", 14, 190);
 
     doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0); // Reset to black for content
+    doc.setTextColor(0, 0, 0);
     doc.text(`Status: ${place}`, 14, 200);
     doc.text(`Tags: ${tags}`, 14, 210);
-    doc.text(`Price: ${price}`, 14, 220);
 
     // Add footer with date and page number
+    const footerY = doc.internal.pageSize.getHeight() - 30;
     doc.setFontSize(10);
-    doc.setTextColor(169, 169, 169); // Gray color
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 285); // Current date
-    doc.text(`Page 1 of 1`, 180, 285); // Page number
+    doc.setTextColor(128, 128, 128);
+    doc.text("Awarna Art Gallery", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
 
     // Save the PDF
     doc.save(`${title}_Artwork_Report.pdf`);
@@ -117,23 +126,17 @@ function AdminArtwork(props) {
     );
 
     if (!confirmDelete) {
-      return; // Exit the function if the user clicks "No"
+      return;
     }
 
     try {
-      const response = await axios.delete(`http://localhost:5000/artWorks/${_id}`);
+      const response = await axios.delete(
+        `http://localhost:5000/artWorks/${_id}`
+      );
       if (response.status === 200) {
-      
         alert("Artwork Rejected! and email sent!");
-      } else {
-        // Handle other error statuses
-        console.error("Error:");
-        
       }
-      history("/"); // Redirects after successful deletion
       history("/mainArtworkDetails");
-      
-      
     } catch (error) {
       console.error("Error deleting artwork:", error);
       alert("Failed to delete the artwork. Please try again.");
@@ -142,9 +145,8 @@ function AdminArtwork(props) {
 
   const handleAccept = async () => {
     const updatedData = {
-      accepted: true, // Setting accepted to true
-      place, // Include other relevant data if needed
-      // Add other properties here if needed (like title, description, etc.)
+      accepted: true,
+      place,
     };
 
     try {
@@ -154,19 +156,18 @@ function AdminArtwork(props) {
       );
       console.log("Artwork updated successfully:", response.data);
       if (response.status === 200) {
-      
         alert("Artwork accepted and email sent!");
-        window.location.reload(); // Refresh the page
-      } else {
-        // Handle other error statuses
-        console.error("Error:");
-        
+        window.location.reload();
       }
-      // setAccepted(true); // Update accepted state in UI
     } catch (error) {
       console.error("Error updating artwork:", error.response.data);
     }
   };
+
+  // Render only if place is "promote"
+  if (place !== "promote") {
+    return null; // Do not render anything if place is not "promote"
+  }
 
   return (
     <>
@@ -176,29 +177,7 @@ function AdminArtwork(props) {
       <td className="p-2 border border-gray-300">{pNumber}</td>
       <td className="p-2 border border-gray-300">{statement}</td>
       <td className="p-2 border border-gray-300">{biography}</td>
-      <td className="p-2 border border-gray-300">
-        <label className="items-center ">
-          <input
-            type="radio"
-            name={`place-${_id}`}
-            value="bidding"
-            checked={place === "bidding"}
-            readOnly
-            className="hidden"
-          />
-          <span
-            className={`w-6 h-6 border-2 rounded-md mr-2 flex items-center justify-center ${
-              place === "bidding"
-                ? "bg-blue-500 border-blue-500"
-                : "border-gray-300"
-            }`}
-          >
-            {place === "bidding" && (
-              <span className="w-3 h-3 bg-white rounded-full"></span>
-            )}
-          </span>
-        </label>
-      </td>
+      
       <td className="p-2 border border-gray-300">
         <label className="flex items-center">
           <input
@@ -223,21 +202,19 @@ function AdminArtwork(props) {
         </label>
       </td>
 
-      <td className="p-2 border border-gray-300">
-        <Button onClick={generatePDFReport} variant="primary" className="mr-1">
+      <td className="p-2 mr-0 border border-gray-300">
+        <Button
+          onClick={generatePDFReport}
+          variant="primary"
+          className="mb-1 ml-1.5 mr-0"
+        >
           Generate Report
         </Button>
-        |
-       
-          <Button
-            onClick={handleAccept}
-            variant="success"
-            className="ml-1 mr-1"
-          >
-            Accept
-          </Button>
-      
-        |
+
+        <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
+          Accept
+        </Button>
+
         <Button
           onClick={deleteHandler}
           variant="danger"

@@ -248,4 +248,20 @@ app.get('/remainingSlots', async (req, res) => {
   }
 });
 
+app.post('/send-email', async (req, res) => {
+  const { to, subject, text } = req.body;
+ 
+  
+  try {
+    const response = await sendEmail(to, subject, text);
+    res.status(200).send({ message: 'Email sent successfully', response });
+  } catch (error) {
+    res.status(500).send({ message: 'Error sending email', error: error.message });
+  }
+});
+
+
+
+
+
 

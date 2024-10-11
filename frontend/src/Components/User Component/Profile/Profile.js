@@ -191,8 +191,12 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
+    <div>
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
     <Container fluid className="py-3 bg-light min-vh-100">
-      <NavigationBar />
+      
       <Card className="mt-4">
         <Card.Body>
           <Row className="mb-4 align-items-center">
@@ -201,24 +205,8 @@ const Profile = () => {
             </Col>
             <Col>
               <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
-
-//               {/* Conditionally render "User" or "Member" tag */}
-//               <p
-//                 className="badge"
-//                 style={{
-//                   backgroundColor: membership ? "#32CD32" : "#FFD700", // Green for member, yellow for user
-//                   color: "#000",
-//                   borderRadius: "12px",
-//                   padding: "5px 10px",
-//                 }}
-//               >
-//                 {membership ? "Member" : "User"}
-//               </p>
-
               <p className="text-muted">{user.role}</p>
-
             </Col>
-
             <Col xs="auto">
               {user.role === "artist" && (
                 <Link to="/mainArtworkDetails">
@@ -235,7 +223,7 @@ const Profile = () => {
                 {isEditing ? "Save Profile" : "Edit Profile"}
               </Button>
             </Col>
-            {membership === null && user.role !== "admin" && (
+            {membership === null && user.role !== "admin" && user.role !== "artist" && (
               <Col xs="auto">
                 <Button variant="primary" onClick={handleApplyMembership}>
                   Apply for membership
@@ -443,7 +431,7 @@ const Profile = () => {
               </Button>
             </Col>
             <Col className="text-center">
-              <Button variant="secondary">Contact Us</Button>
+              <Button variant="secondary" onClick={() => navigate("/mainContactUs")}>Contact Us</Button>
             </Col>
             <Col className="text-end">
               <Button variant="danger" onClick={handleDeleteAccount}>
@@ -481,6 +469,7 @@ const Profile = () => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </div>
   );
 };
 

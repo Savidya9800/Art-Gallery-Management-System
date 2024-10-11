@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 // Define the finance schema
 const financeSchema = new mongoose.Schema({
+  paymentId: {
+    type: String,
+    required: true,
+  },
   cardNumber: {
     type: String,
     required: true,
@@ -22,6 +26,11 @@ const financeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  category: {
+    type: String,
+    enum: ["membership", "shop", "art work", "other"], // Categories for payment
+    required: true, // Category field is required
+  },
   paymentDate: {
     type: Date,
     default: Date.now, // Automatically set the payment date when the record is created
@@ -29,7 +38,7 @@ const financeSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["success", "reject"], // The status can only be 'success' or 'reject'
-    default: "reject", // Default value set to 'success'
+    default: "reject", // Default value set to 'reject'
   },
 });
 
