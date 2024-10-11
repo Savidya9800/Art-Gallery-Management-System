@@ -30,12 +30,12 @@ function ViewBid() {
         }
     }, [artworkId]); // Effect runs when artworkId changes
 
-    // Handle the search functionality
+    // Handle the search functionality specifically for emails
     const handleSearch = () => {
+        // Filter bids based on whether the email matches the search query
         const filteredBids = Bidder.filter((IDBidder) =>
-            Object.values(IDBidder).some((field) =>
-                field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-            )
+            IDBidder.email && // Ensure IDBidder has an email property
+            IDBidder.email.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setBidder(filteredBids);
         setNoResults(filteredBids.length === 0);
@@ -50,7 +50,7 @@ function ViewBid() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     type="text"
                     name="search"
-                    placeholder="Search Bid details"
+                    placeholder="Search Bidder Email"
                     className="w-full p-2 px-3 mr-2 transition duration-300 ease-in-out bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     style={{ width: 'auto', flexGrow: 1, maxWidth: '400px' }}
                 />
