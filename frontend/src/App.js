@@ -28,6 +28,7 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
+
 //Bidding user imports are here
 import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
@@ -158,7 +159,11 @@ function App() {
             <Route
               path="/updateresponse/:id/:inquiryID"
               element={<Updateresponse />}
+
+
+
             />
+           
 
             {/* Event Manager */}
             <Route

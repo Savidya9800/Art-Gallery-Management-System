@@ -21,14 +21,13 @@ export default function Viewresponses(props) {
   
 
     <div className="border-2 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-xl">
-      <div className="p-2 rounded-t-lg text-[#A78F51]">
-        <h1 className="text-2xl font-bold">Response ID: {_id}</h1>
-      </div>
+     
 
       <div className="p-6 rounded-md mt-4">
         <div className="mb-4">
           <h1 className="text-xl font-semibold text-gray-700">Response: {response}</h1>
         </div>
+        
         <div className="mb-4">
           <h1 className="text-xl font-semibold text-gray-700">Status: {inquirystatus}</h1>
         </div>
