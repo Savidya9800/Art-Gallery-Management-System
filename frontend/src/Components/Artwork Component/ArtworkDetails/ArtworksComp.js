@@ -6,11 +6,17 @@ import ArtworkComp from "../Artwork/ArtworkComp";
 import Button from "react-bootstrap/Button";
 
 const URL = "http://localhost:5000/artWorks";
+const email = localStorage.getItem("email");
 
 // fetchHandler
 const fetchHandler = async () => {
   try {
-    const res = await axios.get(URL);
+    const res = await axios.get(`${URL}`, {
+      params: { email }, // Pass the email as a query parameter
+    });
+    console.log(email);
+    console.log(res.data); // Log the full response
+
     return res.data;
   } catch (error) {
     console.error("Error fetching artworks:", error);
@@ -23,6 +29,7 @@ function ArtworksComp() {
   const [filteredArtworks, setFilteredArtworks] = useState([]); // State for filtered artworks
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [noResults, setNoResults] = useState(false);
+  const [sortOption, setSortOption] = useState(""); // State for sorting option
 
   useEffect(() => {
     fetchHandler().then((data) => {
@@ -53,30 +60,66 @@ function ArtworksComp() {
     setNoResults(filtered.length === 0); // Check if no results are found
   };
 
+  // Handle sorting functionality
+  const handleSort = (option) => {
+    setSortOption(option);
+
+    const sorted = [...filteredArtworks].sort((a, b) => {
+      if (option === "bidding") {
+        // Sort to show artworks with "bidding" first
+        return a.place === "bidding" && b.place !== "bidding" ? -1 : 1;
+      } else if (option === "promote") {
+        // Sort to show artworks with "promote" first
+        return a.place === "promote" && b.place !== "promote" ? -1 : 1;
+      }
+      return 0;
+    });
+    setFilteredArtworks(sorted); // Update the artworks with the sorted ones
+  };
+
   return (
     <div className="flex-col min-h-screen">
       <div className="relative z-10">
         <NavigationBar />
       </div>
 
-      {/* Search Bar */}
-      <div className="mt-2">
-        <input
-          type="text"
-          name="search"
-          value={searchQuery}
-          onChange={handleInputChange} // Handle input change
-          placeholder="Search Artworks by Title"
-          className="w-full p-2 px-3 mr-2 transition duration-300 ease-in-out bg-gray-100 border border-gray-300 rounded-lg shadow-sm ml-7 sm:w-1/2 lg:w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
-        <Button variant="success" onClick={handleSearch}>
-          {" "}
-          {/* Handle search button click */}
-          Search
-        </Button>
+      <div className="flex justify-between mt-2">
+        {/* Search Bar */}
+        <div className="mt-2">
+          <input
+            type="text"
+            name="search"
+            value={searchQuery}
+            onChange={handleInputChange} // Handle input change
+            placeholder="Search Artworks by Title"
+            className="p-2 px-3 mr-2 transition duration-300 ease-in-out bg-gray-100 border border-gray-300 rounded-lg shadow-sm ml-7 w-[240px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <Button variant="success" onClick={handleSearch}>
+            {" "}
+            {/* Handle search button click */}
+            Search
+          </Button>
+        </div>
+
+        {/* Sort By Dropdown */}
+        <div className="mt-4 ml-8 mr-8">
+          <label htmlFor="sort" className="mr-2">
+            Sort by:
+          </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => handleSort(e.target.value)} // Handle sorting change
+            className="p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="">Select</option>
+            <option value="bidding">Bidding</option>{" "}
+            <option value="promote">Promote</option>{" "}
+          </select>
+        </div>
       </div>
 
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 mb-10">
         <table className="min-w-full border border-gray-300">
           <thead>
             <tr className="bg-gray-200">

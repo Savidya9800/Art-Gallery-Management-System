@@ -32,6 +32,7 @@ const Profile = () => {
   const userId = JSON.parse(localStorage.getItem("user"))?._id;
 
   useEffect(() => {
+    console.log("token", localStorage.getItem("token"));
     if (localStorage.getItem("user")) {
       fetchUserData();
     } else {
@@ -52,12 +53,14 @@ const Profile = () => {
 
     try {
       const id = JSON.parse(localStorage.getItem("user").toString())["_id"];
+      console.log(id, "id");
       const response = await axios.get(
         `http://localhost:5000/api/membership/user/${id}`
       );
+      console.log(response.data, "1111");
       setMembership(response.data);
       setEditedMembership(response.data);
-      console.log(response.data);
+      console.log(response.data, "2222");
 
       // New logic: Calculate trial expiration
       if (response.data && response.data.trialExpiryDate) {
@@ -85,6 +88,28 @@ const Profile = () => {
     setErrorMessage(""); // Clear error message when editing starts
     setIsEditing(true);
   };
+
+  function SomeComponent() {
+    const user = null; // Replace with actual user fetching logic
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    useEffect(() => {
+      if (!user) {
+        // If the user is not logged in, redirect to the login page
+        navigate("/login");
+      }
+    }, [user, navigate]); // Dependencies include user and navigate
+
+    // If user is available, display the component's content
+    if (!user) return null; // No need for Loading... since we're redirecting
+
+    return (
+      <div>
+        {/* Your component's content goes here */}
+        <h1>Welcome, {user.name}</h1>
+      </div>
+    );
+  }
 
   const handleSave = async () => {
     if (!validatePhoneNumber(editedUser.contactNumber)) {
@@ -198,6 +223,10 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
+    <div>
+      <div className="relative z-10">
+        <NavigationBar />
+      </div>
     <Container fluid className="py-3 bg-light min-vh-100">
     <NavigationBar />
     <Card className="mt-4">
@@ -360,7 +389,7 @@ const Profile = () => {
 
         {membership !== null && (
           <>
-            <Row className="align-items-end justify-content-end mb-4">
+            <Row className="mb-4 align-items-end justify-content-end">
               <Col xs="auto">
                 <Button
                   variant="outline-primary"
@@ -370,11 +399,16 @@ const Profile = () => {
                       : handleMembershipEdit
                   }
                 >
-                  {isMembershipEditing ? "Save Membership" : "Edit Membership"}
+                  {isMembershipEditing
+                      ? "Save Membership"
+                      : "Edit Membership"}
                 </Button>
               </Col>
               <Col xs="auto">
-                <Button variant="outline-danger" onClick={handleDeleteMembership}>
+                <Button
+                    variant="outline-danger"
+                    onClick={handleDeleteMembership}
+                  >
                   Delete Membership
                 </Button>
               </Col>
@@ -482,6 +516,23 @@ const Profile = () => {
         </Row>
       </Card.Body>
     </Card>
+          <Row className="mt-4">
+            <Col>
+              <Button variant="primary" onClick={handleLogout}>
+                Log out
+              </Button>
+            </Col>
+            <Col className="text-center">
+              <Button variant="secondary" onClick={() => navigate("/mainContactUs")}>Contact Us</Button>
+            </Col>
+            <Col className="text-end">
+              <Button variant="danger" onClick={handleDeleteAccount}>
+                Delete Account
+              </Button>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
 
     <Modal
       show={showDeleteConfirmation}
@@ -510,6 +561,7 @@ const Profile = () => {
       </Modal.Footer>
     </Modal>
   </Container>
+    </div>
 );
 
 };

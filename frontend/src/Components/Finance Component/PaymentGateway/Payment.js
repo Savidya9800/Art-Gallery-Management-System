@@ -4,7 +4,7 @@ import NavigationBar from "../../Nav Component/NavigationBar";
 import axios from "axios"; // For making API calls
 import { jsPDF } from "jspdf"; // For generating PDF
 import logo from "../TransactionDetails/logo.JPG";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const PaymentGateway = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +13,12 @@ const PaymentGateway = () => {
     cvv: "",
     cardName: "",
     amount: 100, // Initial amount value
+    category: "membership", // Default category
   });
   const [totalAmount, setTotalAmount] = useState(0 * 1.015); // Initial total amount with 1.5% service charge
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", content: "" });
+  const navigate = useNavigate(); // Add this in your component before `handleSubmit`
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -41,14 +43,20 @@ const PaymentGateway = () => {
       return; // Prevent invalid characters from being entered
     }
 
-    setFormData({ ...formData, [name]: value });
-
     // If amount changes, calculate total with 1.5% service charge
     if (name === "amount") {
       const amountValue = parseFloat(value) || 0;
+
+      if (amountValue < 0) {
+        alert("No negative numbers allowed");
+        return; // Exit the function to prevent further execution
+      }
+
       const updatedTotal = amountValue * 1.015; // Adding 1.5% service charge
       setTotalAmount(updatedTotal);
     }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   // Validate expiry date format and future month/year
@@ -99,8 +107,41 @@ const PaymentGateway = () => {
       20,
       50
     ); // Masking card number
-    doc.text(`Total Amount Paid: $${totalAmountPaid}`, 20, 60);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 70);
+    doc.text(`Category: ${formData.category}`, 20, 60); // Add category information
+    doc.text(`Total Amount Paid: $${totalAmountPaid}`, 20, 70); // Adjusted Y position for amount
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 80); // Adjusted Y position for date
+
+    // Add a line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, 30, 200, 30);
+
+    // Add line above the footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    // Footer text (right-aligned)
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
+
+    // Add line below the footer
+    doc.line(10, footerY + 15, 200, footerY + 15);
 
     // Save the PDF
     doc.save("payment_receipt.pdf");
@@ -138,17 +179,15 @@ const PaymentGateway = () => {
         const totalAmountPaid = response.data.totalAmount.toFixed(2);
         setMessage({
           type: "success",
-          content: `Payment successful! Total Amount Paid: $${totalAmountPaid}`,
+          content: `Payment successful! Total Amount Paid: $${totalAmountPaid}. You will now be redirect in 3 Seconds`,
         });
 
         // Generate the payment slip PDF
         generatePaymentSlip(totalAmountPaid);
 
-        //alert("Payment successful! Redirecting to homepage...");
-
-        // setTimeout(() => {
-        // window.location.href = "/"; // Redirect to the homepage or any other page
-        // }, 2000); // Wait for 2 seconds before redirecting
+        setTimeout(() => {
+          navigate("/"); // Redirect to home
+        }, 5000);
       }
     } catch (error) {
       // Handle errors during the payment process
@@ -165,13 +204,16 @@ const PaymentGateway = () => {
 
   return (
     <div>
-      <div className="payment-container min-h-screen flex flex-col">
+      <div className="payment-container min-h-screen flex flex-col bg-gray-100">
         <NavigationBar />
         <div className="payment-form flex-grow flex flex-col items-center justify-center p-4">
-          <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
-          <h3 className="text-xl mb-4">
+          <h2 className="text-[25px] font-[600] font-Inter mb-4">
+            Payment Gateway
+          </h2>
+          <h3 className="text-[18px] font-[400] font-Inter mb-4">
             Total Amount (Including Service Charge): ${totalAmount.toFixed(2)}
           </h3>
+
           {message.content && (
             <div
               className={`message ${
@@ -181,14 +223,36 @@ const PaymentGateway = () => {
               {message.content}
             </div>
           )}
+
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md bg-white p-6 rounded-lg shadow-md"
+            className="w-[480px] bg-[#e9d8b2] p-3 rounded-[15px] shadow-lg border border-gray-200 relative"
           >
             <div className="form-group mb-4">
               <label
+                htmlFor="category"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Category
+              </label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <option value="membership">Membership</option>
+                <option value="shop">Shop</option>
+                <option value="art work">Art Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div className="form-group mb-4">
+              <label
                 htmlFor="amount"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
               >
                 Amount
               </label>
@@ -197,16 +261,18 @@ const PaymentGateway = () => {
                 id="amount"
                 name="amount"
                 placeholder="Enter amount"
+                min="0"
                 value={formData.amount}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
+
             <div className="form-group mb-4">
               <label
                 htmlFor="cardNumber"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
               >
                 Card Number
               </label>
@@ -216,58 +282,56 @@ const PaymentGateway = () => {
                 name="cardNumber"
                 placeholder="1234 5678 9012 3456"
                 minLength="16"
-                maxLength="16" // Limit to 16 characters
+                maxLength="16"
                 value={formData.cardNumber}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
-            <div className="form-row flex space-x-4 mb-4">
-              <div className="form-group flex-1">
-                <label
-                  htmlFor="expiryDate"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Expiry Date
-                </label>
-                <input
-                  type="text"
-                  id="expiryDate"
-                  name="expiryDate"
-                  placeholder="MM/YY"
-                  maxLength="5"
-                  value={formData.expiryDate}
-                  onChange={handleChange}
-                  required
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-              <div className="form-group flex-1">
-                <label
-                  htmlFor="cvv"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  CVV
-                </label>
-                <input
-                  type="text"
-                  id="cvv"
-                  name="cvv"
-                  placeholder="123"
-                  minLength="3"
-                  maxLength="3"
-                  value={formData.cvv}
-                  onChange={handleChange}
-                  required
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+
+            <div className="form-group mb-4">
+              <label
+                htmlFor="expiryDate"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                Expiry Date (MM/YY)
+              </label>
+              <input
+                type="text"
+                id="expiryDate"
+                name="expiryDate"
+                placeholder="MM/YY"
+                value={formData.expiryDate}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
             </div>
+
+            <div className="form-group mb-4">
+              <label
+                htmlFor="cvv"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
+              >
+                CVV
+              </label>
+              <input
+                type="number"
+                id="cvv"
+                name="cvv"
+                placeholder="123"
+                value={formData.cvv}
+                onChange={handleChange}
+                required
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
             <div className="form-group mb-4">
               <label
                 htmlFor="cardName"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-[16px] font-[500] font-Inter text-black mb-2"
               >
                 Name on Card
               </label>
@@ -279,12 +343,13 @@ const PaymentGateway = () => {
                 value={formData.cardName}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="w-full h-[45px] px-4 border border-gray-300 rounded-[10px] bg-[#f7f1e3] focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
+
             <button
               type="submit"
-              className="pay-button w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full h-[45px] bg-indigo-500 text-white font-semibold rounded-[10px] hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
               disabled={loading}
             >
               {loading ? "Processing..." : "Pay Now"}

@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routerinv = require("./Routes/inventoryRouter"); //Inventory Manager
+const cartrouter = require("./Routes/CartRoutes"); //Inventory Manager
 
 //Artwork-manager
 const router = require("./Routes/artWorkRoutes");
@@ -57,6 +58,7 @@ app.use("/api/messages", ticketissuesroutes);
 
 //Inventory Manager
 app.use("/inventory", routerinv); //Mayomi
+app.use("/cart",cartrouter);
 
 //Artwork-manager
 app.use("/artWorks", router);
@@ -78,6 +80,9 @@ app.use("/requestEvent", RequestEventrouter);
 app.use("/api/bookingUsers", bookingUserRoutes);
 app.use("/api/membership", membershipRoutes);
 
+//cart
+const Cart = require("./Routes/CartRoutes");
+
 //Financial Manager
 app.use("/finance", financeRouter); 
 app.use('/transaction', transactionRouter);
@@ -95,6 +100,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+//Artwork Manager
 //PDF - - - - - - - -
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -174,7 +180,7 @@ app.get("/getImage", async (req, res) => {
 
 const inventoryStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./file"); // folder for inventory images
+    cb(null, "./file"); // Make sure this folder exists and is writable
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -182,7 +188,19 @@ const inventoryStorage = multer.diskStorage({
   },
 });
 
-const uploadInventoryImg = multer({ storage: inventoryStorage });
+const uploadInventoryImg = multer({ storage: inventoryStorage });
+app.post("/uploadInventoryImage", uploadInventoryImg.single("image"), async (req, res) => {
+  console.log(req.file);
+  const imageName = req.file.filename;
+
+  try {
+    await InventorySchema.create({ image: imageName, ...otherInventoryFields });
+    res.status(200).send({ status: 200, message: "Inventory image uploaded successfully" });
+  } catch (error) {
+    console.log("Error uploading inventory image:", error.message);
+    res.status(500).send({ status: 500, message: "Image not uploaded" });
+  }
+});
 
 // Visitor count route
 app.get('/api/visitorCount', async (req, res) => {
@@ -229,4 +247,21 @@ app.get('/remainingSlots', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
+app.post('/send-email', async (req, res) => {
+  const { to, subject, text } = req.body;
+ 
+  
+  try {
+    const response = await sendEmail(to, subject, text);
+    res.status(200).send({ message: 'Email sent successfully', response });
+  } catch (error) {
+    res.status(500).send({ message: 'Error sending email', error: error.message });
+  }
+});
+
+
+
+
+
 

@@ -59,14 +59,12 @@ function AdminArtworks() {
   };
 
   return (
-    <div className="flex-col min-h-screen">
-      <div className="relative z-10">
-        <NavigationBar />
-              
-      </div>
-
+    <div className="relative z-10 flex-col min-h-screen">
+      <NavigationBar />
+            
+      
       {/* Search Bar */}
-      <div className="mt-2">
+      <div className="mt-0">
         <input
           type="text"
           name="search"
@@ -81,8 +79,7 @@ function AdminArtworks() {
           Search
         </Button>
       </div>
-
-      <div className="flex-grow p-4">
+      <div className="flex-grow p-4 mb-5">
         <table className="min-w-full border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
@@ -92,7 +89,6 @@ function AdminArtworks() {
               <th className="p-2 border border-gray-300">Phone Number</th>
               <th className="p-2 border border-gray-300">Artist Statement</th>
               <th className="p-2 border border-gray-300">Biography</th>
-              <th className="p-2 border border-gray-300">Bidding</th>
               <th className="p-2 border border-gray-300">Promote</th>
             </tr>
           </thead>
@@ -112,8 +108,7 @@ function AdminArtworks() {
           )}
         </table>
       </div>
-
-      <FooterComp />
+      <FooterComp/>
     </div>
   );
 }

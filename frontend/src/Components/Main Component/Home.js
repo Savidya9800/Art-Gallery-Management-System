@@ -1,202 +1,160 @@
-import { useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
-import img1 from './Images Home/img1.jpg';
-import img2 from './Images Home/img2.jpg';
-import img3 from './Images Home/img3.jpg';
-import img4 from './Images Home/img4.jpg';
-import img5 from './Images Home/img5.jpg';
-import img6 from './Images Home/img6.jpg';
-import img7 from './Images Home/img7.jpg';
-import img8 from './Images Home/img8.jpg';
+import React, { useState, useEffect, useRef } from 'react';
+import img16 from '../Main Component/Images Home/img16.jpg';
+import img19 from '../Main Component/Images Home/img19.jpg';
+import img20 from '../Main Component/Images Home/img20.jpg';
+import img9 from '../Main Component/Images Home/img9.JPG';
+
+
 import NavigationBar from '../Nav Component/NavigationBar';
 import FooterComp from '../Nav Component/FooterComp';
-import './Home.css';
+import Button from 'react-bootstrap/Button';
+//import bgImage from '../Main Component/Images Home/background.jpg'; // Add your background image path here
 
-function Home() {
-  const [index, setIndex] = useState(0);
-  const [popupImage, setPopupImage] = useState(null);
+const Carousel = () => {
+  const [sliderItems, setSliderItems] = useState([
+    { id: 1, imgSrc: img19, author: 'AWARNA', title: 'ART IS THE', topic: 'THE FUTURE OF CREATIVITY', description: 'Art is inspiring. Walking into a gallery, or when the lights go up on a stage; that thrill of getting something that has nothing to do with acquisition.' },
+    { id: 2, imgSrc: img20, author: 'AWARNA', title: 'ART IS THE', topic: 'THE FUTURE OF CREATIVITY', description: 'Art is inspiring. Walking into a gallery, or when the lights go up on a stage; that thrill of getting something that has nothing to do with acquisition.' },
+    { id: 3, imgSrc: img9, author: 'AWARNA', title: 'ART IS THE', topic: 'THE FUTURE OF CREATIVITY', description: 'Art is inspiring. Walking into a gallery, or when the lights go up on a stage; that thrill of getting something that has nothing to do with acquisition.' },
+    //{ id: 4, imgSrc: img22, author: 'AWARNA', title: 'ART IS THE', topic: 'THE FUTURE OF CREATIVITY', description: 'Art is inspiring. Walking into a gallery, or when the lights go up on a stage; that thrill of getting something that has nothing to do with acquisition.' }
+  ]);
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef(null);
+  const timeRunning = 3000;
+  const timeAutoNext = 7000;
+
+  const showSlider = (type) => {
+    const totalItems = sliderItems.length;
+    if (type === 'next') {
+      setCurrentIndex((currentIndex + 1) % totalItems);
+    } else {
+      setCurrentIndex((currentIndex - 1 + totalItems) % totalItems);
+    }
   };
 
-  const handleImageClick = (src) => {
-    setPopupImage(src);
+  useEffect(() => {
+    const autoSlide = setInterval(() => {
+      showSlider('next');
+    }, timeAutoNext);
+
+    return () => clearInterval(autoSlide);
+  }, [currentIndex]);
+
+  const carouselStyles = {
+    height: '100vh',
+    width: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+    margin: '0',
+    backgroundImage: `url(${img16})`, // Set the background image here
+    backgroundSize: 'cover',            // Cover the whole container
+    backgroundPosition: 'center',       // Center the image
+    backgroundRepeat: 'no-repeat',      // Avoid repeating the image
+    backgroundColor: 'transparent',
   };
 
-  const handleClosePopup = () => {
-    setPopupImage(null);
+  const listStyles = {
+    position: 'relative',
   };
 
-  const AboutGallery = () => {
-    return (
-      <div className="py-12 bg-white">
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center text-gray-900">ABOUT OUR GALLERY</h2>
-          <h3 className="mt-2 text-xl font-semibold text-center text-gray-700">VICTORY ART</h3>
+  const itemStyles = (isActive) => ({
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    inset: '0',
+    opacity: isActive ? 1 : 0,
+    transition: 'opacity 0.5s ease',
+  });
 
-          {/* Content Section */}
-          <div className="mt-10 lg:grid lg:grid-cols-2 lg:gap-8">
-            {/* Left Text Section */}
-            <div className="space-y-10">
-              <div>
-                <h4 className="text-xl font-semibold text-gray-900">2018: The idea of our gallery</h4>
-                <p className="mt-2 text-base text-gray-600">
-                  Intending to change outdated stereotypes and build new perceptions, Viktória Pikovská set out to build a platform capable of promoting and managing talents who truly deserve respect and spotlight - so she founded Victory Art in 2018.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-semibold text-gray-900">2023: Home for Central & Eastern European Art</h4>
-                <p className="mt-2 text-base text-gray-600">
-                  By tailoring our company to the world's fast-paced development, Victory Art makes it trustworthy, flexible, affordable, and possible for every corner of the world to access and discover Central and Eastern European artists, a region that hosts many misunderstood and underrepresented voices and talents.
-                </p>
-              </div>
-
-              <button className="px-6 py-2 text-gray-900 border border-gray-900 rounded-md bg-gray-50 hover:bg-gray-100">
-                Read More
-              </button>
-            </div>
-
-            {/* Right Image Section */}
-            <div className="mt-10 lg:mt-0">
-              <img
-                className="w-full rounded-lg shadow-lg"
-                src={img4}
-                alt="Gallery"
-                onClick={() => handleImageClick(img4)} // Click to open popup
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  const contentStyles = {
+    position: 'absolute',
+    top: '20%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '1140px',
+    maxWidth: '80%',
+    paddingRight: '30%',
+    color: 'inherit',
+    textShadow: '0 5px 10px rgba(0, 0, 0, 0.25)',
+    overflow: 'hidden',	
+    backgroundColor: 'transparent',
   };
 
-  const CollectionGallery = () => {
-    return (
-      <div className="py-12 bg-white">
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          {/* Title Section */}
-          <h2 className="text-3xl font-extrabold text-center text-gray-900">EXPLORE</h2>
-          <h3 className="mt-2 text-xl font-medium text-center text-gray-500">LATEST COLLECTION IN OUR GALLERY</h3>
+  const thumbnailStyles = {
+    position: 'absolute',
+    bottom: '50px',
+    left: '75%',
+    display: 'flex',
+    gap: '20px',
+    transform: 'translateX(-50%)',
+    zIndex: 100,
+  };
 
-          {/* Collection Grid */}
-          <div className="grid grid-cols-1 gap-8 mt-10 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Collection 1 */}
-            <div className="text-center">
-              <img
-                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
-                src={img7}
-                alt="Autumn Curation"
-                onClick={() => handleImageClick(img7)} // Click to open popup
-              />
-              <h4 className="mt-4 text-lg font-semibold text-gray-900">AUTUMN CURATION</h4>
-              <p className="mt-2 text-gray-600">
-                Celebrate the arrival of autumn with us! Our curators have carefully selected a stunning array of autumn-inspired artworks for you. Explore our
-                <span className="font-semibold text-gray-800"> Autumn Collection now!</span>
-              </p>
-              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md bg-gray-50 hover:bg-gray-100">
-                Explore
-              </button>
-            </div>
+  const arrowButtonStyles = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    backgroundColor: 'rgba(238, 238, 238, 0.25)',
+    border: 'none',
+    color: '#fff',
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    transition: '0.5s',
+  };
 
-            {/* Collection 2 */}
-            <div className="text-center">
-              <img
-                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
-                src={img8}
-                alt="Maják Collection"
-                onClick={() => handleImageClick(img8)} // Click to open popup
-              />
-              <h4 className="mt-4 text-lg font-semibold text-gray-900">MAJÁK COLLECTION</h4>
-              <p className="mt-2 text-gray-600">
-                Explore the art of talented deaf blind artists. Discover a whole new world of art that's created in a way you've never seen before! For more information, click
-                <span className="font-semibold text-blue-600"> here!</span>
-              </p>
-              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md bg-gray-50 hover:bg-gray-100">
-                Explore
-              </button>
-            </div>
-
-            {/* Collection 3 */}
-            <div className="text-center">
-              <img
-                className="object-cover w-full h-64 transition-transform duration-300 rounded-lg shadow-lg cursor-pointer hover:scale-105"
-                src={img5}
-                alt="Limited Merch Collection"
-                onClick={() => handleImageClick(img5)} // Click to open popup
-              />
-              <h4 className="mt-4 text-lg font-semibold text-gray-900">LIMITED MERCH COLLECTION</h4>
-              <p className="mt-2 text-gray-600">
-                Victory Art is excited to announce its limited edition merch collection. Explore our collection
-                <span className="font-semibold text-blue-600"> here!</span>
-              </p>
-              <button className="px-6 py-2 mt-4 text-gray-900 border border-gray-800 rounded-md hover:bg-gray-100 bg-gray-50">
-                Explore
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  const arrowContainerStyles = {
+    position: 'absolute',
+    top: '80%',
+    right: '52%',
+    display: 'flex',
+    gap: '10px',
   };
 
   return (
     <div>
-      <div className="relative z-10">
-        <NavigationBar />
-      </div>
-      <div className="relative z-0">
-        <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="object-cover w-full h-96"
-              src={img1}
-              alt="First slide"
-            />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="object-cover w-full h-96"
-              src={img2}
-              alt="Second slide"
-            />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="object-cover w-full h-96"
-              src={img3}
-              alt="Third slide"
-            />
-          </Carousel.Item>
-        </Carousel>
-      </div>
-      <AboutGallery />
-      <CollectionGallery />
-      <FooterComp />
-
-      {/* Popup Image Modal */}
-      {popupImage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="relative">
-            <img
-              className="rounded-lg shadow-lg"
-              src={popupImage}
-              alt="Popup"
-              onClick={handleClosePopup}
-            />
-            <button
-              className="absolute top-0 right-0 p-2 text-white bg-red-500 rounded-full hover:bg-red-600"
-              onClick={handleClosePopup}
-            >
-              X
-            </button>
-          </div>
+      <div className="carousel" ref={carouselRef} style={carouselStyles}>
+        <div className="relative z-10">
+          <NavigationBar />
         </div>
-      )}
+        <div className="list" style={listStyles}>
+          {sliderItems.map((item, index) => (
+            <div
+              className={`item ${index === currentIndex ? 'active' : ''}`}
+              key={item.id}
+              style={itemStyles(index === currentIndex)}
+            >
+              <img src={item.imgSrc} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div className="content" style={contentStyles}>
+                <div className="author" style={{ fontWeight: 'bold', letterSpacing: '10px',  backgroundColor: 'transparent' }}>{item.author}</div>
+                <div className="title" style={{ fontSize: '5em', fontWeight: 'bold', lineHeight: '1.3em', backgroundColor: 'transparent' }}>{item.title}</div>
+                <div className="topic" style={{ fontSize: '5em', fontWeight: 'bold',  backgroundColor: 'transparent' }}>{item.topic}</div>
+                <div className="des" style={{ marginTop: '10px',  backgroundColor: 'transparent'}}>{item.description}</div>
+                <div className="buttons" style={{ display: 'flex', gap: '10px', marginTop: '20px',  backgroundColor: 'transparent' }}>
+                  <button style={{ border: 'none', backgroundColor: 'transparent', letterSpacing: '3px', padding: '10px 20px' }}>SEE MORE</button>
+                  <Button variant="outline-dark">Explore</Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <br />
+        <div className="thumbnail" style={thumbnailStyles}>
+          {sliderItems.map((item, index) => (
+            <div className={`item ${index === currentIndex ? 'active' : ''}`} key={item.id}>
+              <img src={item.imgSrc} alt={item.title} style={{ width: '350px', height: '220px', objectFit: 'cover', borderRadius: '20px' }} />
+            </div>
+          ))}
+        </div>
+
+        <div className="arrows" style={arrowContainerStyles}>
+          <button id="prev" onClick={() => showSlider('prev')} style={arrowButtonStyles}>&lt;</button>
+          <button id="next" onClick={() => showSlider('next')} style={arrowButtonStyles}>&gt;</button>
+        </div>
+
+      </div>
+      <FooterComp />
     </div>
   );
-}
+};
 
-export default Home;
+export default Carousel;

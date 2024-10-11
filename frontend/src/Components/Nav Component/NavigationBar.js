@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -11,7 +9,6 @@ import img1 from "./logo.JPG";
 import img2 from "./UserImg.png";
 
 function NavigationBar() {
-
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
@@ -48,7 +45,7 @@ function NavigationBar() {
               Blog
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainInventory">
+            <Nav.Link as={Link} to="/shopview">
               Shop
               <span></span>
             </Nav.Link>
@@ -61,27 +58,27 @@ function NavigationBar() {
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
-              {user?.role == "artist" && <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>}
-              {user?.role == "user" && <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>}
-              <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
+              {user?.role == "artist" && (
+                <NavDropdown.Item as={Link} to="/mainSellArt">
+                  Sell Art
+                </NavDropdown.Item>
+              )}
+              {user?.role == "user" && (
+                <NavDropdown.Item as={Link} to="/mainBidding">
+                  Buy Art
+                </NavDropdown.Item>
+              )}
+              <NavDropdown.Item as={Link} to="/mainTickets">
+                Tickets
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex" style={{ marginRight: "10px" }}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button className="searchbtn" variant="outline-success">Search</Button>
-          </Form>
 
-          <a
-            href="/profile">
+          <a href="/profile">
             <img
               src={img2}
               style={{ height: "50px", marginRight: "10px" }}

@@ -43,8 +43,10 @@ const EditMembership = () => {
     };
 
     return (
-        <Container fluid className="bg-light min-vh-100 py-3">
-            <NavigationBar />
+        <Container fluid className="py-3 bg-light min-vh-100">
+            <div className="relative z-10">
+      <NavigationBar />
+      </div>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formMembershipType">
                     <Form.Label>Membership Type</Form.Label>

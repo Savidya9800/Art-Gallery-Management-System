@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import NavigationBar from "../../Nav Component/NavigationBar"; // Add NavigationBar
 
 export default function UpdateResponse() {
     const [inputs, setInputs] = useState({
-        response: '',
-        inquirystatus: '',
+        response: "",
+        inquirystatus: "Select", // Ensure default select option is consistent
     });
-    const [loading, setLoading] = useState(true); // Loading state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(""); // Error state for validation
     const history = useNavigate();
-    const id = useParams().id;
+    const { id, inquiryID } = useParams();
 
     useEffect(() => {
         const fetchHandler = async () => {
@@ -18,15 +19,14 @@ export default function UpdateResponse() {
                 const res = await axios.get(`http://localhost:5000/adminResponse/${id}`);
                 const data = res.data;
 
-                // Set the inputs state to include response and inquirystatus
                 setInputs({
-                    response: data.response || '',
-                    inquirystatus: data.inquirystatus || ''
+                    response: data.response || "",
+                    inquirystatus: data.inquirystatus || "Select"
                 });
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
-                setLoading(false); // Update loading state
+                setLoading(false);
             }
         };
         fetchHandler();
@@ -36,68 +36,86 @@ export default function UpdateResponse() {
         await axios.put(`http://localhost:5000/adminResponse/${id}`, {
             response: String(inputs.response),
             inquirystatus: String(inputs.inquirystatus),
+            inquiryID: inquiryID
         }).then((res) => res.data);
     };
 
     const handleChange = (e) => {
         setInputs((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         }));
+        setError(""); // Clear error on input change
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sendRequest().then(() => history("/Viewresponse"));
+        
+        // Validate the inputs
+        if (inputs.response.trim() === "") {
+            setError("**Response field cannot be empty.**");
+            return;
+        }
+        
+        if (inputs.inquirystatus === "Select") {
+            setError("**Please select a valid inquiry status.**");
+            return;
+        }
+
+        sendRequest().then(() => history(`/Viewresponse/${inquiryID}`,{state:{isAdmin:true}})); // Redirect to Viewresponse page
     };
 
-    // If data is still loading, show a loading message
     if (loading) {
         return <div className="text-center">Loading...</div>;
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg">
-            <h1 className="text-2xl font-bold text-center mb-6">Update Response</h1>
+        <div>
+            <NavigationBar /> {/* Include NavigationBar */}
+            <div className="border-2 border-black rounded-lg shadow-md p-5 mx-auto my-5 w-full max-w-xl">
+                <h1 className={"text-center text-2xl font-semibold text-gray-600 mb-8"}>Update Response</h1>
 
-            <form onSubmit={handleSubmit}>
-                <div className="mb-6">
-                    <label className="block text-gray-700 font-medium mb-2">Response</label>
-                    <input
-                        type="text"
-                        name="response"
-                        onChange={handleChange}
-                        value={inputs.response}  // Ensure the value is bound correctly
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
-                        placeholder="Enter your response here"
-                    />
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-6">
+                        <label className="block text-gray-700 font-medium mb-2">Response :</label>
+                        <input
+                            type="text"
+                            name="response"
+                            onChange={handleChange}
+                            value={inputs.response}
+                            required
+                            className="w-full px-4 py-2 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
+                        />
+                    </div>
 
-                <div className="mb-6">
-                    <label className="block text-gray-700 font-medium mb-2">Status</label>
-                    <select
-                        name="inquirystatus"
-                        onChange={handleChange}
-                        value={inputs.inquirystatus}  // Ensure the value is bound correctly
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
-                    >
-                        <option value="">Select</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Not Responded">Not Responded</option>
-                    </select>
-                </div>
+                    <div className="mb-6">
+                        <label className="block text-gray-700 font-medium mb-2">Status :</label>
+                        <select
+                            name="inquirystatus"
+                            onChange={handleChange}
+                            value={inputs.inquirystatus}
+                            required
+                            className="w-full px-4 py-2 border border-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-transparent"
+                        >
+                            <option value="Select">Select</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Not Responded">Not Responded</option>
+                        </select>
+                    </div>
 
-                <div className="text-center">
-                    <button
-                        type="submit"
-                        className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors"
-                    >
-                        Update Response
-                    </button>
-                </div>
-            </form>
+                    {error && <p className="text-red-500 text-sm mb-4">{error}</p>} {/* Display error */}
+
+                    <div className="text-center">
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
+                        >
+                            Update Response
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
