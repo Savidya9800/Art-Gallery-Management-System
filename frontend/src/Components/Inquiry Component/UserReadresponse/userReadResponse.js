@@ -31,7 +31,7 @@ export default function UserReadResponse() {
           <div key={index} className="border-b-2 mb-4 pb-4">
             <h2 className="text-xl font-semibold">Response ID: {response._id}</h2>
             <p><strong>Response:</strong> {response.response}</p>
-            <p><strong>Status:</strong> {response.inquirystatus}</p>
+           
           </div>
         ))
       ) : (

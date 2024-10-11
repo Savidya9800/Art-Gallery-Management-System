@@ -14,7 +14,6 @@ const InquiryAdminSchema = new Schema({
         type: String,
         required:true
     },
-    
     inquiryID: {
         type: mongoose.Schema.Types.ObjectId, // Reference to the InquiryModel
         ref: 'InquiryModel', // This links to the inquiry model
