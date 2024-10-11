@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Viewinquiries from './ViewInquiries';
-import NavigationBar from '../../Nav Component/NavigationBar';
-import FooterComp from '../../Nav Component/FooterComp';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Viewinquiries from "./ViewInquiries";
+import NavigationBar from "../../Nav Component/NavigationBar";
+import FooterComp from "../../Nav Component/FooterComp";
 
 const URL = "http://localhost:5000/inquiry";
+
 const email = localStorage.getItem('email');
 
 const fetchHandler = async () => {
@@ -47,4 +48,6 @@ export default function ViewInquiry() {
             <FooterComp />
         </div>
     );
+
 }
+

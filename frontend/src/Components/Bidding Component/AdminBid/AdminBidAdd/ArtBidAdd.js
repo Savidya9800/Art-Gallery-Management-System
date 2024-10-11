@@ -149,6 +149,7 @@ function ArtBidAdd() {
               <option value="Sculpture">Sculpture</option>
               <option value="Pottery">Pottery</option>
               <option value="Ceramic">Ceramic</option>
+              <option value="Painting">Painting</option>
             </select>
             <br />
 
@@ -169,13 +170,13 @@ function ArtBidAdd() {
               className="border border-black rounded-md w-full p-1 mb-4 focus:outline-none focus:border-[#A78F51]" min="0" />
             <br />
 
-            <label className="bg-white block text-gray-700 text-sm font-bold mb-2">Upload Image (Optional)</label>
+            <label className=" block text-gray-700 text-sm font-bold mb-2">Upload Image (Optional)</label>
               <input
                 type="file"
                 name="image"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
 
             <button className="bg-[#A78F51] text-white p-2 rounded-md w-full hover:bg-[#8f7c43] transition">Add Bid Artwork</button>

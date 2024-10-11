@@ -1,27 +1,64 @@
 // Import the finance model
 const Finance = require("../Models/financeModel");
 
+// Function to generate the payment ID
+const generatePaymentId = async () => {
+  // Get the latest payment record
+  const lastPayment = await Finance.findOne().sort({ paymentDate: -1 });
+
+  // If no payment exists, start with PID001
+  if (!lastPayment) {
+    return "PID001";
+  }
+
+  // Extract the numeric part from the last payment ID and increment it
+  const lastIdNumber = parseInt(lastPayment.paymentId.replace("PID", ""), 10);
+  const newIdNumber = lastIdNumber + 1;
+
+  // Format the new ID to be PID followed by a zero-padded number (e.g., PID002)
+  return `PID${String(newIdNumber).padStart(3, "0")}`;
+};
+
 // Controller function to process and save payment data
 const processPayment = async (req, res) => {
   try {
-    const { cardNumber, expiryDate, cvv, cardName, amount } = req.body;
+    const { cardNumber, expiryDate, cvv, cardName, amount, category } =
+      req.body;
 
     // Validate the payment fields
-    if (!cardNumber || !expiryDate || !cvv || !cardName || !amount) {
+    if (
+      !cardNumber ||
+      !expiryDate ||
+      !cvv ||
+      !cardName ||
+      !amount ||
+      !category
+    ) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Validate the category
+    const validCategories = ["membership", "shop", "art work", "other"];
+    if (!validCategories.includes(category)) {
+      return res.status(400).json({ message: "Invalid category" });
     }
 
     // Calculate the service charge (1.5%) and final amount
     const serviceCharge = amount * 0.015; // 1.5% service charge
     const totalAmount = amount + serviceCharge;
 
+    // Generate a unique payment ID
+    const paymentId = await generatePaymentId();
+
     // Create a new payment entry using the finance model
     const newPayment = new Finance({
+      paymentId, // Save the generated payment ID
       cardNumber,
       expiryDate,
       cvv,
       cardName,
       amount: totalAmount, // Save the total amount including the service charge
+      category, // Save the category
       status: "success", // Default to success (can be modified based on real payment logic)
     });
 
@@ -88,7 +125,6 @@ const getPaymentById = async (req, res) => {
 };
 
 // Controller function to update payment status
-// Controller function to update payment status
 const updatePaymentStatus = async (req, res) => {
   try {
     const { id } = req.params; // Get payment ID from request parameters
@@ -98,8 +134,7 @@ const updatePaymentStatus = async (req, res) => {
     const validStatuses = ["success", "reject"];
     if (!status || !validStatuses.includes(status)) {
       return res.status(400).json({
-        message:
-          "Invalid status. Status must be one of: pending, success, or failed.",
+        message: "Invalid status. Status must be one of: success, reject.",
       });
     }
 
