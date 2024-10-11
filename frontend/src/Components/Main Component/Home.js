@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import img18 from '../Main Component/Images Home/img18.jpg';
-import img17 from '../Main Component/Images Home/img17.jpg';
-import img14 from '../Main Component/Images Home/img14.jpg';
 import img16 from '../Main Component/Images Home/img16.jpg';
 import img19 from '../Main Component/Images Home/img19.jpg';
 import img20 from '../Main Component/Images Home/img20.jpg';
