@@ -66,7 +66,7 @@ const getInquiryByEmail = async (req, res) => {
 
     let inquiryData;
     try {
-        inquiryData = await Inquiry.findOne({ email: email }); // Find by email
+        inquiryData = await Inquiry.find({ email: email }); // Find by email
         console.log(email, '2');
     } catch (err) {
         console.log(err);

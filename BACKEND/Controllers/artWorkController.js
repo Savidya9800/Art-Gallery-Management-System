@@ -192,16 +192,78 @@ const updateArtWork = async (req, res, next) => {
     const mailOptions = {
       from: useremail,
       to: gemail,
-      subject: title,
+      subject: `Your Artwork has Been Accepted!`, // Assign artwork title in subject
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Artwork Accepted</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                color: #333;
+              }
+              .container {
+                max-width: 600px;
+                margin: 50px auto;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+              }
+              .header {
+                text-align: center;
+                padding-bottom: 20px;
+              }
+              .header img {
+                width: 100px;
+              }
+              .content {
+                text-align: left;
+              }
+              .content h1 {
+                font-size: 24px;
+                color: #333;
+              }
+              .content p {
+                font-size: 16px;
+                color: #555;
+                line-height: 1.6;
+              }
+              .footer {
+                text-align: center;
+                padding-top: 20px;
+                font-size: 12px;
+                color: #888;
+              }
+            </style>
+          </head>
           <body>
-            <p>Artwork Accepted</p>
+            <div class="container">
+              <div class="header">
+                <h1>Congratulations!</h1>
+              </div>
+              <div class="content">
+                <p>Dear Artist,</p>
+                <p>We are pleased to inform you that your artwork  has been accepted into our collection at AWARNA Art Gallery.</p>
+                <p>Thank you for your submission, and we are excited to showcase your work!</p>
+                <p>For further inquiries, feel free to contact us.</p>
+                <p>Best regards,<br/>AWARNA Art Gallery Team</p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2024 AWARNA Art Gallery. All Rights Reserved.</p>
+              </div>
+            </div>
           </body>
         </html>
       `,
     };
+    
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
@@ -274,16 +336,78 @@ const deleteArtWork = async (req, res, next) => {
     const mailOptions = {
       from: useremail,
       to: gemail,
-      subject: "title",
+      subject: `Your Artwork Submission Status`, // Including artwork title in the subject
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Artwork Submission Status</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                color: #333;
+              }
+              .container {
+                max-width: 600px;
+                margin: 50px auto;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+              }
+              .header {
+                text-align: center;
+                padding-bottom: 20px;
+              }
+              .header img {
+                width: 100px;
+              }
+              .content {
+                text-align: left;
+              }
+              .content h1 {
+                font-size: 24px;
+                color: #333;
+              }
+              .content p {
+                font-size: 16px;
+                color: #555;
+                line-height: 1.6;
+              }
+              .footer {
+                text-align: center;
+                padding-top: 20px;
+                font-size: 12px;
+                color: #888;
+              }
+            </style>
+          </head>
           <body>
-            <p>Artwork Rejected</p>
+            <div class="container">
+              <div class="header">
+                <h1>Submission Update</h1>
+              </div>
+              <div class="content">
+                <p>Dear Artist,</p>
+                <p>We regret to inform you that your artwork was not accepted into our collection at AWARNA Art Gallery.</p>
+                <p>We appreciate your submission and encourage you to continue creating and sharing your art. We look forward to future opportunities to collaborate.</p>
+                <p>If you have any questions or would like feedback on your submission, please do not hesitate to reach out.</p>
+                <p>Best regards,<br/>AWARNA Art Gallery Team</p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2024 AWARNA Art Gallery. All Rights Reserved.</p>
+              </div>
+            </div>
           </body>
         </html>
       `,
     };
+    
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {

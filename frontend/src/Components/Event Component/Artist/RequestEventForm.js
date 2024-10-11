@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import RighSideImage from "../Artist/background.jpg";
 import FooterComp from "../../Nav Component/FooterComp";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 import "./date_change.css";
 
@@ -23,6 +23,8 @@ const RequestEventForm = () => {
       name: "Package 1",
       memberCountRange: { min: 200, max: 500 },
       budget: 10000,
+      decoration: "Without ",
+      venue: "Community Center",
       Decoration: "Without Decoration",
       Venue: "Community Center",
     },
@@ -31,14 +33,19 @@ const RequestEventForm = () => {
       name: "Package 2",
       memberCountRange: { min: 200, max: 500 },
       budget: 15000,
+      decoration: "With decoration",
+      venue: "Community Center",
       Decoration: "With Decoration",
       Venue: "Community Center",
+
     },
     {
       id: "package3",
       name: "Package 3",
       memberCountRange: { min: 501, max: 1000 },
       budget: 20000,
+      decoration: "Without decoration",
+      venue: "Conference Hall",
       Decoration: "Without Decoration",
       Venue: "Conference Hall",
     },
@@ -47,6 +54,8 @@ const RequestEventForm = () => {
       name: "Package 4",
       memberCountRange: { min: 501, max: 1000 },
       budget: 25000,
+      decoration: "With decoration",
+      venue: "Conference Hall",
       Decoration: "With Decoration",
       Venue: "Conference Hall",
     },
@@ -55,6 +64,8 @@ const RequestEventForm = () => {
       name: "Package 5",
       memberCountRange: { min: 1001, max: 2000 },
       budget: 30000,
+      decoration: "Without decoration",
+      venue: "Local Park",
       Decoration: "Without Decoration",
       Venue: "Local Park",
     },
@@ -63,6 +74,9 @@ const RequestEventForm = () => {
       name: "Package 6",
       memberCountRange: { min: 1001, max: 2000 },
       budget: 35000,
+      decoration: "With decoration",
+      venue: "Local Park",
+
       Decoration: "With Decoration",
       Venue: "Local Park",
     },
@@ -71,6 +85,8 @@ const RequestEventForm = () => {
       name: "Package 7",
       memberCountRange: { min: 1, max: 199 },
       budget: 7000,
+      decoration: "Without decoration",
+      venue: "Local Park",
       Decoration: "Without Decoration",
       Venue: "Local Park",
     },
@@ -79,6 +95,9 @@ const RequestEventForm = () => {
       name: "Package 8",
       memberCountRange: { min: 1, max: 199 },
       budget: 9000,
+      decoration: "With decoration",
+      venue: "Local Park",
+
       Decoration: "With Decoration",
       Venue: "Local Park",
     },
@@ -86,7 +105,7 @@ const RequestEventForm = () => {
 
   const initialFormData = {
     name: "",
-    artist:  "",
+    artist: "",
     email: email || "",
     mobileNumber: "",
     memberCount: "",
@@ -167,12 +186,12 @@ const RequestEventForm = () => {
     const selectedRequest = userRequests.accepted.find(
       (req) => req._id === requestId
     );
-    
+
     if (selectedRequest) {
       const matchedPackage = packages.find(
         (pkg) => pkg.name === selectedRequest.packageName
       );
-  
+
       if (matchedPackage) {
         setSelectedPackage(matchedPackage);
         setFormData({
@@ -182,7 +201,8 @@ const RequestEventForm = () => {
           Decoration: matchedPackage.Decoration,
           Venue: matchedPackage.Venue,
         });
-  
+
+
         // Navigate to the payment page and pass the necessary details
         navigate("/paymentgateway", {
           state: {
@@ -197,7 +217,6 @@ const RequestEventForm = () => {
       }
     }
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -292,28 +311,28 @@ const RequestEventForm = () => {
       fetchUserRequests();
     } catch (error) {
       console.error("Error updating request:", error);
-    const phoneNumber = editedRequestData.mobileNumber;
-    const message = editedRequestData.message;
+      const phoneNumber = editedRequestData.mobileNumber;
+      const message = editedRequestData.message;
 
-    // Phone number validation
-    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
-      alert("Please enter a valid 10-digit mobile number.");
-      return;
+      // Phone number validation
+      if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+      }
+
+      // Message validation
+      if (message.trim() === "") {
+        alert("Message field cannot be empty.");
+        return;
+      }
+
+      // Proceed with saving data only if both validations pass
+      console.log("Data is valid, saving the request...", editedRequestData);
+
+      // Assuming you have your save logic here, after validations succeed
+      setEditingRequestId(null);
     }
-
-    // Message validation
-    if (message.trim() === "") {
-      alert("Message field cannot be empty.");
-      return;
-    }
-
-    // Proceed with saving data only if both validations pass
-    console.log("Data is valid, saving the request...", editedRequestData);
-
-    // Assuming you have your save logic here, after validations succeed
-    setEditingRequestId(null);
   };
-};
 
   const handleEditedChange = (e) => {
     setEditedRequestData({
@@ -346,7 +365,7 @@ const RequestEventForm = () => {
       <NavigationBar />
 
       <div className="request-event-form">
-        <div className="form-container p-4">
+        <div className="p-4 form-container">
           <button
             className="bg-[#A78F51] text-white px-4 py-2 rounded "
             onClick={toggleModal}
@@ -355,43 +374,41 @@ const RequestEventForm = () => {
           </button>
 
           {isModalOpen && (
-            <div className="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 modal">
               <div className="modal-content bg-white p-10 rounded-lg shadow-lg w-full h-auto max-h-[90vh] overflow-auto">
                 <span
-                  className="close text-red-500 cursor-pointer"
+                  className="text-red-500 cursor-pointer close"
                   onClick={toggleModal}
                 >
                   &times;
                 </span>
 
-                <h1 className="bg-white heading text-4xl text-center font-bold mb-4">
+                <h1 className="mb-4 text-4xl font-bold text-center bg-white heading">
                   Plan Your Event
                 </h1>
                 <form onSubmit={handleSubmit}>
-                <div className="date-picker-container mb-4 bg-white flex justify-center">
-                <div className="w-full max-w-lg">
-                  <label className="block font-semibold text-center mb-2">
-                    Event Date and Time:
-                  </label>
-                  <div className="w-full">
-                  <DatePicker
-  selected={formData.eventDate}
-  onChange={handleDateChange}
-  showTimeSelect
-  dateFormat="Pp"
-  inline
-  className="w-full" // Full width for DatePicker
-  minDate={new Date()} // Disable past dates
-/>
-
+                  <div className="flex justify-center mb-4 bg-white date-picker-container">
+                    <div className="w-full max-w-lg">
+                      <label className="block mb-2 font-semibold text-center">
+                        Event Date and Time:
+                      </label>
+                      <div className="w-full">
+                        <DatePicker
+                          selected={formData.eventDate}
+                          onChange={handleDateChange}
+                          showTimeSelect
+                          dateFormat="Pp"
+                          inline
+                          className="w-full" // Full width for DatePicker
+                          minDate={new Date()} // Disable past dates
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-
-                  <div className="form-fields  bg-white">
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                  <div className="bg-white form-fields">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Event Name:{" "}
                       </label>
                       <input
@@ -400,11 +417,11 @@ const RequestEventForm = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Artist Name:{" "}
                       </label>
                       <input
@@ -413,12 +430,12 @@ const RequestEventForm = () => {
                         value={formData.artist}
                         onChange={handleChange}
                         required
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
 
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Email:{" "}
                       </label>
                       <input
@@ -427,7 +444,7 @@ const RequestEventForm = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
 
@@ -445,31 +462,32 @@ const RequestEventForm = () => {
                         onChange={handleChange}
                         required
                         maxLength={10}
-                        className="border border-gray-300 p-2 w-full rounded bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
 
                     <div className="mb-4 bg-white">
-                  <label className="block font-semibold bg-white">Member Count:</label>
-                  <input
-                    type="number"
-                    name="memberCount"
-                    value={formData.memberCount}
-                    onChange={handleMemberCountChange}
-                    min="0" // This ensures no negative values are entered
-                    onKeyPress={(e) => {
-                      if (e.key === "-" || e.key === "+" || e.key === "e") {
-                        e.preventDefault(); // Prevents typing minus, plus, and scientific notation
-                      }
-                    }}
-                    required
-                    className="border border-gray-300 p-2 w-full rounded bg-white"
-                  />
-                </div>
-                    
+                      <label className="block font-semibold bg-white">
+                        Member Count:
+                      </label>
+                      <input
+                        type="number"
+                        name="memberCount"
+                        value={formData.memberCount}
+                        onChange={handleMemberCountChange}
+                        min="0" // This ensures no negative values are entered
+                        onKeyPress={(e) => {
+                          if (e.key === "-" || e.key === "+" || e.key === "e") {
+                            e.preventDefault(); // Prevents typing minus, plus, and scientific notation
+                          }
+                        }}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
 
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Budget:{" "}
                       </label>
                       <input
@@ -479,12 +497,12 @@ const RequestEventForm = () => {
                         onChange={handleChange}
                         required
                         disabled={!!formData.package}
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
 
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Selected Package:{" "}
                       </label>
                       <input
@@ -494,12 +512,12 @@ const RequestEventForm = () => {
                         onChange={handleChange}
                         required
                         readOnly
-                        className="border border-gray-300 p-2 w-full rounded bg-gray-200  bg-white"
+                        className="w-full p-2 bg-gray-200 border border-gray-300 rounded "
                       />
                     </div>
 
-                    <div className="mb-4  bg-white">
-                      <label className="block font-semibold  bg-white">
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
                         Message:{" "}
                       </label>
                       <textarea
@@ -507,7 +525,7 @@ const RequestEventForm = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        className="border border-gray-300 p-2 w-full rounded  bg-white"
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
                       />
                     </div>
 
@@ -517,31 +535,28 @@ const RequestEventForm = () => {
                       value={formData.status}
                     />
 
-                    <Button
-                      type="submit"
-                      variant="dark"
-                    >
+                    <Button type="submit" variant="dark">
                       Submit
                     </Button>
                   </div>
                 </form>
 
                 {filteredPackages.length > 0 && (
-                  <div className="package-selection mt-6">
+                  <div className="mt-6 package-selection">
                     <h3 className="text-lg font-semibold text-center">
                       Available Packages:
                     </h3>
                     <ul className="mt-2">
                       {filteredPackages.map((pkg) => (
                         <li key={pkg.id} className="mb-4">
-                          <div className="package-card border border-gray-300 p-4 rounded">
+                          <div className="p-4 border border-gray-300 rounded package-card">
                             <strong>{pkg.name}</strong>
                             <p>
                               Member Count: {pkg.memberCountRange.min} -{" "}
                               {pkg.memberCountRange.max}
                             </p>
-                            <p>Package Include: {pkg.Decoration}</p>
-                            <p>Venue: {pkg.Venue}</p>
+                            <p>Package Include: {pkg.decoration}</p>
+                            <p>Venue: {pkg.venue}</p>
                             <p>Budget: {pkg.budget}</p>
 
                             <button
@@ -570,17 +585,17 @@ const RequestEventForm = () => {
             </div>
           )}
 
-          <div className="user-requests p-6  rounded-lg shadow-md">
-            <h2 className="topic text-3xl text-center font-bold mb-4 text-gray-800">
+          <div className="p-6 rounded-lg shadow-md user-requests">
+            <h2 className="mb-4 text-3xl font-bold text-center text-gray-800 topic">
               EVENT REQUESTS
             </h2>
 
-            <h3 className="pending_topic text-xl font-semibold mb-2 text-yellow-600">
+            <h3 className="mb-2 text-xl font-semibold text-yellow-600 pending_topic">
               Pending Requests
             </h3>
 
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.pending.length > 0 ? (
@@ -588,7 +603,7 @@ const RequestEventForm = () => {
                   {userRequests.pending.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4  border-l-4 border-yellow-600 rounded-lg"
+                        className="p-4 border-l-4 border-yellow-600 rounded-lg request-card rejected"
                         style={{ width: "1400px" }}
                       >
                         {editingRequestId === request._id ? (
@@ -609,12 +624,12 @@ const RequestEventForm = () => {
                                     handleEditedChange(e);
                                   }
                                 }}
-                                className="w-full p-2 border border-gray-50 rounded bg-red-50"
+                                className="w-full p-2 border rounded border-gray-50 bg-red-50"
                               />
                               {/* Show validation error message if needed */}
                               {editedRequestData.mobileNumber &&
                                 editedRequestData.mobileNumber.length < 10 && (
-                                  <p className="text-red-600 mt-2">
+                                  <p className="mt-2 text-red-600">
                                     Mobile number must be exactly 10 digits.
                                   </p>
                                 )}
@@ -630,11 +645,11 @@ const RequestEventForm = () => {
                                 onChange={(e) => {
                                   handleEditedChange(e);
                                 }}
-                                className="w-full p-2 border border-gray-50 rounded bg-red-50"
+                                className="w-full p-2 border rounded border-gray-50 bg-red-50"
                               />
                               {/* Show validation error message if message is empty */}
                               {editedRequestData.message === "" && (
-                                <p className="text-red-600 mt-2">
+                                <p className="mt-2 text-red-600">
                                   Message field cannot be empty.
                                 </p>
                               )}
@@ -656,7 +671,7 @@ const RequestEventForm = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="space-y-2 w-full ">
+                          <div className="w-full space-y-2 ">
                             <strong className="block text-lg text-gray-800">
                               {request.name}
                             </strong>
@@ -713,17 +728,17 @@ const RequestEventForm = () => {
                   ))}
                 </ul>
               ) : (
-                <p className="pending_result text-gray-600">
+                <p className="text-gray-600 pending_result">
                   No pending requests found.
                 </p>
               )}
             </div>
 
-            <h3 className="accept_topic text-xl font-semibold mb-2 text-green-600">
+            <h3 className="mb-2 text-xl font-semibold text-green-600 accept_topic">
               Accepted Requests
             </h3>
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.accepted.length > 0 ? (
@@ -731,7 +746,7 @@ const RequestEventForm = () => {
                   {userRequests.accepted.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4  border-l-4 border-green-600 rounded-lg"
+                        className="p-4 border-l-4 border-green-600 rounded-lg request-card rejected"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">
@@ -787,11 +802,11 @@ const RequestEventForm = () => {
               )}
             </div>
 
-            <h3 className="reject_topic text-xl font-semibold mb-2 text-red-600">
+            <h3 className="mb-2 text-xl font-semibold text-red-600 reject_topic">
               Rejected Requests
             </h3>
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.rejected.length > 0 ? (
@@ -799,7 +814,7 @@ const RequestEventForm = () => {
                   {userRequests.rejected.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4  border-l-4 border-red-500 rounded-lg"
+                        className="p-4 border-l-4 border-red-500 rounded-lg request-card rejected"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">

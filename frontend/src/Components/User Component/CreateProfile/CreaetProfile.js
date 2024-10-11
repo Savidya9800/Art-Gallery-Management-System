@@ -118,18 +118,18 @@ const CreateProfile = () => {
     }
   };
 
-  /* To add admin, and change role as "admin" in line 13 
-   const adminData = { ...formData, role: "admin" };
+   //To add admin, and change role as "admin" in line 13 
+  //  const adminData = { ...formData, role: "admin" };
 
-    try {
-      await BookingUserService.registerUser(adminData); // Register admin
-      alert("Admin registered successfully!");
-      navigate("/login"); // Redirect to login page after successful registration
-    } catch (error) {
-      setError(error.message);
-    }
-  };
- */
+  //   try {
+  //     await BookingUserService.registerUser(adminData); // Register admin
+  //     alert("Admin registered successfully!");
+  //     navigate("/login"); // Redirect to login page after successful registration
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+ 
 
   return (
     <div className="bg-gray-100">

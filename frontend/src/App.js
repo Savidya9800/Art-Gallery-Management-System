@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import "./App.css";
-import { CartProvider } from "./Components/Inventory Component/Shop/CartContext";
+import { CartProvider } from "../../frontend/src/Components/Inventory Component/Shop/CartContext";
 
 //Main Components
 import Home from "./Components/Main Component/Home";
@@ -11,7 +11,7 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
-
+import PrivacyPolicy from "./Components/Main Component/PrivacyPolicy";
 
 //Inquiry imports
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
@@ -34,6 +34,7 @@ import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
 import CreateBid from "./Components/Bidding Component/BiddingAdd/CreateBid";
 import BidUpdate from "./Components/Bidding Component/UpdateBid/BidUpdate";
+import ArtworksBid from "./Components/Bidding Component/AdminBid/AdminBidView/ArtworksBid";
 
 //Bidding Admin imports are here
 import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBidAdd";
@@ -46,6 +47,7 @@ import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtwork
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 import UploadImage from "./Components/Artwork Component/AddArtwork/UploadImage";
 import SendPdf from "./Components/Artwork Component/AddArtwork/SendPdf";
+import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
@@ -58,7 +60,6 @@ import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
 import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
-import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
 //Event-manager
 import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
@@ -92,9 +93,8 @@ import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
 
 function App() {
-<<<<<<< HEAD
- return (
-     <CartProvider>
+  return (
+    <CartProvider>
       <div>
         <React.Fragment>
           <Routes>
@@ -112,130 +112,106 @@ function App() {
             <Route path="/mainSellArt" element={<SellArtComp />} />
             <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
             <Route path="/mainContactUs" element={<ContactUsComp />} />
-=======
-  return (
-<CartProvider> 
-    <div>
-      <React.Fragment>
-        <Routes>
-          {/* Main Components */}
-          <Route path="/" element={<Home />} />
-          <Route path="/mainHome" element={<Home />} />
-          <Route path="/mainGallery" element={<GalleryComp />} />
-          <Route path="/mainEvents" element={<EventComp />} />
-          <Route path="/mainTickets" element={<TicketComp />} />
-          <Route path="/mainShop" element={<ShopComp />} />
-          <Route path="/mainBidding" element={<BiddingComp />} />
-          <Route path="/mainAboutUs" element={<AboutUsComp />} />
-          <Route path="/mainBlog" element={<BlogComp />} />
-          <Route path="/mainInquary" element={<InquiryComp />} />
-          <Route path="/mainSellArt" element={<SellArtComp />} />
-          <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
-          <Route path="/mainContactUs" element={<ContactUsComp />} />
->>>>>>> cb43e4c2c6eba98cd8cfdd7acbc035934de5cf91
+            <Route path="/mainPrivacyPolicy" element={<PrivacyPolicy />} />
 
-          {/* Artwork-manager */}
-          <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
-          <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
-          <Route path="/mainUploadImage" element={<UploadImage />} />
-          <Route path="/mainUploadReceipt" element={<SendPdf />} />
-          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
-          <Route path="/mainGallery" element={<GalleryComp />} />
-          <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
-          <Route path="/mainAdminArtworks" element={<AdminArtworks />} />
+            {/* Artwork-manager */}
+            <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
+            <Route path="/mainAddArtwork" element={<AddArtworkComp />} />
+            <Route path="/mainUploadImage" element={<UploadImage />} />
+            <Route path="/mainUploadReceipt" element={<SendPdf />} />
+            <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
+            <Route path="/mainGallery" element={<GalleryComp />} />
+            <Route path="/mainArtworkDetails/:id" element={<UpdateArtwork />} />
+            <Route path="/mainAdminArtworks" element={<AdminArtworks />} />
 
-          {/* Inventory Manager */}
-          <Route path="/mainInventory" element={<AdminUi />} />
-          <Route path="/addinventoryform" element={<AddInventory />} />
-          <Route path="/itemview" element={<InventoryComp />} />
-          <Route path="/itemview/:id" element={<UpdateInventory />} />
-          <Route path="/shopView" element={<ShopView />} />
-          {/* Cart */}
-          <Route path="/cart" element={<CartPage />} />
+            {/* Inventory Manager */}
+            <Route path="/mainInventory" element={<AdminUi />} />
+            <Route path="/addinventoryform" element={<AddInventory />} />
+            <Route path="/itemview" element={<InventoryComp />} />
+            <Route path="/itemview/:id" element={<UpdateInventory />} />
+            <Route path="/shopView" element={<ShopView />} />
+            {/* Cart */}
+            <Route path="/cart" element={<CartPage />} />
 
-          {/* Ticket-manager */}
-          <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
-          <Route path="/visitor" element={<Visitor />} />
-          <Route path="/visitorDetails" element={<Visitors />} />
-          <Route path="/addVisitor" element={<AddVisitor />} />
-          <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
-          <Route path="/visitorDetails/:id" element={<Visitor />} />
-          <Route
-            path="/bookingConfirmation"
-            element={<BookingConfirmation />}
-          />
-          <Route path="/messageAdmin" element={<MessageAdmin />} />
-          <Route path="/messageResult" element={<MessageResult />} />
-          <Route path="/message" element={<Messages />} />
-          <Route path="/visitor-count" element={<VisitorCount />} />
+            {/* Ticket-manager */}
+            <Route path="/mainTicketAddVisitor" element={<AddVisitor />} />
+            <Route path="/visitor" element={<Visitor />} />
+            <Route path="/visitorDetails" element={<Visitors />} />
+            <Route path="/addVisitor" element={<AddVisitor />} />
+            <Route path="/visitorDetails/:id" element={<UpdateVisitor />} />
+            <Route path="/visitorDetails/:id" element={<Visitor />} />
+            <Route
+              path="/bookingConfirmation"
+              element={<BookingConfirmation />}
+            />
+            <Route path="/messageAdmin" element={<MessageAdmin />} />
+            <Route path="/messageResult" element={<MessageResult />} />
+            <Route path="/message" element={<Messages />} />
+            <Route path="/visitor-count" element={<VisitorCount />} />
 
-          {/* Inquiry Manager */}
-          <Route path="/mainInquary" element={<InquiryComp />} />
-          <Route path="/newInquiry" element={<AddInquiry />} />
-          <Route path="/inquiries" element={<ViewInquiry />} />
-          <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
-          <Route path="/userReadResponse" element={<UserReadResponse />} />
-          <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
-          <Route path="/Viewresponse/:id" element={<ViewResponse />} />
-          <Route path="/Addresponse/:id" element={<Addresponse />} />
-          <Route
-            path="/updateresponse/:id/:inquiryID"
-            element={<Updateresponse />}
-          />
+            {/* Inquiry Manager */}
+            <Route path="/mainInquary" element={<InquiryComp />} />
+            <Route path="/newInquiry" element={<AddInquiry />} />
+            <Route path="/inquiries" element={<ViewInquiry />} />
+            <Route path="/updateInquiry/:id" element={<UpdateInquiry />} />
+            <Route path="/userReadResponse" element={<UserReadResponse />} />
+            <Route path="/AdminViewresponse" element={<AdminInquiryPage />} />
+            <Route path="/Viewresponse/:id" element={<ViewResponse />} />
+            <Route path="/Addresponse/:id" element={<Addresponse />} />
+            <Route
+              path="/updateresponse/:id/:inquiryID"
+              element={<Updateresponse />}
+            />
 
-          {/* Event Manager */}
-          <Route
-            path="/event-manager-request"
-            element={<EventMangerRequest />}
-          />
-          <Route path="/userSee" element={<UserSee />} />
-          <Route path="/pdf-generator" element={<PdfGenerator />} />
-          <Route
-            path="/event-manager-request"
-            element={<EventMangerRequest />}
-          />
-          <Route path="/artistLogin" element={<ArtistLogin />} />
-          <Route path="/artistRegister" element={<ArtistRegister />} />
-          <Route path="/requestEventForm" element={<RequestEventForm />} />
+            {/* Event Manager */}
+            <Route
+              path="/event-manager-request"
+              element={<EventMangerRequest />}
+            />
+            <Route path="/userSee" element={<UserSee />} />
+            <Route path="/pdf-generator" element={<PdfGenerator />} />
+            <Route
+              path="/event-manager-request"
+              element={<EventMangerRequest />}
+            />
+            <Route path="/artistLogin" element={<ArtistLogin />} />
+            <Route path="/artistRegister" element={<ArtistRegister />} />
+            <Route path="/requestEventForm" element={<RequestEventForm />} />
 
-          {/* Bidding Manager */}
-          <Route path="/mainBidding" element={<BiddingComp />} />
-          <Route path="/mainViewBid" element={<ViewBid />} />
-          <Route path="/startBidding" element={<StartBid />} />
-          <Route path="/mainCreateBid" element={<CreateBid />} />
-          <Route path="/mainViewBid/:id" element={<BidUpdate />} />
-          <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
-          <Route path="/adminBidView" element={<ArtBidView />} />
-          <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
-          <Route path="/mainBidding" element={<BiddingComp />} />
-          <Route path="/mainViewBid/:id" element={<ViewBid />} />
-          <Route path="/startBidding" element={<StartBid />} />
-          <Route path="/mainCreateBid/:id" element={<CreateBid />} />
-          <Route path="/mainUpdateBid/:id/:artworkId" element={<BidUpdate />} />
-          <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
-          <Route path="/adminBidView" element={<ArtBidView />} />
-          <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+            {/* Bidding Manager */}
 
-          {/* Financial Manager */}
-          <Route path="/paymentgateway" element={<PaymentGateway />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/transactions" element={<Transactions />} />
+            <Route path="/mainBidding" element={<BiddingComp />} />
+            <Route path="/mainViewBid/:id" element={<ViewBid />} />
+            <Route path="/startBidding" element={<StartBid />} />
+            <Route path="/mainCreateBid/:id" element={<CreateBid />} />
+            <Route
+              path="/mainUpdateBid/:id/:artworkId"
+              element={<BidUpdate />}
+            />
+            <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
+            <Route path="/adminBidView" element={<ArtBidView />} />
+            <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+            <Route path="/adminArtworksBid" element={<ArtworksBid />} />
 
-          {/* User Manager */}
-          <Route path="/admin/users" element={<AdminUsers />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<CreaetProfile />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/membership" element={<CreateMembership />} />
-          <Route path="/allMembership" element={<AllMembership />} />
-          <Route path="/edit-membership/:id" element={<EditMembership />} />
-        </Routes>
-      </React.Fragment>
-    </div>
-</CartProvider> 
+            {/* Financial Manager */}
+            <Route path="/paymentgateway" element={<PaymentGateway />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/transactions" element={<Transactions />} />
 
+            {/* User Manager */}
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<CreaetProfile />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/membership" element={<CreateMembership />} />
+            <Route path="/allMembership" element={<AllMembership />} />
+            <Route path="/edit-membership/:id" element={<EditMembership />} />
+          </Routes>
+        </React.Fragment>
+      </div>
+    </CartProvider>
   );
 }
 
-export default App;
+export default App;
