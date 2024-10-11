@@ -203,9 +203,23 @@ const Profile = () => {
             <Col xs="auto">
               <Image src="\dp.png" roundedCircle width={100} height={100} />
             </Col>
+            
             <Col>
               <h2 className="mb-0">{`${user.firstName} ${user.lastName}`}</h2>
               <p className="text-muted">{user.role}</p>
+              {/* <p
+              className="badge"
+              style={{
+                backgroundColor: membership ? "#32CD32" : "#FFD700",
+                color: "#000",
+                borderRadius: "12px",
+                padding: "5px 10px",
+              }}
+            >
+              {membership ? "Member" : "User"}
+            </p> */}
+
+
             </Col>
             <Col xs="auto">
               {user.role === "artist" && (
