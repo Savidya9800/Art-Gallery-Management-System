@@ -1,0 +1,98 @@
+/* Confirmation Box */
+.custom-confirmation-box {
+  border: 2px solid #333; /* Keep the border around the confirmation box */
+  border-radius: 12px; /* Set to 12px as per new style */
+  width: 100%;
+  text-align: center;
+  margin-left: 200px;
+  margin-right: 200px;
+  padding: 20px; /* Add padding for better spacing */
+  background-color: #eee8dc; /* Keep background white */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Keep the subtle shadow */
+}
+
+/* Title */
+.custom-confirmation-title {
+  font-size: 2rem; /* Increase font size for the title */
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 20px;
+}
+
+/* Progress Bar */
+.custom-confirmation-progress {
+  width: 100%;
+  height: 10px;
+  background-color: #dfe6e9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Message */
+.custom-confirmation-message {
+  font-size: 1rem;
+  color: #636e72;
+  margin-bottom: 20px;
+}
+
+/* Details List */
+.custom-details-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 30px;
+  text-align: left;
+  margin-left: 100px;
+}
+
+.custom-details-list li {
+  margin: 10px 0;
+}
+
+.custom-details-list li strong {
+  color: #2d3436;
+}
+
+/* Button Wrapper */
+.custom-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Pay Button */
+.custom-pay-button {
+  background-color: #A78F51;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  height: 47px;
+}
+
+/* Download PDF Button */
+.custom-pdf-button {
+  background-color: #A78F51;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  height: 47px;
+  margin-left: 750px;
+  margin-top: 35px;
+  margin-bottom: 45px;
+}
+
+.custom-pdf-button:hover {
+  background-color: #a29bfe; /* Change on hover */
+}
+
+/* Additional Spacing and Border Adjustments */
+.custom-confirmation-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #eee8dc;
+}

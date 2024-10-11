@@ -12,19 +12,19 @@ function FooterComp() {
       </Link>
       <div className="footerContainer">
         <div className="socialIcons">
-          <a href="#" aria-label="Facebook">
+          <a href="https://www.facebook.com/profile.php?id=100094546082676&mibextid=LQQJ4d" aria-label="Facebook"  target="_blank" >
             <i className="fa-brands fa-facebook"></i>
           </a>
-          <a href="#" aria-label="Instagram">
+          <a href="https://www.instagram.com/" aria-label="Instagram"  target="_blank" >
             <i className="fa-brands fa-instagram"></i>
           </a>
-          <a href="#" aria-label="Twitter">
+          <a href="https://twitter.com/" aria-label="Twitter"  target="_blank" >
             <i className="fa-brands fa-twitter"></i>
           </a>
-          <a href="#" aria-label="Google Plus">
+          <a href="https://support.google.com/" aria-label="Google Plus"  target="_blank" >
             <i className="fa-brands fa-google-plus"></i>
           </a>
-          <a href="#" aria-label="YouTube">
+          <a href="https://www.youtube.com/" aria-label="YouTube"  target="_blank" >
             <i className="fa-brands fa-youtube"></i>
           </a>
         </div>
@@ -41,12 +41,12 @@ function FooterComp() {
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/#" className="footerLink">
+              <Link to="/mainPrivacyPolicy" className="footerLink">
                 Privacy Policy
               </Link>
             </li>
             <li className="footerLinkMain">
-              <Link to="/#" className="footerLink">
+              <Link to="/mainInquary" className="footerLink">
                 FAQ
               </Link>
             </li>

@@ -6,7 +6,6 @@
 
 footer {
   background-color: #111;
-  margin-top: 595px;
 }
 
 .footerContainer {
@@ -35,14 +34,7 @@ footer {
   opacity: 0.9;
 }
 
-/* Hover effect on social media icon */
-.socialIcons a:hover {
-  background-color: #111;
-  transition: 0.5s;
-}
-
 .socialIcons a:hover i {
-  color: white;
   transition: 0.5s;
 }
 
