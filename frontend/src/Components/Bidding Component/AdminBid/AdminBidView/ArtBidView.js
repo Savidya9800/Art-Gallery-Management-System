@@ -57,7 +57,13 @@ function ArtBidView() {
     doc.setFontSize(16);
     doc.text("Artwork Added for Bidding Report", 15, 50);
 
-    const tableColumn = ["ID", "Title", "Artist Name", "Category", "Minimum Price"];
+    const tableColumn = [
+      "ID",
+      "Title",
+      "Artist Name",
+      "Category",
+      "Minimum Price",
+    ];
 
     const tableRows = [];
 
@@ -77,13 +83,13 @@ function ArtBidView() {
       startY: 60,
       head: [tableColumn],
       body: tableRows,
-      theme: 'striped',
+      theme: "striped",
       styles: { fillColor: [255, 255, 255] },
       headStyles: { fillColor: [167, 143, 81] },
     });
 
     // Category summary
-    doc.setTextColor(0, 0, 0); 
+    doc.setTextColor(0, 0, 0);
     doc.setFontSize(16);
     doc.text(
       "Summary of Artworks by Category:",
@@ -102,7 +108,7 @@ function ArtBidView() {
     const footerText = [
       "Awarná Art Gallery",
       "Address: 58, Parakrama Mawatha, Wennappuwa",
-      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.co"
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.co",
     ];
 
     doc.setFontSize(12);
@@ -110,7 +116,7 @@ function ArtBidView() {
     const footerY = doc.internal.pageSize.getHeight() - 40; // Adjust footer position as necessary
 
     footerText.forEach((line, index) => {
-      doc.text(line, 15, footerY + (index * 10)); // Increment Y position for each line
+      doc.text(line, 15, footerY + index * 10); // Increment Y position for each line
     });
 
     // Download PDF
@@ -142,9 +148,15 @@ function ArtBidView() {
       <div className="p-6">
         {/* Container for Add New Record and Search Bar */}
         <div className="flex justify-center mb-4 space-x-4">
+        <button
+            className="px-4 py-2 text-white transition duration-300 bg-[#A78F51] rounded-md shadow-md hover:bg-[#bfa35d]"
+            onClick={() => navigate("/adminArtworksBid")}
+          >
+            Requested Artworks
+          </button>
           {/* Add New Record Button */}
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-500 transition duration-300"
+            className="px-4 py-2 text-white transition duration-300 bg-blue-600 rounded-md shadow-md hover:bg-blue-500"
             onClick={() => navigate("/adminArtBidAdd")}
           >
             + Add New Record
@@ -155,12 +167,12 @@ function ArtBidView() {
             <input
               type="text"
               name="search"
-              className="bg-transparent w-full px-4 py-2 text-gray-700 focus:outline-none rounded-l-md"
+              className="w-full px-4 py-2 text-gray-700 bg-transparent focus:outline-none rounded-l-md"
               placeholder="Search by Title"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
-              className="bg-green-600 text-white py-2 px-4 rounded-r-md shadow-md hover:bg-green-500 transition duration-300"
+              className="px-4 py-2 text-white transition duration-300 bg-green-600 shadow-md rounded-r-md hover:bg-green-500"
               onClick={handleSearch}
             >
               Search
@@ -174,33 +186,21 @@ function ArtBidView() {
           </div>
         ) : (
           <div className="mt-6">
-            {adminAddBid && adminAddBid.map((BIDART, i) => (
-              <div key={i}>
-                <ArtBidForm BIDART={BIDART} />
-              </div>
-            ))}
+            {adminAddBid &&
+              adminAddBid.map((BIDART, i) => (
+                <div key={i}>
+                  <ArtBidForm BIDART={BIDART} />
+                </div>
+              ))}
 
             {/* Generate PDF Button */}
             <button
-              className="mt-6 px-4 py-2 bg-blue-700 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+              className="px-4 py-2 mt-6 mr-5 text-white transition duration-300 bg-blue-700 rounded-md shadow-md hover:bg-blue-600"
               onClick={generatePDF}
             >
               Download Summary Report
             </button>
-            <button
-              className="px-5 py-2 text-lg bg-transparent text-[#A78F51] border-2 border-[#A78F51] rounded-md cursor-pointer transition duration-300 hover:text-[#c5b358] hover:border-[#A78F51] mr-2"
-              onClick={() => navigate("/adminArtBidAdd")}
-            >
-              Admin Art Bid insert →
-            </button>
 
-            <button
-              className="mt-6 px-4 py-2 bg-[#A78F51] text-white rounded-md shadow-md hover:bg-[#855E3E] transition duration-300 mr-2"
-              onClick={() => navigate("/adminArtworksBid")}
-              
-            >
-             Browse Bids
-            </button>
           </div>
         )}
       </div>
