@@ -14,7 +14,7 @@ const Transactions = () => {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [editingTransactionId, setEditingTransactionId] = useState(null);
-  const [searchCategory, setSearchCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [filterMonth, setFilterMonth] = useState(new Date().getMonth());
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [newTransaction, setNewTransaction] = useState({
@@ -154,9 +154,9 @@ const Transactions = () => {
     setEditingTransactionId(transaction._id);
   };
 
-  // Handle search input change for Category
-  const handleCategoryInputChange = (e) => {
-    setSearchCategory(e.target.value);
+  // Handle search input change
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   // Handle month filter change
@@ -168,12 +168,12 @@ const Transactions = () => {
   useEffect(() => {
     let filtered = transactions;
 
-    // Filter by category
-    if (searchCategory.trim() !== "") {
-      filtered = filtered.filter((transaction) =>
-        transaction.category
-          .toLowerCase()
-          .includes(searchCategory.toLowerCase())
+    // Filter by search term (transaction ID or category)
+    if (searchTerm.trim() !== "") {
+      filtered = filtered.filter(
+        (transaction) =>
+          transaction.transactionId.toString().includes(searchTerm) || // Check transaction ID
+          transaction.category.toLowerCase().includes(searchTerm.toLowerCase()) // Check category
       );
     }
 
@@ -187,7 +187,7 @@ const Transactions = () => {
     });
 
     setFilteredTransactions(filtered);
-  }, [searchCategory, filterMonth, transactions]);
+  }, [searchTerm, filterMonth, transactions]);
 
   // Format date to display only the date part
   const formatDate = (dateString) => {
@@ -195,7 +195,6 @@ const Transactions = () => {
     return date.toLocaleDateString(); // Change format as needed
   };
 
-  // Add this function inside your Transactions component
   const handleGenerateReport = () => {
     const doc = new jsPDF();
 
@@ -222,6 +221,7 @@ const Transactions = () => {
 
     // Add table with transaction details
     const tableData = filteredTransactions.map((transaction) => [
+      transaction.transactionId, // Include transaction ID
       transaction.type,
       transaction.category,
       `Rs. ${transaction.amount}`,
@@ -229,7 +229,7 @@ const Transactions = () => {
     ]);
 
     doc.autoTable({
-      head: [["Type", "Category", "Amount", "Date"]],
+      head: [["Transaction ID", "Type", "Category", "Amount", "Date"]], // Update header
       body: tableData,
       startY: 35, // Position after the title
       theme: "grid",
@@ -245,6 +245,38 @@ const Transactions = () => {
     doc.text(`Total Income: Rs. ${totalIncome}`, 14, startY);
     doc.text(`Total Expense: Rs. ${totalExpenses}`, 14, startY + 10);
 
+    // Add a line below the title
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, 30, 200, 30);
+
+    // Add line above the footer
+    const footerY = doc.internal.pageSize.getHeight() - 30;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(169, 169, 169);
+    doc.line(10, footerY - 5, 200, footerY - 5);
+
+    // Footer text (right-aligned)
+    doc.setFontSize(10);
+    doc.setTextColor(128, 128, 128);
+
+    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text(
+      "Address: 58, Parakrama Mawatha, Wennappuwa",
+      pageWidth - 14,
+      footerY + 5,
+      { align: "right" }
+    );
+    doc.text(
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.com",
+      pageWidth - 14,
+      footerY + 10,
+      { align: "right" }
+    );
+
+    // Add line below the footer
+    doc.line(10, footerY + 15, 200, footerY + 15);
+
     // Save the PDF
     doc.save("transaction_report.pdf");
   };
@@ -258,79 +290,85 @@ const Transactions = () => {
           Add Income / Expense (Internal)
         </h2>
 
-        <div className="mb-4">
+        <div className="bg-[#e9d8b2] rounded-lg shadow-md p-4 mb-4">
+          <div className="flex flex-wrap items-center mb-4">
+            <input
+              type="text"
+              name="amount"
+              placeholder="Amount"
+              value={newTransaction.amount}
+              onChange={handleInputChange}
+              className="border border-gray-300 p-2 rounded mr-2 w-full md:w-1/4"
+            />
+            <select
+              name="type"
+              onChange={handleInputChange}
+              value={newTransaction.type}
+              className="border border-gray-300 p-2 rounded mr-2 w-full md:w-1/4"
+            >
+              <option value={"Income"}>Income</option>
+              <option value={"Expense"}>Expense</option>
+            </select>
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={newTransaction.category}
+              onChange={handleInputChange}
+              className="border border-gray-300 p-2 rounded mr-2 w-full md:w-1/4"
+            />
+            <button
+              onClick={handleAddOrUpdateTransaction}
+              className="bg-indigo-500 text-white p-2 rounded hover:bg-indigo-600"
+            >
+              {editingTransactionId ? "Update" : "Add"}
+            </button>
+          </div>
+
           <input
             type="text"
-            name="amount"
-            placeholder="Amount"
-            value={newTransaction.amount}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
+            placeholder="Search by Transaction ID or Category"
+            value={searchTerm}
+            onChange={handleSearchInputChange}
+            className="border border-gray-300 p-2 rounded mb-4 w-full"
           />
+
+          {/* Month filter */}
           <select
-            name="type"
-            onChange={handleInputChange}
-            value={newTransaction.type}
-            className="border p-2 mr-2"
+            onChange={handleMonthChange}
+            value={filterMonth}
+            className="border border-gray-300 p-2 rounded mb-4 w-full"
           >
-            <option value={"Income"}>Income</option>
-            <option value={"Expense"}>Expense</option>
+            <option value={0}>January</option>
+            <option value={1}>February</option>
+            <option value={2}>March</option>
+            <option value={3}>April</option>
+            <option value={4}>May</option>
+            <option value={5}>June</option>
+            <option value={6}>July</option>
+            <option value={7}>August</option>
+            <option value={8}>September</option>
+            <option value={9}>October</option>
+            <option value={10}>November</option>
+            <option value={11}>December</option>
           </select>
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={newTransaction.category}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <button
-            onClick={handleAddOrUpdateTransaction}
-            className="bg-blue-500 text-white p-2"
-          >
-            {editingTransactionId ? "Update" : "Add"}
-          </button>
+
+          <div className="mt-4">
+            <h3 className="text-lg font-bold">
+              Total Income: Rs. {totalIncome}
+            </h3>
+            <h3 className="text-lg font-bold">
+              Total Expenses: Rs. {totalExpenses}
+            </h3>
+            <button
+              onClick={handleGenerateReport}
+              className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            >
+              Generate Report
+            </button>
+          </div>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search by Category"
-          value={searchCategory}
-          onChange={handleCategoryInputChange}
-          className="border p-2 mb-4"
-        />
-
-        {/* Month filter */}
-        <select
-          onChange={handleMonthChange}
-          value={filterMonth}
-          className="border p-2 mb-4"
-        >
-          <option value={0}>January</option>
-          <option value={1}>February</option>
-          <option value={2}>March</option>
-          <option value={3}>April</option>
-          <option value={4}>May</option>
-          <option value={5}>June</option>
-          <option value={6}>July</option>
-          <option value={7}>August</option>
-          <option value={8}>September</option>
-          <option value={9}>October</option>
-          <option value={10}>November</option>
-          <option value={11}>December</option>
-        </select>
-        <div className="mt-4">
-          <h3 className="text-lg font-bold">Total Income: Rs. {totalIncome}</h3>
-          <h3 className="text-lg font-bold">
-            Total Expenses: Rs. {totalExpenses}
-          </h3>
-          <button
-            onClick={handleGenerateReport}
-            className="bg-green-500 text-white p-2"
-          >
-            Generate Report
-          </button>
-        </div>
         {loading ? (
           <p>Loading transactions...</p>
         ) : error ? (
@@ -339,7 +377,8 @@ const Transactions = () => {
           <div>
             <table className="min-w-full border-collapse border border-gray-200">
               <thead>
-                <tr>
+                <tr className="bg-gray-200">
+                  <th className="border border-gray-200 p-2">Transaction ID</th>
                   <th className="border border-gray-200 p-2">Type</th>
                   <th className="border border-gray-200 p-2">Category</th>
                   <th className="border border-gray-200 p-2">Amount</th>
@@ -349,7 +388,10 @@ const Transactions = () => {
               </thead>
               <tbody>
                 {filteredTransactions.map((transaction) => (
-                  <tr key={transaction._id}>
+                  <tr key={transaction._id} className="hover:bg-gray-100">
+                    <td className="border border-gray-200 p-2">
+                      {transaction.transactionId}
+                    </td>
                     <td className="border border-gray-200 p-2">
                       {transaction.type}
                     </td>
@@ -365,13 +407,13 @@ const Transactions = () => {
                     <td className="border border-gray-200 p-2">
                       <button
                         onClick={() => handleEditTransaction(transaction)}
-                        className="bg-yellow-500 text-white p-1 mr-2"
+                        className="bg-yellow-500 text-white p-1 mr-2 rounded hover:bg-yellow-600"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDeleteTransaction(transaction._id)}
-                        className="bg-red-500 text-white p-1"
+                        className="bg-red-500 text-white p-1 rounded hover:bg-red-600"
                       >
                         Delete
                       </button>
