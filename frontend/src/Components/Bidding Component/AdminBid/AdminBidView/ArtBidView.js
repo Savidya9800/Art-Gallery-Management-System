@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import ArtBidForm from '../AdminBidForm/ArtBidForm'; // ArtBidForm to display data
-import NavigationBar from '../../../Nav Component/NavigationBar';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ArtBidForm from "../AdminBidForm/ArtBidForm"; // ArtBidForm to display data
+import NavigationBar from "../../../Nav Component/NavigationBar";
+import { useNavigate } from "react-router-dom";
 
 const URL = "http://Localhost:5000/Adminbid";
 
 // Fetch handler
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
-}
+};
 
 function ArtBidView() {
   const [adminAddBid, setBidAddArt] = useState([]);
@@ -19,12 +19,12 @@ function ArtBidView() {
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchHandler().then((data) => {
       setBidAddArt(data.adminAddBid);
-      calculateCategoryCount(data.adminAddBid); 
+      calculateCategoryCount(data.adminAddBid);
     });
   }, []);
 
@@ -40,21 +40,25 @@ function ArtBidView() {
   // PDF generation function using jsPDF
   const generatePDF = () => {
     const doc = new jsPDF();
-    
+
     //  background color
     doc.setFillColor("#FFFFFF");
-    doc.rect(0, 0, 210, 297, "F"); 
+    doc.rect(0, 0, 210, 297, "F");
 
-   
     doc.setFontSize(22);
-    doc.setTextColor(25, 25, 112); 
+    doc.setTextColor(25, 25, 112);
     doc.text("Awarná Art Gallery", 15, 20);
-    
+
     doc.setFontSize(16);
     doc.text("Artwork Added for Bidding Report", 15, 30);
 
-    
-    const tableColumn = ["ID", "Title", "Artist Name", "Category", "Minimum Price"];
+    const tableColumn = [
+      "ID",
+      "Title",
+      "Artist Name",
+      "Category",
+      "Minimum Price",
+    ];
     const tableRows = [];
 
     adminAddBid.forEach((artwork) => {
@@ -63,7 +67,7 @@ function ArtBidView() {
         artwork.title,
         artwork.artistName,
         artwork.category,
-        artwork.minPrice
+        artwork.minPrice,
       ];
       tableRows.push(artworkData);
     });
@@ -73,15 +77,19 @@ function ArtBidView() {
       startY: 40,
       head: [tableColumn],
       body: tableRows,
-      theme: 'striped',
-      styles: { fillColor: [255, 255, 255] }, 
-      headStyles: { fillColor: [167, 143, 81] }, 
+      theme: "striped",
+      styles: { fillColor: [255, 255, 255] },
+      headStyles: { fillColor: [167, 143, 81] },
     });
 
     //  category summary
-    doc.setTextColor(0, 0, 0); 
+    doc.setTextColor(0, 0, 0);
     doc.setFontSize(16);
-    doc.text("Summary of Artworks by Category:", 15, doc.lastAutoTable.finalY + 10);
+    doc.text(
+      "Summary of Artworks by Category:",
+      15,
+      doc.lastAutoTable.finalY + 10
+    );
 
     let yPos = doc.lastAutoTable.finalY + 20;
     Object.entries(categoryCount).forEach(([category, count]) => {
@@ -92,7 +100,7 @@ function ArtBidView() {
 
     // Footer pdf
     doc.setFontSize(12);
-    doc.text(`Generated on ${new Date().toLocaleDateString()}`, 15, 290); 
+    doc.text(`Generated on ${new Date().toLocaleDateString()}`, 15, 290);
 
     // Download PDF
     doc.save("Artwork_Bid_Report.pdf");
@@ -114,12 +122,11 @@ function ArtBidView() {
 
   return (
     <div>
-      <div className='relative z-10'>
+      <div className="relative z-10">
         <NavigationBar />
       </div>
-      
+
       <div className="p-6">
-        
         <div className="flex items-center bg-[#ECE6F0] border-gray-300 px-6 py-1.5 shadow-md w-96 mx-auto">
           <input
             type="text"
@@ -136,31 +143,40 @@ function ArtBidView() {
           </button>
         </div>
 
-       
         {noResults ? (
-          <div className="text-center mt-6">
+          <div className="mt-6 text-center">
             <p className="text-red-500">No Bid Art found</p>
           </div>
         ) : (
           <div className="mt-6">
-           
-            {adminAddBid && adminAddBid.map((BIDART, i) => (
-              <div key={i}>
-               
-                <ArtBidForm BIDART={BIDART} />
-              </div>
-            ))}
+            {adminAddBid &&
+              adminAddBid.map((BIDART, i) => (
+                <div key={i}>
+                  <ArtBidForm BIDART={BIDART} />
+                </div>
+              ))}
 
-           
             <button
-              className="mt-6 px-4 py-2 bg-[#A78F51] text-white rounded-md shadow-md hover:bg-[#855E3E] transition duration-300"
+              className="mt-6 px-4 py-2 bg-[#A78F51] text-white rounded-md shadow-md hover:bg-[#855E3E] transition duration-300 mr-2"
               onClick={generatePDF}
             >
               Download Summary Report
             </button>
 
-            <button className="px-5 py-2 text-lg bg-transparent text-[#A78F51] border-2 border-[#A78F51] rounded-md cursor-pointer transition duration-300 hover:text-[#c5b358] hover:border-[#A78F51]" 
-      onClick={() => navigate("/adminArtBidAdd")}>Admin Art Bid insert  →</button>
+            <button
+              className="px-5 py-2 text-lg bg-transparent text-[#A78F51] border-2 border-[#A78F51] rounded-md cursor-pointer transition duration-300 hover:text-[#c5b358] hover:border-[#A78F51] mr-2"
+              onClick={() => navigate("/adminArtBidAdd")}
+            >
+              Admin Art Bid insert →
+            </button>
+
+            <button
+              className="mt-6 px-4 py-2 bg-[#A78F51] text-white rounded-md shadow-md hover:bg-[#855E3E] transition duration-300 mr-2"
+              onClick={() => navigate("/adminArtworksBid")}
+              
+            >
+             Browse Bids
+            </button>
           </div>
         )}
       </div>

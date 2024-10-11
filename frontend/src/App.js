@@ -89,6 +89,7 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
+import ArtworksBid from "./Components/Bidding Component/AdminBid/AdminBidView/ArtworksBid";
 
 function App() {
   return (
@@ -188,6 +189,7 @@ function App() {
             <Route path="/adminArtBidAdd" element={<ArtBidAdd />} />
             <Route path="/adminBidView" element={<ArtBidView />} />
             <Route path="/adminBidView/:id" element={<ArtBidUpdate />} />
+            <Route path="/adminArtworksBid" element={<ArtworksBid />} />
 
             {/* Financial Manager */}
             <Route path="/paymentgateway" element={<PaymentGateway />} />

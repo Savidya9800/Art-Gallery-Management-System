@@ -11,7 +11,6 @@ import img1 from "./logo.JPG";
 import img2 from "./UserImg.png";
 
 function NavigationBar() {
-
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
@@ -61,21 +60,27 @@ function NavigationBar() {
               <NavDropdown.Item as={Link} to="/mainInquary">
                 Inquiry
               </NavDropdown.Item>
-              {user?.role == "artist" && <NavDropdown.Item as={Link} to="/mainSellArt">Sell Art</NavDropdown.Item>}
-              {user?.role == "user" && <NavDropdown.Item as={Link} to="/mainBidding">Buy Art</NavDropdown.Item>}
-              <NavDropdown.Item as={Link} to="/mainTickets">Tickets</NavDropdown.Item>
+              {user?.role == "artist" && (
+                <NavDropdown.Item as={Link} to="/mainSellArt">
+                  Sell Art
+                </NavDropdown.Item>
+              )}
+              {user?.role == "user" && (
+                <NavDropdown.Item as={Link} to="/mainBidding">
+                  Buy Art
+                </NavDropdown.Item>
+              )}
+              <NavDropdown.Item as={Link} to="/mainTickets">
+                Tickets
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/mainContactUs">
                 Contact Us
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          
-            <Button className="searchbtn" variant="outline-success">Search</Button>
-         
 
-          <a
-            href="/profile">
+          <a href="/profile">
             <img
               src={img2}
               style={{ height: "50px", marginRight: "10px" }}
