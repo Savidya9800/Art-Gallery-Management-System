@@ -48,7 +48,7 @@ function NavigationBar() {
               Blog
               <span></span>
             </Nav.Link>
-            <Nav.Link as={Link} to="/mainInventory">
+            <Nav.Link as={Link} to="/shopview">
               Shop
               <span></span>
             </Nav.Link>

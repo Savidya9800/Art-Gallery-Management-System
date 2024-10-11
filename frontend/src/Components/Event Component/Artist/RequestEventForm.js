@@ -20,7 +20,7 @@ const RequestEventForm = () => {
       name: "Package 1",
       members: { min: 200, max: 500 },
       budget: 10000,
-      decoration: "Without",
+      decoration: "Without ",
       venue: "Community Center",
     },
     {
@@ -28,7 +28,7 @@ const RequestEventForm = () => {
       name: "Package 2",
       members: { min: 200, max: 500 },
       budget: 15000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Community Center",
     },
     {
@@ -36,7 +36,7 @@ const RequestEventForm = () => {
       name: "Package 3",
       members: { min: 501, max: 1000 },
       budget: 20000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Conference Hall",
     },
     {
@@ -44,7 +44,7 @@ const RequestEventForm = () => {
       name: "Package 4",
       members: { min: 501, max: 1000 },
       budget: 25000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Conference Hall",
     },
     {
@@ -52,7 +52,7 @@ const RequestEventForm = () => {
       name: "Package 5",
       members: { min: 1001, max: 2000 },
       budget: 30000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Local Park",
     },
     {
@@ -60,7 +60,7 @@ const RequestEventForm = () => {
       name: "Package 6",
       members: { min: 1001, max: 2000 },
       budget: 35000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Local Park",
     },
     {
@@ -68,7 +68,7 @@ const RequestEventForm = () => {
       name: "Package 7",
       members: { min: 1, max: 199 },
       budget: 7000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Local Park",
     },
     {
@@ -76,7 +76,7 @@ const RequestEventForm = () => {
       name: "Package 8",
       members: { min: 1, max: 199 },
       budget: 9000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Local Park",
     },
   ];
@@ -173,7 +173,7 @@ const RequestEventForm = () => {
           decoration: matchedPackage.decoration,
           venue: matchedPackage.venue,
         });
-        navigate("/paymentgateway", {
+        navigate("/pdf-generator", {
           state: {
             selectedPackage: matchedPackage,
             email: selectedRequest.email,
@@ -470,8 +470,8 @@ const RequestEventForm = () => {
                               Member Count: {pkg.members.min} -{" "}
                               {pkg.members.max}
                             </p>
-                            <p>Package Include: {pkg.Decoration}</p>
-                            <p>Venue: {pkg.Venue}</p>
+                            <p>Package Include: {pkg.decoration}</p>
+                            <p>Venue: {pkg.venue}</p>
                             <p>Budget: {pkg.budget}</p>
                             <button
                               className="bg-[#A78F51] text-white mt-2 px-3 py-1 rounded"
