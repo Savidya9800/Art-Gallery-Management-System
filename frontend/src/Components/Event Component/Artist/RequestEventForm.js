@@ -220,7 +220,7 @@ const RequestEventForm = () => {
       <NavigationBar />
 
       <div className="request-event-form">
-        <div className="form-container p-4">
+        <div className="p-4 form-container">
           <button
             className="bg-[#A78F51] text-white px-4 py-2 rounded "
             onClick={togglehModal}
@@ -233,22 +233,22 @@ const RequestEventForm = () => {
               visibility: 'visible', 
               display: 'block',     // Ensure it's not hidden
             }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="modal-content bg-white p-10 rounded-lg shadow-lg w-full h-auto max-h-[90vh] overflow-auto">
                 <span
-                  className="close text-red-500 cursor-pointer"
+                  className="text-red-500 cursor-pointer close"
                   onClick={togglehModal}
                 >
                   &times;
                 </span>
 
-                <h1 className="bg-white heading text-4xl text-center font-bold mb-4">
+                <h1 className="mb-4 text-4xl font-bold text-center bg-white heading">
                   Plan Your Event
                 </h1>
                 <form onSubmit={handleSubmit}>
-  <div className="date-picker-container mb-4 bg-white flex justify-center">
+  <div className="flex justify-center mb-4 bg-white date-picker-container">
     <div className="w-full max-w-lg">
-      <label className="block font-semibold text-center mb-2">Event Date and Time:</label>
+      <label className="block mb-2 font-semibold text-center">Event Date and Time:</label>
       <div className="w-full">
         <DatePicker
           selected={formData.eventDate}
@@ -263,7 +263,7 @@ const RequestEventForm = () => {
     </div>
   </div>
 
-  <div className="form-fields bg-white">
+  <div className="bg-white form-fields">
     {[
       { label: "Event Name", type: "text", name: "name", value: formData.name },
       { label: "Artist Name", type: "text", name: "artist", value: formData.artist },
@@ -288,14 +288,14 @@ const RequestEventForm = () => {
             {...inputProps}
             onChange={handleChange}
             required
-            className="border border-gray-300 p-2 w-full rounded bg-white"
+            className="w-full p-2 bg-white border border-gray-300 rounded"
           />
         ) : (
           <input
             {...inputProps}
             onChange={handleChange}
             required
-            className="border border-gray-300 p-2 w-full rounded bg-white"
+            className="w-full p-2 bg-white border border-gray-300 rounded"
           />
         )}
       </div>
@@ -307,12 +307,12 @@ const RequestEventForm = () => {
 
 
 {filteredPackages.length > 0 && (
-  <div className="package-selection mt-6">
+  <div className="mt-6 package-selection">
     <h3 className="text-lg font-semibold text-center">Available Packages:</h3>
     <ul className="mt-2">
       {filteredPackages.map((pkg) => (
         <li key={pkg.id} className="mb-4">
-          <div className="package-card border border-gray-300 p-4 rounded">
+          <div className="p-4 border border-gray-300 rounded package-card">
             <strong>{pkg.name}</strong>
             <p>Member Count: {pkg.members.min} - {pkg.members.max}</p>
             <p>Package Include: {pkg.decoration}</p>
@@ -338,24 +338,24 @@ const RequestEventForm = () => {
             </div>
           )}
 
-          <div className="user-requests p-6  rounded-lg shadow-md">
-            <h2 className="topic text-3xl text-center font-bold mb-4 text-gray-800">
+          <div className="p-6 rounded-lg shadow-md user-requests">
+            <h2 className="mb-4 text-3xl font-bold text-center text-gray-800 topic">
               EVENT REQUESTS
             </h2>
 
-            <h3 className="pending_topic text-xl font-semibold mb-2 text-yellow-600">
+            <h3 className="mb-2 text-xl font-semibold text-yellow-600 pending_topic">
               Pending Requests
             </h3>
 
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.pending.length > 0 ? (
   <ul>
     {userRequests.pending.map((request) => (
       <li key={request._id} className="mb-4">
-        <div className="request-card rejected p-4 border-l-4 border-yellow-600 rounded-lg" style={{ width: "1400px" }}>
+        <div className="p-4 border-l-4 border-yellow-600 rounded-lg request-card rejected" style={{ width: "1400px" }}>
           {editingRequestId === request._id ? (
             <div className="space-y-4 bg-red-50">
               <div>
@@ -370,10 +370,10 @@ const RequestEventForm = () => {
                       handleEditedChange(e);
                     }
                   }}
-                  className="w-full p-2 border border-gray-50 rounded bg-red-50"
+                  className="w-full p-2 border rounded border-gray-50 bg-red-50"
                 />
                 {editedRequestData.mobileNumber && editedRequestData.mobileNumber.length < 10 && (
-                  <p className="text-red-600 mt-2">Mobile number must be exactly 10 digits.</p>
+                  <p className="mt-2 text-red-600">Mobile number must be exactly 10 digits.</p>
                 )}
               </div>
               <div>
@@ -382,10 +382,10 @@ const RequestEventForm = () => {
                   name="message"
                   value={editedRequestData.message}
                   onChange={(e) => handleEditedChange(e)}
-                  className="w-full p-2 border border-gray-50 rounded bg-red-50"
+                  className="w-full p-2 border rounded border-gray-50 bg-red-50"
                 />
                 {editedRequestData.message === "" && (
-                  <p className="text-red-600 mt-2">Message field cannot be empty.</p>
+                  <p className="mt-2 text-red-600">Message field cannot be empty.</p>
                 )}
               </div>
               <div className="flex space-x-4 bg-red-50">
@@ -394,7 +394,7 @@ const RequestEventForm = () => {
               </div>
             </div>
           ) : (
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <strong className="block text-lg text-gray-800">{request.name}</strong>
               <p className="text-gray-600"><strong>Status:</strong> <span className="text-yellow-600">{request.status}</span></p>
               <p className="text-gray-600"><strong>Artist:</strong> {request.artist}</p>
@@ -417,25 +417,25 @@ const RequestEventForm = () => {
 
 
               ) : (
-                <p className="pending_result text-gray-600">
+                <p className="text-gray-600 pending_result">
                   No pending requests found.
                 </p>
               )}
             </div>
 
-            <h3 className="accept_topic text-xl font-semibold mb-2 text-green-600">
+            <h3 className="mb-2 text-xl font-semibold text-green-600 accept_topic">
               Accepted Requests
               
             </h3>
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.accepted.length > 0 ? (
                <ul>
                {userRequests.accepted.map((request) => (
                  <li key={request._id} className="mb-4">
-                   <div className="request-card rejected p-4 border-l-4 border-green-600 rounded-lg" style={{ width: "1400px" }}>
+                   <div className="p-4 border-l-4 border-green-600 rounded-lg request-card rejected" style={{ width: "1400px" }}>
                      <strong className="block text-lg text-gray-800">{request.name}</strong>
                      <p className="text-gray-600"><strong>Status:</strong> <span className="text-green-600">{request.status}</span></p>
                      <p className="text-gray-600"><strong>Budget:</strong> {request.budget}</p>
@@ -458,11 +458,11 @@ const RequestEventForm = () => {
               )}
             </div>
 
-            <h3 className="reject_topic text-xl font-semibold mb-2 text-red-600">
+            <h3 className="mb-2 text-xl font-semibold text-red-600 reject_topic">
               Rejected Requests
             </h3>
             <div
-              className="user-requests-section  rounded-lg p-4 shadow-inner w-full h-104 overflow-auto"
+              className="w-full p-4 overflow-auto rounded-lg shadow-inner user-requests-section h-104"
               style={{ height: "400px" }}
             >
               {userRequests.rejected.length > 0 ? (
@@ -470,7 +470,7 @@ const RequestEventForm = () => {
                   {userRequests.rejected.map((request) => (
                     <li key={request._id} className="mb-4">
                       <div
-                        className="request-card rejected p-4  border-l-4 border-red-500 rounded-lg"
+                        className="p-4 border-l-4 border-red-500 rounded-lg request-card rejected"
                         style={{ width: "1400px" }}
                       >
                         <strong className="block text-lg text-gray-800">{request.name}</strong><p className="text-gray-600"><strong>Status:</strong>{" "}<span className="text-red-600">{request.status}</span></p><p className="text-gray-600"><strong>Budget:</strong> {request.budget}</p><p className="text-gray-600"><strong>Member Count:</strong> {request.memberCount}</p><p className="text-gray-600"><strong>Mobile Number:</strong> {request.mobileNumber}</p><p className="text-gray-600"><strong>Package:</strong> {request.packageName}</p><p className="text-gray-600"><strong>Message:</strong> {request.message}</p><p className="text-gray-600"><strong>Date:</strong>{" "}{request.eventDate ? new Date(request.eventDate).toLocaleString() : "No Date"}</p>
