@@ -62,7 +62,7 @@ function ArtworkComp(props) {
   };
 
   const modalStyle = {
-    maxWidth: "800px", // Increased width for better visibility
+    width: "35%",
     margin: "auto",
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: "40px", // Increased padding for spacing
