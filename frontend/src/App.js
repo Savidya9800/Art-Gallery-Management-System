@@ -11,6 +11,7 @@ import TicketComp from "./Components/Ticketing Component/TicketComp";
 import BiddingComp from "./Components/Bidding Component/BiddingComp";
 import AboutUsComp from "./Components/Main Component/AboutUsComp";
 import BlogComp from "./Components/Main Component/BlogComp";
+import PrivacyPolicy from "./Components/Main Component/PrivacyPolicy";
 
 //Inquiry imports
 import InquiryComp from "./Components/Inquiry Component/InquiryComp";
@@ -28,12 +29,12 @@ import SellArtComp from "./Components/Artwork Component/SellArtComp";
 import NewsFeedComp from "./Components/Main Component/NewsFeedComp";
 import ContactUsComp from "./Components/Main Component/ContactUsComp";
 
-
 //Bidding user imports are here
 import ViewBid from "./Components/Bidding Component/BiddingDisplay/ViewBid";
 import StartBid from "./Components/Bidding Component/BiddingHome/StartBid";
 import CreateBid from "./Components/Bidding Component/BiddingAdd/CreateBid";
 import BidUpdate from "./Components/Bidding Component/UpdateBid/BidUpdate";
+import ArtworksBid from "./Components/Bidding Component/AdminBid/AdminBidView/ArtworksBid";
 
 //Bidding Admin imports are here
 import ArtBidAdd from "./Components/Bidding Component/AdminBid/AdminBidAdd/ArtBidAdd";
@@ -46,6 +47,7 @@ import AddArtworkComp from "./Components/Artwork Component/AddArtwork/AddArtwork
 import UpdateArtwork from "./Components/Artwork Component/UpdateArtwork/UpdateArtwork";
 import UploadImage from "./Components/Artwork Component/AddArtwork/UploadImage";
 import SendPdf from "./Components/Artwork Component/AddArtwork/SendPdf";
+import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
 //Ticket-manager
 import Visitor from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/Visitor";
@@ -58,7 +60,6 @@ import Messages from "./Components/Ticketing Component/Ticket Issues/Messages";
 import VisitorCount from "./Components/Ticketing Component/Ticket Visitor Component/Visitor/VisitorCount";
 import ShopComp from "./Components/Inventory Component/Inventory/ShopComp";
 import AddVisitor from "./Components/Ticketing Component/Ticket Visitor Component/AddVisitor/AddVisitor";
-import AdminArtworks from "./Components/Artwork Component/ArtworkAdmin/AdminArtworks";
 
 //Event-manager
 import ArtistLogin from "./Components/Event Component/Artist/ArtistLogin";
@@ -77,6 +78,7 @@ import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDash
 import CreateMembership from "./Components/User Component/membership/CreateMembership";
 import AllMembership from "./Components/User Component/membership/AllMembership";
 import EditMembership from "./Components/User Component/AdminMemberships/EditMembership";
+import AdminMemberships from "./Components/User Component/AdminMemberships/AdminMemberships";
 
 //Finance Manager
 import PaymentGateway from "./Components/Finance Component/PaymentGateway/Payment";
@@ -90,7 +92,6 @@ import InventoryComp from "./Components/Inventory Component/InventoryDetails/Inv
 import UpdateInventory from "./Components/Inventory Component/InventoryDetails/UpdateInventory";
 import ShopView from "./Components/Inventory Component/Shop/ShopView";
 import CartPage from "./Components/Inventory Component/Shop/CartPage";
-import ArtworksBid from "./Components/Bidding Component/AdminBid/AdminBidView/ArtworksBid";
 
 function App() {
   return (
@@ -112,6 +113,7 @@ function App() {
             <Route path="/mainSellArt" element={<SellArtComp />} />
             <Route path="/mainNewsFeed" element={<NewsFeedComp />} />
             <Route path="/mainContactUs" element={<ContactUsComp />} />
+            <Route path="/mainPrivacyPolicy" element={<PrivacyPolicy />} />
 
             {/* Artwork-manager */}
             <Route path="/mainArtworkDetails" element={<ArtworksComp />} />
@@ -160,11 +162,7 @@ function App() {
             <Route
               path="/updateresponse/:id/:inquiryID"
               element={<Updateresponse />}
-
-
-
             />
-           
 
             {/* Event Manager */}
             <Route
@@ -210,6 +208,8 @@ function App() {
             <Route path="/membership" element={<CreateMembership />} />
             <Route path="/allMembership" element={<AllMembership />} />
             <Route path="/edit-membership/:id" element={<EditMembership />} />
+            <Route path="/adminMember" element={<AdminMemberships />} />
+
           </Routes>
         </React.Fragment>
       </div>
@@ -217,4 +217,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

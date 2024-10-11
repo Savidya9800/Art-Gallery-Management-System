@@ -547,7 +547,7 @@ function UpdateArtwork() {
                 className="absolute left-[433px] top-[470px]"
                 type="submit"
               >
-                Submit
+                Update
               </Button>
             </div>
           )}

@@ -31,7 +31,7 @@ export default function Addresponse() {
         }
 
         console.log(inputs);
-        sendRequest().then(() => history(`/ViewResponse/${inquiryID}`));
+        sendRequest().then(() => history(`/ViewResponse/${inquiryID}` ,{state:{isAdmin:true}})); // Redirect to ViewResponse after adding response
     };
 
     const sendRequest = async () => {

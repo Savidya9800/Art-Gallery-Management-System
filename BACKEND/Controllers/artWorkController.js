@@ -7,7 +7,6 @@ const getAllArtWorks = async (req, res) => {
   const email = req.query.email;
   console.log(email);
   //Get all artWorks
-  
 
   try {
     if (email) {
@@ -52,7 +51,7 @@ const addArtWorks = async (req, res, next) => {
   try {
     // Fetch the last uploaded image from the database
     const lastImage = await ImgSchema.findOne({}).sort({ createdAt: -1 });
-    const img = lastImage ? lastImage.image : null; 
+    const img = lastImage ? lastImage.image : null;
     // const img = lastImage ? lastImage._id : null;
 
     artWorks = new artWork({
@@ -124,7 +123,7 @@ const updateArtWork = async (req, res, next) => {
 
     // Now, you can use the email variable for any further operations
     console.log("Email from artwork:", gemail);
-  } catch(err){
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });
   }
@@ -148,7 +147,6 @@ const updateArtWork = async (req, res, next) => {
     accepted,
   } = req.body;
 
-  
   try {
     const updatedArtwork = await artWork.findByIdAndUpdate(
       id,
@@ -177,8 +175,8 @@ const updateArtWork = async (req, res, next) => {
       return res.status(404).json({ message: "Artwork Not Found" });
     }
 
-    const useremail = "savidyajayalath@gmail.com";
-    const pass = "rofk zebl vrwb gjti";
+    const useremail = "suhansa2816@gmail.com";
+    const pass = "hifb jtjv jdia zdtg";
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -187,7 +185,6 @@ const updateArtWork = async (req, res, next) => {
         pass: pass,
       },
     });
-
 
     const mailOptions = {
       from: useremail,
@@ -263,7 +260,6 @@ const updateArtWork = async (req, res, next) => {
         </html>
       `,
     };
-    
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
@@ -271,18 +267,14 @@ const updateArtWork = async (req, res, next) => {
       }
       console.log("Email sent: " + info.response);
       return res.status(409).json({ message: "Accepted, Email sent!" });
-    });
+    });
 
     return res.status(200).json({ artwork: updatedArtwork });
-
-  
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });
   }
 };
-
 
 //Delete artwork
 const deleteArtWork = async (req, res, next) => {
@@ -303,7 +295,7 @@ const deleteArtWork = async (req, res, next) => {
 
     // Now, you can use the email variable for any further operations
     console.log("Email from artwork:", gemail);
-  } catch(err){
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server Error" });
   }
@@ -321,23 +313,22 @@ const deleteArtWork = async (req, res, next) => {
       .json({ message: "Unable to Delete Artwork Details" });
   }
 
-  const useremail = "savidyajayalath@gmail.com";
-    const pass = "rofk zebl vrwb gjti";
+  const useremail = "suhansa2816@gmail.com";
+  const pass = "hifb jtjv jdia zdtg";
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: useremail,
-        pass: pass,
-      },
-    });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: useremail,
+      pass: pass,
+    },
+  });
 
-
-    const mailOptions = {
-      from: useremail,
-      to: gemail,
-      subject: `Your Artwork Submission Status`, // Including artwork title in the subject
-      html: `
+  const mailOptions = {
+    from: useremail,
+    to: gemail,
+    subject: `Your Artwork Submission Status`, // Including artwork title in the subject
+    html: `
         <!DOCTYPE html>
         <html lang="en">
           <head>
@@ -406,17 +397,16 @@ const deleteArtWork = async (req, res, next) => {
           </body>
         </html>
       `,
-    };
-    
+  };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log("Email sent: " + info.response);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log("Email sent: " + info.response);
 
-      return res.status(409).json({ message: "Accepted, Email sent!" });
-    });
+    return res.status(409).json({ message: "Accepted, Email sent!" });
+  });
 
   return res.status(200).json({ artworks });
 };

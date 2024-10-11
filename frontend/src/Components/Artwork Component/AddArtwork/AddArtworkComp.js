@@ -170,7 +170,7 @@ function AddArtworkComp() {
     try {
       await sendRequest();
       alert("Artwork Added Successfully");
-      history("/mainArtworkDetails");
+      history("/mainHome");
     } catch (error) {
       console.error("Error submitting the form:", error);
       alert("There was an error submitting the form. Please try again.");

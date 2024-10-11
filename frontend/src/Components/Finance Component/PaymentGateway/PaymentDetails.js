@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import FooterComp from "../../Nav Component/FooterComp";
 import NavigationBar from "../../Nav Component/NavigationBar";
 import axios from "axios"; // Import axios for API calls
-import { useNavigate } from "react-router";
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const Payments = () => {
   const [payments, setPayments] = useState([]); // Initialize payments as an empty array
   const [loading, setLoading] = useState(true); // State to manage loading
   const [error, setError] = useState(null); // State to manage errors
+  const navigate = useNavigate();
+
 
   // State for search inputs
   const [searchTerm, setSearchTerm] = useState(""); // Single state for combined search
@@ -74,53 +80,56 @@ const Payments = () => {
     return maskedDigits + lastFourDigits;
   };
 
+  
+
   return (
     <div>
       <NavigationBar />
 
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">All Paid Payments</h1>
+      <div className="container p-4 mx-auto">
+        <h1 className="mb-4 text-2xl font-bold">All Paid Payments</h1>
         <div className="mb-6">
           <input
             type="text"
             placeholder="Search by Payment ID, Card Name, or Category"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 w-full text-base bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+            className="w-full p-2 text-base bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
+        <Button variant="dark mb-2" onClick={() => navigate("/transactions")}>Inter Transactions</Button>
         <div className="bg-[#e9d8b2] rounded-lg shadow-md p-4">
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr className="bg-gray-200">
-                <th className="py-2 px-4 border-b text-left">Payment ID</th>
-                <th className="py-2 px-4 border-b text-left">Card Number</th>
-                <th className="py-2 px-4 border-b text-left">Card Name</th>
-                <th className="py-2 px-4 border-b text-left">Category</th>
-                <th className="py-2 px-4 border-b text-left">Paid Amount</th>
-                <th className="py-2 px-4 border-b text-left">Payment Date</th>
-                <th className="py-2 px-4 border-b text-left">Status</th>
-                <th className="py-2 px-4 border-b text-left">Actions</th>
+                <th className="px-4 py-2 text-left border-b">Payment ID</th>
+                <th className="px-4 py-2 text-left border-b">Card Number</th>
+                <th className="px-4 py-2 text-left border-b">Card Name</th>
+                <th className="px-4 py-2 text-left border-b">Category</th>
+                <th className="px-4 py-2 text-left border-b">Paid Amount</th>
+                <th className="px-4 py-2 text-left border-b">Payment Date</th>
+                <th className="px-4 py-2 text-left border-b">Status</th>
+                <th className="px-4 py-2 text-left border-b">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredPayments.length > 0 ? (
                 filteredPayments.map((payment, index) => (
                   <tr key={index} className="hover:bg-gray-100">
-                    <td className="py-2 px-4 border-b">{payment.paymentId}</td>
-                    <td className="py-2 px-4 border-b">
+                    <td className="px-4 py-2 border-b">{payment.paymentId}</td>
+                    <td className="px-4 py-2 border-b">
                       {formatCardNumber(payment.cardNumber)}
                     </td>
-                    <td className="py-2 px-4 border-b">{payment.cardName}</td>
-                    <td className="py-2 px-4 border-b">{payment.category}</td>
-                    <td className="py-2 px-4 border-b">{payment.amount}</td>
-                    <td className="py-2 px-4 border-b">
+                    <td className="px-4 py-2 border-b">{payment.cardName}</td>
+                    <td className="px-4 py-2 border-b">{payment.category}</td>
+                    <td className="px-4 py-2 border-b">{payment.amount}</td>
+                    <td className="px-4 py-2 border-b">
                       {new Date(payment.paymentDate).toLocaleDateString()}
                     </td>
-                    <td className="py-2 px-4 border-b">{payment.status}</td>
-                    <td className="py-2 px-4 border-b">
+                    <td className="px-4 py-2 border-b">{payment.status}</td>
+                    <td className="px-4 py-2 border-b">
                       <button
-                        className="bg-indigo-500 text-white py-1 px-3 rounded hover:bg-indigo-600"
+                        className="px-3 py-1 text-white bg-indigo-500 rounded hover:bg-indigo-600"
                         onClick={() =>
                           handleStatusChange(payment._id, payment.status)
                         }
@@ -132,7 +141,7 @@ const Payments = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center py-4">
+                  <td colSpan="8" className="py-4 text-center">
                     No payments found.
                   </td>
                 </tr>

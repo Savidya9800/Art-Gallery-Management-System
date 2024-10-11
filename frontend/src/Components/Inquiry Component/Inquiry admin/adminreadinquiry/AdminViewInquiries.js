@@ -38,7 +38,7 @@ export default function AdminViewInquiries(props) {
                                         Response
                                     </button>
                                     <button
-                                        onClick={() => navigate(`/ViewResponse/${_id}`)} 
+                                        onClick={() => navigate(`/ViewResponse/${_id}`,{state:{isAdmin:true}})} 
                                         className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 border border-black transition duration-200">
                                         Status
                                     </button>
