@@ -59,9 +59,10 @@ function AdminArtworks() {
   };
 
   return (
-    <div className="flex-col min-h-screen">
+    <div className="relative z-10 flex-col min-h-screen">
+      <NavigationBar />
+            
       <div className="relative z-10">      </div>
-
       {/* Search Bar */}
       <div className="mt-2">
         <input
@@ -78,7 +79,6 @@ function AdminArtworks() {
           Search
         </Button>
       </div>
-
       <div className="flex-grow p-4">
         <table className="min-w-full border border-gray-300">
           <thead>
@@ -109,6 +109,7 @@ function AdminArtworks() {
           )}
         </table>
       </div>
+      <FooterComp/>
     </div>
   );
 }

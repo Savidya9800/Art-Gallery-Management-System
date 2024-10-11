@@ -246,15 +246,15 @@ function AdminArtwork(props) {
         </label>
       </td>
 
-      <td className="p-2 border border-gray-300">
-        <Button onClick={generatePDFReport} variant="primary" className="mr-1">
+      <td className="p-2 mr-0 border border-gray-300">
+        <Button onClick={generatePDFReport} variant="primary" className="mb-1 ml-1.5 mr-0">
           Generate Report
         </Button>
-        |
+        
         <Button onClick={handleAccept} variant="success" className="ml-1 mr-1">
           Accept
         </Button>
-        |
+        
         <Button
           onClick={deleteHandler}
           variant="danger"
@@ -263,6 +263,7 @@ function AdminArtwork(props) {
           Reject
         </Button>
       </td>
+      
     </>
   );
 }
