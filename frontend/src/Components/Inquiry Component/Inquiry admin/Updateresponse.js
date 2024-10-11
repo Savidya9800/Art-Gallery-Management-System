@@ -62,7 +62,7 @@ export default function UpdateResponse() {
             return;
         }
 
-        sendRequest().then(() => history(`/Viewresponse/${inquiryID}`));
+        sendRequest().then(() => history(`/Viewresponse/${inquiryID}`,{state:{isAdmin:true}})); // Redirect to Viewresponse page
     };
 
     if (loading) {
