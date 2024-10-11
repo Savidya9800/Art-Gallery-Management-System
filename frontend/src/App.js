@@ -78,6 +78,7 @@ import AdminDashboard from "./Components/User Component/AdminDashboard/AdminDash
 import CreateMembership from "./Components/User Component/membership/CreateMembership";
 import AllMembership from "./Components/User Component/membership/AllMembership";
 import EditMembership from "./Components/User Component/AdminMemberships/EditMembership";
+import AdminMemberships from "./Components/User Component/AdminMemberships/AdminMemberships";
 
 //Finance Manager
 import PaymentGateway from "./Components/Finance Component/PaymentGateway/Payment";
@@ -207,6 +208,8 @@ function App() {
             <Route path="/membership" element={<CreateMembership />} />
             <Route path="/allMembership" element={<AllMembership />} />
             <Route path="/edit-membership/:id" element={<EditMembership />} />
+            <Route path="/adminMember" element={<AdminMemberships />} />
+
           </Routes>
         </React.Fragment>
       </div>

@@ -175,8 +175,8 @@ const updateArtWork = async (req, res, next) => {
       return res.status(404).json({ message: "Artwork Not Found" });
     }
 
-    const useremail = "savidyajayalath@gmail.com";
-    const pass = "rofk zebl vrwb gjti";
+    const useremail = "suhansa2816@gmail.com";
+    const pass = "hifb jtjv jdia zdtg";
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -313,8 +313,8 @@ const deleteArtWork = async (req, res, next) => {
       .json({ message: "Unable to Delete Artwork Details" });
   }
 
-  const useremail = "savidyajayalath@gmail.com";
-  const pass = "rofk zebl vrwb gjti";
+  const useremail = "suhansa2816@gmail.com";
+  const pass = "hifb jtjv jdia zdtg";
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
