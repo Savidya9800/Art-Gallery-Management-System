@@ -49,7 +49,7 @@ export default function Viewinquiries(props) {
 
       <div className="flex justify-between mt-5">/////////////////////
 <button
-                        onClick={() => navigate(`/ViewResponse/${_id}`)} // Pass inquiry ID to the ViewResponse route
+                        onClick={() => navigate(`/ViewResponse/${_id}`,{state:{isAdmin:false}})} // Pass inquiry ID to the ViewResponse route
                         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border border-black transition duration-200">
                         Status
                     </button>
