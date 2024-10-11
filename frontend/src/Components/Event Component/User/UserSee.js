@@ -96,7 +96,7 @@ function UserSee() {
     setSortOrder(e.target.value); // Update the sort order based on dropdown selection
   };
 
-  if (loading) return <p className="text-lg font-semibold text-center">Loading...</p>;
+  // if (loading) return <p className="text-lg font-semibold text-center">Loading...</p>;
   if (error) return <p className="font-semibold text-center text-red-500">{error}</p>;
 
   return (
@@ -129,7 +129,7 @@ function UserSee() {
         </div>
 
         {/* Dropdown for sorting */}
-        <div className="flex justify-left mb-6">
+        <div className="flex mb-6 justify-left">
           <select
             value={sortOrder}
             onChange={handleSortChange}

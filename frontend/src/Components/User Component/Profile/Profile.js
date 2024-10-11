@@ -154,7 +154,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/mainHome");
+    navigate("/login");
   };
 
   const handleDeleteAccount = () => setShowDeleteConfirmation(true);
@@ -191,10 +191,12 @@ const Profile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <Container fluid className="py-3 bg-light min-vh-100">
+    <div>
       <div className="relative z-10">
         <NavigationBar />
       </div>
+    <Container fluid className="py-3 bg-light min-vh-100">
+      
       <Card className="mt-4">
         <Card.Body>
           <Row className="mb-4 align-items-center">
@@ -221,7 +223,7 @@ const Profile = () => {
                 {isEditing ? "Save Profile" : "Edit Profile"}
               </Button>
             </Col>
-            {membership === null && user.role !== "admin" && (
+            {membership === null && user.role !== "admin" && user.role !== "artist" && (
               <Col xs="auto">
                 <Button variant="primary" onClick={handleApplyMembership}>
                   Apply for membership
@@ -429,7 +431,7 @@ const Profile = () => {
               </Button>
             </Col>
             <Col className="text-center">
-              <Button variant="secondary">Contact Us</Button>
+              <Button variant="secondary" onClick={() => navigate("/mainContactUs")}>Contact Us</Button>
             </Col>
             <Col className="text-end">
               <Button variant="danger" onClick={handleDeleteAccount}>
@@ -467,6 +469,7 @@ const Profile = () => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </div>
   );
 };
 

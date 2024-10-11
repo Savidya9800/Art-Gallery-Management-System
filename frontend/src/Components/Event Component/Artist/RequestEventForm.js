@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavigationBar from "../../Nav Component/NavigationBar";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import RighSideImage from "../Artist/background.jpg";
 import FooterComp from "../../Nav Component/FooterComp";
 import Button from "react-bootstrap/Button";
+
 import "./date_change.css";
 
 const RequestEventForm = () => {
@@ -14,72 +16,93 @@ const RequestEventForm = () => {
   const navigate = useNavigate();
   const { email, name } = location.state || { email: "", name: "" };
   const [selectedPackage, setSelectedPackage] = useState(null);
+
   const packages = [
     {
       id: "package1",
       name: "Package 1",
-      members: { min: 200, max: 500 },
+      memberCountRange: { min: 200, max: 500 },
       budget: 10000,
-      decoration: "Without",
+      decoration: "Without ",
       venue: "Community Center",
+      Decoration: "Without Decoration",
+      Venue: "Community Center",
     },
     {
       id: "package2",
       name: "Package 2",
-      members: { min: 200, max: 500 },
+      memberCountRange: { min: 200, max: 500 },
       budget: 15000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Community Center",
+      Decoration: "With Decoration",
+      Venue: "Community Center",
+
     },
     {
       id: "package3",
       name: "Package 3",
-      members: { min: 501, max: 1000 },
+      memberCountRange: { min: 501, max: 1000 },
       budget: 20000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Conference Hall",
+      Decoration: "Without Decoration",
+      Venue: "Conference Hall",
     },
     {
       id: "package4",
       name: "Package 4",
-      members: { min: 501, max: 1000 },
+      memberCountRange: { min: 501, max: 1000 },
       budget: 25000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Conference Hall",
+      Decoration: "With Decoration",
+      Venue: "Conference Hall",
     },
     {
       id: "package5",
       name: "Package 5",
-      members: { min: 1001, max: 2000 },
+      memberCountRange: { min: 1001, max: 2000 },
       budget: 30000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Local Park",
+      Decoration: "Without Decoration",
+      Venue: "Local Park",
     },
     {
       id: "package6",
       name: "Package 6",
-      members: { min: 1001, max: 2000 },
+      memberCountRange: { min: 1001, max: 2000 },
       budget: 35000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Local Park",
+
+      Decoration: "With Decoration",
+      Venue: "Local Park",
     },
     {
       id: "package7",
       name: "Package 7",
-      members: { min: 1, max: 199 },
+      memberCountRange: { min: 1, max: 199 },
       budget: 7000,
-      decoration: "Without",
+      decoration: "Without decoration",
       venue: "Local Park",
+      Decoration: "Without Decoration",
+      Venue: "Local Park",
     },
     {
       id: "package8",
       name: "Package 8",
-      members: { min: 1, max: 199 },
+      memberCountRange: { min: 1, max: 199 },
       budget: 9000,
-      decoration: "With",
+      decoration: "With decoration",
       venue: "Local Park",
+
+      Decoration: "With Decoration",
+      Venue: "Local Park",
     },
   ];
+
   const initialFormData = {
     name: "",
     artist: "",
@@ -92,20 +115,23 @@ const RequestEventForm = () => {
     budget: "",
     packageName: "",
   };
+
   const [formData, setFormData] = useState(initialFormData);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Force open
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userRequests, setUserRequests] = useState({
     pending: [],
     accepted: [],
     rejected: [],
   });
+
   const [editingRequestId, setEditingRequestId] = useState(null);
   const [editedRequestData, setEditedRequestData] = useState({});
 
-  const togglehModal = () => {
+  const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
-    console.log("Modal state:", isModalOpen); // Log to check the state
-    if (isModalOpen) resetForm();
+    if (isModalOpen) {
+      resetForm();
+    }
   };
 
   const handleMemberCountChange = (e) => {
@@ -113,9 +139,9 @@ const RequestEventForm = () => {
     setFormData({ ...formData, memberCount: count });
 
     const matchedPackage = packages.find(
-      (pkg) => count >= pkg.members.min && count <= pkg.members.max
+      (pkg) =>
+        count >= pkg.memberCountRange.min && count <= pkg.memberCountRange.max
     );
-    console.log("Matched package:", matchedPackage); // Log the matched package
 
     if (matchedPackage) {
       setSelectedPackage(matchedPackage);
@@ -123,8 +149,8 @@ const RequestEventForm = () => {
         ...prevFormData,
         budget: matchedPackage.budget,
         packageName: matchedPackage.name,
-        decoration: matchedPackage.decoration,
-        venue: matchedPackage.venue,
+        Decoration: matchedPackage.Decoration,
+        Venue: matchedPackage.Venue,
       }));
     } else {
       setSelectedPackage(null);
@@ -132,8 +158,8 @@ const RequestEventForm = () => {
         ...prevFormData,
         budget: "",
         packageName: "",
-        decoration: "",
-        venue: "",
+        Decoration: "",
+        Venue: "",
       }));
     }
   };
@@ -160,28 +186,35 @@ const RequestEventForm = () => {
     const selectedRequest = userRequests.accepted.find(
       (req) => req._id === requestId
     );
+
     if (selectedRequest) {
       const matchedPackage = packages.find(
         (pkg) => pkg.name === selectedRequest.packageName
       );
+
       if (matchedPackage) {
         setSelectedPackage(matchedPackage);
         setFormData({
           ...formData,
           budget: matchedPackage.budget,
           packageName: matchedPackage.name,
-          decoration: matchedPackage.decoration,
-          venue: matchedPackage.venue,
+          Decoration: matchedPackage.Decoration,
+          Venue: matchedPackage.Venue,
         });
+
+
+        // Navigate to the payment page and pass the necessary details
         navigate("/paymentgateway", {
           state: {
             selectedPackage: matchedPackage,
-            email: selectedRequest.email,
-            eventDate: selectedRequest.eventDate,
-            artistName: selectedRequest.name,
+            email: selectedRequest.email, // assuming email is part of selectedRequest
+            eventDate: selectedRequest.eventDate, // assuming eventDate is part of selectedRequest
+            artistName: selectedRequest.name, // assuming name is the artist's name
           },
         });
-      } else console.error("No matching package found");
+      } else {
+        console.error("No matching package found");
+      }
     }
   };
 
@@ -195,16 +228,22 @@ const RequestEventForm = () => {
       );
       alert("Form submitted successfully!");
       resetForm();
-      togglehModal();
+      toggleModal();
       fetchUserRequests();
     } catch (error) {
       console.error("There was an error submitting the form!", error);
     }
+
+    e.preventDefault(); // Prevent form default submission
+
     if (!formData.eventDate) {
       alert("Please select a date and time for the event.");
       return; // Stop the form submission if the date is not selected
     }
+
+    // Proceed with form submission logic if validation passes
     console.log("Form submitted with data:", formData);
+    // Add your submission logic here (e.g., sending form data to a server)
   };
 
   const fetchUserRequests = async () => {
@@ -213,6 +252,7 @@ const RequestEventForm = () => {
         `http://localhost:5000/requestEvent/getrequestsbyemail/${email}`
       );
       const requests = response.data;
+
       const pendingRequests = requests.filter(
         (request) => request.status === "pending"
       );
@@ -222,6 +262,7 @@ const RequestEventForm = () => {
       const rejectedRequests = requests.filter(
         (request) => request.status === "Rejected"
       );
+
       setUserRequests({
         pending: pendingRequests,
         accepted: acceptedRequests,
@@ -233,7 +274,9 @@ const RequestEventForm = () => {
   };
 
   useEffect(() => {
-    if (email) fetchUserRequests();
+    if (email) {
+      fetchUserRequests();
+    }
   }, [email]);
 
   const goToEventManagerRequest = () => {
@@ -270,17 +313,23 @@ const RequestEventForm = () => {
       console.error("Error updating request:", error);
       const phoneNumber = editedRequestData.mobileNumber;
       const message = editedRequestData.message;
+
       // Phone number validation
       if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
         alert("Please enter a valid 10-digit mobile number.");
         return;
       }
+
       // Message validation
       if (message.trim() === "") {
         alert("Message field cannot be empty.");
         return;
       }
+
+      // Proceed with saving data only if both validations pass
       console.log("Data is valid, saving the request...", editedRequestData);
+
+      // Assuming you have your save logic here, after validations succeed
       setEditingRequestId(null);
     }
   };
@@ -298,8 +347,8 @@ const RequestEventForm = () => {
       budget: pkg.budget,
       package: pkg.name,
       packageName: pkg.name,
-      decoration: pkg.decoration,
-      venue: pkg.venue,
+      Decoration: pkg.Decoration,
+      Venue: pkg.Venue,
     });
     setSelectedPackage(pkg);
   };
@@ -307,10 +356,9 @@ const RequestEventForm = () => {
   const filteredPackages = packages.filter(
     (pkg) =>
       formData.memberCount &&
-      formData.memberCount >= pkg.members.min &&
-      formData.memberCount <= pkg.members.max
+      formData.memberCount >= pkg.memberCountRange.min &&
+      formData.memberCount <= pkg.memberCountRange.max
   );
-  console.log(filteredPackages.map((pkg) => pkg.budget.toString()).join(", ")); // Log the selected package
 
   return (
     <div>
@@ -320,23 +368,17 @@ const RequestEventForm = () => {
         <div className="p-4 form-container">
           <button
             className="bg-[#A78F51] text-white px-4 py-2 rounded "
-            onClick={togglehModal}
+            onClick={toggleModal}
           >
             Request Event
           </button>
+
           {isModalOpen && (
-            <div
-              style={{
-                zIndex: 1000, // z-index above other content
-                visibility: "visible",
-                display: "block", // Ensure it's not hidden
-              }}
-              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-            >
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 modal">
               <div className="modal-content bg-white p-10 rounded-lg shadow-lg w-full h-auto max-h-[90vh] overflow-auto">
                 <span
                   className="text-red-500 cursor-pointer close"
-                  onClick={togglehModal}
+                  onClick={toggleModal}
                 >
                   &times;
                 </span>
@@ -357,99 +399,142 @@ const RequestEventForm = () => {
                           showTimeSelect
                           dateFormat="Pp"
                           inline
-                          className="w-full"
-                          minDate={new Date()}
+                          className="w-full" // Full width for DatePicker
+                          minDate={new Date()} // Disable past dates
                         />
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-white form-fields">
-                    {[
-                      {
-                        label: "Event Name",
-                        type: "text",
-                        name: "name",
-                        value: formData.name,
-                      },
-                      {
-                        label: "Artist Name",
-                        type: "text",
-                        name: "artist",
-                        value: formData.artist,
-                      },
-                      {
-                        label: "Email",
-                        type: "email",
-                        name: "email",
-                        value: formData.email,
-                      },
-                      {
-                        label: "Mobile Number",
-                        type: "text",
-                        name: "mobileNumber",
-                        value: formData.mobileNumber,
-                        maxLength: 10,
-                        onInput: (e) =>
-                          (e.target.value = e.target.value.replace(/\D/g, "")),
-                      },
-                      {
-                        label: "Member Count",
-                        type: "number",
-                        name: "memberCount",
-                        value: formData.memberCount,
-                        min: "0",
-                        onKeyPress: (e) =>
-                          ["-", "+", "e"].includes(e.key) && e.preventDefault(),
-                        onChange: handleMemberCountChange,
-                      },
-                      {
-                        label: "Budget",
-                        type: "number",
-                        name: "budget",
-                        value: formData.budget,
-                        readOnly: true,
-                      },
-                      {
-                        label: "Selected Package",
-                        type: "text",
-                        name: "packageName",
-                        value: formData.packageName,
-                        readOnly: true,
-                      },
-                      {
-                        label: "Message",
-                        type: "textarea",
-                        name: "message",
-                        value: formData.message,
-                      },
-                    ].map(({ label, ...inputProps }, i) => (
-                      <div key={i} className="mb-4 bg-white">
-                        <label className="block font-semibold bg-white">
-                          {label}:{" "}
-                        </label>
-                        {inputProps.type === "textarea" ? (
-                          <textarea
-                            {...inputProps}
-                            onChange={handleChange}
-                            required
-                            className="w-full p-2 bg-white border border-gray-300 rounded"
-                          />
-                        ) : (
-                          <input
-                            {...inputProps}
-                            onChange={handleChange}
-                            required
-                            className="w-full p-2 bg-white border border-gray-300 rounded"
-                          />
-                        )}
-                      </div>
-                    ))}
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Event Name:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Artist Name:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        name="artist"
+                        value={formData.artist}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Email:{" "}
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Mobile Number:
+                      </label>
+                      <input
+                        type="text"
+                        name="mobileNumber"
+                        value={formData.mobileNumber}
+                        onInput={(e) => {
+                          e.target.value = e.target.value.replace(/\D/g, ""); // This replaces any non-digit character
+                        }}
+                        onChange={handleChange}
+                        required
+                        maxLength={10}
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Member Count:
+                      </label>
+                      <input
+                        type="number"
+                        name="memberCount"
+                        value={formData.memberCount}
+                        onChange={handleMemberCountChange}
+                        min="0" // This ensures no negative values are entered
+                        onKeyPress={(e) => {
+                          if (e.key === "-" || e.key === "+" || e.key === "e") {
+                            e.preventDefault(); // Prevents typing minus, plus, and scientific notation
+                          }
+                        }}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Budget:{" "}
+                      </label>
+                      <input
+                        type="number"
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleChange}
+                        required
+                        disabled={!!formData.package}
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Selected Package:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        name="packageName"
+                        value={formData.packageName}
+                        onChange={handleChange}
+                        required
+                        readOnly
+                        className="w-full p-2 bg-gray-200 border border-gray-300 rounded "
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white">
+                      <label className="block font-semibold bg-white">
+                        Message:{" "}
+                      </label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 bg-white border border-gray-300 rounded"
+                      />
+                    </div>
+
                     <input
                       type="hidden"
                       name="status"
                       value={formData.status}
                     />
+
                     <Button type="submit" variant="dark">
                       Submit
                     </Button>
@@ -467,14 +552,15 @@ const RequestEventForm = () => {
                           <div className="p-4 border border-gray-300 rounded package-card">
                             <strong>{pkg.name}</strong>
                             <p>
-                              Member Count: {pkg.members.min} -{" "}
-                              {pkg.members.max}
+                              Member Count: {pkg.memberCountRange.min} -{" "}
+                              {pkg.memberCountRange.max}
                             </p>
-                            <p>Package Include: {pkg.Decoration}</p>
-                            <p>Venue: {pkg.Venue}</p>
+                            <p>Package Include: {pkg.decoration}</p>
+                            <p>Venue: {pkg.venue}</p>
                             <p>Budget: {pkg.budget}</p>
+
                             <button
-                              className="bg-[#A78F51] text-white mt-2 px-3 py-1 rounded"
+                              className="bg-[#A78F51] text-white mt-2 px-3 py-1 rounded "
                               onClick={() => handlePackageSelection(pkg)}
                             >
                               {formData.package === pkg.name
@@ -485,8 +571,9 @@ const RequestEventForm = () => {
                         </li>
                       ))}
                     </ul>
+                    <br />
                     <p>
-                      <b>If the Package you need is not here,</b>
+                      <b class>If the Package you need is not here,</b>
                     </p>
                     <p>
                       Call - 011 2 232 456 <br />
@@ -520,38 +607,34 @@ const RequestEventForm = () => {
                         style={{ width: "1400px" }}
                       >
                         {editingRequestId === request._id ? (
-                          <div className="space-y-4 bg-red-50">
+                          <div className="space-y-4 bg-red-50 ">
                             <div>
                               <label className="block font-semibold text-gray-700 bg-red-50">
                                 Mobile Number:
                               </label>
                               <input
-                                type="number"
-                                required={true}
+                                type="text"
                                 name="mobileNumber"
                                 value={editedRequestData.mobileNumber}
                                 onChange={(e) => {
                                   const phoneNumber = e.target.value;
 
-                                  // Allow only valid numbers or prevent updating if the field is empty
-                                  if (
-                                    phoneNumber === "" ||
-                                    /^\d{0,10}$/.test(phoneNumber)
-                                  ) {
+                                  // Only allow numbers and ensure length is no more than 10 digits
+                                  if (/^\d{0,10}$/.test(phoneNumber)) {
                                     handleEditedChange(e);
                                   }
                                 }}
                                 className="w-full p-2 border rounded border-gray-50 bg-red-50"
                               />
-
-                              {(editedRequestData.mobileNumber &&
-                                editedRequestData.mobileNumber.length < 10) ||
-                                (editedRequestData.mobileNumber == "" && (
+                              {/* Show validation error message if needed */}
+                              {editedRequestData.mobileNumber &&
+                                editedRequestData.mobileNumber.length < 10 && (
                                   <p className="mt-2 text-red-600">
                                     Mobile number must be exactly 10 digits.
                                   </p>
-                                ))}
+                                )}
                             </div>
+
                             <div>
                               <label className="block font-semibold text-gray-700 bg-red-50">
                                 Message:
@@ -559,20 +642,23 @@ const RequestEventForm = () => {
                               <textarea
                                 name="message"
                                 value={editedRequestData.message}
-                                onChange={(e) => handleEditedChange(e)}
+                                onChange={(e) => {
+                                  handleEditedChange(e);
+                                }}
                                 className="w-full p-2 border rounded border-gray-50 bg-red-50"
                               />
+                              {/* Show validation error message if message is empty */}
                               {editedRequestData.message === "" && (
                                 <p className="mt-2 text-red-600">
                                   Message field cannot be empty.
                                 </p>
                               )}
                             </div>
+
                             <div className="flex space-x-4 bg-red-50">
                               <Button
                                 onClick={handleSaveClick}
                                 variant="primary"
-                                type="submit"
                               >
                                 Save
                               </Button>
@@ -585,7 +671,7 @@ const RequestEventForm = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="w-full space-y-2">
+                          <div className="w-full space-y-2 ">
                             <strong className="block text-lg text-gray-800">
                               {request.name}
                             </strong>
@@ -759,7 +845,6 @@ const RequestEventForm = () => {
                             ? new Date(request.eventDate).toLocaleString()
                             : "No Date"}
                         </p>
-
                         <Button
                           variant="danger"
                           onClick={() => deleteRequest(request._id)}
