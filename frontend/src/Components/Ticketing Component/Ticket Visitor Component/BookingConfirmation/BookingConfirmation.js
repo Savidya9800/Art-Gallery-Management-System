@@ -103,7 +103,7 @@ function BookingConfirmation() {
     // Footer text (right-aligned)
     doc.setFontSize(10);
     doc.setTextColor(128, 128, 128);
-    doc.text("Art Gallery Name", pageWidth - 14, footerY, { align: "right" });
+    doc.text("Awarna Art", pageWidth - 14, footerY, { align: "right" });
     doc.text(
       "Address: 58, Parakrama Mawatha, Wennappuwa",
       pageWidth - 14,
