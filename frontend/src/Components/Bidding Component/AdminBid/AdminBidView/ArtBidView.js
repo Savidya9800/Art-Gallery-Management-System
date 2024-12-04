@@ -6,7 +6,10 @@ import ArtBidForm from '../AdminBidForm/ArtBidForm'; // ArtBidForm to display da
 import NavigationBar from '../../../Nav Component/NavigationBar';
 import { useNavigate } from 'react-router-dom';
 
-const URL = "http://localhost:5000/Adminbid"; // Ensure URL is correct (case-sensitive)
+
+
+
+const URL = "http://localhost:5000/Adminbid"; // Ensure URL is correct 
 
 // Fetch handler
 const fetchHandler = async () => {

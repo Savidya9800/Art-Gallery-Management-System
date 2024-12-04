@@ -10,7 +10,7 @@ function CreateBid() {
   const history = useNavigate();
   const { id: artworkId } = useParams(); // Extract the artwork ID from URL
   const location = useLocation(); // Get location to retrieve state
-  const { title, minPrice } = location.state || {}; // Extract the title from state, or set to empty object if not passed
+  const { title, minPrice } = location.state || {}; // Extract the title from state
 
   // Insert data set
   const [inputs, setInputs] = useState({
@@ -53,7 +53,7 @@ function CreateBid() {
       alert("Please enter a valid email address.");
       return;
     }
-
+    //validate the amount is greater than minimum price
     if (Number(inputs.amount) <= Number(minPrice)) {
       setErrorMessage(`Amount should be higher than Rs.${minPrice}`);
       return;

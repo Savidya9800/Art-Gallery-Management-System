@@ -22,7 +22,7 @@ function ArtBidForm(props) {
 
   // Helper function to get formatted ID
   const formatId = (id) => {
-    // Extract the last three characters and prepend "BA"
+    // Extract the last three characters and  "BA"
     return `BA${id.slice(-3)}`;
   };
 
@@ -56,7 +56,7 @@ function ArtBidForm(props) {
           </div>
         )}
 
-        {/* Description and Details */}
+        
         <div className="grid grid-cols-1 gap-4 col-span-1 md:col-span-1">
           <p className="text-base text-gray-700"><strong>Description:</strong> {description}</p>
           <p className="text-base text-gray-700"><strong>Artist Name:</strong> {artistName}</p>
@@ -66,7 +66,7 @@ function ArtBidForm(props) {
           <p className="text-base text-gray-700"><strong>Minimum Price:</strong> Rs.{minPrice}</p>
         </div>
 
-        {/* Buttons */}
+        
         <div className="flex justify-between mt-5 col-span-1 md:col-span-2">
           <Link
             to={`/adminBidView/${_id}`}

@@ -13,7 +13,7 @@ function StartBid() {
     axios
       .get("http://localhost:5000/Adminbid")
       .then((response) => {
-        setBids(response.data.adminAddBid); // Adjust based on your backend response structure
+        setBids(response.data.adminAddBid); 
       })
       .catch((err) => {
         console.error(err);
