@@ -31,7 +31,7 @@ export default function Addresponse() {
         }
 
         console.log(inputs);
-        sendRequest().then(() => history(`/ViewResponse/${inquiryID}`));
+        sendRequest().then(() => history(`/ViewResponse/${inquiryID}` ,{state:{isAdmin:true}})); // Redirect to ViewResponse after adding response
     };
 
     const sendRequest = async () => {
@@ -81,7 +81,7 @@ export default function Addresponse() {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
+                        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none"
                     >
                         Add Response
                     </button>

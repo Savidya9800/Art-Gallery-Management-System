@@ -51,7 +51,7 @@ const Login = () => {
       } else if (response.data.user.email === "bidding@gmail.com") {
         navigate("/adminBidView");
       } else if (response.data.user.email === "payment@gmail.com") {
-        navigate("/itemview");
+        navigate("/payments");
       } else if (response.data.user.email === "user@gmail.com") {
         navigate("/admin/users");
       } else {

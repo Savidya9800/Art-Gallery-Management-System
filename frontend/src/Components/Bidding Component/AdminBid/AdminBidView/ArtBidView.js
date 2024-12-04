@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import ArtBidForm from '../AdminBidForm/ArtBidForm'; // ArtBidForm to display data
-import NavigationBar from '../../../Nav Component/NavigationBar';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ArtBidForm from "../AdminBidForm/ArtBidForm"; // ArtBidForm to display data
+import NavigationBar from "../../../Nav Component/NavigationBar";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -14,7 +14,7 @@ const URL = "http://localhost:5000/Adminbid"; // Ensure URL is correct
 // Fetch handler
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
-}
+};
 
 function ArtBidView() {
   const [adminAddBid, setBidAddArt] = useState([]);
@@ -22,12 +22,12 @@ function ArtBidView() {
   const [searchQuery, setSearchQuery] = useState("");
   const [noResults, setNoResults] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchHandler().then((data) => {
       setBidAddArt(data.adminAddBid);
-      calculateCategoryCount(data.adminAddBid); 
+      calculateCategoryCount(data.adminAddBid);
     });
   }, []);
 
@@ -44,7 +44,6 @@ function ArtBidView() {
   const generatePDF = () => {
     const doc = new jsPDF();
 
-    // Background color
     doc.setFillColor("#FFFFFF");
     doc.rect(0, 0, 210, 297, "F");
 
@@ -61,7 +60,14 @@ function ArtBidView() {
     doc.setFontSize(16);
     doc.text("Artwork Added for Bidding Report", 15, 50);
 
-    const tableColumn = ["ID", "Title", "Artist Name", "Category", "Minimum Price"];
+    const tableColumn = [
+      "ID",
+      "Title",
+      "Artist Name",
+      "Category",
+      "Minimum Price",
+    ];
+
     const tableRows = [];
 
     adminAddBid.forEach((artwork) => {
@@ -70,7 +76,7 @@ function ArtBidView() {
         artwork.title,
         artwork.artistName,
         artwork.category,
-        artwork.minPrice
+        artwork.minPrice,
       ];
       tableRows.push(artworkData);
     });
@@ -80,15 +86,19 @@ function ArtBidView() {
       startY: 60,
       head: [tableColumn],
       body: tableRows,
-      theme: 'striped',
+      theme: "striped",
       styles: { fillColor: [255, 255, 255] },
       headStyles: { fillColor: [167, 143, 81] },
     });
 
     // Category summary
-    doc.setTextColor(0, 0, 0); 
+    doc.setTextColor(0, 0, 0);
     doc.setFontSize(16);
-    doc.text("Summary of Artworks by Category:", 15, doc.lastAutoTable.finalY + 10);
+    doc.text(
+      "Summary of Artworks by Category:",
+      15,
+      doc.lastAutoTable.finalY + 10
+    );
 
     let yPos = doc.lastAutoTable.finalY + 20;
     Object.entries(categoryCount).forEach(([category, count]) => {
@@ -101,7 +111,7 @@ function ArtBidView() {
     const footerText = [
       "Awarná Art Gallery",
       "Address: 58, Parakrama Mawatha, Wennappuwa",
-      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.co"
+      "Contact: +94 765 456 789 | Email: awarnaArts@gmail.co",
     ];
 
     doc.setFontSize(12);
@@ -109,7 +119,7 @@ function ArtBidView() {
     const footerY = doc.internal.pageSize.getHeight() - 40; // Adjust footer position as necessary
 
     footerText.forEach((line, index) => {
-      doc.text(line, 15, footerY + (index * 10)); // Increment Y position for each line
+      doc.text(line, 15, footerY + index * 10); // Increment Y position for each line
     });
 
     // Download PDF
@@ -134,16 +144,22 @@ function ArtBidView() {
 
   return (
     <div>
-      <div className='relative z-10'>
+      <div className="relative z-10">
         <NavigationBar />
       </div>
-      
+
       <div className="p-6">
         {/* Container for Add New Record and Search Bar */}
         <div className="flex justify-center mb-4 space-x-4">
+        <button
+            className="px-4 py-2 text-white transition duration-300 bg-[#A78F51] rounded-md shadow-md hover:bg-[#bfa35d]"
+            onClick={() => navigate("/adminArtworksBid")}
+          >
+            Requested Artworks
+          </button>
           {/* Add New Record Button */}
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-500 transition duration-300"
+            className="px-4 py-2 text-white transition duration-300 bg-blue-600 rounded-md shadow-md hover:bg-blue-500"
             onClick={() => navigate("/adminArtBidAdd")}
           >
             + Add New Record
@@ -154,12 +170,12 @@ function ArtBidView() {
             <input
               type="text"
               name="search"
-              className="bg-transparent w-full px-4 py-2 text-gray-700 focus:outline-none rounded-l-md"
+              className="w-full px-4 py-2 text-gray-700 bg-transparent focus:outline-none rounded-l-md"
               placeholder="Search by Title"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
-              className="bg-green-600 text-white py-2 px-4 rounded-r-md shadow-md hover:bg-green-500 transition duration-300"
+              className="px-4 py-2 text-white transition duration-300 bg-green-600 shadow-md rounded-r-md hover:bg-green-500"
               onClick={handleSearch}
             >
               Search
@@ -168,24 +184,26 @@ function ArtBidView() {
         </div>
 
         {noResults ? (
-          <div className="text-center mt-6">
+          <div className="mt-6 text-center">
             <p className="text-red-500">No Bid Art found</p>
           </div>
         ) : (
           <div className="mt-6">
-            {adminAddBid && adminAddBid.map((BIDART, i) => (
-              <div key={i}>
-                <ArtBidForm BIDART={BIDART} />
-              </div>
-            ))}
+            {adminAddBid &&
+              adminAddBid.map((BIDART, i) => (
+                <div key={i}>
+                  <ArtBidForm BIDART={BIDART} />
+                </div>
+              ))}
 
             {/* Generate PDF Button */}
             <button
-              className="mt-6 px-4 py-2 bg-blue-700 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+              className="px-4 py-2 mt-6 mr-5 text-white transition duration-300 bg-blue-700 rounded-md shadow-md hover:bg-blue-600"
               onClick={generatePDF}
             >
               Download Summary Report
             </button>
+
           </div>
         )}
       </div>
